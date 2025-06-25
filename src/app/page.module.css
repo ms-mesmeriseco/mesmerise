@@ -6,14 +6,7 @@
   --button-primary-hover: #383838;
   --button-secondary-hover: #f2f2f2;
 
-  display: grid;
-  grid-template-rows: 20px 1fr 20px;
-  align-items: center;
-  justify-items: center;
-  min-height: 100svh;
-  padding: 80px;
-  gap: 64px;
-  font-family: var(--font-geist-sans);
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,21 +21,9 @@
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
   grid-row-start: 2;
 }
 
-.main ol {
-  font-family: var(--font-geist-mono);
-  padding-left: 0;
-  margin: 0;
-  font-size: 14px;
-  line-height: 24px;
-  letter-spacing: -0.01em;
-  list-style-position: inside;
-}
 
 .main li:not(:last-of-type) {
   margin-bottom: 8px;
@@ -56,9 +37,8 @@
   font-weight: 600;
 }
 .hero {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
+  width: 100%;
+  height: calc(100vh - var(--padding) * 4);
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+//this frgament not currently in use!
 
 export const GET_PAGE_BLOCKS = gql`
   fragment PageBlocks on Entry {
@@ -6,7 +7,6 @@ export const GET_PAGE_BLOCKS = gql`
     sys {
       id
     }
-
     ... on ComponentHeroBanner {
       entryTitle
       heroText {
