@@ -55,7 +55,14 @@
   border-radius: 4px;
   font-weight: 600;
 }
-
+.hero {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .ctas {
   display: flex;
   gap: 16px;
