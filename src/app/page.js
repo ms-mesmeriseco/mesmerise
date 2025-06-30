@@ -2,6 +2,7 @@ import { getClient } from "@/lib/apollo-client";
 import { GET_HOME_PAGE } from "@/lib/graphql/queries/getHomePageContent";
 import HeroBanner from "@/components/blocks/HeroBanner";
 import SingleColumn from "@/components/blocks/SingleColumn";
+import TwoColumn from "@/components/blocks/TwoColumn";
 
 export default async function Home() {
   const { data } = await getClient().query({ query: GET_HOME_PAGE });
@@ -22,6 +23,12 @@ export default async function Home() {
     (item) => item.__typename === "Image"
   );
 
+  const twoColumnBlock = blocks.find(
+    (block) => block.__typename === "TwoColumnBlockBlank"
+  );
+
+  const column1 = twoColumnBlock?.column1Collection?.items || [];
+  const column2 = twoColumnBlock?.column2Collection?.items || [];
   const richTextJson = richTextEntry?.content?.json;
   const imageUrl = imageEntry?.imageContent?.url;
 
@@ -34,6 +41,9 @@ export default async function Home() {
 
       <main className="flex flex-col gap-8">
        <SingleColumn richText={richTextJson} imageUrl={imageUrl} />
+       {twoColumnBlock && (
+        <TwoColumn column1={column1} column2={column2} />
+      )}
       </main>
     </div>
   );
