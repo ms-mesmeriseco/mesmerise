@@ -3,33 +3,36 @@
 import PropTypes from 'prop-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-export default function HeroBanner({ heroMedia, heroText }) {
-  const backgroundImageStyle = heroMedia?.url
-    ? {
-        backgroundImage: `url(${heroMedia.url})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        borderRadius: '0.5rem',
-      }
-    : {};
+export default function HeroBanner({ heroMedia, heroText, mediaHeight }) {
+  const isVideo = heroMedia?.contentType?.includes('video');
+  const heightClass = mediaHeight ? 'h-screen' : 'h-[60vh]';
 
   return (
-    <div
-      className="w-full h-[50vh] flex items-center justify-center"
-      style={backgroundImageStyle}
-    >
-      <div className="max-w-2xl text-white text-center">
+    <div className={`relative w-full ${heightClass} overflow-hidden rounded-md flex items-center justify-center`}>
+      {heroMedia?.url && (
+        isVideo ? (
+          <video
+            src={heroMedia.url}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <img
+            src={heroMedia.url}
+            alt={heroMedia.title || ''}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        )
+      )}
+
+      <div className="relative z-10 text-white text-center max-w-2xl px-4">
         {heroText?.json && documentToReactComponents(heroText.json)}
       </div>
+
+      <div className="absolute inset-0 bg-black/40 z-[5]" />
     </div>
   );
 }
-
-HeroBanner.propTypes = {
-  heroMedia: PropTypes.shape({
-    url: PropTypes.string,
-  }),
-  heroText: PropTypes.shape({
-    json: PropTypes.object,
-  }),
-};

@@ -33,6 +33,14 @@ function BlockRenderer({ block }) {
           className="w-full h-auto rounded shadow"
         />
       );
+    case "Video":
+        return (
+            <video 
+                src={block.videoContent?.url}
+                alt={block.videoContent?.title || ""}
+                className="w-full h-auto rounded shadow">
+            </video>
+        );
     default:
       return null;
   }

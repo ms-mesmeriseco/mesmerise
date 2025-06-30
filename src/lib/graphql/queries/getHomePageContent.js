@@ -29,6 +29,7 @@ export const GET_HOME_PAGE = gql`
               contentType
               fileName
             }
+            mediaHeight
           }
 
           ... on SingleColumnBlockBlank {
@@ -41,6 +42,17 @@ export const GET_HOME_PAGE = gql`
                 }
                 ... on Image {
                   imageContent {
+                    url
+                    title
+                    description
+                    width
+                    height
+                    contentType
+                    fileName
+                  }
+                }
+                ... on Video {
+                  videoContent {
                     url
                     title
                     description
@@ -73,6 +85,17 @@ export const GET_HOME_PAGE = gql`
                     fileName
                   }
                 }
+                ... on Video {
+                  videoContent {
+                    url
+                    title
+                    description
+                    width
+                    height
+                    contentType
+                    fileName
+                  }
+                }
               }
             }
             column2Collection {
@@ -84,6 +107,17 @@ export const GET_HOME_PAGE = gql`
                 }
                 ... on Image {
                   imageContent {
+                    url
+                    title
+                    description
+                    width
+                    height
+                    contentType
+                    fileName
+                  }
+                }
+                ... on Video {
+                  videoContent {
                     url
                     title
                     description
