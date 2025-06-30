@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-//this frgament not currently in use!
 
 export const GET_PAGE_BLOCKS = gql`
   fragment PageBlocks on Entry {
@@ -8,7 +7,6 @@ export const GET_PAGE_BLOCKS = gql`
       id
     }
     ... on ComponentHeroBanner {
-      entryTitle
       heroText {
         json
       }
@@ -22,6 +20,16 @@ export const GET_PAGE_BLOCKS = gql`
         fileName
       }
     }
-
+    ... on SingleColumnBlockBlank {
+      contentCollection {
+        items {
+          ... on ContentTypeRichText {
+            content {
+              json
+            }
+          }
+        }
+      }
+    }
   }
 `;

@@ -1,6 +1,7 @@
 import { getClient } from "@/lib/apollo-client";
 import { GET_HOME_PAGE } from "@/lib/graphql/queries/getHomePageContent";
 import HeroBanner from "@/components/blocks/HeroBanner";
+import SingleColumn from "@/components/blocks/SingleColumn";
 
 export default async function Home() {
   const { data } = await getClient().query({ query: GET_HOME_PAGE });
@@ -10,6 +11,19 @@ export default async function Home() {
   const heroBannerBlock = blocks.find(
     (block) => block.__typename === "ComponentHeroBanner"
   );
+  const singleColumn = blocks.find(
+    (block) => block.__typename === "SingleColumnBlockBlank"
+  );
+  const richTextEntry = singleColumn?.contentCollection?.items?.find(
+    (item) => item.__typename === "ContentTypeRichText"
+  );
+
+  const imageEntry = singleColumn?.contentCollection?.items?.find(
+    (item) => item.__typename === "Image"
+  );
+
+  const richTextJson = richTextEntry?.content?.json;
+  const imageUrl = imageEntry?.imageContent?.url;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-16 m-4">
@@ -19,9 +33,7 @@ export default async function Home() {
       />
 
       <main className="flex flex-col gap-8">
-        <p className="text-lg max-w-prose text-center">
-          Skyrocket your lead generation. Install a predictable growth engine into your business that will automate your revenue growth in 90 days.
-        </p>
+       <SingleColumn richText={richTextJson} imageUrl={imageUrl} />
       </main>
     </div>
   );
