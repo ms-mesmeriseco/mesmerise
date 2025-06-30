@@ -42,11 +42,3 @@ export default async function Home() {
     </div>
   );
 }
-
-try {
-  const { data } = await getClient().query({
-    query: GET_HOME_PAGE
-  });
-} catch (error) {
-  console.error("GraphQL Error:", JSON.stringify(error, null, 2));
-}

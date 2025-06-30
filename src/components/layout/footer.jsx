@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getClient } from '@/lib/apollo-client';
-import { GET_LANDING_PAGES } from '@/lib/graphql/queries/getLandingPages';
+// import { GET_LANDING_PAGES } from '@/lib/graphql/queries/getLandingPages';
 
 export default function Footer() {
   const [landingPages, setLandingPages] = useState([]);
