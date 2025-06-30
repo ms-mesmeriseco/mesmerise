@@ -7,15 +7,15 @@ import { getClient } from '@/lib/apollo-client';
 // import { GET_LANDING_PAGES } from '@/lib/graphql/queries/getLandingPages';
 
 export default function Footer() {
-  const [landingPages, setLandingPages] = useState([]);
+  // const [landingPages, setLandingPages] = useState([]);
 
-  useEffect(() => {
-    async function fetchLandingPages() {
-      const { data } = await getClient().query({ query: GET_LANDING_PAGES });
-      setLandingPages(data?.landingPageCollection?.items || []);
-    }
-    fetchLandingPages();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchLandingPages() {
+  //     const { data } = await getClient().query({ query: GET_LANDING_PAGES });
+  //     setLandingPages(data?.landingPageCollection?.items || []);
+  //   }
+  //   fetchLandingPages();
+  // }, []);
 
   return (
     <footer className="bg-black text-white py-12 px-4">
@@ -38,7 +38,7 @@ export default function Footer() {
         <div className="col-span-1">
           <h4 className="text-lg font-semibold mb-2">Landing Pages</h4>
           <ul className="space-y-1 text-sm">
-            {landingPages.map((page) => (
+            {/* {landingPages.map((page) => (
               <li key={page.pageSlug}>
                 <Link
                   href={`/[slug]/${page.pageSlug}`}
@@ -47,7 +47,7 @@ export default function Footer() {
                   {page.pageTitle}
                 </Link>
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
 
