@@ -2,7 +2,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 
 export default function TwoColumn({ column1 = [], column2 = [] }) {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-8 m-(--global-margin)">
       {/* Column 1 */}
       <div className="flex flex-col gap-6">
         {column1.map((block, index) => (
@@ -30,17 +30,19 @@ function BlockRenderer({ block }) {
         <img
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className="w-full h-auto rounded shadow"
+          className="w-full h-auto rounded-(--radius-sm) shadow"
         />
       );
-    case "Video":
-        return (
-            <video 
-                src={block.videoContent?.url}
-                alt={block.videoContent?.title || ""}
-                className="w-full h-auto rounded shadow">
-            </video>
-        );
+        case "Video":
+      return (
+        <video
+          src={block.videoContent?.url}
+          controls
+          className="w-1/2 h-auto rounded-(--radius-sm) shadow"
+        >
+          Your browser does not support the video tag.
+        </video>
+      );
     default:
       return null;
   }

@@ -1,4 +1,5 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import ListIcons from "./ListIcons";
 
 export default function SingleColumn({ content = [] }) {
   return (
@@ -23,7 +24,7 @@ function BlockRenderer({ block }) {
         <img
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className="w-full h-auto rounded shadow"
+          className="w-full h-auto rounded-(--radius-sm) shadow"
         />
       );
     case "Video":
@@ -31,11 +32,13 @@ function BlockRenderer({ block }) {
         <video
           src={block.videoContent?.url}
           controls
-          className="w-1/2 h-auto rounded shadow"
+          className="w-1/2 h-auto rounded-(--radius-sm) shadow"
         >
           Your browser does not support the video tag.
         </video>
       );
+    case "ListIcons":
+      return <ListIcons items={block.listItemsCollection?.items || []} />;
     default:
       return null;
   }

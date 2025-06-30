@@ -26,12 +26,18 @@
   --foreground: #171717;
   --padding: 0.5rem;
   box-sizing:border-box;
+  --global-margin: 0.75rem;
+  --fw-m: calc(100vw - var(--global-margin) * 2);
+  --fh-m: calc(100vh - var(--global-margin) * 2);
+  --radius-lrg: 1.5rem;
+  --radius-sm: 0.75rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
   }
 }
 

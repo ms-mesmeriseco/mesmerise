@@ -26,7 +26,7 @@ export default async function Home() {
   const column2 = twoColumnBlock?.column2Collection?.items || [];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-16 m-4">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-16">
       <HeroBanner
         heroMedia={heroBannerBlock?.heroMedia}
         heroText={heroBannerBlock?.heroText}

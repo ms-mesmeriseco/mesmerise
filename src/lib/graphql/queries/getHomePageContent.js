@@ -62,6 +62,19 @@ export const GET_HOME_PAGE = gql`
                     fileName
                   }
                 }
+                ... on ListIcons {
+                    listItemsCollection(limit: 2) {
+                      items {
+                        icon {
+                          url
+                          title
+                        }
+                        textContent {
+                          json
+                        }
+                      }
+                    }
+                  }
               }
             }
           }
