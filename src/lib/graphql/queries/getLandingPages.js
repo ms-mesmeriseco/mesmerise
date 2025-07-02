@@ -22,6 +22,9 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on IconRow {
               ...IconRowFragment
             }
+            ... on TrustBadges {
+              ...TrustBadgesFragment
+            }
             ... on SingleColumnBlockBlank {
               contentCollection {
                 items {
@@ -86,6 +89,25 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
       }
     }
   }
+
+fragment TrustBadgesFragment on TrustBadges {
+    textContent {
+      json
+    }
+    scroll
+    logosCollection {
+      items {
+        url
+        title
+        description
+        width
+        height
+        contentType
+        fileName
+      }
+    }
+  }
+
   fragment IconRowFragment on IconRow {
       columnNumber
       contentDirection

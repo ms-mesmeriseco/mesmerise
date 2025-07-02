@@ -25,6 +25,9 @@ export const GET_HOME_PAGE = gql`
             ... on IconRow {
               ...IconRowFragment
             }
+            ... on TrustBadges {
+              ...TrustBadgesFragment
+            }
             ... on SingleColumnBlockBlank {
               contentCollection {
                 items {
@@ -36,7 +39,7 @@ export const GET_HOME_PAGE = gql`
                   ... on Image {
                     ...ImageDetails
                   }
-                 
+
                   ... on ListIcons {
                     listItemsCollection(limit: 4) {
                       items {
@@ -91,15 +94,38 @@ export const GET_HOME_PAGE = gql`
     }
   }
 
+  fragment TrustBadgesFragment on TrustBadges {
+    textContent {
+      json
+    }
+    scroll
+    logosCollection {
+      items {
+        url
+        title
+        description
+        width
+        height
+        contentType
+        fileName
+      }
+    }
+  }
+
   fragment IconRowFragment on IconRow {
-      columnNumber
-      contentDirection
-    iconItemsCollection (limit: 12) {
+    columnNumber
+    contentDirection
+    iconItemsCollection(limit: 12) {
       items {
         ... on ListIconItem {
           icon {
             url
             title
+            description
+            width
+            height
+            contentType
+            fileName
           }
           textContent {
             json

@@ -48,8 +48,8 @@ export default function Footer() {
             {landingPages.map((page) => (
               <li key={page.pageSlug}>
                 <Link
-                  href={`/landing/${page.pageSlug}`}
-                  className="hover:underline text-gray-300"
+                  href={`${page.pageSlug}`}
+                  className="hover:underline"
                 >
                   {page.pageTitle}
                 </Link>
@@ -61,7 +61,7 @@ export default function Footer() {
         {/* Connect */}
         <div className="col-span-1">
           <h4 className="text-lg font-semibold mb-2">Connect</h4>
-          <ul className="space-y-1 text-sm text-gray-300">
+          <ul className="space-y-1 text-sm">
             <li><a href="#">LinkedIn</a></li>
             <li><a href="#">Instagram</a></li>
             <li><a href="#">Email</a></li>

@@ -9,7 +9,7 @@ export default function Header() {
       </span>
       <span>this will be site menu</span>
       <span>
-        <button className="bg-white text-black px-4 py-2 rounded-(--radius-sm)">CTA</button>
+        <button className="bg-white text-black px-4 py-0 rounded-(--radius-lrg)">CTA</button>
       </span>
     </header>
     </> 

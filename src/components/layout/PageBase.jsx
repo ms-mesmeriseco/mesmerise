@@ -2,6 +2,7 @@ import HeroBanner from "@/components/blocks/HeroBanner";
 import SingleColumn from "@/components/blocks/SingleColumn";
 import TwoColumn from "@/components/blocks/TwoColumn";
 import IconRow from "@/components/blocks/IconRow";
+import TrustBadges from "@/components/blocks/TrustBadges";
 
 export default function PageBase({ blocks }) {
   return (
@@ -44,6 +45,15 @@ export default function PageBase({ blocks }) {
                 iconItems={block.iconItemsCollection?.items || []}
               />
             );
+            case "TrustBadges":
+              return (
+                <TrustBadges
+                  key={`block-${index}`}
+                  textContent={block.textContent}
+                  logos={block.logosCollection?.items || []}
+                  scroll={block.scroll}
+                />
+              )
 
             default:
               return null;
