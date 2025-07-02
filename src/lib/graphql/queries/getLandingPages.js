@@ -4,7 +4,7 @@ import { GET_PAGE_BLOCKS } from "../fragments/getPageBlocks";
 export const GET_LANDING_PAGE_BY_SLUG = gql`
   query GetLandingPageBySlug($slug: String!) {
     landingPageCollection(limit: 1, where: { pageSlug: $slug }) {
-      items {
+       items {
         __typename
         sys {
           id
@@ -14,7 +14,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
         metaText {
           json
         }
-        pageBlocksCollection(limit: 10) {
+        pageBlocksCollection(limit: 20) {
           items {
             ... on ComponentHeroBanner {
               ...HeroDetails
@@ -26,7 +26,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
               ...TrustBadgesFragment
             }
             ... on SingleColumnBlockBlank {
-              contentCollection {
+              contentCollection(limit: 3) {
                 items {
                   ... on ContentTypeRichText {
                     content {
@@ -35,6 +35,76 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
                   }
                   ... on Image {
                     ...ImageDetails
+                  }
+                  ... on Video {
+                    ...VideoDetails
+                  }
+                  ... on AccordionWidget {
+                    ...AccordionWidgetFragment
+                  }
+                  ... on ListIcons {
+                    listItemsCollection(limit: 12) {
+                      items {
+                        icon {
+                          url
+                          title
+                        }
+                        textContent {
+                          json
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            ... on TwoColumnBlockBlank {
+              column1Collection(limit: 3) {
+                items {
+                  ... on ContentTypeRichText {
+                    content {
+                      json
+                    }
+                  }
+                  ... on Image {
+                    ...ImageDetails
+                  }
+                  ... on Video {
+                    ...VideoDetails
+                  }
+                  ... on AccordionWidget {
+                    ...AccordionWidgetFragment
+                  }
+                  ... on ListIcons {
+                    listItemsCollection(limit: 12) {
+                      items {
+                        icon {
+                          url
+                          title
+                        }
+                        textContent {
+                          json
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              column2Collection(limit: 3) {
+                items {
+                  ... on ContentTypeRichText {
+                    content {
+                      json
+                    }
+                  }
+                  ... on Image {
+                    ...ImageDetails
+                  }
+                  ... on Video {
+                    ...VideoDetails
+                  }
+                  ... on AccordionWidget {
+                    ...AccordionWidgetFragment
                   }
                   ... on ListIcons {
                     listItemsCollection(limit: 4) {
@@ -52,50 +122,18 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
                 }
               }
             }
-            ... on TwoColumnBlockBlank {
-              column1Collection {
-                items {
-                  ... on ContentTypeRichText {
-                    content {
-                      json
-                    }
-                  }
-                  ... on Image {
-                    ...ImageDetails
-                  }
-                  ... on Video {
-                    ...VideoDetails
-                  }
-                }
-              }
-              column2Collection {
-                items {
-                  ... on ContentTypeRichText {
-                    content {
-                      json
-                    }
-                  }
-                  ... on Image {
-                    ...ImageDetails
-                  }
-                  ... on Video {
-                    ...VideoDetails
-                  }
-                }
-              }
-            }
           }
         }
       }
     }
   }
 
-fragment TrustBadgesFragment on TrustBadges {
+  fragment TrustBadgesFragment on TrustBadges {
     textContent {
       json
     }
     scroll
-    logosCollection {
+    logosCollection(limit: 10) {
       items {
         url
         title
@@ -109,14 +147,34 @@ fragment TrustBadgesFragment on TrustBadges {
   }
 
   fragment IconRowFragment on IconRow {
-      columnNumber
-      contentDirection
-    iconItemsCollection {
+    columnNumber
+    contentDirection
+    iconItemsCollection(limit: 12) {
       items {
         ... on ListIconItem {
           icon {
             url
             title
+            description
+            width
+            height
+            contentType
+            fileName
+          }
+          textContent {
+            json
+          }
+        }
+      }
+    }
+  }
+
+  fragment AccordionWidgetFragment on AccordionWidget {
+    accordionContentCollection(limit: 12) {
+      items {
+        ... on AccordionItem {
+          titleContent {
+            json
           }
           textContent {
             json

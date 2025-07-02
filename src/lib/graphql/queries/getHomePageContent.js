@@ -17,7 +17,7 @@ export const GET_HOME_PAGE = gql`
         metaText {
           json
         }
-        pageBlocksCollection(limit: 10) {
+        pageBlocksCollection(limit: 20) {
           items {
             ... on ComponentHeroBanner {
               ...HeroDetails
@@ -29,7 +29,7 @@ export const GET_HOME_PAGE = gql`
               ...TrustBadgesFragment
             }
             ... on SingleColumnBlockBlank {
-              contentCollection {
+              contentCollection(limit: 3) {
                 items {
                   ... on ContentTypeRichText {
                     content {
@@ -39,7 +39,76 @@ export const GET_HOME_PAGE = gql`
                   ... on Image {
                     ...ImageDetails
                   }
-
+                  ... on Video {
+                    ...VideoDetails
+                  }
+                  ... on AccordionWidget {
+                    ...AccordionWidgetFragment
+                  }
+                  ... on ListIcons {
+                    listItemsCollection(limit: 12) {
+                      items {
+                        icon {
+                          url
+                          title
+                        }
+                        textContent {
+                          json
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            ... on TwoColumnBlockBlank {
+              column1Collection(limit: 3) {
+                items {
+                  ... on ContentTypeRichText {
+                    content {
+                      json
+                    }
+                  }
+                  ... on Image {
+                    ...ImageDetails
+                  }
+                  ... on Video {
+                    ...VideoDetails
+                  }
+                  ... on AccordionWidget {
+                    ...AccordionWidgetFragment
+                  }
+                  ... on ListIcons {
+                    listItemsCollection(limit: 12) {
+                      items {
+                        icon {
+                          url
+                          title
+                        }
+                        textContent {
+                          json
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              column2Collection(limit: 3) {
+                items {
+                  ... on ContentTypeRichText {
+                    content {
+                      json
+                    }
+                  }
+                  ... on Image {
+                    ...ImageDetails
+                  }
+                  ... on Video {
+                    ...VideoDetails
+                  }
+                  ... on AccordionWidget {
+                    ...AccordionWidgetFragment
+                  }
                   ... on ListIcons {
                     listItemsCollection(limit: 4) {
                       items {
@@ -56,38 +125,6 @@ export const GET_HOME_PAGE = gql`
                 }
               }
             }
-            ... on TwoColumnBlockBlank {
-              column1Collection {
-                items {
-                  ... on ContentTypeRichText {
-                    content {
-                      json
-                    }
-                  }
-                  ... on Image {
-                    ...ImageDetails
-                  }
-                  ... on Video {
-                    ...VideoDetails
-                  }
-                }
-              }
-              column2Collection {
-                items {
-                  ... on ContentTypeRichText {
-                    content {
-                      json
-                    }
-                  }
-                  ... on Image {
-                    ...ImageDetails
-                  }
-                  ... on Video {
-                    ...VideoDetails
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -99,7 +136,7 @@ export const GET_HOME_PAGE = gql`
       json
     }
     scroll
-    logosCollection {
+    logosCollection(limit: 10) {
       items {
         url
         title
@@ -126,6 +163,21 @@ export const GET_HOME_PAGE = gql`
             height
             contentType
             fileName
+          }
+          textContent {
+            json
+          }
+        }
+      }
+    }
+  }
+
+  fragment AccordionWidgetFragment on AccordionWidget {
+    accordionContentCollection(limit: 12) {
+      items {
+        ... on AccordionItem {
+          titleContent {
+            json
           }
           textContent {
             json
