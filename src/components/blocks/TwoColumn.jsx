@@ -1,4 +1,7 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import AccordionWidget from "./Accordion";
+import ListIcons from "./ListIcons";
+import IconRow from "./IconRow";
 
 export default function TwoColumn({ column1 = [], column2 = [] }) {
   return (
@@ -6,14 +9,14 @@ export default function TwoColumn({ column1 = [], column2 = [] }) {
       {/* Column 1 */}
       <div className="flex flex-col gap-6">
         {column1.map((block, index) => (
-          <BlockRenderer key={`col1-${index}`} block={block} />
+          <BlockRenderer key={`col1-${index}`} block={block} index={index} />
         ))}
       </div>
 
       {/* Column 2 */}
       <div className="flex flex-col gap-6">
         {column2.map((block, index) => (
-          <BlockRenderer key={`col2-${index}`} block={block} />
+          <BlockRenderer key={`col2-${index}`} block={block} index={index} />
         ))}
       </div>
     </section>
@@ -21,10 +24,14 @@ export default function TwoColumn({ column1 = [], column2 = [] }) {
 }
 
 // Helper component to render any block type
-function BlockRenderer({ block }) {
+function BlockRenderer({ block, index }) {
   switch (block.__typename) {
     case "ContentTypeRichText":
-      return documentToReactComponents(block.content?.json);
+      return (
+        <div className="prose max-w-none">
+          {documentToReactComponents(block.content?.json)}
+        </div>
+      );
     case "Image":
       return (
         <img
@@ -33,7 +40,7 @@ function BlockRenderer({ block }) {
           className="w-full h-auto rounded-(--radius-sm) shadow"
         />
       );
-        case "Video":
+    case "Video":
       return (
         <video
           src={block.videoContent?.url}
@@ -42,6 +49,25 @@ function BlockRenderer({ block }) {
         >
           Your browser does not support the video tag.
         </video>
+      );
+    case "ListIcons":
+      return <ListIcons items={block.listItemsCollection?.items || []} />;
+    case "IconRow":
+      return (
+        <IconRow
+          key={`icon-row-${index}`}
+          columnNumber={block.columnNumber}
+          contentDirection={block.contentDirection}
+          iconItems={block.iconItemsCollection?.items || []}
+        />
+      );
+    case "AccordionWidget":
+      return (
+        <AccordionWidget
+          key={`accordion-${index}`}
+          icon={block.icon}
+          accordionItems={block.accordionContentCollection?.items || []}
+        />
       );
     default:
       return null;

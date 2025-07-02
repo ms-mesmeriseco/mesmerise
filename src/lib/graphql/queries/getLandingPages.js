@@ -14,7 +14,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
         metaText {
           json
         }
-        pageBlocksCollection(limit: 20) {
+        pageBlocksCollection(limit: 15) {
           items {
             ... on ComponentHeroBanner {
               ...HeroDetails
@@ -133,7 +133,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
       json
     }
     scroll
-    logosCollection(limit: 10) {
+    logosCollection(limit: 5) {
       items {
         url
         title
@@ -170,12 +170,19 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   }
 
   fragment AccordionWidgetFragment on AccordionWidget {
-    accordionContentCollection(limit: 12) {
+      icon {
+        url
+          title
+          description
+          width
+          height
+          contentType
+          fileName
+      }
+    accordionContentCollection(limit: 8) {
       items {
         ... on AccordionItem {
-          titleContent {
-            json
-          }
+          entryTitle
           textContent {
             json
           }

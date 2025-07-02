@@ -17,7 +17,7 @@ export const GET_HOME_PAGE = gql`
         metaText {
           json
         }
-        pageBlocksCollection(limit: 20) {
+        pageBlocksCollection(limit: 15) {
           items {
             ... on ComponentHeroBanner {
               ...HeroDetails
@@ -29,7 +29,7 @@ export const GET_HOME_PAGE = gql`
               ...TrustBadgesFragment
             }
             ... on SingleColumnBlockBlank {
-              contentCollection(limit: 3) {
+              contentCollection(limit: 5) {
                 items {
                   ... on ContentTypeRichText {
                     content {
@@ -62,7 +62,7 @@ export const GET_HOME_PAGE = gql`
               }
             }
             ... on TwoColumnBlockBlank {
-              column1Collection(limit: 3) {
+              column1Collection(limit: 5) {
                 items {
                   ... on ContentTypeRichText {
                     content {
@@ -93,7 +93,7 @@ export const GET_HOME_PAGE = gql`
                   }
                 }
               }
-              column2Collection(limit: 3) {
+              column2Collection(limit: 5) {
                 items {
                   ... on ContentTypeRichText {
                     content {
@@ -173,12 +173,19 @@ export const GET_HOME_PAGE = gql`
   }
 
   fragment AccordionWidgetFragment on AccordionWidget {
-    accordionContentCollection(limit: 12) {
+    icon {
+        url
+          title
+          description
+          width
+          height
+          contentType
+          fileName
+    }
+    accordionContentCollection(limit: 8) {
       items {
         ... on AccordionItem {
-          titleContent {
-            json
-          }
+          entryTitle
           textContent {
             json
           }

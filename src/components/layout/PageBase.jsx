@@ -3,12 +3,16 @@ import SingleColumn from "@/components/blocks/SingleColumn";
 import TwoColumn from "@/components/blocks/TwoColumn";
 import IconRow from "@/components/blocks/IconRow";
 import TrustBadges from "@/components/blocks/TrustBadges";
+import AccordionWidget from "@/components/blocks/Accordion";
 
 export default function PageBase({ blocks }) {
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-16">
       <main className="flex flex-col gap-8 w-full">
         {blocks.map((block, index) => {
+            console.log("Block type:", block.__typename);
+            console.log("Block data:", block);
           switch (block.__typename) {
             case "ComponentHeroBanner":
               return (
@@ -53,7 +57,15 @@ export default function PageBase({ blocks }) {
                   logos={block.logosCollection?.items || []}
                   scroll={block.scroll}
                 />
-              )
+              );
+            case "AccordionWidget":
+              return (
+                <AccordionWidget
+                  key={`block-${index}`}
+                  icon={block.icon}
+                  accordionItems={block.accordionContentCollection?.items || []}
+                />
+              );
 
             default:
               return null;
