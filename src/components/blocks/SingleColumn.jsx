@@ -1,5 +1,6 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import ListIcons from "./ListIcons";
+import IconRow from "@/components/blocks/IconRow";
 
 export default function SingleColumn({ content = [] }) {
   return (
@@ -39,6 +40,15 @@ function BlockRenderer({ block }) {
       );
     case "ListIcons":
       return <ListIcons items={block.listItemsCollection?.items || []} />;
+    case "IconRow":
+      return (
+        <IconRow
+          key={`block-${index}`}
+          columnNumber={block.columnNumber}
+          contentDirection={block.contentDirection}
+          iconItems={block.iconItemsCollection?.items || []}
+        />
+      );
     default:
       return null;
   }
