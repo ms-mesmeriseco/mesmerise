@@ -6,17 +6,17 @@ import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 export default function AccordionWidget({ icon, accordionItems = [] }) {
-    console.log("RENDER ACCORDION");
+    // console.log("RENDER ACCORDION");
   const [activeIndex, setActiveIndex] = useState(null);
 
-  useEffect(() => {
-    console.log("AccordionWidget mounted");
-    console.log("Icon data:", icon);
-    console.log("Accordion items:", accordionItems);
-  }, [icon, accordionItems]);
+  // useEffect(() => {
+    // console.log("AccordionWidget mounted");
+    // console.log("Icon data:", icon);
+    // console.log("Accordion items:", accordionItems);
+  // }, [icon, accordionItems]);
 
   const toggleIndex = (index) => {
-    console.log("Toggling accordion index:", index);
+    // console.log("Toggling accordion index:", index);
     setActiveIndex((prev) => (prev === index ? null : index));
   };
 
@@ -25,7 +25,7 @@ export default function AccordionWidget({ icon, accordionItems = [] }) {
       <div className="space-y-4">
         {accordionItems.map((item, index) => {
           const isActive = activeIndex === index;
-          console.log(`Rendering item ${index}:`, item.entryTitle, "Active:", isActive);
+          // console.log(`Rendering item ${index}:`, item.entryTitle, "Active:", isActive);
 
           return (
             <div key={`accordion-item-${index}`} className="">

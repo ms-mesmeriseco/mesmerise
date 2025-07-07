@@ -4,6 +4,9 @@ import { HERO_BANNER_FRAGMENT } from "../fragments/componentHeroBanner";
 import { SINGLE_COLUMN_BLOCK } from "../fragments/singleColumnBlock";
 import { TWO_COLUMN_BLOCK } from "../fragments/twoColumnBlock";
 
+// this query is the same as the landingpagecontent query
+// any changes to the schema need to be replicated there most likely
+
 export const GET_HOME_PAGE = gql`
   {
     homePageCollection(limit: 1) {
@@ -135,7 +138,7 @@ export const GET_HOME_PAGE = gql`
     textContent {
       json
     }
-    scroll
+      scroll
     logosCollection(limit: 10) {
       items {
         url

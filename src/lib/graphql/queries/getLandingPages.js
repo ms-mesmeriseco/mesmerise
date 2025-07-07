@@ -1,6 +1,9 @@
 import { gql } from "@apollo/client";
 import { GET_PAGE_BLOCKS } from "../fragments/getPageBlocks";
 
+// this query is the same as the homepagecontent query
+// any changes to the schema need to be replicated there most likely
+
 export const GET_LANDING_PAGE_BY_SLUG = gql`
   query GetLandingPageBySlug($slug: String!) {
     landingPageCollection(limit: 1, where: { pageSlug: $slug }) {
@@ -132,7 +135,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
     textContent {
       json
     }
-    scroll
+      scroll
     logosCollection(limit: 5) {
       items {
         url

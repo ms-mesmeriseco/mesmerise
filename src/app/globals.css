@@ -24,13 +24,13 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --padding: 0.5rem;
+  --padding: 1.5rem;
   box-sizing:border-box;
-  --global-margin: 0.75rem;
+  --global-margin:0.75rem;
   --fw-m: calc(100vw - var(--global-margin) * 2);
   --fh-m: calc(100vh - var(--global-margin) * 2);
-  --radius-lrg: 1.5rem;
-  --radius-sm: 0.75rem;
+  --radius-lrg: 0.5rem;
+  --radius-sm: 0.15rem;
 }
 
 @media (prefers-color-scheme: dark) {
