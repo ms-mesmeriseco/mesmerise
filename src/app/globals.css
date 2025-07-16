@@ -10,29 +10,33 @@
 @font-face {
   font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplayMedium.ttf") format("truetype");
-  font-style: normal;
+  font-style: medium;
   font-weight: 600;
   font-display: swap;
 }
 @font-face {
   font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplayBold.ttf") format("truetype");
-  font-style: normal;
+  font-style: bold;
   font-weight: 700;
   font-display: swap;
 }
 
-
+body.page-home,
 body.page-blog,
 body.page-landing {
   --background: #000000;
   --foreground: #ffffff;
+   --footer-bg: #ff3700;
+   --footer-txt: #ffffff;
 }
 
 
 body.page-connect {
   --background: #DFFF00;
   --foreground: #000000;
+   --footer-bg: #C1D2FC;
+   --footer-txt: #000000;
 
     h1 {
       font-size: 6.44rem;
@@ -44,11 +48,15 @@ body.page-connect {
 
 body.page-about {
   --background: #ff3700;
-  --foreground: #000000;
+  --foreground: #ffffff;
+   --footer-bg: #C1D2FC;
+   --footer-txt: #000000;
 }
 :root {
   --foreground: #ffffff;
   --background: #000000;
+  --footer-bg: #C1D2FC;
+  --foot-txt: #000000;
   --padding: 1.5rem;
   box-sizing:border-box;
   --global-margin:0.75rem;
@@ -118,9 +126,10 @@ h3 {
 h4 {
   font-size: 1.8rem;
   font-weight: 600;
+  color: var(--foreground);
 }
 h5 {
-  font-size: 1.33rem;
+  font-size: 1rem;
 }
 h6 {
   font-size: 0.778rem;
@@ -128,8 +137,11 @@ h6 {
 p {
   font-weight: 400;
 }
-a {
-
+a:hover {
+  cursor: pointer;
+}
+a button:hover {
+  cursor: pointer;
 }
 @keyframes scroll-horizontal {
   0% {
