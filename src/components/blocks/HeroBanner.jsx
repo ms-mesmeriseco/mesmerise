@@ -1,7 +1,7 @@
 'use client';
 
 import PropTypes from 'prop-types';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import renderRichTextWithBreaks from "@/lib/renderRichTextWithBreaks";
 
 export default function HeroBanner({ heroMedia, heroText, mediaHeight }) {
   const isVideo = heroMedia?.contentType?.includes('video');
@@ -28,8 +28,8 @@ export default function HeroBanner({ heroMedia, heroText, mediaHeight }) {
         )
       )}
 
-      <div className="relative z-10 text-white text-center max-w-2xl px-4">
-        {heroText?.json && documentToReactComponents(heroText.json)}
+      <div className="relative z-10 text-[var(--foreground)] text-center max-w-5xl px-4">
+        {heroText?.json && renderRichTextWithBreaks(heroText.json)}
       </div>
 
       <div className="absolute inset-0 bg-black/40 z-[5]" />

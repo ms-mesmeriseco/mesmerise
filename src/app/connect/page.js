@@ -9,7 +9,9 @@ export default function Connect() {
       {/* Middle Row */}
 <div className="flex w-full justify-between gap-[var(--global-margin)]">
   {/* Form */}
-  <div className="w-1/2">
+  
+  <div className="w-1/2 p-[var(--global-margin)]">
+  <h3>Send us a love letter</h3>
     <form className="space-y-4 w-full">
       <input
         type="text"
@@ -30,9 +32,10 @@ export default function Connect() {
         placeholder="Message"
         className="w-full border-b-1 p-[var(--global-margin)] h-32"
       />
+      
       <button
         type="submit"
-        className="w-full bg-black rounded-md text-white py-2 font-semibold"
+        className="w-full bg-none rounded-full border-1 border-[var(--foreground)] duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] py-2 font-normal"
       >
         Submit
       </button>
@@ -46,12 +49,12 @@ export default function Connect() {
 
       {/* Bottom Row */}
       <div className="flex h-[40vh]  gap-[var(--global-margin)]">
-        <div className="flex-1 border-1 rounded-sm flex items-center justify-center">
+        <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
           <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin)] flex-start flex">
             Call
           </button>
         </div>
-        <div className="flex-1  border-1 rounded-sm flex items-center justify-center">
+        <div className="flex-1  border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
           <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin)] flex-start flex">
             Email
           </button>

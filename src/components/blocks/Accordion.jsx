@@ -21,17 +21,17 @@ export default function AccordionWidget({ icon, accordionItems = [] }) {
   };
 
   return (
-    <section className="w-full max-w-4xl mx-auto px-4 py-8">
-      <div className="space-y-4">
+    <section className="w-full max-w-4xl mx-auto">
+      <div className="space-y-2">
         {accordionItems.map((item, index) => {
           const isActive = activeIndex === index;
           // console.log(`Rendering item ${index}:`, item.entryTitle, "Active:", isActive);
 
           return (
-            <div key={`accordion-item-${index}`} className="">
+            <div key={`accordion-item-${index}`} className=" border-1 rounded-md">
               <button
                 onClick={() => toggleIndex(index)}
-                className="w-full flex items-center justify-between px-4 py-3 font-semibold hover:bg-neutral-900 cursor-pointer focus:outline-none  rounded-(--radius-lrg)"
+                className="w-full flex items-center p-[var(--global-margin)] justify-between font-normal hover:bg-[var(--foreground)] hover:text-[var(--background)] duration-300 cursor-pointer focus:outline-none"
                 aria-expanded={isActive}
               >
                 <span className="text-left">{item.entryTitle}</span>

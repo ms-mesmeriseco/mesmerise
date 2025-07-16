@@ -5,6 +5,7 @@ import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 // import { motion } from "framer-motion"
 import HeroBanner from "@/components/blocks/HeroBanner";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import renderRichTextWithBreaks from "@/lib/renderRichTextWithBreaks";
 
 export default async function BlogPost({ params }) {
       const { slug } = await params;
@@ -34,7 +35,7 @@ export default async function BlogPost({ params }) {
             </div>
             {page.blogContent?.json && (
                 <div>
-                    {documentToReactComponents(page.blogContent.json)}
+                    {renderRichTextWithBreaks(page.blogContent.json)}
                 </div>
             )}
             </div>

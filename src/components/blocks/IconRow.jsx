@@ -21,7 +21,7 @@ export default function IconRow({
 
   return (
     <section className="w-full py-8">
-      <div className={`grid grid-cols-1 ${gridColsClass} gap-6 p-6`}>
+      <div className={`grid grid-cols-1 ${gridColsClass} gap-6 p-6  min-h-[50vh] flex items-center justify-between`}>
         {iconItems.map((item, idx) => {
           const { icon, textContent } = item || {};
           const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;
