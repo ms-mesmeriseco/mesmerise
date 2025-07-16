@@ -94,7 +94,7 @@ export default function Footer() {
 
         {/* Connect */}
         <div className="col-span-1">
-          <h4 className="text-lg font-semibold mb-2">Connect</h4>
+          <h4 className="text-lg font-semibold mb-2"><a href='/connect/'>Connect</a></h4>
           <ul className="space-y-1 text-sm">
             <li><a href="#">LinkedIn</a></li>
             <li><a href="#">Instagram</a></li>

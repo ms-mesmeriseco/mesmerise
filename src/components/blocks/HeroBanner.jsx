@@ -5,7 +5,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 export default function HeroBanner({ heroMedia, heroText, mediaHeight }) {
   const isVideo = heroMedia?.contentType?.includes('video');
-  const heightClass = mediaHeight ? 'h-(--fh-m)' : 'h-[30vh]';
+  const heightClass = mediaHeight ? 'h-(--fh-m)' : 'h-[50vh]';
 
   return (
     <div className={`relative ${heightClass} overflow-hidden w-(--fw-m) rounded-(--radius-lrg) flex items-center justify-center`}>

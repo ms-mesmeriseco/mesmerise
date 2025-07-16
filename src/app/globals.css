@@ -22,12 +22,13 @@
   font-display: swap;
 }
 
-body.page-home,
+
 body.page-blog,
 body.page-landing {
   --background: #000000;
   --foreground: #ffffff;
 }
+
 
 body.page-connect {
   --background: #DFFF00;
@@ -57,13 +58,13 @@ body.page-about {
   --radius-sm: 0.15rem;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #000000;
     --foreground: #ededed;
 
   }
-}
+} */
 
 html,
 body {
@@ -96,11 +97,11 @@ a {
   color: inherit;
   text-decoration: none;
 }
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
-}
+} */
 
 h1 {
   font-size: 4.22rem;
@@ -126,6 +127,9 @@ h6 {
 }
 p {
   font-weight: 400;
+}
+a {
+
 }
 @keyframes scroll-horizontal {
   0% {

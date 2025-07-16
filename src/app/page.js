@@ -1,11 +1,23 @@
-import { getClient } from "@/lib/apollo-client";
-import { GET_HOME_PAGE } from "@/lib/graphql/queries/getHomePageContent";
-import PageBase from "@/components/layout/PageBase";
+"use client";
 
-export default async function Home() {
-  const { data } = await getClient().query({ query: GET_HOME_PAGE });
-  const page = data.homePageCollection.items[0];
-  const blocks = page.pageBlocksCollection.items;
+import useSectionMarker from "@/hooks/useSectionMarker";
+import HeroBlock from "@/components/home/HeroBlock";
+import ProjectScroll from "@/components/blocks/ProjectScroll";
+import ServicesList from "@/components/home/ServicesList";
+import AboutSection from "@/components/home/AboutSection";
+import SectionMarker from "@/components/home/SectionMarker";
 
-  return <PageBase blocks={blocks} />;
+export default function HomePage() {
+  const marker = useSectionMarker(); // same as before
+
+  return (
+    <div className="relative">
+      <SectionMarker label={marker} />
+
+      <HeroBlock />
+      <AboutSection />
+      <ProjectScroll />
+      <ServicesList />
+    </div>
+  );
 }

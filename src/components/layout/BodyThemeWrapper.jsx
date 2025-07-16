@@ -24,6 +24,8 @@ export default function BodyThemeWrapper() {
       body.classList.add("page-connect");
     } else if (pathname === "/about") {
       body.classList.add("page-about");
+    } else {
+        body.classList.add("page-home");
     }
   }, [pathname]);
 

@@ -29,7 +29,7 @@ export default function Inner({children}) {
 
 
     return (
-    <motion.div {...anim(opacity)} className="page  m-(--global-margin)">
+    <motion.div {...anim(opacity)} className="page  m-(--global-margin)  pt-[var(--header-height)]">
         {children}
     </motion.div>
 
