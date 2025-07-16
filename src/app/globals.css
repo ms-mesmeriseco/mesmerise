@@ -21,9 +21,33 @@
   font-weight: 700;
   font-display: swap;
 }
-:root {
-  --background: #ffffff;
+
+body.page-home,
+body.page-blog,
+body.page-landing {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body.page-connect {
+  --background: #DFFF00;
   --foreground: #000000;
+
+    h1 {
+      font-size: 6.44rem;
+      line-height: 6rem;
+      font-weight: 400;
+    }
+
+}
+
+body.page-about {
+  --background: #ff3700;
+  --foreground: #000000;
+}
+:root {
+  --foreground: #ffffff;
+  --background: #000000;
   --padding: 1.5rem;
   box-sizing:border-box;
   --global-margin:0.75rem;
