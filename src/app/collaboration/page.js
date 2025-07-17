@@ -1,5 +1,5 @@
 import Link from "next/link";
-import HeaderLarge from "@/components/layout/HeaderLarger";
+import HeaderLarge from "@/components/layout/HeaderLarge";
 
 export default function CollaborationPage() {
   return (

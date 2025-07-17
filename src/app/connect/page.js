@@ -1,5 +1,5 @@
 import Header from "@/components/layout/header";
-import HeaderLarge from "@/components/layout/HeaderLarger";
+import HeaderLarge from "@/components/layout/HeaderLarge";
 
 export default function Connect() {
   return (
