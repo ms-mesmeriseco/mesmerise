@@ -12,7 +12,10 @@ const wordVariants = {
 
 export default function HeroBlock() {
   return (
-    <section data-marker="hello" className="h-[70vh] flex items-center justify-center">
+    <section
+      data-marker="hello"
+      className="h-[70vh] flex items-center justify-center"
+    >
       <div className="overflow-hidden h-[6rem]">
         <motion.div
           variants={wordVariants}
@@ -20,7 +23,9 @@ export default function HeroBlock() {
           className="flex flex-col gap-0 text-6xl md:text-8xl font-medium leading-none"
         >
           {words.map((w) => (
-            <span key={w} className="h-[6rem] font-bold">{w}</span>
+            <span key={w} className="h-[6rem] font-bold">
+              {w}
+            </span>
           ))}
         </motion.div>
       </div>

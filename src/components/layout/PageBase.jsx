@@ -6,40 +6,42 @@ import TwoColumn from "@/components/blocks/TwoColumn";
 import IconRow from "@/components/blocks/IconRow";
 import TrustBadges from "@/components/blocks/TrustBadges";
 import AccordionWidget from "@/components/blocks/Accordion";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 export default function PageBase({ blocks }) {
   const anim = (variants) => {
-        return {
-            initial: "initial",
-            animate: "animate",
-            exit: "exit",
-            variants
-        }
-    }
+    return {
+      initial: "initial",
+      animate: "animate",
+      exit: "exit",
+      variants,
+    };
+  };
 
-    const opacity = {
+  const opacity = {
     initial: {
-        opacity: 0,
-        transition: { duration: 0.2 },
+      opacity: 0,
+      transition: { duration: 0.2 },
     },
     animate: {
-        opacity: 1,
-        transition: { duration: 0.3 },
+      opacity: 1,
+      transition: { duration: 0.3 },
     },
     exit: {
-        opacity: 0,
-        transition: { duration: 0.2 },
+      opacity: 0,
+      transition: { duration: 0.2 },
     },
-    };
-
+  };
 
   return (
-    <motion.div {...anim(opacity)} className="flex flex-col items-center justify-center min-h-screen gap-16">
+    <motion.div
+      {...anim(opacity)}
+      className="flex flex-col items-center justify-center min-h-screen gap-[var(--global-margin-sm)]"
+    >
       <main className="flex flex-col gap-8 w-full">
         {blocks.map((block, index) => {
-            // console.log("Block type:", block.__typename);
-            // console.log("Block data:", block);
+          // console.log("Block type:", block.__typename);
+          // console.log("Block data:", block);
           switch (block.__typename) {
             case "ComponentHeroBanner":
               return (
@@ -68,14 +70,14 @@ export default function PageBase({ blocks }) {
                 />
               );
             case "IconRow":
-            return (
-              <IconRow
-                key={`block-${index}`}
-                columnNumber={block.columnNumber}
-                contentDirection={block.contentDirection}
-                iconItems={block.iconItemsCollection?.items || []}
-              />
-            );
+              return (
+                <IconRow
+                  key={`block-${index}`}
+                  columnNumber={block.columnNumber}
+                  contentDirection={block.contentDirection}
+                  iconItems={block.iconItemsCollection?.items || []}
+                />
+              );
             case "TrustBadges":
               return (
                 <TrustBadges

@@ -56,14 +56,14 @@ export default function Header() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -100, opacity: 0 }}
           transition={{ type: "tween", duration: 0.2, delay: 0.1 }}
-          className="fixed z-50 flex flex-row justify-between items-center w-full p-(--global-margin) box-border bg-[var(--background)]"
+          className="fixed z-50 w-full box-border bg-[var(--background)] grid grid-cols-3 items-center p-[var(--global-margin-lg)]"
         >
           <span>
             <a href="../">
               <svg
                 id="Layer_2"
                 data-name="Layer 2"
-                className="w-[80px] h-auto fill-[var(--foreground)]"
+                className="h-[2rem] fill-[var(--foreground)]"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 894.74 533.35"
               >
@@ -86,13 +86,8 @@ export default function Header() {
               </svg>
             </a>
           </span>
-          <span>
-            <a
-              href="../"
-              className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)]"
-            >
-              Home
-            </a>
+          <span className="flex justify-center">
+            {/* Menu */}
             <a
               href="/about"
               className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)] ml-4"
@@ -112,7 +107,7 @@ export default function Header() {
               Work
             </a>
           </span>
-          <span className="flex gap-2">
+          <span className="flex gap-2 justify-end">
             <PrimaryButton key="button" href="/connect">
               Connect
             </PrimaryButton>
