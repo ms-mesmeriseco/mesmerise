@@ -14,13 +14,11 @@ export default function HomePage() {
     <div className="relative">
       <SectionMarker label={marker} />
       <div className="pr-[var(--global-margin)]">
-   <HeroBlock />
-      <AboutSection />
-      <ProjectScroll />
-      <ServicesList />
-
+        <HeroBlock />
+        <AboutSection />
+        <ProjectScroll />
+        <ServicesList />
       </div>
-   
     </div>
   );
 }
