@@ -9,7 +9,7 @@ export default function ApproachSection() {
       <div className="flex flex-col justify-center gap-6">
         {" "}
         <div className="flex flex-col gap-6">
-          <h3 className="text-3xl font-bold">
+          <h3 className="page-title-large font-bold">
             Complexity to clarity.
             <br />
             Vision to Reality.

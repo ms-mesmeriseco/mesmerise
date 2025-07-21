@@ -33,11 +33,9 @@ export default function HomePage() {
             Let’s turn your vision into a legacy, and your business into a story
             worth telling.
           </h2>
-          <PrimaryButton
-            href={"/connect"}
-            children={"Let's chat"}
-            size="large"
-          />
+          <PrimaryButton href={"/connect"} size="large">
+            Let's chat
+          </PrimaryButton>
         </section>
       </div>
     </div>
