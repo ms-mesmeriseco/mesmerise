@@ -34,7 +34,7 @@ export default function HomePage() {
             story worth telling.
           </h2>
           <PrimaryButton href={"/connect"} size="large">
-            Let's chat
+            Let&apos;s chat
           </PrimaryButton>
         </section>
       </div>
