@@ -11,9 +11,9 @@ const categories = {
     "Workflow Optimisation",
     "Customer Journey Maps",
     "Positioning",
-    "Proposition Refinement",
-    "Product Research and Refinement",
-    "Systems Optimisation & Implementation",
+    "Proposition Development",
+    "Product Research",
+    "Systems Optimisation",
   ],
   strategy: [
     "Competitor Analysis",
@@ -49,6 +49,10 @@ const categories = {
     "Accessibility",
     "Performance Testing",
     "Ongoing Support",
+    "SEO Optimisation",
+    "Analytics & Reporting",
+    "Security",
+    "Hosting & Deployment",
   ],
 };
 
@@ -64,26 +68,27 @@ export default function ServicesTabs() {
         staggerChildren: 0.03,
       },
     },
+
     exit: {},
   };
 
   const itemVariants = {
     initial: { opacity: 0, y: 10 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.2 } },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.15 } },
     exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
   };
 
   return (
     <section className="wrapper flex flex-col gap-[var(--global-margin-md)]">
       {/* Tabs */}
-      <div className="flex gap-[var(--global-margin-sm)] justify-around">
+      <div className="flex gap-[var(--global-margin-sm)] justify-center">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActive(tab)}
-            className={`text-md font-medium capitalize transition duration-200 px-4 py-1 rounded-md cursor-pointer ${
+            className={`text-md font-normal uppercase transition duration-200 px-4 py-1 rounded-md cursor-pointer ${
               active === tab
-                ? "text-[var(--foreground)] opacity-50 hover:opacity-80"
+                ? "text-[var(--foreground)] opacity-100 hover:opacity-80"
                 : "opacity-50 hover:opacity-80"
             }`}
           >
@@ -106,6 +111,7 @@ export default function ServicesTabs() {
               key={idx}
               variants={itemVariants}
               className="bg-[#c1d2fc] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap"
+              whileHover={{ opacity: 0.7 }}
             >
               {capability}
             </motion.div>

@@ -14,7 +14,7 @@ export default function HeroBlock() {
   return (
     <section
       data-marker="hello"
-      className="h-[70vh] flex items-center justify-center"
+      className="h-[50vh] flex items-center justify-center"
     >
       <div className="overflow-hidden h-[6rem]">
         <motion.div

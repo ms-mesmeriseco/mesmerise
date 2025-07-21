@@ -27,27 +27,27 @@ body.page-blog,
 body.page-landing {
   --background: #000000;
   --foreground: #ffffff;
-  --footer-bg: #ff3700;
+  --footer-bg: var(--mesm-red);
   --footer-txt: #ffffff;
 }
 
 body.page-connect {
-  --background: #dfff00;
+  --background: var(--mesm-yellow);
   --foreground: #000000;
-  --footer-bg: #c1d2fc;
+  --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
 }
 
 body.page-about {
-  --background: #ff3700;
+  --background: var(--mesm-red);
   --foreground: #ffffff;
-  --footer-bg: #c1d2fc;
+  --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
 }
 :root {
   --foreground: #ffffff;
   --background: #000000;
-  --footer-bg: #c1d2fc;
+  --footer-bg: var(--mesm-blue);
   --foot-txt: #000000;
   --padding: 1.5rem;
   box-sizing: border-box;
@@ -62,6 +62,7 @@ body.page-about {
   --mesm-yellow: #dfff00;
   --mesm-red: #ff3700;
   --mesm-blue: #c1d2fc;
+  --mesm-grey: #686767;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -145,7 +146,7 @@ h6 {
 }
 p {
   font-size: 1.5rem;
-  line-height: 1.9rem;
+  line-height: 2rem;
   font-weight: 400;
   color: var(--foreground, 0.8);
 }

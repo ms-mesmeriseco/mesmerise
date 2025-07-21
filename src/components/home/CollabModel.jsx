@@ -27,12 +27,12 @@ export default function CollabModel() {
         {offerings.map((pkg) => (
           <div
             key={pkg.title}
-            className=" flex-col flex gap-[var(--global-margin-md)] justify-between w-[300px] md:w-[360px] border border-[var(--foreground)] p-[var(--global-margin-md)] text-left rounded-xl bg-[var(--background)] text-[var(--foreground)]"
+            className=" flex-col flex gap-[var(--global-margin-lg)] justify-between w-[300px] md:w-[360px] border border-[var(--mesm-grey)] p-[var(--global-margin-md)] text-center rounded-3xl bg-[var(--background)] text-[var(--foreground)]"
           >
             <h3 className="text-2xl font-bold">{pkg.title}</h3>
             <p className="text-base opacity-80">{pkg.subheading}</p>
 
-            <PrimaryButton href={pkg.cta.href} className="">
+            <PrimaryButton href={pkg.cta.href} className="" size="large">
               {pkg.cta.label}
             </PrimaryButton>
           </div>
