@@ -1,10 +1,9 @@
-import Header from "@/components/layout/header";
-import HeaderLarge from "@/components/layout/HeaderLarge";
+import PageTitleLarge from "@/components/layout/PageTitleLarge";
 
 export default function Connect() {
   return (
     <div className="flex flex-col min-h-screen gap-[var(--global-margin-lg)]">
-      <HeaderLarge text="Connect" />
+      <PageTitleLarge text="Connect" />
 
       {/* Middle Row */}
       <div className="flex w-full justify-between gap-[var(--global-margin-sm)]">

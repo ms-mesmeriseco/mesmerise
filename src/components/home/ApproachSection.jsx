@@ -4,9 +4,9 @@ export default function ApproachSection() {
   return (
     <section
       data-marker="our approach"
-      className={`grid grid-cols-[1fr_1fr] gap-[var(--global-margin-lg)] h-[60vh] border-b-1 py-[var(--global-margin-sm)]`}
+      className={`grid grid-cols-[1fr_1fr] gap-[var(--global-margin-lg)] border-b-1 py-[var(--global-margin-sm)]`}
     >
-      <div className="flex flex-col justify-center gap-6 p-[var(--global-margin-lg)]">
+      <div className="flex flex-col justify-center gap-6">
         {" "}
         <div className="flex flex-col gap-6">
           <h3 className="text-3xl font-bold">

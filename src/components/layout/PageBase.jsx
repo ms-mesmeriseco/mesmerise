@@ -38,62 +38,71 @@ export default function PageBase({ blocks }) {
       {...anim(opacity)}
       className="flex flex-col items-center justify-center min-h-screen gap-[var(--global-margin-sm)]"
     >
-      <main className="flex flex-col gap-8 w-full">
+      <main className="wrapper grid grid-cols-12 gap-y-[var(--global-margin-sm)] w-full">
         {blocks.map((block, index) => {
-          // console.log("Block type:", block.__typename);
-          // console.log("Block data:", block);
           switch (block.__typename) {
             case "ComponentHeroBanner":
               return (
-                <HeroBanner
-                  key={`block-${index}`}
-                  heroMedia={block.heroMedia}
-                  heroText={block.heroText}
-                  mediaHeight={block.mediaHeight}
-                />
+                <div className="col-span-12" key={`block-${index}`}>
+                  <HeroBanner
+                    heroMedia={block.heroMedia}
+                    heroText={block.heroText}
+                    mediaHeight={block.mediaHeight}
+                  />
+                </div>
               );
 
             case "SingleColumnBlockBlank":
               return (
-                <SingleColumn
-                  key={`block-${index}`}
-                  content={block.contentCollection?.items || []}
-                />
+                <div className="col-span-12" key={`block-${index}`}>
+                  <SingleColumn
+                    content={block.contentCollection?.items || []}
+                  />
+                </div>
               );
 
             case "TwoColumnBlockBlank":
               return (
-                <TwoColumn
-                  key={`block-${index}`}
-                  column1={block.column1Collection?.items || []}
-                  column2={block.column2Collection?.items || []}
-                />
+                <div className="col-span-12" key={`block-${index}`}>
+                  <TwoColumn
+                    column1={block.column1Collection?.items || []}
+                    column2={block.column2Collection?.items || []}
+                  />
+                </div>
               );
+
             case "IconRow":
               return (
-                <IconRow
-                  key={`block-${index}`}
-                  columnNumber={block.columnNumber}
-                  contentDirection={block.contentDirection}
-                  iconItems={block.iconItemsCollection?.items || []}
-                />
+                <div className="col-span-12" key={`block-${index}`}>
+                  <IconRow
+                    columnNumber={block.columnNumber}
+                    contentDirection={block.contentDirection}
+                    iconItems={block.iconItemsCollection?.items || []}
+                  />
+                </div>
               );
+
             case "TrustBadges":
               return (
-                <TrustBadges
-                  key={`block-${index}`}
-                  textContent={block.textContent}
-                  logos={block.logosCollection?.items || []}
-                  scroll={block.scroll}
-                />
+                <div className="col-span-12" key={`block-${index}`}>
+                  <TrustBadges
+                    textContent={block.textContent}
+                    logos={block.logosCollection?.items || []}
+                    scroll={block.scroll}
+                  />
+                </div>
               );
+
             case "AccordionWidget":
               return (
-                <AccordionWidget
-                  key={`block-${index}`}
-                  icon={block.icon}
-                  accordionItems={block.accordionContentCollection?.items || []}
-                />
+                <div className="col-span-12" key={`block-${index}`}>
+                  <AccordionWidget
+                    icon={block.icon}
+                    accordionItems={
+                      block.accordionContentCollection?.items || []
+                    }
+                  />
+                </div>
               );
 
             default:

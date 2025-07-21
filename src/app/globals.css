@@ -36,12 +36,6 @@ body.page-connect {
   --foreground: #000000;
   --footer-bg: #c1d2fc;
   --footer-txt: #000000;
-
-  h1 {
-    font-size: 6.44rem;
-    line-height: 6rem;
-    font-weight: 400;
-  }
 }
 
 body.page-about {
@@ -65,6 +59,9 @@ body.page-about {
   --fh-m: calc(100vh - var(--global-margin-lg) * 2);
   --radius-lrg: 0.5rem;
   --radius-sm: 0.15rem;
+  --mesm-yellow: #dfff00;
+  --mesm-red: #ff3700;
+  --mesm-blue: #c1d2fc;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -89,7 +86,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* padding: --padding; */
-  font-size: 12px;
+  font-size: 18px;
   font-family: "Neue Haas";
   font-weight: 400;
 }
@@ -109,14 +106,27 @@ a {
     color-scheme: dark;
   }
 } */
-
+.wrapper {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--global-margin-sm);
+  padding-right: var(--global-margin-sm);
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
 h1 {
   font-size: 4.22rem;
   font-weight: 400;
 }
 h2 {
   font-size: 3.15rem;
-  font-weight: 600;
+  font-weight: 400;
 }
 h3 {
   font-size: 2.39rem;
@@ -134,7 +144,8 @@ h6 {
   font-size: 0.778rem;
 }
 p {
-  font-size: 1rem;
+  font-size: 1.5rem;
+  line-height: 1.9rem;
   font-weight: 400;
   color: var(--foreground, 0.8);
 }
@@ -146,6 +157,11 @@ a:hover {
 }
 a button:hover {
   cursor: pointer;
+}
+.page-title-large {
+  font-size: 6.44rem;
+  line-height: 6rem;
+  font-weight: 400;
 }
 @keyframes scroll-horizontal {
   0% {

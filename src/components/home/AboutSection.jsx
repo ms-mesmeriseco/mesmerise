@@ -3,11 +3,9 @@ import PrimaryButton from "@/components/ui/PrimaryButton";
 
 export default function AboutSection() {
   return (
-    <section
-      data-marker="what we're about"
-      className="h-[80vh] flex items-center  border-b-1  p-[var(--global-margin-lg)]"
-    >
+    <section className="flex items-center  border-b-1 pb-[var(--global-margin-lg)]">
       <StaticTwoColumn
+        label={"what we're about"}
         column1={[
           <h1 key="title" className="text-md md:text-6xl">
             Not just another marketing agency.
