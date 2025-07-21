@@ -1,6 +1,6 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import ListIcons from "./ListIcons";
-import IconRow from "@/components/blocks/IconRow";
+import IconRow from "@/components/cms-blocks/IconRow";
 
 export default function SingleColumn({ content = [] }) {
   return (

@@ -1,11 +1,11 @@
 "use client";
 
-import HeroBanner from "@/components/blocks/HeroBanner";
-import SingleColumn from "@/components/blocks/SingleColumn";
-import TwoColumn from "@/components/blocks/TwoColumn";
-import IconRow from "@/components/blocks/IconRow";
-import TrustBadges from "@/components/blocks/TrustBadges";
-import AccordionWidget from "@/components/blocks/Accordion";
+import HeroBanner from "@/components/cms-blocks/HeroBanner";
+import SingleColumn from "@/components/cms-blocks/SingleColumn";
+import TwoColumn from "@/components/cms-blocks/TwoColumn";
+import IconRow from "@/components/cms-blocks/IconRow";
+import TrustBadges from "@/components/cms-blocks/TrustBadges";
+import AccordionWidget from "@/components/cms-blocks/Accordion";
 import { motion } from "framer-motion";
 
 export default function PageBase({ blocks }) {

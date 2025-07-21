@@ -2,7 +2,7 @@
 
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import CollabToggle from "@/components/ui/CollabToggle";
-import CollaborationDetail from "@/components/blocks/CollaborationDetail";
+import CollaborationDetail from "@/components/cms-blocks/CollaborationDetail";
 
 export default function PerpetualCollab() {
   return (

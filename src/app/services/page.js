@@ -15,13 +15,40 @@ export default function Connect() {
       question:
         "What’s the difference between Defined and Perpetual Collaboration?",
       answer:
-        "Defined Collaboration is perfect for projects with a clear scope, timeline... [rest of content]",
+        "Defined Collaboration is perfect for projects with a clear scope, timeline, and deliverables. Ideal for businesses looking for a fixed-price, time-bound engagement.<br /><br />Perpetual Collaboration is designed for long-term partnerships with flexibility and scalability, providing ongoing strategic, creative, and performance support as your needs evolve.",
     },
     {
       question: "What is Mesmerise’s unique strength as an agency?",
-      answer: "Our strength lies in our holistic, integrated approach...",
+      answer:
+        "Our strength lies in our holistic, integrated approach across Strategy, Design, Growth Marketing, and Business Consulting.<br /><br />We don’t just execute, we carefully construct systems that align every touchpoint of your digital presence with your business goals, delivering growth that compounds.",
+    },
+    {
+      question: "What type of clients do you typically work with?",
+      answer:
+        "We collaborate with ambitious SMEs, premium B2B brands, SaaS & technology companies, and enterprise-level organisations.<br /><br />Our experience enables us to navigate both the agility of startups and the complexity of large corporate environments.",
+    },
+    {
+      question: "What does the typical project process look like?",
+      answer:
+        "We start with a discovery session to understand your goals, challenges, and priorities. Then we recommend the right engagement model, assemble the right team, create a roadmap, and execute with clear milestones.",
+    },
+    {
+      question: "How flexible are your engagement models?",
+      answer:
+        "Flexibility is one of our core strengths. Whether you need a tightly scoped, fixed-budget project or an evolving, long-term partnership, we can adapt to meet your business needs at every stage.",
+    },
+    {
+      question: "What kind of project management setup do you offer?",
+      answer:
+        "You’ll have a dedicated project lead as your single point of contact, supported by real-time dashboards for transparency on progress, resource allocation, and KPIs.<br /><br />Defined Collaborations are fixed and predictable, while Perpetual Collaborations are billed monthly, with room to adjust as needed.",
+    },
+    {
+      question: "What results can I expect from working with Mesmerise?",
+      answer:
+        "We bring measurable impact to every engagement. For instance REIGNER had to open another business to meet fulfillment, Tony Caulk hired 4+ new staff and a full time admin person, the list goes on. 97% of small businesses we work with can’t handle the lead volume and don’t have systems in place to handle the growth engine we’ve implemented.",
     },
   ];
+
   return (
     <div className="flex flex-col min-h-screen gap-[8rem]">
       <SectionMarker label={marker} />
@@ -62,7 +89,7 @@ export default function Connect() {
           <SecondaryButton
             size="large"
             key="button"
-            href="/services/branding-and-strategy"
+            href="/services/branding-strategy"
           >
             Learn more
           </SecondaryButton>,
@@ -80,11 +107,7 @@ export default function Connect() {
             touchpoint, and every interaction is intentional. Designed to build
             trust, connect with your audience, convert and of course Mesmerise.
           </p>,
-          <SecondaryButton
-            size="large"
-            key="button"
-            href="/services/branding-and-strategy"
-          >
+          <SecondaryButton size="large" key="button" href="/services/website">
             Learn more
           </SecondaryButton>,
         ]}
@@ -104,7 +127,7 @@ export default function Connect() {
           <SecondaryButton
             size="large"
             key="button"
-            href="/services/branding-and-strategy"
+            href="/services/performance-growth"
           >
             Learn more
           </SecondaryButton>,
@@ -127,13 +150,13 @@ export default function Connect() {
           <SecondaryButton
             size="large"
             key="button"
-            href="/services/branding-and-strategy"
+            href="/services/business-consulting"
           >
             Learn more
           </SecondaryButton>,
         ]}
       />
-      <FAQ faqItems={servicesFAQ} />
+      <FAQ label={"common questions"} faqItems={servicesFAQ} />
       {/* Bottom Row */}
       <div className="flex h-[40vh]  gap-[var(--global-margin-sm)]">
         <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">

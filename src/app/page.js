@@ -2,13 +2,13 @@
 
 import useSectionMarker from "@/hooks/useSectionMarker";
 import HeroBlock from "@/components/home/HeroBlock";
-import ProjectScroll from "@/components/blocks/ProjectScroll";
+import ProjectScroll from "@/components/cms-blocks/ProjectScroll";
 import ServicesList from "@/components/home/ServicesList";
 import AboutSection from "@/components/home/AboutSection";
 import SectionMarker from "@/components/home/SectionMarker";
 import ApproachSection from "@/components/home/ApproachSection";
 import CollabModel from "@/components/home/CollabModel";
-import BlogScroll from "@/components/blocks/BlogScroll";
+import BlogScroll from "@/components/cms-blocks/BlogScroll";
 import PrimaryButton from "@/components/ui/PrimaryButton";
 
 export default function HomePage() {
