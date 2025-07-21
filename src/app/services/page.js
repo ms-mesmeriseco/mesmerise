@@ -21,7 +21,6 @@ export default function Connect() {
       question: "What is Mesmerise’s unique strength as an agency?",
       answer: "Our strength lies in our holistic, integrated approach...",
     },
-    // and so on...
   ];
   return (
     <div className="flex flex-col min-h-screen gap-[8rem]">
