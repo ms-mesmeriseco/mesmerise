@@ -96,7 +96,7 @@ export default function Connect() {
             Performance & Growth
           </h3>,
           <p key="desc" className="text-lg">
-            You don’t need another agency “running ads”, you need a growth
+            You don&apos;t need another agency “running ads”, you need a growth
             architect. We engineer performance-driven marketing strategies and
             omnipresent campaigns that deliver results across every channel your
             audience uses.
@@ -120,9 +120,9 @@ export default function Connect() {
             We help you future proof your business with cutting edge industry
             insights. This is for brands seeking strategic clarity and
             operational alignment, we serve as your trusted partner in growth.
-            Perfect if you’re launching a product, entering a new market, or
-            rethinking how teams work together, we guide you to make informed,
-            impactful decisions.
+            Perfect if you&apos;re launching a product, entering a new market,
+            or rethinking how teams work together, we guide you to make
+            informed, impactful decisions.
           </p>,
           <SecondaryButton
             size="large"
