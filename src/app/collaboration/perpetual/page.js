@@ -1,13 +1,13 @@
 "use client";
 
-import HeaderLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import CollabToggle from "@/components/ui/CollabToggle";
 import CollaborationDetail from "@/components/blocks/CollaborationDetail";
 
 export default function PerpetualCollab() {
   return (
     <>
-      <HeaderLarge text="Perpetual" />
+      <PageTitleLarge text="Perpetual" />
       <CollaborationDetail
         title="Defined Collaboration"
         audiencePoints={[

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import HeaderLarge from "@/components/layout/HeaderLarge";
+import PageTitleLarge from "@/components/layout/PageTitleLarge";
 
 export default function CollaborationPage() {
   return (
     <div className="flex flex-col gap-6 mt-[var(--global-margin-sm)]">
-      <HeaderLarge text="Collaboration" />
+      <PageTitleLarge text="Collaboration" />
       {/* Bottom Row */}
 
       <div className="flex h-[40vh]  gap-[var(--global-margin-sm)]">

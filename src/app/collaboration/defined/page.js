@@ -1,12 +1,12 @@
 "use client";
-import HeaderLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import CollabToggle from "@/components/ui/CollabToggle";
 import CollaborationDetail from "@/components/blocks/CollaborationDetail";
 
 export default function DefinedCollab() {
   return (
     <>
-      <HeaderLarge text="Defined" />
+      <PageTitleLarge text="Defined" />
       <CollaborationDetail
         title="Defined Collaboration"
         audiencePoints={[
