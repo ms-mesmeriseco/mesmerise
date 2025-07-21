@@ -30,8 +30,8 @@ export default function HomePage() {
           className="flex flex-col items-center justify-center gap-[var(--global-margin-lg)] p-[var(--global-margin-lg)] m-auto h-[60vh]"
         >
           <h2 className="text-center text-[6rem] md:text-4xl font-bold">
-            Let’s turn your vision into a legacy, and your business into a story
-            worth telling.
+            Let&apos;s turn your vision into a legacy, and your business into a
+            story worth telling.
           </h2>
           <PrimaryButton href={"/connect"} size="large">
             Let's chat
