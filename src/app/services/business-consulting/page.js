@@ -1,4 +1,4 @@
-export default BusinessConsultingPage = () => {
+export default function BusinessConsultingPage() {
   return (
     <div className="business-consulting">
       <h1>Business Consulting Services</h1>
@@ -9,4 +9,4 @@ export default BusinessConsultingPage = () => {
       <p>Contact us for more information!</p>
     </div>
   );
-};
+}

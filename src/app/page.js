@@ -10,7 +10,6 @@ import ApproachSection from "@/components/home/ApproachSection";
 import CollabModel from "@/components/home/CollabModel";
 import BlogScroll from "@/components/blocks/BlogScroll";
 import PrimaryButton from "@/components/ui/PrimaryButton";
-import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
 
 export default function HomePage() {
   const marker = useSectionMarker();
@@ -23,33 +22,7 @@ export default function HomePage() {
         <AboutSection />
         <ProjectScroll />
         <ServicesList />
-        <StaticTwoColumn
-          label={"OUR APPROACH"}
-          column1={[
-            <h3 key="title" className="text-md md:text-6xl">
-              Complexity to clarity.
-              <br />
-              Vision to Reality.
-            </h3>,
-            <p key="desc" className="text-lg">
-              We immerse ourselves in your goals, uncovering the heart of your
-              challenges and ambitions. Then,{" "}
-              <strong>
-                we craft a tailored, state-of-the-art approach that unites
-                strategy, design, and marketing into one cohesive ecosystem.
-              </strong>
-              <br />
-              From insights that spark momentum, to creative that captivates and
-              omnipresent campaigns that Mesmerise, we deliver scalable
-              solutions that evolve with your vision. At every step, we stand as
-              your trusted partner.{" "}
-              <strong>
-                Building not only growth, but lasting value that inspires the
-                people who matter most to your mission.
-              </strong>
-            </p>,
-          ]}
-        />
+        <ApproachSection />
         <CollabModel />
         <BlogScroll />
         <section
