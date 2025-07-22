@@ -9,7 +9,7 @@ export default function HeroBanner({ heroMedia, heroText, mediaHeight }) {
 
   return (
     <div
-      className={`relative ${heightClass} overflow-hidden rounded-(--radius-lrg) flex items-center justify-center`}
+      className={`relative ${heightClass} overflow-hidden rounded-2xl flex items-center justify-center`}
     >
       {heroMedia?.url &&
         (isVideo ? (

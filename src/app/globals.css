@@ -153,8 +153,14 @@ h6 {
   font-size: 0.778rem;
 }
 p {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  font-weight: 400;
+  color: var(--foreground, 0.8);
+}
+.p2 {
   font-size: 1.5rem;
-  line-height: 2rem;
+  line-height: 2.25rem;
   font-weight: 400;
   color: var(--foreground, 0.8);
 }
@@ -169,7 +175,7 @@ a button:hover {
 }
 .page-title-large {
   font-size: 6.44rem;
-  line-height: 6rem;
+  line-height: 6.77rem;
   font-weight: 400;
 }
 @keyframes scroll-horizontal {

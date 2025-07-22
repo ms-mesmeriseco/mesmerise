@@ -25,14 +25,19 @@ export default async function BlogPost({ params }) {
   if (!page) return <p>Blog post not found.</p>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-16">
-      <main className="flex flex-col gap-8">
+    <div className="wrapper flex flex-col items-center justify-center min-h-screen gap-16">
+      <main className="flex flex-col gap-8 rounded-3xl">
         <HeroBanner heroMedia={page.heroImage} mediaHeight={false} />
-        <div className="lg:w-[50vw] md:w-[80vw] sm:w-[100vw] m-auto">
-          <div className="text-xs">
-            <p>{formattedDate}</p>
-            <p>By {page.postAuthor}</p>
+        <div className="lg:w-[720px] md:w-full sm:w-full m-auto">
+          <div>
+            <h3>{page.postHeading}</h3>
+            <span className="text-sm">
+              {formattedDate}
+              <br />
+              By {page.postAuthor}
+            </span>
           </div>
+          <br />
           {page.blogContent?.json && (
             <div>{renderRichTextWithBreaks(page.blogContent.json)}</div>
           )}

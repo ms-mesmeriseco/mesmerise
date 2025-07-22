@@ -1,9 +1,13 @@
+import ProjectNavigationList from "@/components/cms-blocks/ProjectNavigationList";
+import PageTitleLarge from "@/components/layout/PageTitleLarge";
+
 export default function Work() {
   return (
-    <div className="work">
-      <h1>Our Work</h1>
-      <p>Explore our portfolio to see the projects we&apos;ve completed.</p>
-      <p>Contact us for more information!</p>
-    </div>
+    <>
+      <div className="flex flex-col gap-[6rem]">
+        <PageTitleLarge text="Work" />
+        <ProjectNavigationList />
+      </div>
+    </>
   );
 }
