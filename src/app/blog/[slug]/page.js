@@ -25,25 +25,47 @@ export default async function BlogPost({ params }) {
     });
   }
 
-  // Define renderOptions using assetMap
   const renderOptions = {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const assetId = node.data.target.sys.id;
         const asset = assetMap[assetId];
         if (!asset) return null;
-        const { url, title, description, width, height } = asset;
-        return (
-          <div className="my-6">
-            <Image
-              src={`${url}`}
-              alt={title || description || "Embedded asset"}
-              width={width}
-              height={height}
-              className="w-full h-auto rounded-xl"
-            />
-          </div>
-        );
+        const { url, title, description, width, height, contentType } = asset;
+
+        if (contentType && contentType.startsWith("image/")) {
+          return (
+            <div className="my-6">
+              <Image
+                src={`${url}`}
+                alt={title || description || "Embedded image"}
+                width={width}
+                height={height}
+                className="w-full h-auto rounded-xl"
+              />
+            </div>
+          );
+        }
+
+        if (contentType && contentType.startsWith("video/")) {
+          return (
+            <div className="my-6">
+              <video
+                controls
+                width={width}
+                height={height}
+                className="w-full h-auto rounded-x max-h-[80vh] w-auto"
+                style={{ maxHeight: "80vh" }}
+              >
+                <source src={`${url}`} type={contentType} />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          );
+        }
+
+        // fallback for other asset types
+        return null;
       },
     },
   };
