@@ -1,14 +1,17 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import ListIcons from "./ListIcons";
 import IconRow from "@/components/cms-blocks/IconRow";
+import InView from "@/hooks/InView";
 
 export default function SingleColumn({ content = [] }) {
   return (
-    <section className="w-full max-w-3xl mx-auto flex flex-col gap-6 min-h-[50vh] text-center">
-      {content.map((block, index) => (
-        <BlockRenderer key={`single-${index}`} block={block} />
-      ))}
-    </section>
+    <InView>
+      <section className="wrapper w-full m-auto flex flex-col gap-6 min-h-[50vh] justify-around">
+        {content.map((block, index) => (
+          <BlockRenderer key={`single-${index}`} block={block} />
+        ))}
+      </section>
+    </InView>
   );
 }
 
@@ -16,7 +19,7 @@ function BlockRenderer({ block }) {
   switch (block.__typename) {
     case "ContentTypeRichText":
       return (
-        <div className="prose max-w-none">
+        <div className="m-auto prose max-w-none text-center">
           {documentToReactComponents(block.content?.json)}
         </div>
       );
@@ -25,7 +28,7 @@ function BlockRenderer({ block }) {
         <img
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className="w-full h-auto rounded-(--radius-sm) shadow"
+          className="w-full h-auto rounded-lg shadow"
         />
       );
     case "Video":
@@ -33,19 +36,21 @@ function BlockRenderer({ block }) {
         <video
           src={block.videoContent?.url}
           controls
-          className="w-1/2 h-auto rounded-(--radius-sm) shadow"
+          className="w-1/2 h-auto rounded-lg shadow"
         >
           Your browser does not support the video tag.
         </video>
       );
     case "ListIcons":
-      return <ListIcons items={block.listItemsCollection?.items || []} />;
+      return (
+        <div className="m-auto">
+          <ListIcons items={block.listItemsCollection?.items || []} />
+        </div>
+      );
     case "IconRow":
       return (
         <IconRow
           key={`block-${index}`}
-          columnNumber={block.columnNumber}
-          contentDirection={block.contentDirection}
           iconItems={block.iconItemsCollection?.items || []}
         />
       );

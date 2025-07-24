@@ -37,8 +37,12 @@ export default function FAQ({
               className="w-full flex justify-between items-center h-[72px] text-left transition duration-200 hover:opacity-60 cursor-pointer"
             >
               <span className="text-xl font-normal">{item.question}</span>
-              <span className="text-4xl font-light ease-in-out duration-500">
-                {isOpen ? "×" : "+"}
+              <span
+                className={`text-4xl font-light ease-in-out  transition-transform duration-300 ${
+                  isOpen ? "rotate-45" : ""
+                }`}
+              >
+                +
               </span>
             </button>
 

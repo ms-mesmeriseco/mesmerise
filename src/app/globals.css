@@ -70,6 +70,18 @@ body.page-about {
   --mesm-red: #ff3700;
   --mesm-blue: #c1d2fc;
   --mesm-grey: #686767;
+  --mesm-grey-dk: rgba(255, 255, 255, 0.1);
+  --mesm-l-grey: #d4d4d4;
+}
+@media screen and (max-width: 768px) {
+  :root {
+    --global-margin-lg: 0.5rem;
+    --global-margin-md: 0.4rem;
+    --global-margin-sm: 0.3rem;
+    --global-margin-xs: 0.2rem;
+    --fw-m: calc(100vw - var(--global-margin-lg) * 2);
+    --fh-m: calc(100vh - var(--global-margin-lg) * 2);
+  }
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -153,19 +165,19 @@ h6 {
   font-size: 0.778rem;
 }
 p {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: 400;
-  color: var(--foreground, 0.8);
+  color: var(--mesm-l-grey, 0.8);
+}
+p b {
+  color: var(--foreground);
 }
 .p2 {
   font-size: 1.5rem;
   line-height: 2.25rem;
   font-weight: 400;
-  color: var(--foreground, 0.8);
-}
-p strong {
-  color: var(--foreground);
+  color: var(--mesm-l-grey, 0.8);
 }
 a:hover {
   cursor: pointer;

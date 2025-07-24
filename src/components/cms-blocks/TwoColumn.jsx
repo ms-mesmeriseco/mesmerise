@@ -5,7 +5,7 @@ import IconRow from "./IconRow";
 
 export default function TwoColumn({ column1 = [], column2 = [] }) {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[50vh]">
+    <section className="wrapper grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[50vh]">
       {/* Column 1 */}
       <div className="flex flex-col gap-6">
         {column1.map((block, index) => (
@@ -37,7 +37,7 @@ function BlockRenderer({ block, index }) {
         <img
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className="w-full h-auto rounded-(--radius-sm) shadow"
+          className="w-full h-auto rounded-xl shadow"
         />
       );
     case "Video":

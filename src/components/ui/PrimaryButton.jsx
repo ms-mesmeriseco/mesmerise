@@ -9,10 +9,9 @@ export default function PrimaryButton({
 }) {
   const isLarge = size === "large";
 
-  const basePadding = isLarge ? "2.5rem" : "2rem";
-  const hoverPadding = isLarge ? "3.5rem" : "2.5rem";
-  const height = isLarge ? "44px" : "32px";
-  const textSize = isLarge ? "text-lg" : "text-base";
+  const basePadding = isLarge ? "2rem" : "1.5rem";
+  const hoverPadding = isLarge ? "2.7rem" : "2rem";
+  const height = isLarge ? "45px" : "32px";
   const radius = isLarge ? "rounded-xl" : "rounded-md";
 
   return (
@@ -28,7 +27,7 @@ export default function PrimaryButton({
           paddingRight: hoverPadding,
         }}
         transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
-        className={`inline-block w-fit bg-[var(--foreground)] text-[var(--background)] font-medium ${radius} transition hover:opacity-90 ${textSize} ${className}`}
+        className={`inline-block w-fit bg-[var(--foreground)] text-sm text-[var(--background)] font-medium ${radius} transition ${className}`}
       >
         {children}
       </motion.button>

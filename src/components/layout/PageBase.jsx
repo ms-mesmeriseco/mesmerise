@@ -36,9 +36,9 @@ export default function PageBase({ blocks }) {
   return (
     <motion.div
       {...anim(opacity)}
-      className="flex flex-col items-center justify-center min-h-screen gap-[6rem]"
+      className="flex flex-col items-center justify-center min-h-screen "
     >
-      <main className="grid grid-cols-12 gap-y-[4rem] w-full">
+      <main className="grid grid-cols-12 gap-y-[10rem] w-full">
         {blocks.map((block, index) => {
           switch (block.__typename) {
             case "ComponentHeroBanner":

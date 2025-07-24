@@ -19,8 +19,11 @@ export default function HomePage() {
       <SectionMarker label={marker} />
       <div className="pr-[var(--global-margin-xs)] flex flex-col gap-[8rem]">
         <HeroBlock />
+
         <AboutSection />
+
         <ProjectScroll />
+
         <ServicesList />
         <ApproachSection />
         <CollabModel />
