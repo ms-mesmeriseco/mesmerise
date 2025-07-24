@@ -9,12 +9,10 @@ export default function AboutSection() {
         column1={
           <>
             <h1 className="text-md md:text-6xl">
-              Not just another marketing agency.
+              Mesmerise is a bespoke digital agency. We work end-to-end, from
+              website to strategy, to growth and performance.
             </h1>
-            <p>
-              We blend smart data with bold design to deliver work that
-              doesn&apos;t just look good, it performs.
-            </p>
+
             <PrimaryButton href="/connect" size="large">
               Connect
             </PrimaryButton>

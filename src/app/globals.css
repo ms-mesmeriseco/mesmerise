@@ -36,6 +36,7 @@ body.page-landing {
   --foreground: #ffffff;
   --footer-bg: var(--mesm-red);
   --footer-txt: #ffffff;
+  --accent: var(--mesm-blue);
 }
 
 body.page-connect {
@@ -43,6 +44,7 @@ body.page-connect {
   --foreground: #000000;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
+  --accent: var(--mesm-grey);
 }
 
 body.page-about {
@@ -50,6 +52,7 @@ body.page-about {
   --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
+  --accent: var(--mesm-blue);
 }
 :root {
   --foreground: #ffffff;
@@ -71,6 +74,7 @@ body.page-about {
   --mesm-blue: #c1d2fc;
   --mesm-grey: #686767;
   --mesm-grey-dk: rgba(255, 255, 255, 0.1);
+  --mesm-grey-xd: rgba(255, 255, 255, 0.05);
   --mesm-l-grey: #d4d4d4;
 }
 @media screen and (max-width: 768px) {
@@ -118,7 +122,6 @@ body {
   display: none;
 }
 a {
-  color: inherit;
   text-decoration: none;
 }
 /* @media (prefers-color-scheme: dark) {
@@ -151,6 +154,7 @@ h2 {
 }
 h3 {
   font-size: 2.39rem;
+  line-height: 3rem;
   font-weight: 400;
 }
 h4 {
@@ -162,6 +166,8 @@ h5 {
   font-size: 1rem;
 }
 h6 {
+  letter-spacing: 1px;
+  color: var(--mesm-grey);
   font-size: 0.778rem;
 }
 p {
@@ -170,8 +176,29 @@ p {
   font-weight: 400;
   color: var(--mesm-l-grey, 0.8);
 }
-p b {
-  color: var(--foreground);
+p a {
+  color: var(--accent);
+  position: relative;
+  text-decoration: none;
+}
+
+p a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+p a:hover::after,
+p a:focus::after {
+  transform: scaleX(1);
 }
 .p2 {
   font-size: 1.5rem;

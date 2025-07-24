@@ -7,8 +7,10 @@ import IconRow from "@/components/cms-blocks/IconRow";
 import TrustBadges from "@/components/cms-blocks/TrustBadges";
 import AccordionWidget from "@/components/cms-blocks/Accordion";
 import { motion } from "framer-motion";
+import useSectionMarker from "@/hooks/useSectionMarker";
 
 export default function PageBase({ blocks }) {
+  const marker = useSectionMarker();
   const anim = (variants) => {
     return {
       initial: "initial",
@@ -56,7 +58,11 @@ export default function PageBase({ blocks }) {
 
             case "SingleColumnBlockBlank":
               return (
-                <div className="col-span-12" key={`block-${index}`}>
+                <div
+                  marker={marker}
+                  className="col-span-12"
+                  key={`block-${index}`}
+                >
                   <SingleColumn
                     content={block.contentCollection?.items || []}
                   />

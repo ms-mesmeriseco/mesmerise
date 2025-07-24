@@ -222,6 +222,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
     pageHeader
     pageHeaderLine2
     pageSubtitle
+    ctaUrl
     heroMedia {
       url
       title

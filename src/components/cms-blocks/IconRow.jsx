@@ -6,8 +6,8 @@ import InView from "@/hooks/InView";
 
 const columnClassMap = {
   1: "sm:grid-cols-1",
-  2: "sm:grid-cols-2",
-  3: "md:grid-cols-3",
+  2: "sm:grid-cols-3",
+  3: "lg:grid-cols-4",
   4: "lg:grid-cols-4",
 };
 
@@ -21,7 +21,7 @@ export default function IconRow({ blockTitle = "", iconItems = [] }) {
         <br />
         <br />
         <div
-          className={`grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-[var(--global-margin-xs)] min-h-full flex items-center justify-between`}
+          className={`grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-[var(--global-margin-xs)] min-h-full flex items-center justify-between`}
         >
           {iconItems.map((item, idx) => {
             const { icon, textContent } = item || {};
@@ -30,16 +30,18 @@ export default function IconRow({ blockTitle = "", iconItems = [] }) {
             return (
               <motion.div
                 key={key}
-                initial={{ borderColor: "var(--mesm-grey)" }}
-                whileHover={{ borderColor: "var(--mesm-blue)" }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className={
-                  "flex flex-col items-left text-left gap-6 min-h-full rounded-2xl p-[2rem] justify-top border-1 border-[var(--mesm-yellow)]"
-                }
-                style={{
+                initial={{
                   borderColor: "var(--mesm-grey)",
-                  borderStyle: "solid",
+                  backgroundColor: "var(--mesm-grey-xd)",
                 }}
+                whileHover={{
+                  borderColor: "var(--mesm-blue)",
+                  backgroundColor: "var(--mesm-grey-dk)",
+                }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className={
+                  "flex flex-col items-left text-left gap-6 min-h-full rounded-xl p-[2rem] justify-top border-1 transition duration-100 ease-in-out "
+                }
               >
                 {icon?.url && (
                   <Image

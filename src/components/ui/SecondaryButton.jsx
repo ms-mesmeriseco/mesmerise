@@ -11,27 +11,29 @@ export default function SecondaryButton({
 
   const basePadding = isLarge ? "1.5rem" : "0.5rem";
   const hoverPadding = isLarge ? "2rem" : "1.0rem";
-  const height = isLarge ? "44px" : "32px";
+  const height = isLarge ? "45px" : "32px";
 
   const radius = isLarge ? "rounded-xl" : "rounded-md";
 
   return (
-    <a href={href} {...props}>
-      <motion.button
-        style={{
-          paddingLeft: basePadding,
-          paddingRight: basePadding,
-          height,
-        }}
-        whileHover={{
-          paddingLeft: hoverPadding,
-          paddingRight: hoverPadding,
-        }}
-        transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
-        className={`inline-block border border-[var(--foreground)] text-[var(--foreground)] font-medium text-sm h-[32px] ${radius} transition hover:bg-[var(--foreground)] hover:text-[var(--background)] ${className}`}
-      >
-        {children}
-      </motion.button>
-    </a>
+    <motion.a
+      href={href}
+      style={{
+        paddingLeft: basePadding,
+        paddingRight: basePadding,
+        height,
+        display: "inline-block",
+        lineHeight: height,
+      }}
+      whileHover={{
+        paddingLeft: hoverPadding,
+        paddingRight: hoverPadding,
+      }}
+      transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
+      className={`w-fit border border-[var(--foreground)] text-[var(--foreground)] text-sm ${radius} transition hover:bg-[var(--foreground)] hover:text-[var(--background)] ${className}`}
+      {...props}
+    >
+      {children}
+    </motion.a>
   );
 }

@@ -3,10 +3,26 @@
 import { getClient } from "../../../lib/apollo-client";
 import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 // import { motion } from "framer-motion"
-import HeroBanner from "@/components/cms-blocks/HeroBanner";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "next/image";
+import BlogTOC from "@/components/blog/BlogTOC";
+
+function handleAnchorClick(e, id) {
+  e.preventDefault();
+  const headerHeight =
+    parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--header-height"
+      )
+    ) || 80; // fallback to 80px
+  const el = document.getElementById(id);
+  if (el) {
+    const y =
+      el.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px extra spacing
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+}
 
 export default async function BlogPost({ params }) {
   const { slug } = params;
@@ -24,9 +40,35 @@ export default async function BlogPost({ params }) {
       assetMap[asset.sys.id] = asset;
     });
   }
+  function getH3Anchors(json) {
+    const anchors = [];
+    if (!json?.content) return anchors;
+    json.content.forEach((node, idx) => {
+      if (node.nodeType === "heading-3") {
+        const text =
+          node.content?.map((c) => c.value).join("") || `Section ${idx}`;
+        const id = text
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "");
+        anchors.push({ text, id });
+      }
+    });
+    return anchors;
+  }
+
+  const h3Anchors = getH3Anchors(page.blogContent?.json);
 
   const renderOptions = {
     renderNode: {
+      [BLOCKS.HEADING_3]: (node, children) => {
+        const text = node.content?.map((c) => c.value).join("") || "";
+        const id = text
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w-]/g, "");
+        return <h3 id={id}>{children}</h3>;
+      },
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const assetId = node.data.target.sys.id;
         const asset = assetMap[assetId];
@@ -79,25 +121,34 @@ export default async function BlogPost({ params }) {
     hour12: false,
   });
   return (
-    <div className="wrapper flex flex-col items-center justify-center min-h-screen gap-16">
-      <main className="flex flex-col gap-8 rounded-3xl">
-        <HeroBanner heroMedia={page.heroImage} mediaHeight={false} />
-        <div className="lg:w-[720px] md:w-full sm:w-full m-auto">
-          <div>
-            <h3>{page.postHeading}</h3>
-            <span className="text-sm">
-              {formattedDate}
-              <br />
-              By {page.postAuthor}
-            </span>
-          </div>
-          <br />
-          {page.blogContent?.json && (
-            <div>
-              {documentToReactComponents(page.blogContent.json, renderOptions)}
-            </div>
-          )}
+    <div className="wrapper flex flex-col items-center max-w-3xl justify-center min-h-screen gap-0">
+      {/* Hero Image */}
+      <div className="w-full aspect-[16/5] rounded-3xl overflow-hidden mb-0">
+        <img
+          src={page.heroImage?.url || ""}
+          alt={page.heroImage?.title || ""}
+          className="w-full h-full object-cover rounded-3xl"
+        />
+      </div>
+
+      <BlogTOC anchors={h3Anchors} />
+
+      {/* Main Content */}
+      <main className="flex flex-col gap-8 rounded-3xl w-full max-w-3xl mx-auto px-4">
+        <div>
+          <h3>{page.postHeading}</h3>
+          <span className="text-sm">
+            {formattedDate}
+            <br />
+            By {page.postAuthor}
+          </span>
         </div>
+        <br />
+        {page.blogContent?.json && (
+          <div>
+            {documentToReactComponents(page.blogContent.json, renderOptions)}
+          </div>
+        )}
       </main>
     </div>
   );

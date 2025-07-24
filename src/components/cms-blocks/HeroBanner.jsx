@@ -13,7 +13,7 @@ const characterAnimation = {
   }),
 };
 
-function AnimatedText({ text, gradient }) {
+function AnimatedText({ text = " ", gradient }) {
   const words = text.split(" ");
 
   return (
@@ -47,13 +47,15 @@ export default function HeroBanner({
   pageSubtitle,
   pageHeaderLine2,
   mediaHeight,
+  showCta = true,
+  ctaUrl = "/connect",
 }) {
   const isVideo = heroMedia?.contentType?.includes("video");
 
   return (
     <InView>
       <div
-        className={`relative h-[50vh] overflow-hidden flex items-end justify-left `}
+        className={`relative h-[50vh] overflow-hidden flex items-end justify-left rounded-xl`}
       >
         {heroMedia?.url &&
           (isVideo ? (
@@ -84,9 +86,12 @@ export default function HeroBanner({
             {pageSubtitle}
           </div>
           <br />
-          <PrimaryButton href="/connect" className="mt-4" size="large">
-            Learn More
-          </PrimaryButton>
+
+          {showCta && (
+            <PrimaryButton href={ctaUrl} extraClass="mt-4" size="large">
+              Learn More
+            </PrimaryButton>
+          )}
         </div>
 
         <div className="absolute inset-0 bg-black/40 z-[5]" />

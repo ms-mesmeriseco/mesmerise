@@ -32,11 +32,11 @@ export default function ListIcons({ items = [] }) {
           variants={child}
           key={index}
           whileHover={{
-            backgroundColor: "var(--mesm-red)",
+            backgroundColor: "var(--mesm-grey-dk)",
             translateX: "2px",
           }}
           transition={{ damping: 20, duration: 0.1 }}
-          className="flex gap-4 items-start bg-[var(--mesm-grey-dk)] py-4 px-8 rounded-2xl shadow cursor-pointer"
+          className="flex gap-8 items-center bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-2xl shadow cursor-pointer"
         >
           {item.icon?.url && (
             <img

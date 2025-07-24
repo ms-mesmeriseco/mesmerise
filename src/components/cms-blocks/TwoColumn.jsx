@@ -2,24 +2,27 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import AccordionWidget from "./Accordion";
 import ListIcons from "./ListIcons";
 import IconRow from "./IconRow";
+import InView from "@/hooks/InView";
 
 export default function TwoColumn({ column1 = [], column2 = [] }) {
   return (
-    <section className="wrapper grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[50vh]">
-      {/* Column 1 */}
-      <div className="flex flex-col gap-6">
-        {column1.map((block, index) => (
-          <BlockRenderer key={`col1-${index}`} block={block} index={index} />
-        ))}
-      </div>
+    <InView>
+      <section className="wrapper grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[50vh]">
+        {/* Column 1 */}
+        <div className="flex flex-col gap-6">
+          {column1.map((block, index) => (
+            <BlockRenderer key={`col1-${index}`} block={block} index={index} />
+          ))}
+        </div>
 
-      {/* Column 2 */}
-      <div className="flex flex-col gap-6">
-        {column2.map((block, index) => (
-          <BlockRenderer key={`col2-${index}`} block={block} index={index} />
-        ))}
-      </div>
-    </section>
+        {/* Column 2 */}
+        <div className="flex flex-col gap-6">
+          {column2.map((block, index) => (
+            <BlockRenderer key={`col2-${index}`} block={block} index={index} />
+          ))}
+        </div>
+      </section>
+    </InView>
   );
 }
 
@@ -34,11 +37,13 @@ function BlockRenderer({ block, index }) {
       );
     case "Image":
       return (
-        <img
-          src={block.imageContent?.url}
-          alt={block.imageContent?.title || ""}
-          className="w-full h-auto rounded-xl shadow"
-        />
+        <div className="aspect-[16/9] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] transition duration-200 ease-in-out">
+          <img
+            src={block.imageContent?.url}
+            alt={block.imageContent?.title || ""}
+            className="w-full h-full object-cover"
+          />
+        </div>
       );
     case "Video":
       return (

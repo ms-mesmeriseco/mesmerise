@@ -2,11 +2,16 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import ListIcons from "./ListIcons";
 import IconRow from "@/components/cms-blocks/IconRow";
 import InView from "@/hooks/InView";
+import useSectionMarker from "@/hooks/useSectionMarker";
 
-export default function SingleColumn({ content = [] }) {
+export default function SingleColumn({ content = [], marker = "mesmerise" }) {
+  const sectionMarker = useSectionMarker(marker);
   return (
     <InView>
-      <section className="wrapper w-full m-auto flex flex-col gap-6 min-h-[50vh] justify-around">
+      <section
+        data-label={marker}
+        className="wrapper w-full m-auto flex flex-col gap-6 min-h-[50vh] justify-around"
+      >
         {content.map((block, index) => (
           <BlockRenderer key={`single-${index}`} block={block} />
         ))}
@@ -19,7 +24,7 @@ function BlockRenderer({ block }) {
   switch (block.__typename) {
     case "ContentTypeRichText":
       return (
-        <div className="m-auto prose max-w-none text-center">
+        <div className="m-auto prose max-w-none text-center lg:w-6/12 md:w-8/12 sm:w-10/12 gap-4 flex flex-col">
           {documentToReactComponents(block.content?.json)}
         </div>
       );
