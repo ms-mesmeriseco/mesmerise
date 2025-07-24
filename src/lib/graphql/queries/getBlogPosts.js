@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_BLOG_POSTS = gql`
   {
-    blogPostPageCollection {
+    blogPostPageCollection(limit: 10) {
       items {
         postTitle
         slug
@@ -23,6 +23,22 @@ export const GET_BLOG_POSTS = gql`
         }
         blogContent {
           json
+          links {
+            assets {
+              block {
+                sys {
+                  id
+                }
+                url
+                title
+                description
+                width
+                height
+                contentType
+                fileName
+              }
+            }
+          }
         }
       }
     }

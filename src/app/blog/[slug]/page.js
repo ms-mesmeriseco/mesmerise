@@ -4,15 +4,50 @@ import { getClient } from "../../../lib/apollo-client";
 import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 // import { motion } from "framer-motion"
 import HeroBanner from "@/components/cms-blocks/HeroBanner";
+import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import renderRichTextWithBreaks from "@/lib/renderRichTextWithBreaks";
+import Image from "next/image";
 
 export default async function BlogPost({ params }) {
-  const { slug } = await params;
+  const { slug } = params;
   const { data } = await getClient().query({ query: GET_BLOG_POSTS });
   const page = data.blogPostPageCollection.items.find(
     (post) => post.slug === slug
   );
+
+  if (!page) return <p>Blog post not found.</p>;
+
+  // Build asset map for embedded assets
+  const assetMap = {};
+  if (page.blogContent?.links?.assets?.block) {
+    page.blogContent.links.assets.block.forEach((asset) => {
+      assetMap[asset.sys.id] = asset;
+    });
+  }
+
+  // Define renderOptions using assetMap
+  const renderOptions = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: (node) => {
+        const assetId = node.data.target.sys.id;
+        const asset = assetMap[assetId];
+        if (!asset) return null;
+        const { url, title, description, width, height } = asset;
+        return (
+          <div className="my-6">
+            <Image
+              src={`${url}`}
+              alt={title || description || "Embedded asset"}
+              width={width}
+              height={height}
+              className="w-full h-auto rounded-xl"
+            />
+          </div>
+        );
+      },
+    },
+  };
+
   const formattedDate = new Date(page.postDate).toLocaleString("en-AU", {
     day: "numeric",
     month: "long",
@@ -21,9 +56,6 @@ export default async function BlogPost({ params }) {
     minute: "2-digit",
     hour12: false,
   });
-
-  if (!page) return <p>Blog post not found.</p>;
-
   return (
     <div className="wrapper flex flex-col items-center justify-center min-h-screen gap-16">
       <main className="flex flex-col gap-8 rounded-3xl">
@@ -39,7 +71,9 @@ export default async function BlogPost({ params }) {
           </div>
           <br />
           {page.blogContent?.json && (
-            <div>{renderRichTextWithBreaks(page.blogContent.json)}</div>
+            <div>
+              {documentToReactComponents(page.blogContent.json, renderOptions)}
+            </div>
           )}
         </div>
       </main>
