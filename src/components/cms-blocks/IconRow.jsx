@@ -1,39 +1,40 @@
 import PropTypes from "prop-types";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
-// Map column number to Tailwind class name (safe from purging)
 const columnClassMap = {
   1: "sm:grid-cols-1",
   2: "sm:grid-cols-2",
-  3: "sm:grid-cols-3",
-  4: "sm:grid-cols-4",
-  5: "sm:grid-cols-5",
+  3: "md:grid-cols-3",
+  4: "md:grid-cols-4",
 };
 
-export default function IconRow({
-  columnNumber = 3,
-  contentDirection = true,
-  iconItems = [],
-}) {
-  const safeCols = Math.min(Math.max(columnNumber, 1), 5);
+export default function IconRow({ blockTitle = "", iconItems = [] }) {
+  const safeCols = Math.min(Math.max(3, 1), 4);
   const gridColsClass = columnClassMap[safeCols] || "sm:grid-cols-3";
-
   return (
-    <section className="w-full py-8">
-      <div className={`grid grid-cols-1 ${gridColsClass} gap-6 p-6  min-h-[50vh] flex items-center justify-between`}>
+    <section className="w-full py-8 text-center">
+      <h3>{blockTitle}</h3>
+      <br />
+      <br />
+      <div
+        className={`grid ${gridColsClass} gap-[var(--global-margin-xs)] min-h-[50vh] flex items-center justify-between`}
+      >
         {iconItems.map((item, idx) => {
           const { icon, textContent } = item || {};
           const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;
 
           return (
-            <div
+            <motion.div
               key={key}
-              className={`flex ${
-                contentDirection
-                  ? "flex-col items-center text-center"
-                  : "flex-row items-center text-center"
-              } gap-3`}
+              initial={{ borderColor: "var(--mesm-grey)" }}
+              whileHover={{ borderColor: "var(--mesm-blue)" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className={
+                "flex flex-col items-left text-left gap-6 min-h-full rounded-2xl p-[2rem] justify-top border-1 border-[var(--mesm-yellow)]"
+              }
+              style={{ borderColor: "var(--mesm-grey)", borderStyle: "solid" }}
             >
               {icon?.url && (
                 <Image
@@ -49,7 +50,7 @@ export default function IconRow({
                   {documentToReactComponents(textContent.json)}
                 </div>
               )}
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -58,8 +59,6 @@ export default function IconRow({
 }
 
 IconRow.propTypes = {
-  columnNumber: PropTypes.number, // 1–5
-  contentDirection: PropTypes.bool, // true = vertical stack, false = horizontal row
   iconItems: PropTypes.arrayOf(
     PropTypes.shape({
       icon: PropTypes.shape({

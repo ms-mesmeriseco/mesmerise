@@ -4,7 +4,7 @@ import IconRow from "@/components/cms-blocks/IconRow";
 
 export default function SingleColumn({ content = [] }) {
   return (
-    <section className="w-full max-w-3xl mx-auto flex flex-col gap-6 min-h-[50vh]">
+    <section className="w-full max-w-3xl mx-auto flex flex-col gap-6 min-h-[50vh] text-center">
       {content.map((block, index) => (
         <BlockRenderer key={`single-${index}`} block={block} />
       ))}

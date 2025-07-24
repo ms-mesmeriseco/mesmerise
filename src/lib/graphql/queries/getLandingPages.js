@@ -7,7 +7,7 @@ import { GET_PAGE_BLOCKS } from "../fragments/getPageBlocks";
 export const GET_LANDING_PAGE_BY_SLUG = gql`
   query GetLandingPageBySlug($slug: String!) {
     landingPageCollection(limit: 1, where: { pageSlug: $slug }) {
-       items {
+      items {
         __typename
         sys {
           id
@@ -135,7 +135,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
     textContent {
       json
     }
-      scroll
+    scroll
     logosCollection(limit: 5) {
       items {
         url
@@ -150,8 +150,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   }
 
   fragment IconRowFragment on IconRow {
-    columnNumber
-    contentDirection
+    entryTitle
     iconItemsCollection(limit: 12) {
       items {
         ... on ListIconItem {
@@ -173,15 +172,15 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   }
 
   fragment AccordionWidgetFragment on AccordionWidget {
-      icon {
-        url
-          title
-          description
-          width
-          height
-          contentType
-          fileName
-      }
+    icon {
+      url
+      title
+      description
+      width
+      height
+      contentType
+      fileName
+    }
     accordionContentCollection(limit: 8) {
       items {
         ... on AccordionItem {
@@ -220,9 +219,9 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
 
   fragment HeroDetails on ComponentHeroBanner {
     entryTitle
-    heroText {
-      json
-    }
+    pageHeader
+    pageHeaderLine2
+    pageSubtitle
     heroMedia {
       url
       title

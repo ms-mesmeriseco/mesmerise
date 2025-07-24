@@ -36,9 +36,9 @@ export default function PageBase({ blocks }) {
   return (
     <motion.div
       {...anim(opacity)}
-      className="flex flex-col items-center justify-center min-h-screen gap-[var(--global-margin-sm)]"
+      className="flex flex-col items-center justify-center min-h-screen gap-[6rem]"
     >
-      <main className="wrapper grid grid-cols-12 gap-y-[var(--global-margin-sm)] w-full">
+      <main className="grid grid-cols-12 gap-y-[4rem] w-full">
         {blocks.map((block, index) => {
           switch (block.__typename) {
             case "ComponentHeroBanner":
@@ -46,7 +46,9 @@ export default function PageBase({ blocks }) {
                 <div className="col-span-12" key={`block-${index}`}>
                   <HeroBanner
                     heroMedia={block.heroMedia}
-                    heroText={block.heroText}
+                    pageHeader={block.pageHeader}
+                    pageSubtitle={block.pageSubtitle}
+                    pageHeaderLine2={block.pageHeaderLine2}
                     mediaHeight={block.mediaHeight}
                   />
                 </div>
@@ -76,7 +78,7 @@ export default function PageBase({ blocks }) {
                 <div className="col-span-12" key={`block-${index}`}>
                   <IconRow
                     columnNumber={block.columnNumber}
-                    contentDirection={block.contentDirection}
+                    blockTitle={block.entryTitle}
                     iconItems={block.iconItemsCollection?.items || []}
                   />
                 </div>

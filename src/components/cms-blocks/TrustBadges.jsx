@@ -11,15 +11,22 @@ export default function TrustBadges({ textContent, logos = [], scroll }) {
     <section className="w-full py-8 px-4 overflow-hidden">
       <div className="flex gap-8 items-center">
         {/* Text content block (15%) */}
-        <div className="w-2/12 min-w-[120px]">
-          {textContent?.json && documentToReactComponents(textContent.json)}
-        </div>
-
+        {textContent?.json && (
+          <div className="w-2/12 min-w-[120px]">
+            {documentToReactComponents(textContent.json)}
+          </div>
+        )}
         {/* Logo area (85%) */}
-        <div className="w-10/12 overflow-hidden">
+        <div
+          className={`${
+            textContent ? "w-10/12" : "w-12/12"
+          } w-10/12 overflow-hidden`}
+        >
           <div
             className={`flex items-center gap-50 ${
-              scroll ? "animate-scroll-horizontal whitespace-nowrap" : "flex-wrap"
+              scroll
+                ? "animate-scroll-horizontal whitespace-nowrap"
+                : "flex-wrap"
             }`}
           >
             {duplicatedLogos.map((logo, idx) => (
