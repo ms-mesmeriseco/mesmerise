@@ -8,7 +8,7 @@ export default function BlogTOC({ anchors }) {
         getComputedStyle(document.documentElement).getPropertyValue(
           "--header-height"
         )
-      ) || 80;
+      ) || 64;
     const el = document.getElementById(id);
     if (el) {
       const y =
@@ -20,19 +20,23 @@ export default function BlogTOC({ anchors }) {
   if (!anchors?.length) return null;
 
   return (
-    <nav className="fixed top-[calc(var(--header-height,80px)+2rem)] left-0 z-40 flex flex-col gap-2 p-4 w-fit self-start mx-0 mb-8">
-      <span className="font-semibold text-[var(--mesm-blue)] mb-2">
-        Contents
+    <nav className="flex flex-col gap-2 p-4 w-fit self-start mx-0 mb-8">
+      <span className="">
+        <h6>CONTENTS</h6>
       </span>
       {anchors.map((anchor) => (
-        <a
+        <div
           key={anchor.id}
-          href={`#${anchor.id}`}
-          className="text-left text-sm text-[var(--mesm-blue)] hover:underline"
-          onClick={(e) => handleAnchorClick(e, anchor.id)}
+          className="border-[var(--mesm-grey-dk)] border-1 rounded-xl px-4 py-2 text-left text-sm text-[var(--foreground)] hover:text-[var(--background)] hover:bg-[var(--foreground)] duration-200 flex flex-row items-start gap-2"
         >
-          {anchor.text}
-        </a>
+          <div className="w-[8px] h-[8px] text-[var(--foreground)] border-[var(--mesm-grey)] border-1 p-[4px] m-[4px] rounded-full bg-black"></div>
+          <a
+            href={`#${anchor.id}`}
+            onClick={(e) => handleAnchorClick(e, anchor.id)}
+          >
+            {anchor.text}
+          </a>
+        </div>
       ))}
     </nav>
   );

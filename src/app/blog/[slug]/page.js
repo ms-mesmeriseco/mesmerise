@@ -1,5 +1,3 @@
-// "use client";
-
 import { getClient } from "../../../lib/apollo-client";
 import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 // import { motion } from "framer-motion"
@@ -123,7 +121,7 @@ export default async function BlogPost({ params }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-0">
       {/* Hero Image */}
-      <div className="w-full aspect-[16/5] rounded-4xl overflow-hidden mb-0">
+      <div className="w-full aspect-[16/5] rounded-4xl overflow-hidden mb-0 p-[var(--global-margin-sm)]">
         <img
           src={page.heroImage?.url || ""}
           alt={page.heroImage?.title || ""}
@@ -131,24 +129,40 @@ export default async function BlogPost({ params }) {
         />
       </div>
 
-      <BlogTOC anchors={h3Anchors} />
-
       {/* Main Content */}
-      <main className="flex flex-col gap-8 rounded-3xl w-full max-w-3xl mx-auto px-4">
-        <div>
+
+      <main className="flex flex-col md:flex-row md:gap-8 gap-0 rounded-3xl w-full mx-auto px-4 pb-[30vh]">
+        {h3Anchors?.length > 0 && (
+          <aside
+            className="
+        hidden md:block
+        md:sticky
+        md:top-[calc(var(--header-height)+16px)]
+        md:h-[calc(100vh-var(--header-height)-32px)]
+        md:w-64
+        self-start
+        z-20
+      "
+          >
+            <BlogTOC anchors={h3Anchors} />
+          </aside>
+        )}
+
+        <article className="max-w-3xl w-full flex flex-col gap-6">
           <h3>{page.postHeading}</h3>
           <span className="text-sm">
             {formattedDate}
             <br />
             By {page.postAuthor}
           </span>
-        </div>
-        <br />
-        {page.blogContent?.json && (
-          <div>
-            {documentToReactComponents(page.blogContent.json, renderOptions)}
-          </div>
-        )}
+
+          <br />
+          {page.blogContent?.json && (
+            <div>
+              {documentToReactComponents(page.blogContent.json, renderOptions)}
+            </div>
+          )}
+        </article>
       </main>
     </div>
   );

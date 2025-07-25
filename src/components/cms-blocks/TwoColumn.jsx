@@ -3,6 +3,7 @@ import AccordionWidget from "./Accordion";
 import ListIcons from "./ListIcons";
 import IconRow from "./IconRow";
 import InView from "@/hooks/InView";
+import { getRichTextOptions } from "@/lib/utils/richTextOptions";
 
 export default function TwoColumn({ column1 = [], column2 = [] }) {
   return (
@@ -32,7 +33,7 @@ function BlockRenderer({ block, index }) {
     case "ContentTypeRichText":
       return (
         <div className="prose max-w-none">
-          {documentToReactComponents(block.content?.json)}
+          {documentToReactComponents(block.content?.json, getRichTextOptions())}
         </div>
       );
     case "Image":

@@ -3,6 +3,7 @@ import ListIcons from "./ListIcons";
 import IconRow from "@/components/cms-blocks/IconRow";
 import InView from "@/hooks/InView";
 import useSectionMarker from "@/hooks/useSectionMarker";
+import { getRichTextOptions } from "@/lib/utils/richTextOptions";
 
 export default function SingleColumn({ content = [], marker = "mesmerise" }) {
   const sectionMarker = useSectionMarker(marker);
@@ -25,7 +26,7 @@ function BlockRenderer({ block }) {
     case "ContentTypeRichText":
       return (
         <div className="m-auto prose max-w-none text-center lg:w-6/12 md:w-8/12 sm:w-10/12 gap-4 flex flex-col">
-          {documentToReactComponents(block.content?.json)}
+          {documentToReactComponents(block.content?.json, getRichTextOptions())}
         </div>
       );
     case "Image":

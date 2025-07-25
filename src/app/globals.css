@@ -76,6 +76,7 @@ body.page-about {
   --mesm-grey-dk: rgba(255, 255, 255, 0.1);
   --mesm-grey-xd: rgba(255, 255, 255, 0.05);
   --mesm-l-grey: #d4d4d4;
+  --header-height: 36px;
 }
 /* @media screen and (max-width: 768px) {
   :root {
@@ -99,8 +100,8 @@ body.page-about {
 html,
 body {
   max-width: 100vw;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
 }
 
 body {
