@@ -55,7 +55,7 @@ export default function HeroBanner({
   return (
     <InView>
       <div
-        className={`relative h-[60vh] overflow-hidden flex items-end justify-left rounded-4xl`}
+        className={`relative h-[60vh] overflow-hidden flex items-end justify-left rounded-4xl mx-[var(--global-margin-md)]`}
       >
         {heroMedia?.url &&
           (isVideo ? (
@@ -75,7 +75,7 @@ export default function HeroBanner({
             />
           ))}
 
-        <div className="relative z-10 text-[var(--foreground)] text-left lg:max-w-[80vw] md:max-w-full sm:w-full p-[4rem]">
+        <div className="relative z-10 text-[var(--foreground)] text-left lg:max-w-[80vw] md:max-w-full sm:w-full p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] ">
           <h1>
             <AnimatedText text={pageHeader} gradient />
             <br />

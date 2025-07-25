@@ -4,6 +4,7 @@ import { getClient } from "../../../lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import renderRichTextWithBreaks from "@/lib/renderRichTextWithBreaks";
+import ServiceTags from "@/components/services/ServiceTags";
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
@@ -18,9 +19,9 @@ export default async function ProjectPage({ params }) {
   if (!page) return <p>Blog post not found.</p>;
 
   return (
-    <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[8rem] py-[var(--global-margin-lg)]">
+    <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
       {/* --- HERO ROW --- */}
-      <div className="col-span-12 lg:col-span-8 h-[50vh]">
+      <div className="col-span-12 lg:col-span-8 lg:h-[80vh]  md:h-[50vh] sm:h-[30vh] ">
         <img
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
@@ -37,7 +38,7 @@ export default async function ProjectPage({ params }) {
           </div>
         )}
       </div>
-
+      <ServiceTags items={["Project", page.projectType]} />
       {/* --- EXTENDED DESCRIPTION (right half below) --- */}
       {page.extendedDescription?.json && (
         <div className="col-span-12 lg:col-start-7 lg:col-end-13">

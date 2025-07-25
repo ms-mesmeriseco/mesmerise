@@ -7,6 +7,37 @@ export default function SwitchListAccordion({ items }) {
 
   if (!items || items.length === 0) return null;
 
+  function renderMedia(media) {
+    if (!media?.url) return null;
+    if (media.contentType?.startsWith("video")) {
+      return (
+        <video
+          src={media.url}
+          controls
+          className="w-full h-full object-cover rounded-xl"
+          autoPlay
+          muted
+          loop
+          style={{
+            width: "auto",
+            maxHeight: "70vh",
+            aspectRatio: "9/16",
+            pointerEvents: "none",
+          }}
+          loading="lazy"
+        />
+      );
+    }
+    return (
+      <img
+        src={media.url}
+        alt={media.title || ""}
+        style={{ width: "auto", maxHeight: "70vh", aspectRatio: "9/16" }}
+        className="w-full h-full object-cover rounded-xl"
+        loading="lazy"
+      />
+    );
+  }
   return (
     <InView>
       <section className="wrapper grid grid-cols-1 md:grid-cols-2 gap-8 min-h-[50vh] items-center justify-center">
@@ -16,7 +47,7 @@ export default function SwitchListAccordion({ items }) {
             <AnimatePresence key={item.entryTitle || idx}>
               <motion.div
                 key={idx}
-                className="border-l px-4 h-[auto] bg-white-300 ease-in-out"
+                className="border-l-2 border-[var(--mesm-yellow)] px-4 h-[auto] bg-white-300 ease-in-out"
                 initial={{ opacity: 0, y: 10, height: "auto" }}
                 animate={{
                   opacity: 1,
@@ -50,7 +81,7 @@ export default function SwitchListAccordion({ items }) {
                         height: "0px",
                         transition: { duration: 0.005 },
                       }}
-                      className="py-2 ease-in-out"
+                      className="py-2 ease-in-out text-[var(--mesm-l-grey)] text-sm"
                     >
                       <div
                         dangerouslySetInnerHTML={{
@@ -74,13 +105,9 @@ export default function SwitchListAccordion({ items }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.1 }}
-                className="aspect-[6/4] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] transition duration-200 ease-in-out w-full"
+                className="aspect-[4/6] max-h-[70vh] w-auto rounded-xl shadow overflow-hidden  transition duration-200 ease-in-out w-full flex items-center justify-center"
               >
-                <img
-                  src={items[activeIndex].listMedia.url}
-                  alt={items[activeIndex].listMedia.title || ""}
-                  className="w-full h-full object-cover"
-                />
+                {renderMedia(items[activeIndex].listMedia)}
               </motion.div>
             )}
           </AnimatePresence>

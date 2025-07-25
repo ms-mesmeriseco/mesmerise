@@ -39,9 +39,9 @@ export default function PageBase({ blocks }) {
   return (
     <motion.div
       {...anim(opacity)}
-      className="flex flex-col items-center justify-center min-h-screen mt-[6rem] md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)]"
+      className="flex flex-col items-center justify-center min-h-screen  md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)]"
     >
-      <main className="grid grid-cols-12 gap-y-[10rem] w-full">
+      <main className="grid grid-cols-12 flex flex-col lg:gap-y-[10rem] md:gap-y-[6rem] gap-y-[4rem] w-full">
         {blocks.map((block, index) => {
           console.log(block);
           switch (block.__typename) {

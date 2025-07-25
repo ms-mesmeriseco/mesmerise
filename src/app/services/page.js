@@ -50,7 +50,7 @@ export default function Connect() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen gap-[8rem]">
+    <div className="flex flex-col min-h-screen gap-[8rem] p-[var(--global-margin-lg)]">
       <SectionMarker label={marker} />
       <PageTitleLarge text="Services" label={marker} />
 
@@ -165,28 +165,6 @@ export default function Connect() {
         }))}
       />
       {/* Bottom Row */}
-      <div className="flex h-[40vh]  gap-[var(--global-margin-sm)]">
-        <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
-          <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
-            Branding & Strategy
-          </button>
-        </div>
-        <div className="flex-1  border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
-          <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
-            Website
-          </button>
-        </div>
-        <div className="flex-1  border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
-          <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
-            Performance & Growth
-          </button>
-        </div>
-        <div className="flex-1  border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
-          <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
-            Business Consulting & Development
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
