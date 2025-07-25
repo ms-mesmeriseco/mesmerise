@@ -8,6 +8,7 @@ import TrustBadges from "@/components/cms-blocks/TrustBadges";
 import AccordionWidget from "@/components/cms-blocks/Accordion";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
+import SwitchListAccordion from "@/components/cms-blocks/SwitchListAccordion";
 
 export default function PageBase({ blocks }) {
   const marker = useSectionMarker();
@@ -38,10 +39,11 @@ export default function PageBase({ blocks }) {
   return (
     <motion.div
       {...anim(opacity)}
-      className="flex flex-col items-center justify-center min-h-screen mt-[6rem]"
+      className="flex flex-col items-center justify-center min-h-screen mt-[6rem] md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)]"
     >
       <main className="grid grid-cols-12 gap-y-[10rem] w-full">
         {blocks.map((block, index) => {
+          console.log(block);
           switch (block.__typename) {
             case "SingleColumnBlockBlank":
               return (
@@ -73,6 +75,14 @@ export default function PageBase({ blocks }) {
                     columnNumber={block.columnNumber}
                     blockTitle={block.entryTitle}
                     iconItems={block.iconItemsCollection?.items || []}
+                  />
+                </div>
+              );
+            case "ListWithImageSwitch":
+              return (
+                <div className="col-span-12" key={`block-${index}`}>
+                  <SwitchListAccordion
+                    items={block.listItemsCollection?.items || []}
                   />
                 </div>
               );

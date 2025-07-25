@@ -18,7 +18,7 @@ export default function ExpandingCard({
 
   return (
     <div
-      className="flex flex-col gap-4 bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-2xl shadow cursor-pointer transition duration-200"
+      className="flex flex-col gap-4 bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-2xl shadow cursor-pointer transition duration-100  hover:translate-x-[2px] hover:bg-[var(--mesm-grey-dk)]"
       {...props}
     >
       <button

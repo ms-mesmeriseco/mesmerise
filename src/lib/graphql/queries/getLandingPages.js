@@ -28,6 +28,9 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on TrustBadges {
               ...TrustBadgesFragment
             }
+            ... on ListWithImageSwitch {
+              ...SwitchListDetails
+            }
             ... on SingleColumnBlockBlank {
               contentCollection(limit: 3) {
                 items {
@@ -231,6 +234,27 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
       height
       contentType
       fileName
+    }
+  }
+
+  fragment SwitchListDetails on ListWithImageSwitch {
+    entryTitle
+    listItemsCollection(limit: 4) {
+      items {
+        ... on ListSwitchItem {
+          entryTitle
+          listMedia {
+            url
+            title
+            description
+            width
+            height
+            contentType
+            fileName
+          }
+          textContent
+        }
+      }
     }
   }
 `;
