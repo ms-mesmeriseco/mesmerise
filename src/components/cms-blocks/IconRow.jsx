@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import InView from "@/hooks/InView";
+import Card from "@/components/ui/Card";
 
 const columnClassMap = {
   1: "sm:grid-cols-1",
@@ -20,44 +21,19 @@ export default function IconRow({ blockTitle = "", iconItems = [] }) {
         <h3>{blockTitle}</h3>
         <br />
         <br />
-        <div
-          className={`grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-[var(--global-margin-xs)] min-h-full flex items-center justify-between`}
-        >
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-[var(--global-margin-xs)] min-h-full flex items-center justify-between">
           {iconItems.map((item, idx) => {
             const { icon, textContent } = item || {};
             const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;
 
             return (
-              <motion.div
-                key={key}
-                initial={{
-                  borderColor: "var(--mesm-grey)",
-                  backgroundColor: "var(--mesm-grey-xd)",
-                }}
-                whileHover={{
-                  borderColor: "var(--mesm-blue)",
-                  backgroundColor: "var(--mesm-grey-dk)",
-                }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-                className={
-                  "flex flex-col items-left text-left gap-6 min-h-full rounded-xl p-[2rem] justify-top border-1 transition duration-100 ease-in-out "
-                }
-              >
-                {icon?.url && (
-                  <Image
-                    src={icon.url}
-                    alt={icon.title || ""}
-                    width={48}
-                    height={48}
-                    className="object-contain"
-                  />
-                )}
+              <Card key={key} icon={icon}>
                 {textContent?.json && (
                   <div className="text-sm flex flex-col gap-6">
                     {documentToReactComponents(textContent.json)}
                   </div>
                 )}
-              </motion.div>
+              </Card>
             );
           })}
         </div>

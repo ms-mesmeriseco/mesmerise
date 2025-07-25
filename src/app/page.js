@@ -15,7 +15,7 @@ export default function HomePage() {
   const marker = useSectionMarker();
 
   return (
-    <div className="relative">
+    <div className="relative m-[var(--global-margin-lg)] pt-[var(--header-height)]">
       <SectionMarker label={marker} />
       <div className="pr-[var(--global-margin-xs)] flex flex-col gap-[8rem]">
         <HeroBlock />

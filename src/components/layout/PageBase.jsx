@@ -38,24 +38,11 @@ export default function PageBase({ blocks }) {
   return (
     <motion.div
       {...anim(opacity)}
-      className="flex flex-col items-center justify-center min-h-screen "
+      className="flex flex-col items-center justify-center min-h-screen mt-[6rem]"
     >
       <main className="grid grid-cols-12 gap-y-[10rem] w-full">
         {blocks.map((block, index) => {
           switch (block.__typename) {
-            case "ComponentHeroBanner":
-              return (
-                <div className="col-span-12" key={`block-${index}`}>
-                  <HeroBanner
-                    heroMedia={block.heroMedia}
-                    pageHeader={block.pageHeader}
-                    pageSubtitle={block.pageSubtitle}
-                    pageHeaderLine2={block.pageHeaderLine2}
-                    mediaHeight={block.mediaHeight}
-                  />
-                </div>
-              );
-
             case "SingleColumnBlockBlank":
               return (
                 <div
@@ -86,17 +73,6 @@ export default function PageBase({ blocks }) {
                     columnNumber={block.columnNumber}
                     blockTitle={block.entryTitle}
                     iconItems={block.iconItemsCollection?.items || []}
-                  />
-                </div>
-              );
-
-            case "TrustBadges":
-              return (
-                <div className="col-span-12" key={`block-${index}`}>
-                  <TrustBadges
-                    textContent={block.textContent}
-                    logos={block.logosCollection?.items || []}
-                    scroll={block.scroll}
                   />
                 </div>
               );

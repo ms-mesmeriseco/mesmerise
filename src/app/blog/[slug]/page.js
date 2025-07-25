@@ -121,9 +121,9 @@ export default async function BlogPost({ params }) {
     hour12: false,
   });
   return (
-    <div className="wrapper flex flex-col items-center max-w-3xl justify-center min-h-screen gap-0">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-0">
       {/* Hero Image */}
-      <div className="w-full aspect-[16/5] rounded-3xl overflow-hidden mb-0">
+      <div className="w-full aspect-[16/5] rounded-4xl overflow-hidden mb-0">
         <img
           src={page.heroImage?.url || ""}
           alt={page.heroImage?.title || ""}

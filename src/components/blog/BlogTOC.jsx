@@ -20,7 +20,7 @@ export default function BlogTOC({ anchors }) {
   if (!anchors?.length) return null;
 
   return (
-    <nav className="sticky top-[calc(var(--header-height,80px)+2rem)] left-0 z-40 flex flex-col gap-2 p-4 rounded-xl shadow bg-white/80 w-fit self-start mx-0 mb-8">
+    <nav className="fixed top-[calc(var(--header-height,80px)+2rem)] left-0 z-40 flex flex-col gap-2 p-4 w-fit self-start mx-0 mb-8">
       <span className="font-semibold text-[var(--mesm-blue)] mb-2">
         Contents
       </span>

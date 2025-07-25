@@ -1,20 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { dangerouslySetInnerHTML } from "react";
+import AccordionWidget from "@/components/cms-blocks/Accordion";
 
 export default function FAQ({
   faqItems,
   label,
   title = "Frequently Asked Questions",
+  accordionItems = [],
 }) {
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  const toggle = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
   return (
     <section
       data-marker={label}
@@ -23,41 +16,16 @@ export default function FAQ({
       <div className="col-span-12 text-center pb-[var(--global-margin-md)]">
         <h2 className="text-[6rem] font-normal">{title}</h2>
       </div>
-
-      {faqItems.map((item, idx) => {
-        const isOpen = activeIndex === idx;
-
-        return (
-          <div
-            key={idx}
-            className="col-start-2 col-span-1 border-b border-[var(--foreground)]"
-          >
-            <button
-              onClick={() => toggle(idx)}
-              className="w-full flex justify-between items-center h-[72px] text-left transition duration-200 hover:opacity-60 cursor-pointer"
-            >
-              <span className="text-xl font-normal">{item.question}</span>
-              <span
-                className={`text-4xl font-light ease-in-out  transition-transform duration-300 ${
-                  isOpen ? "rotate-45" : ""
-                }`}
-              >
-                +
-              </span>
-            </button>
-
-            {isOpen && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="pt-[var(--global-margin-xs)] pb-[var(--global-margin-sm)] text-base leading-relaxed text-[var(--foreground)]"
-                dangerouslySetInnerHTML={{ __html: item.answer }}
-              ></motion.div>
-            )}
-          </div>
-        );
-      })}
+      <div className="col-start-2 col-span-1">
+        <AccordionWidget
+          icon={{ url: "/icons/plus.svg", title: "Expand" }}
+          accordionItems={accordionItems.map((item) => ({
+            entryTitle: item.question,
+            textContent: item.textContent,
+          }))}
+          rotation={45}
+        />
+      </div>
     </section>
   );
 }

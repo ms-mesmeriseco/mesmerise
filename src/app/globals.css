@@ -121,6 +121,9 @@ body {
 *::-webkit-scrollbar {
   display: none;
 }
+.page {
+  margin: 0;
+}
 a {
   text-decoration: none;
 }
