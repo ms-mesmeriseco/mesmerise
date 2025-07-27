@@ -1,6 +1,7 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import ListIcons from "./ListIcons";
 import IconRow from "@/components/cms-blocks/IconRow";
+import AccordionWidget from "@/components/cms-blocks/Accordion";
 import InView from "@/hooks/InView";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import { getRichTextOptions } from "@/lib/utils/richTextOptions";
@@ -58,6 +59,14 @@ function BlockRenderer({ block }) {
         <IconRow
           key={`block-${index}`}
           iconItems={block.iconItemsCollection?.items || []}
+        />
+      );
+    case "AccordionWidget":
+      return (
+        <AccordionWidget
+          key={`accordion`}
+          icon={block.icon}
+          accordionItems={block.accordionContentCollection?.items || []}
         />
       );
     default:

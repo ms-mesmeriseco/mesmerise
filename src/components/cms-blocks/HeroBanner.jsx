@@ -9,7 +9,7 @@ const characterAnimation = {
   visible: (i) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.035 },
+    transition: { delay: i * 0.05 },
   }),
 };
 
@@ -55,7 +55,7 @@ export default function HeroBanner({
   return (
     <InView>
       <div
-        className={`relative h-[60vh] overflow-hidden flex items-end justify-left rounded-4xl mx-[var(--global-margin-md)]`}
+        className={`relative h-[45vh] overflow-hidden flex items-end justify-left rounded-4xl mx-[var(--global-margin-md)]`}
       >
         {heroMedia?.url &&
           (isVideo ? (
