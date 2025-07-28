@@ -4,6 +4,7 @@ import ListIcons from "./ListIcons";
 import IconRow from "./IconRow";
 import InView from "@/hooks/InView";
 import { getRichTextOptions } from "@/lib/utils/richTextOptions";
+import BlockRenderer from "@/lib/utils/BlockRenderer";
 
 export default function TwoColumn({ column1 = [], column2 = [] }) {
   return (
@@ -27,55 +28,55 @@ export default function TwoColumn({ column1 = [], column2 = [] }) {
   );
 }
 
-// Helper component to render any block type
-function BlockRenderer({ block, index }) {
-  switch (block.__typename) {
-    case "ContentTypeRichText":
-      return (
-        <div className="prose max-w-none">
-          {documentToReactComponents(block.content?.json, getRichTextOptions())}
-        </div>
-      );
-    case "Image":
-      return (
-        <div className="aspect-[16/9] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] transition duration-200 ease-in-out">
-          <img
-            src={block.imageContent?.url}
-            alt={block.imageContent?.title || ""}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      );
-    case "Video":
-      return (
-        <video
-          src={block.videoContent?.url}
-          controls
-          className="w-1/2 h-auto rounded-(--radius-sm) shadow"
-        >
-          Your browser does not support the video tag.
-        </video>
-      );
-    case "ListIcons":
-      return <ListIcons items={block.listItemsCollection?.items || []} />;
-    case "IconRow":
-      return (
-        <IconRow
-          key={`icon-row-${index}`}
-          columnNumber={block.columnNumber}
-          contentDirection={block.contentDirection}
-          iconItems={block.iconItemsCollection?.items || []}
-        />
-      );
-    case "AccordionWidget":
-      return (
-        <AccordionWidget
-          key={`accordion-${index}`}
-          icon={block.icon}
-          accordionItems={block.accordionContentCollection?.items || []}
-        />
-      );
-    default:
-      return null;
-  }
-}
+// // Helper component to render any block type
+// function BlockRenderer({ block, index }) {
+//   switch (block.__typename) {
+//     case "ContentTypeRichText":
+//       return (
+//         <div className="prose max-w-none">
+//           {documentToReactComponents(block.content?.json, getRichTextOptions())}
+//         </div>
+//       );
+//     case "Image":
+//       return (
+//         <div className="aspect-[16/9] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] transition duration-200 ease-in-out">
+//           <img
+//             src={block.imageContent?.url}
+//             alt={block.imageContent?.title || ""}
+//             className="w-full h-full object-cover"
+//           />
+//         </div>
+//       );
+//     case "Video":
+//       return (
+//         <video
+//           src={block.videoContent?.url}
+//           controls
+//           className="w-1/2 h-auto rounded-(--radius-sm) shadow"
+//         >
+//           Your browser does not support the video tag.
+//         </video>
+//       );
+//     case "ListIcons":
+//       return <ListIcons items={block.listItemsCollection?.items || []} />;
+//     case "IconRow":
+//       return (
+//         <IconRow
+//           key={`icon-row-${index}`}
+//           columnNumber={block.columnNumber}
+//           contentDirection={block.contentDirection}
+//           iconItems={block.iconItemsCollection?.items || []}
+//         />
+//       );
+//     case "AccordionWidget":
+//       return (
+//         <AccordionWidget
+//           key={`accordion-${index}`}
+//           icon={block.icon}
+//           accordionItems={block.accordionContentCollection?.items || []}
+//         />
+//       );
+//     default:
+//       return null;
+//   }
+// }

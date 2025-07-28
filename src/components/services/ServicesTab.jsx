@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
+// FULL TAG TAXONOMY
 const categories = {
   growth: [
     "Go-to-Market Strategy",
@@ -13,7 +15,9 @@ const categories = {
     "Positioning",
     "Proposition Development",
     "Product Research",
-    "Systems Optimisation",
+    "Systems Optimisation & Implementation",
+    "Omni-Channel Marketing",
+    "Media Buying",
   ],
   strategy: [
     "Competitor Analysis",
@@ -24,6 +28,11 @@ const categories = {
     "Developing Tone of Voice",
     "Content Strategy",
     "Personas & Archetypes",
+    "Customer Lifecycle",
+    "Paid Media Management",
+    "Search Engine Optimisation",
+    "Content Marketing",
+    "Local SEO & Geo Targeting",
   ],
   design: [
     "Branding",
@@ -60,22 +69,22 @@ const tabs = ["growth", "strategy", "design", "development"];
 
 export default function ServicesTabs() {
   const [active, setActive] = useState("growth");
+  const router = useRouter();
 
   const containerVariants = {
     initial: {},
-    animate: {
-      transition: {
-        staggerChildren: 0.03,
-      },
-    },
-
+    animate: { transition: { staggerChildren: 0.03 } },
     exit: {},
   };
 
   const itemVariants = {
-    initial: { opacity: 0, y: 10 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.15 } },
-    exit: { opacity: 0, y: -10, transition: { duration: 0.2 } },
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.15 } },
+    exit: { opacity: 0, transition: { duration: 0.2 } },
+  };
+
+  const handleTagClick = (tag) => {
+    router.push(`/work?tag=${encodeURIComponent(tag)}`);
   };
 
   return (
@@ -97,6 +106,7 @@ export default function ServicesTabs() {
         ))}
       </div>
 
+      {/* Tag Chips */}
       <AnimatePresence mode="wait">
         <motion.div
           key={active}
@@ -106,15 +116,17 @@ export default function ServicesTabs() {
           exit="exit"
           className="flex flex-wrap gap-[var(--global-margin-xs)] justify-center"
         >
-          {categories[active].map((capability, idx) => (
-            <motion.div
+          {categories[active].map((tag, idx) => (
+            <motion.button
               key={idx}
               variants={itemVariants}
-              className="bg-[#c1d2fc] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap"
               whileHover={{ opacity: 0.7 }}
+              onClick={() => handleTagClick(tag)}
+              className="bg-[#c1d2fc] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap cursor-pointer transition"
+              type="button"
             >
-              {capability}
-            </motion.div>
+              {tag}
+            </motion.button>
           ))}
         </motion.div>
       </AnimatePresence>

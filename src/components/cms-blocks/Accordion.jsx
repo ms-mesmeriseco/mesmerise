@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import ExpandingCard from "@/components/ui/ExpandingCard";
+import { getRichTextOptions } from "@/lib/utils/richTextOptions";
 
 export default function AccordionWidget({
   icon,
@@ -28,7 +29,10 @@ export default function AccordionWidget({
             rotation={rotation}
             expandedContent={
               item.textContent && item.textContent.json ? (
-                documentToReactComponents(item.textContent.json)
+                documentToReactComponents(
+                  item.textContent.json,
+                  getRichTextOptions()
+                )
               ) : item.textContent ? (
                 <div dangerouslySetInnerHTML={{ __html: item.textContent }} />
               ) : null

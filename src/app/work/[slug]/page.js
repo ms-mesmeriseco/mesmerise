@@ -3,7 +3,7 @@
 import { getClient } from "../../../lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import renderRichTextWithBreaks from "@/lib/renderRichTextWithBreaks";
+import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import ServiceTags from "@/components/services/ServiceTags";
 
 export default async function ProjectPage({ params }) {
@@ -32,13 +32,23 @@ export default async function ProjectPage({ params }) {
       <div className="col-span-12 lg:col-span-4 border-1 p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4">
         <h1 className="font-medium">{page.projectTitle}</h1>
         <p className="text-sm opacity-60">{formattedDate}</p>
+        <p className="text-sm opacity-60">
+          {page.collaborationModel || "Collaboration Model: Not specified"}
+        </p>
         {page.projectScope?.json && (
           <div className="text-base leading-relaxed">
             {renderRichTextWithBreaks(page.projectScope.json)}
           </div>
         )}
       </div>
-      <ServiceTags items={["Project", page.projectType]} />
+      <div className="inline-flex col-span-12 items-center gap-2">
+        {page.contentfulMetadata?.tags && (
+          <ServiceTags
+            items={page.contentfulMetadata.tags.map((tag) => tag.name)}
+          />
+        )}
+      </div>
+
       {/* --- EXTENDED DESCRIPTION (right half below) --- */}
       {page.extendedDescription?.json && (
         <div className="col-span-12 lg:col-start-7 lg:col-end-13">

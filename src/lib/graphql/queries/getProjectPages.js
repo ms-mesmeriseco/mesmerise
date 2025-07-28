@@ -10,7 +10,7 @@ export const GET_PROJECT_PAGES = gql`
           json
         }
         projectDate
-        category
+        collaborationModel
         heroMedia {
           url
           title
@@ -24,6 +24,12 @@ export const GET_PROJECT_PAGES = gql`
         }
         extendedDescription {
           json
+        }
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
         }
       }
     }

@@ -56,7 +56,7 @@ export default function Footer() {
             <li>
               <a
                 href="/about"
-                className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)]"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
               >
                 About
               </a>
@@ -64,7 +64,7 @@ export default function Footer() {
             <li>
               <a
                 href="/services"
-                className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)]"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
               >
                 Services
               </a>
@@ -72,7 +72,7 @@ export default function Footer() {
             <li>
               <a
                 href="/work"
-                className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)]"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
               >
                 Work
               </a>
