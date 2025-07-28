@@ -49,6 +49,7 @@ export default function SwitchListAccordion({ items }) {
             <AnimatePresence key={item.entryTitle || idx}>
               <motion.div
                 key={idx}
+                layout
                 className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto ease-in-out"
                 initial={{ opacity: 0, y: 10, height: "auto" }}
                 animate={{
@@ -70,6 +71,7 @@ export default function SwitchListAccordion({ items }) {
                 <AnimatePresence>
                   {activeIndex === idx && (
                     <motion.div
+                      layout
                       key={item.entryTitle}
                       initial={{ opacity: 0, height: "0px" }}
                       animate={{
@@ -80,7 +82,7 @@ export default function SwitchListAccordion({ items }) {
                       exit={{
                         opacity: 0,
                         height: "0px",
-                        transition: { duration: 0.005 },
+                        transition: { duration: 0.02 },
                       }}
                       className="py-2 ease-in-out text-[var(--mesm-l-grey)] text-sm"
                     >

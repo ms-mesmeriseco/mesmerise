@@ -92,14 +92,14 @@ export default function ProjectNavigationList({ activeTag = null }) {
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-wrap gap-2 mb-4"
+          className="flex flex-wrap gap-2 mb-4 text-sm"
         >
           <motion.button
             variants={item}
-            className={`px-4 py-1 rounded-xl ${
+            className={`px-4 py-1 rounded-lg ${
               !selectedTag
                 ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
-                : "bg-[var(--mesm-grey)] text-gray-800"
+                : "bg-[var(--mesm-grey)] text-gray-800 cursor-pointer"
             }`}
             onClick={() => handleSelectTag(null)}
           >
@@ -109,10 +109,10 @@ export default function ProjectNavigationList({ activeTag = null }) {
             <motion.button
               key={tag}
               variants={item}
-              className={`px-4 py-1 rounded-xl ${
+              className={`px-4 py-1 rounded-lg ${
                 selectedTag === tag
                   ? "bg-[var(--mesm-blue)] text-[var(--background)]"
-                  : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)]"
+                  : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
               }`}
               onClick={() => handleSelectTag(tag)}
             >
@@ -141,6 +141,7 @@ export default function ProjectNavigationList({ activeTag = null }) {
           filteredProjects.map((project) => (
             <motion.div
               key={project.slug}
+              layout
               variants={item}
               initial="hidden"
               animate="show"
