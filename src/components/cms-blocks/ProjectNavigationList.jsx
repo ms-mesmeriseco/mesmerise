@@ -148,7 +148,7 @@ export default function ProjectNavigationList({ activeTag = null }) {
               exit="hidden"
             >
               <Link href={`/work/${project.slug}`}>
-                <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-50 transition duration-100">
+                <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
                   {/* Row 1: Title + Year */}
                   <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-[var(--global-margin-md)]">
                     <h3 className="">{project.projectTitle}</h3>

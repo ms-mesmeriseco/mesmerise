@@ -17,6 +17,15 @@ export const GET_PROJECT_PAGES = gql`
           width
           height
         }
+        dataOne {
+          json
+        }
+        dataTwo {
+          json
+        }
+        dataThree {
+          json
+        }
         mediaGalleryCollection {
           items {
             url

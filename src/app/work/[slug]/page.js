@@ -32,9 +32,7 @@ export default async function ProjectPage({ params }) {
       <div className="col-span-12 lg:col-span-4 border-1 p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4">
         <h1 className="font-medium">{page.projectTitle}</h1>
         <p className="text-sm opacity-60">{formattedDate}</p>
-        <p className="text-sm opacity-60">
-          {page.collaborationModel || "Collaboration Model: Not specified"}
-        </p>
+        <p className="text-sm opacity-60">{page.collaborationModel || ""}</p>
         {page.projectScope?.json && (
           <div className="text-base leading-relaxed">
             {renderRichTextWithBreaks(page.projectScope.json)}
@@ -46,6 +44,23 @@ export default async function ProjectPage({ params }) {
           <ServiceTags
             items={page.contentfulMetadata.tags.map((tag) => tag.name)}
           />
+        )}
+      </div>
+      <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left py-6">
+        {page.dataOne?.json && (
+          <div className="text-base leading-relaxed">
+            {renderRichTextWithBreaks(page.dataOne.json)}
+          </div>
+        )}
+        {page.dataTwo?.json && (
+          <div className="text-base leading-relaxed">
+            {renderRichTextWithBreaks(page.dataTwo.json)}
+          </div>
+        )}
+        {page.dataThree?.json && (
+          <div className="text-base leading-relaxed">
+            {renderRichTextWithBreaks(page.dataThree.json)}
+          </div>
         )}
       </div>
 
