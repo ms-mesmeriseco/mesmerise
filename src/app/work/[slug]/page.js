@@ -34,7 +34,7 @@ export default async function ProjectPage({ params }) {
         <p className="text-sm opacity-60">{formattedDate}</p>
         <p className="text-sm opacity-60">{page.collaborationModel || ""}</p>
         {page.projectScope?.json && (
-          <div className="text-base leading-relaxed">
+          <div className="text-base leading-relaxed [&>p+p]:mt-4">
             {renderRichTextWithBreaks(page.projectScope.json)}
           </div>
         )}
@@ -46,19 +46,19 @@ export default async function ProjectPage({ params }) {
           />
         )}
       </div>
-      <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left py-6">
+      <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left py-6 border-y border-[var(--mesm-grey)]">
         {page.dataOne?.json && (
-          <div className="text-base leading-relaxed">
+          <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4">
             {renderRichTextWithBreaks(page.dataOne.json)}
           </div>
         )}
         {page.dataTwo?.json && (
-          <div className="text-base leading-relaxed">
+          <div className="text-base leading-relaxed [&>p+p]:mt-4">
             {renderRichTextWithBreaks(page.dataTwo.json)}
           </div>
         )}
         {page.dataThree?.json && (
-          <div className="text-base leading-relaxed">
+          <div className="text-base leading-relaxed [&>p+p]:mt-4">
             {renderRichTextWithBreaks(page.dataThree.json)}
           </div>
         )}
@@ -67,7 +67,7 @@ export default async function ProjectPage({ params }) {
       {/* --- EXTENDED DESCRIPTION (right half below) --- */}
       {page.extendedDescription?.json && (
         <div className="col-span-12 lg:col-start-7 lg:col-end-13">
-          <div className="text-base leading-relaxed">
+          <div className="text-base leading-relaxed [&>p+p]:mt-4">
             {renderRichTextWithBreaks(page.extendedDescription.json)}
           </div>
         </div>

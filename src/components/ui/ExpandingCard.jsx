@@ -63,7 +63,7 @@ export default function ExpandingCard({
         )}
       </button>
       <div
-        className={`transition-opacity duration-300 ${
+        className={`transition-opacity duration-300 [&>p+p]:mt-4 ${
           expanded ? "opacity-100 py-3" : "opacity-0 h-0 overflow-hidden p-0"
         }`}
         style={{

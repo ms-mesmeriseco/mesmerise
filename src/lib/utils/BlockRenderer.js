@@ -12,7 +12,7 @@ export default function BlockRenderer({ block, center = false }) {
   switch (block.__typename) {
     case "ContentTypeRichText":
       return (
-        <div className={textAlign}>
+        <div className={` [&>p+p]:mt-4 ${textAlign}`}>
           {renderRichTextWithBreaks(block.content?.json)}
         </div>
       );

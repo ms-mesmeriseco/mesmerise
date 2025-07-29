@@ -14,7 +14,8 @@ const characterAnimation = {
 };
 
 function AnimatedText({ text = " ", gradient }) {
-  const words = text.split(" ");
+  const safeText = typeof text === "string" ? text : "";
+  const words = safeText.split(" ");
 
   return (
     <span

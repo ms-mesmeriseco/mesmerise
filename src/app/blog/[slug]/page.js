@@ -158,7 +158,7 @@ export default async function BlogPost({ params }) {
 
           <br />
           {page.blogContent?.json && (
-            <div>
+            <div className="[&>p+p]:mt-4">
               {documentToReactComponents(page.blogContent.json, renderOptions)}
             </div>
           )}

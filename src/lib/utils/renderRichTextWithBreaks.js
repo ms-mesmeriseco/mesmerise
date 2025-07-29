@@ -2,14 +2,14 @@ import React from "react";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { INLINES } from "@contentful/rich-text-types";
 
-// Utility to replace line breaks with <br />
 function replaceLineBreaks(text) {
-  const parts = text.split("\n");
-  return parts.flatMap((part, index) =>
-    index > 0 ? [<br key={index} />, part] : [part]
-  );
+  console.log("Rendering rich text with line breaks:", text); // DEBUG LOG
+  return text.split("\n").reduce((acc, segment, index) => {
+    if (index > 0) acc.push(<br key={`br-${index}`} />);
+    acc.push(segment);
+    return acc;
+  }, []);
 }
-
 // Combined render options
 export function getRichTextOptions() {
   return {
