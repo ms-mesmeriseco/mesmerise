@@ -4,15 +4,16 @@ import AccordionWidget from "@/components/cms-blocks/Accordion";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import renderRichTextWithBreaks from "./renderRichTextWithBreaks";
 
-export default function BlockRenderer({ block, center = false }) {
+export default function BlockRenderer({ block, center }) {
   const textAlign = center
     ? "m-auto prose max-w-none text-center lg:w-6/12 md:w-8/12 sm:w-10/12 gap-4 flex flex-col"
-    : "prose max-w-none";
+    : "prose max-w-none lg:w-12/12 md:w-12/12 sm:w-12/12";
+  const widgetAlign = center ? " " : "w-full";
 
   switch (block.__typename) {
     case "ContentTypeRichText":
       return (
-        <div className={` [&>p+p]:mt-4 ${textAlign}`}>
+        <div className={`[&>p+p]:mt-4 ${textAlign}`}>
           {renderRichTextWithBreaks(block.content?.json)}
         </div>
       );
@@ -21,7 +22,7 @@ export default function BlockRenderer({ block, center = false }) {
         <img
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className="w-full h-auto rounded-lg shadow"
+          className={`w-full h-auto rounded-lg shadow`}
         />
       );
     case "Video":
@@ -36,7 +37,7 @@ export default function BlockRenderer({ block, center = false }) {
       );
     case "ListIcons":
       return (
-        <div className="m-auto">
+        <div className={`m-auto ${widgetAlign}`}>
           <ListIcons items={block.listItemsCollection?.items || []} />
         </div>
       );

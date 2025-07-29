@@ -1,14 +1,20 @@
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import ListIcons from "./ListIcons";
-import IconRow from "@/components/cms-blocks/IconRow";
-import AccordionWidget from "@/components/cms-blocks/Accordion";
 import InView from "@/hooks/InView";
 import useSectionMarker from "@/hooks/useSectionMarker";
-import { getRichTextOptions } from "@/lib/utils/richTextOptions";
 import BlockRenderer from "@/lib/utils/BlockRenderer";
 
-export default function SingleColumn({ content = [], marker = "mesmerise" }) {
+export default function SingleColumn({
+  content = [],
+  marker = "mesmerise",
+  align,
+}) {
   const sectionMarker = useSectionMarker(marker);
+  const blockAlignment = [
+    align
+      ? "wrapper w-full m-auto flex flex-col gap-6 min-h-[50vh] justify-around"
+      : "wrapper w-full m-auto flex flex-col gap-6 min-h-[50vh]",
+  ];
+
+  console.log("ALGINMENT: ", blockAlignment, align);
   return (
     <InView>
       <section
@@ -16,7 +22,7 @@ export default function SingleColumn({ content = [], marker = "mesmerise" }) {
         className="wrapper w-full m-auto flex flex-col gap-6 min-h-[50vh] justify-around"
       >
         {content.map((block, index) => (
-          <BlockRenderer key={`single-${index}`} block={block} center={true} />
+          <BlockRenderer key={`single-${index}`} block={block} center={align} />
         ))}
       </section>
     </InView>

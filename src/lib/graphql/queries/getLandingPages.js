@@ -32,6 +32,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
               ...SwitchListDetails
             }
             ... on SingleColumnBlockBlank {
+              blockAlignment
               contentCollection(limit: 3) {
                 items {
                   ... on ContentTypeRichText {
@@ -65,6 +66,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
               }
             }
             ... on TwoColumnBlockBlank {
+              blockAlignment
               column1Collection(limit: 3) {
                 items {
                   ... on ContentTypeRichText {

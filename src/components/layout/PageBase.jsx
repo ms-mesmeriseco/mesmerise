@@ -39,11 +39,11 @@ export default function PageBase({ blocks }) {
   return (
     <motion.div
       {...anim(opacity)}
-      className="flex flex-col items-center justify-center min-h-screen  md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)] md:mt-[var(--header-height)] pb-[var(--global-margin-lg)]"
+      className="flex flex-col items-center justify-center min-h-screen  md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)] md:mt-[var(--header-height)]"
     >
       <main className="grid grid-cols-12 flex flex-col lg:gap-y-[10rem] md:gap-y-[6rem] gap-y-[4rem] w-full">
         {blocks.map((block, index) => {
-          console.log(block);
+          // console.log(block);
           switch (block.__typename) {
             case "SingleColumnBlockBlank":
               return (
@@ -54,6 +54,7 @@ export default function PageBase({ blocks }) {
                 >
                   <SingleColumn
                     content={block.contentCollection?.items || []}
+                    align={block.blockAlignment}
                   />
                 </div>
               );
@@ -64,6 +65,7 @@ export default function PageBase({ blocks }) {
                   <TwoColumn
                     column1={block.column1Collection?.items || []}
                     column2={block.column2Collection?.items || []}
+                    align={block.blockAlignment}
                   />
                 </div>
               );

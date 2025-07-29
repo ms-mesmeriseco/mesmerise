@@ -3,7 +3,7 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { INLINES } from "@contentful/rich-text-types";
 
 function replaceLineBreaks(text) {
-  console.log("Rendering rich text with line breaks:", text); // DEBUG LOG
+  // console.log("Rendering rich text with line breaks:", text);
   return text.split("\n").reduce((acc, segment, index) => {
     if (index > 0) acc.push(<br key={`br-${index}`} />);
     acc.push(segment);
