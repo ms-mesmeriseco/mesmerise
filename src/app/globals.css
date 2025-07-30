@@ -221,6 +221,22 @@ a button:hover {
   line-height: 6.77rem;
   font-weight: 400;
 }
+ul li {
+  list-style-type: circle;
+  margin-left: 2rem;
+}
+ul {
+  margin: 0.5rem 0rem;
+}
+/* ul li p::before {
+  content: "";
+  display: inline-block;
+  background-image: url("/icons/plus.svg");
+  background-size: contain;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0.5rem;
+} */
 @keyframes scroll-horizontal {
   0% {
     transform: translateX(0%);
