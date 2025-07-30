@@ -22,6 +22,12 @@ export default function TrustBadges({ textContent, logos = [], scroll }) {
             textContent ? "w-10/12" : "w-12/12"
           } w-10/12 overflow-hidden`}
         >
+                      {/* Left Gradient Overlay */}
+  <div className="pointer-events-none absolute left-0 top-0 h-full w-18 z-10 bg-gradient-to-r from-black to-transparent" />
+  
+  {/* Right Gradient Overlay */}
+  <div className="pointer-events-none absolute right-0 top-0 h-full w-18 z-10 bg-gradient-to-l from-black to-transparent" />
+
           <div
             className={`flex items-center gap-50 ${
               scroll
@@ -29,6 +35,7 @@ export default function TrustBadges({ textContent, logos = [], scroll }) {
                 : "flex-wrap"
             }`}
           >
+
             {duplicatedLogos.map((logo, idx) => (
               <Image
                 key={`logo-${idx}`}
