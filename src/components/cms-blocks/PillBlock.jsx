@@ -3,7 +3,7 @@
 import { useState } from "react";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 
-export default function PillBlock({ pills = [] }) {
+export default function PillBlock({ pills = [], assetMap = {}  }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
@@ -30,7 +30,7 @@ export default function PillBlock({ pills = [] }) {
 
       {/* Bottom row: Active pill content */}
       <div className="overflow-y-auto max-h-[70vh] px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] text-base leading-relaxed">
-       {renderRichTextWithBreaks(pills[activeIndex]?.content)} 
+       {renderRichTextWithBreaks(pills[activeIndex]?.content, assetMap)} 
       </div>
     </section>
   );

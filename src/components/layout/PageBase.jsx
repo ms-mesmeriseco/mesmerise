@@ -116,10 +116,13 @@ export default function PageBase({ blocks }) {
               if (block.pillFour && block.pillFourContent?.json) {
                 pills.push({ label: block.pillFour, content: block.pillFourContent.json });
               }
-
+              const assetMap = {};
+              (block?.links?.assets?.block || []).forEach((asset) => {
+                assetMap[asset.sys.id] = asset;
+              });
               return (
                 <div className="col-span-12" key={`block-${index}`}>
-                  <PillBlock pills={pills} />
+                  <PillBlock pills={pills} assetMap={assetMap} />
                 </div>
               );
 

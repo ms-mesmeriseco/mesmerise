@@ -25,7 +25,7 @@ export default function ListIcons({ items = [] }) {
       className="grid grid-cols-1 sm:grid-cols-1 gap-4"
     >
       {items.map((item, index) => (
-        <motion.li variants={child} key={index}>
+        <motion.li variants={child} key={index} className=" no-list">
           <ListCard icon={item.icon}>
             {item.textContent?.json &&
               documentToReactComponents(item.textContent.json)}

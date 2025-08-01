@@ -232,6 +232,10 @@ footer ul li {
   list-style-type: none;
   margin: 0;
 }
+.no-list {
+  list-style-type: none;
+  margin: 0;
+}
 b {
   font-style: normal;
   color: var(--accent);
