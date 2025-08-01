@@ -11,6 +11,7 @@ import { GET_VIDEO } from "./fragments/getVideo";
 import { GET_TWO_COLUMN } from "./fragments/getTwoColumn";
 import {GET_SINGLE_COLUMN} from "./fragments/singleColumn";
 import { GET_SINGLE_CASESTUDY } from "./fragments/getSingleCaseStudy";
+import { GET_MEDIA_CAROUSEL } from "./fragments/getMediaCarousel";
 
 
 
@@ -30,7 +31,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
         metaText {
           json
         }
-        pageBlocksCollection(limit: 15) {
+        pageBlocksCollection(limit: 16) {
           items {
             ... on ComponentHeroBanner {
               ...HeroDetails
@@ -56,12 +57,15 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on SingleCaseStudy {
               ...SingleStudy
             }
+            ... on MediaCarouselWithText {
+              ...MediaCarouselWithTextFragment
+            }
           }
         }
       }
     }
   }
-
+${GET_MEDIA_CAROUSEL}
 ${GET_SINGLE_CASESTUDY}
 ${GET_SINGLE_COLUMN}
 ${GET_TWO_COLUMN}

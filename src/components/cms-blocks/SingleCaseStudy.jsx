@@ -13,6 +13,7 @@ export default function SingleCaseStudy({ study, summary, results, timeFrame }) 
     dataOne,
     dataTwo,
     dataThree,
+    collaborationModel
   } = caseStudy;
 
   const formattedDate = new Date(study.caseStudy.projectDate).toLocaleString("en-AU", {
@@ -37,8 +38,10 @@ export default function SingleCaseStudy({ study, summary, results, timeFrame }) 
 
       {/* Right (Details) */}
       <div className="md:w-1/4 space-y-4 p-4">
-        <h3 className="text-lg font-semibold">{projectTitle}</h3>
-        <p className="text-sm text-muted-foreground">{formattedDate}</p>
+        <h3 className="text-lg font-semibold m-0">{projectTitle}</h3>
+        <span className="bg-[var(--mesm-blue)] text-[var(--background)] text-sm py-1 px-2 rounded-full">{formattedDate} / {collaborationModel ? "Defined" : "Ongoing"}</span>
+        <br/>
+        <br/>
         {projectScope?.json && (
           <div className="text-sm flex flex-col gap-2">
             <h6>SUMMARY</h6>

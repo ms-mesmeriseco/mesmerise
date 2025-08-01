@@ -7,6 +7,7 @@ import AccordionWidget from "@/components/cms-blocks/Accordion";
 import SwitchListAccordion from "@/components/cms-blocks/SwitchListAccordion";
 import PillBlock from "@/components/cms-blocks/PillBlock";
 import SingleCaseStudy from "@/components/cms-blocks/SingleCaseStudy";
+import MediaCarouselWithText from "@/components/cms-blocks/MediaCarouselWithText";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -74,8 +75,9 @@ export default function PageBase({ blocks }) {
                 <div className="col-span-12" key={`block-${index}`}>
                   <IconRow
                     columnNumber={block.columnNumber}
-                    blockTitle={block.entryTitle}
+                    titleText={block.titleText || []}
                     iconItems={block.iconItemsCollection?.items || []}
+                    displayTwo={block.displayTwo}
                   />
                 </div>
               );
@@ -130,7 +132,18 @@ export default function PageBase({ blocks }) {
                     <SingleCaseStudy study={block} summary={block.summary} results={block.results} timeFrame={block.timeFrame} />
                   </div>
                 );
-
+              case "MediaCarouselWithText":
+                if (
+                  block.mediaContentCollection?.items &&
+                  block.mediaContentCollection.items.length > 0
+                ) {
+                  return (
+                    <div className="col-span-12" key={`block-${index}`}>
+                      <MediaCarouselWithText mediaContentCollection={block.mediaContentCollection} />
+                    </div>
+                  );
+                }
+                return null;
             default:
               return null;
           }
