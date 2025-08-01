@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 import { GET_PAGE_BLOCKS } from "../fragments/getPageBlocks";
+import { GET_PILL_BLOCK } from "./fragments/pillBlockFragment"
+import { GET_TRUST_BADGES } from "./fragments/trustBadgesFragment";
+import { GET_LIST_SWITCH } from "./fragments/getListSwitch"
+import { GET_HERO_DETAILS } from "./fragments/getHeroDetails";
+import {GET_LIST_ICONS } from "./fragments/getListIcons";
+import { GET_ACCORDION } from "./fragments/getAccordion";
+import { GET_IMAGE } from "./fragments/getImage";
+import { GET_VIDEO } from "./fragments/getVideo";
+import { GET_TWO_COLUMN } from "./fragments/getTwoColumn";
+import {GET_SINGLE_COLUMN} from "./fragments/singleColumn"
 
 // this query is the same as the homepagecontent query
 // any changes to the schema need to be replicated there most likely
@@ -31,234 +41,33 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on ListWithImageSwitch {
               ...SwitchListDetails
             }
-            ... on SingleColumnBlockBlank {
-              blockAlignment
-              contentCollection(limit: 3) {
-                items {
-                  ... on ContentTypeRichText {
-                    content {
-                      json
-                    }
-                  }
-                  ... on Image {
-                    ...ImageDetails
-                  }
-                  ... on Video {
-                    ...VideoDetails
-                  }
-                  ... on AccordionWidget {
-                    ...AccordionWidgetFragment
-                  }
-                  ... on ListIcons {
-                    listItemsCollection(limit: 12) {
-                      items {
-                        icon {
-                          url
-                          title
-                        }
-                        textContent {
-                          json
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+            ... on PillBlock {
+                ...PillBlockFragment
             }
             ... on TwoColumnBlockBlank {
-              blockAlignment
-              column1Collection(limit: 3) {
-                items {
-                  ... on ContentTypeRichText {
-                    content {
-                      json
-                    }
-                  }
-                  ... on Image {
-                    ...ImageDetails
-                  }
-                  ... on Video {
-                    ...VideoDetails
-                  }
-                  ... on AccordionWidget {
-                    ...AccordionWidgetFragment
-                  }
-                  ... on ListIcons {
-                    listItemsCollection(limit: 12) {
-                      items {
-                        icon {
-                          url
-                          title
-                        }
-                        textContent {
-                          json
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-              column2Collection(limit: 3) {
-                items {
-                  ... on ContentTypeRichText {
-                    content {
-                      json
-                    }
-                  }
-                  ... on Image {
-                    ...ImageDetails
-                  }
-                  ... on Video {
-                    ...VideoDetails
-                  }
-                  ... on AccordionWidget {
-                    ...AccordionWidgetFragment
-                  }
-                  ... on ListIcons {
-                    listItemsCollection(limit: 4) {
-                      items {
-                        icon {
-                          url
-                          title
-                        }
-                        textContent {
-                          json
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              ...TwoColumn
             }
+            ... on SingleColumnBlockBlank {
+              ...SingleColumn
+            }
+      
           }
         }
       }
     }
   }
 
-  fragment TrustBadgesFragment on TrustBadges {
-    textContent {
-      json
-    }
-    scroll
-    logosCollection(limit: 5) {
-      items {
-        url
-        title
-        description
-        width
-        height
-        contentType
-        fileName
-      }
-    }
-  }
 
-  fragment IconRowFragment on IconRow {
-    entryTitle
-    iconItemsCollection(limit: 12) {
-      items {
-        ... on ListIconItem {
-          icon {
-            url
-            title
-            description
-            width
-            height
-            contentType
-            fileName
-          }
-          textContent {
-            json
-          }
-        }
-      }
-    }
-  }
-
-  fragment AccordionWidgetFragment on AccordionWidget {
-    icon {
-      url
-      title
-      description
-      width
-      height
-      contentType
-      fileName
-    }
-    accordionContentCollection(limit: 8) {
-      items {
-        ... on AccordionItem {
-          entryTitle
-          textContent {
-            json
-          }
-        }
-      }
-    }
-  }
-
-  fragment ImageDetails on Image {
-    imageContent {
-      url
-      title
-      description
-      width
-      height
-      contentType
-      fileName
-    }
-  }
-
-  fragment VideoDetails on Video {
-    videoContent {
-      url
-      title
-      description
-      width
-      height
-      contentType
-      fileName
-    }
-  }
-
-  fragment HeroDetails on ComponentHeroBanner {
-    entryTitle
-    pageHeader
-    pageHeaderLine2
-    pageSubtitle
-    ctaUrl
-    heroMedia {
-      url
-      title
-      description
-      width
-      height
-      contentType
-      fileName
-    }
-  }
-
-  fragment SwitchListDetails on ListWithImageSwitch {
-    entryTitle
-    listItemsCollection(limit: 4) {
-      items {
-        ... on ListSwitchItem {
-          entryTitle
-          listMedia {
-            url
-            title
-            description
-            width
-            height
-            contentType
-            fileName
-          }
-          textContent
-        }
-      }
-    }
-  }
+${GET_SINGLE_COLUMN}
+${GET_TWO_COLUMN}
+${GET_VIDEO}
+${GET_IMAGE}
+${GET_ACCORDION}
+${GET_LIST_ICONS}
+${GET_HERO_DETAILS}
+${GET_LIST_SWITCH}
+${GET_TRUST_BADGES}
+${GET_PILL_BLOCK}
 `;
 
 export const GET_ALL_LANDING_PAGES = gql`
