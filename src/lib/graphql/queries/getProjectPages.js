@@ -1,46 +1,13 @@
 import { gql } from "@apollo/client";
+import { GET_PROJECT_DATA } from "./fragments/getProjects";
 
 export const GET_PROJECT_PAGES = gql`
-  {
+  query GetProjectPages {
     projectPageCollection {
       items {
-        projectTitle
-        slug
-        projectScope {
-          json
-        }
-        projectDate
-        collaborationModel
-        heroMedia {
-          url
-          title
-          width
-          height
-        }
-        dataOne {
-          json
-        }
-        dataTwo {
-          json
-        }
-        dataThree {
-          json
-        }
-        mediaGalleryCollection {
-          items {
-            url
-          }
-        }
-        extendedDescription {
-          json
-        }
-        contentfulMetadata {
-          tags {
-            id
-            name
-          }
-        }
+          ...ProjectData  
       }
     }
   }
+    ${GET_PROJECT_DATA}
 `;

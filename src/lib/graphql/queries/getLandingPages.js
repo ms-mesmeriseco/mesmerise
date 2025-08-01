@@ -9,7 +9,10 @@ import { GET_ACCORDION } from "./fragments/getAccordion";
 import { GET_IMAGE } from "./fragments/getImage";
 import { GET_VIDEO } from "./fragments/getVideo";
 import { GET_TWO_COLUMN } from "./fragments/getTwoColumn";
-import {GET_SINGLE_COLUMN} from "./fragments/singleColumn"
+import {GET_SINGLE_COLUMN} from "./fragments/singleColumn";
+import { GET_SINGLE_CASESTUDY } from "./fragments/getSingleCaseStudy";
+
+
 
 // this query is the same as the homepagecontent query
 // any changes to the schema need to be replicated there most likely
@@ -50,14 +53,16 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on SingleColumnBlockBlank {
               ...SingleColumn
             }
-      
+            ... on SingleCaseStudy {
+              ...SingleStudy
+            }
           }
         }
       }
     }
   }
 
-
+${GET_SINGLE_CASESTUDY}
 ${GET_SINGLE_COLUMN}
 ${GET_TWO_COLUMN}
 ${GET_VIDEO}

@@ -1,13 +1,12 @@
 "use client";
 
-import HeroBanner from "@/components/cms-blocks/HeroBanner";
 import SingleColumn from "@/components/cms-blocks/SingleColumn";
 import TwoColumn from "@/components/cms-blocks/TwoColumn";
 import IconRow from "@/components/cms-blocks/IconRow";
-import TrustBadges from "@/components/cms-blocks/TrustBadges";
 import AccordionWidget from "@/components/cms-blocks/Accordion";
 import SwitchListAccordion from "@/components/cms-blocks/SwitchListAccordion";
 import PillBlock from "@/components/cms-blocks/PillBlock";
+import SingleCaseStudy from "@/components/cms-blocks/SingleCaseStudy";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -40,7 +39,7 @@ export default function PageBase({ blocks }) {
   return (
     <motion.div
       {...anim(opacity)}
-      className="flex flex-col items-center justify-center min-h-screen  md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)] md:mt-[var(--header-height)]"
+      className="flex flex-col items-center justify-center min-h-screen mb-[10rem] md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)] md:mt-[var(--header-height)]"
     >
       <main className="grid grid-cols-12 flex flex-col lg:gap-y-[10rem] md:gap-y-[6rem] gap-y-[4rem] w-full">
         {blocks.map((block, index) => {
@@ -125,6 +124,12 @@ export default function PageBase({ blocks }) {
                   <PillBlock pills={pills} assetMap={assetMap} />
                 </div>
               );
+              case "SingleCaseStudy":
+                return (
+                  <div className="col-span-12" key={`block-${index}`}>
+                    <SingleCaseStudy study={block} summary={block.summary} results={block.results} timeFrame={block.timeFrame} />
+                  </div>
+                );
 
             default:
               return null;
