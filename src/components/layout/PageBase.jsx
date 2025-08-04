@@ -103,19 +103,32 @@ export default function PageBase({ blocks }) {
                 </div>
               );
 
-                 case "PillBlock":
+            case "PillBlock":
               const pills = [];
               if (block.pillOne && block.pillOneContent?.json) {
-                pills.push({ label: block.pillOne, content: block.pillOneContent.json });
+                pills.push({
+                  label: block.pillOne,
+                  content: block.pillOneContent.json,
+                  media: block.pillOneMedia || null,
+                });
               }
               if (block.pillTwo && block.pillTwoContent?.json) {
-                pills.push({ label: block.pillTwo, content: block.pillTwoContent.json });
+                pills.push({
+                  label: block.pillTwo,
+                  content: block.pillTwoContent.json,
+                });
               }
               if (block.pillThree && block.pillThreeContent?.json) {
-                pills.push({ label: block.pillThree, content: block.pillThreeContent.json });
+                pills.push({
+                  label: block.pillThree,
+                  content: block.pillThreeContent.json,
+                });
               }
               if (block.pillFour && block.pillFourContent?.json) {
-                pills.push({ label: block.pillFour, content: block.pillFourContent.json });
+                pills.push({
+                  label: block.pillFour,
+                  content: block.pillFourContent.json,
+                });
               }
               const assetMap = {};
               (block?.links?.assets?.block || []).forEach((asset) => {
@@ -126,24 +139,31 @@ export default function PageBase({ blocks }) {
                   <PillBlock pills={pills} assetMap={assetMap} />
                 </div>
               );
-              case "SingleCaseStudy":
+            case "SingleCaseStudy":
+              return (
+                <div className="col-span-12" key={`block-${index}`}>
+                  <SingleCaseStudy
+                    study={block}
+                    summary={block.summary}
+                    results={block.results}
+                    timeFrame={block.timeFrame}
+                  />
+                </div>
+              );
+            case "MediaCarouselWithText":
+              if (
+                block.mediaContentCollection?.items &&
+                block.mediaContentCollection.items.length > 0
+              ) {
                 return (
                   <div className="col-span-12" key={`block-${index}`}>
-                    <SingleCaseStudy study={block} summary={block.summary} results={block.results} timeFrame={block.timeFrame} />
+                    <MediaCarouselWithText
+                      mediaContentCollection={block.mediaContentCollection}
+                    />
                   </div>
                 );
-              case "MediaCarouselWithText":
-                if (
-                  block.mediaContentCollection?.items &&
-                  block.mediaContentCollection.items.length > 0
-                ) {
-                  return (
-                    <div className="col-span-12" key={`block-${index}`}>
-                      <MediaCarouselWithText mediaContentCollection={block.mediaContentCollection} />
-                    </div>
-                  );
-                }
-                return null;
+              }
+              return null;
             default:
               return null;
           }

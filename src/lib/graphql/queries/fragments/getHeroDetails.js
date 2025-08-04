@@ -1,7 +1,7 @@
-import { gql} from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export const GET_HERO_DETAILS = gql`
- fragment HeroDetails on ComponentHeroBanner {
+  fragment HeroDetails on ComponentHeroBanner {
     entryTitle
     pageHeader
     pageHeaderLine2
@@ -10,10 +10,9 @@ export const GET_HERO_DETAILS = gql`
     heroMedia {
       url
       title
-      description
       width
       height
       contentType
-      fileName
     }
-  }`;
+  }
+`;

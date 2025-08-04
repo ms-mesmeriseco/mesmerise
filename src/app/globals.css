@@ -154,6 +154,7 @@ h1 {
 }
 h2 {
   font-size: 3.15rem;
+  line-height: 3.42rem;
   font-weight: 400;
 }
 h3 {
@@ -199,6 +200,13 @@ p a::after {
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }
+/* p a::after {
+  content: url("/icons/link-arrow_MESM-10px.png");
+  object-fit: contain;
+  margin: 8px;
+  width: 16px;
+  height: 16px;
+} */
 
 p a:hover::after,
 p a:focus::after {
