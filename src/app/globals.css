@@ -119,12 +119,13 @@ body {
 * {
   box-sizing: border-box;
 }
-*::-webkit-scrollbar {
+*:not(.page)::-webkit-scrollbar {
   display: none;
 }
 .page {
   margin: 0;
 }
+
 a {
   text-decoration: none;
 }
@@ -231,7 +232,13 @@ a button:hover {
 }
 ul li {
   list-style-type: circle;
-  margin-left: 2rem;
+  margin-left: 1rem;
+  list-style-position: outside;
+}
+ol li {
+  list-style-type: decimal;
+  margin-left: 1rem;
+  padding-left: 0.5rem;
 }
 ul {
   margin: 0.5rem 0rem;
@@ -246,8 +253,25 @@ footer ul li {
 }
 b {
   font-style: normal;
-  color: var(--accent);
 }
+
+.link-text:hover::after {
+  transform: scaleX(1);
+}
+
+.inline-arrow {
+  width: 1rem;
+  height: 1rem;
+  margin-bottom: 0.28rem;
+  margin-left: -0.25rem;
+  object-fit: contain;
+  transition: transform 0.2s ease-in-out;
+}
+
+a:hover .inline-arrow {
+  transform: translateX(2px);
+}
+
 @keyframes scroll-horizontal {
   0% {
     transform: translateX(0%);

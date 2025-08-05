@@ -3,6 +3,7 @@ import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 // import { motion } from "framer-motion"
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import Image from "next/image";
 import BlogTOC from "@/components/blog/BlogTOC";
 
@@ -121,7 +122,7 @@ export default async function BlogPost({ params }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-0">
       {/* Hero Image */}
-      <div className="w-full aspect-[16/5] rounded-4xl overflow-hidden mb-0 p-[var(--global-margin-sm)]">
+      <div className="w-full aspect-[16/5] rounded-4xl h-[60vh] overflow-hidden mb-0 p-[var(--global-margin-sm)]">
         <img
           src={page.heroImage?.url || ""}
           alt={page.heroImage?.title || ""}
@@ -159,7 +160,7 @@ export default async function BlogPost({ params }) {
           <br />
           {page.blogContent?.json && (
             <div className="[&>p+p]:mt-4">
-              {documentToReactComponents(page.blogContent.json, renderOptions)}
+              {renderRichTextWithBreaks(page.blogContent.json)}
             </div>
           )}
         </article>
