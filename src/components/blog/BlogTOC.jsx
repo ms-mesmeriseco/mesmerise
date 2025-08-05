@@ -49,9 +49,9 @@ export default function BlogTOC({ anchors }) {
           {anchors.map((anchor) => (
             <div
               key={anchor.id}
-              className="border-[var(--mesm-grey-dk)] border-1 rounded-xl px-4 py-2 text-left text-sm text-[var(--foreground)] hover:text-[var(--background)] hover:bg-[var(--foreground)] duration-200 flex flex-row items-start gap-2"
+              className="border-[var(--mesm-grey-dk)] border-1 rounded-xl px-2 py-2 text-left text-sm text-[var(--foreground)] hover:text-[var(--background)] hover:bg-[var(--foreground)] duration-200 flex flex-row items-start gap-2"
             >
-              <div className="w-[8px] h-[8px] text-[var(--foreground)] border-[var(--mesm-grey)] border-1 p-[4px] m-[4px] rounded-full bg-black"></div>
+              <div className="w-[8px] h-[8px] text-[var(--foreground)] border-[var(--mesm-grey)] border-1 p-[2px] m-[5px] rounded-full bg-black"></div>
               <a
                 href={`#${anchor.id}`}
                 onClick={(e) => handleAnchorClick(e, anchor.id)}
@@ -64,13 +64,13 @@ export default function BlogTOC({ anchors }) {
 
         {/* Scroll hint arrow */}
         {!atBottom && (
-          <div className="absolute bottom-2 left-2 -translate-x-1/2 pointer-events-none opacity-70">
+          <div className="absolute bottom-2 left-1 -translate-x-1/2 pointer-events-none opacity-70">
             <svg
               width="16"
               height="16"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="var(--mesm-l-grey)"
+              stroke="var(--mesm-grey)"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"

@@ -45,7 +45,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.25 }}
           lazy="true"
           className="relative w-full aspect-[16/9] overflow-hidden rounded-xl bg-black"
         >
@@ -78,7 +78,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
+                transition={{ duration: 0.1 }}
                 lazy="true"
                 className="absolute top-1 left-1 text-white p-4 rounded-lg max-w-[50%] text-sm z-10"
               >

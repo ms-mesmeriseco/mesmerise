@@ -122,13 +122,13 @@ export default async function BlogPost({ params }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-0">
       {/* Hero Image */}
-      <div className="w-full aspect-[16/5] rounded-4xl h-[60vh] overflow-hidden mb-0 p-[var(--global-margin-sm)]">
+      {/* <div className="w-full aspect-[16/5] rounded-4xl h-[60vh] overflow-hidden mb-0 p-[var(--global-margin-sm)]">
         <img
           src={page.heroImage?.url || ""}
           alt={page.heroImage?.title || ""}
           className="w-full h-full object-cover rounded-3xl"
         />
-      </div>
+      </div> */}
 
       {/* Main Content */}
 
@@ -149,9 +149,9 @@ export default async function BlogPost({ params }) {
           </aside>
         )}
 
-        <article className="max-w-3xl w-full flex flex-col gap-6">
-          <h3>{page.postHeading}</h3>
-          <span className="text-sm">
+        <article className="max-w-xl w-full flex flex-col gap-6">
+          <h1 className="text-sm">{page.postHeading}</h1>
+          <span className="text-sm text-[var(--mesm-l-grey)]">
             {formattedDate}
             <br />
             By {page.postAuthor}
@@ -160,7 +160,9 @@ export default async function BlogPost({ params }) {
           <br />
           {page.blogContent?.json && (
             <div className="[&>p+p]:mt-4">
-              {renderRichTextWithBreaks(page.blogContent.json)}
+              {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
+                blog: true,
+              })}
             </div>
           )}
         </article>
