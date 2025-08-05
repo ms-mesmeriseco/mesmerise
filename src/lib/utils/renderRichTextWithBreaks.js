@@ -77,7 +77,7 @@ export function getRichTextOptions(assetMap = {}, context = {}) {
                 alt={title || description || "Embedded image"}
                 width={width}
                 height={height}
-                className="w-full h-auto rounded-xl"
+                className="w-full h-auto rounded-md"
               />
             </div>
           );

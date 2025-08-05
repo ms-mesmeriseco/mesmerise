@@ -3,10 +3,10 @@ import { gql } from "@apollo/client";
 export const GET_LIST_ICONS = gql`
   fragment IconRowFragment on IconRow {
     titleText {
-        json
+      json
     }
     displayTwo
-    iconItemsCollection(limit: 12) {
+    iconItemsCollection(limit: 4) {
       items {
         ... on ListIconItem {
           icon {
@@ -24,4 +24,5 @@ export const GET_LIST_ICONS = gql`
         }
       }
     }
-  }`;
+  }
+`;

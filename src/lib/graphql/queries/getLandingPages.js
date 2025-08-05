@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import { GET_PAGE_BLOCKS } from "../fragments/getPageBlocks";
 import { GET_PILL_BLOCK } from "./fragments/pillBlockFragment";
 import { GET_TRUST_BADGES } from "./fragments/trustBadgesFragment";
 import { GET_LIST_SWITCH } from "./fragments/getListSwitch";
@@ -12,9 +11,6 @@ import { GET_TWO_COLUMN } from "./fragments/getTwoColumn";
 import { GET_SINGLE_COLUMN } from "./fragments/singleColumn";
 import { GET_SINGLE_CASESTUDY } from "./fragments/getSingleCaseStudy";
 import { GET_MEDIA_CAROUSEL } from "./fragments/getMediaCarousel";
-
-// this query is the same as the homepagecontent query
-// any changes to the schema need to be replicated there most likely
 
 export const GET_LANDING_PAGE_BY_SLUG = gql`
   query GetLandingPageBySlug($slug: String!) {
