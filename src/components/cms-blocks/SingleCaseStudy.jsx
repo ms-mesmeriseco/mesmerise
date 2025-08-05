@@ -34,7 +34,7 @@ export default function SingleCaseStudy({
   return (
     <section className="flex flex-col md:flex-row gap-4 wrapper">
       {/* Left (Hero image with 16:9 ratio) */}
-      <div className="relative w-full md:w-3/4 aspect-video overflow-hidden rounded-xl">
+      <div className="relative w-full max-h-[50vh] md:w-3/4 aspect-16/9 overflow-hidden rounded-xl">
         {heroMedia?.url && (
           <Image
             src={heroMedia.url}

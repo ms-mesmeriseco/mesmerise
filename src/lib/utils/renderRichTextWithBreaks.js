@@ -48,7 +48,7 @@ export function getRichTextOptions(assetMap = {}, context = {}) {
               alt=""
               width={16}
               height={16}
-              className="inline-arrow"
+              className="inline-arrow p-[1px]"
               aria-hidden="true"
             />
           </a>

@@ -58,18 +58,14 @@ export default function Connect() {
         label={"what's on offer"}
         column1={[
           <h2 key="title" className="text-md md:text-6xl">
-            Premium full service solutions, engineered with insight.
-            <br />
-            Delivered with intent.
+            Premium full service solutions, engineered with insight. Delivered
+            with intent.
           </h2>,
-          <p key="desc" className="text-lg">
+          <h3 key="sub-title">
             We take a holistic approach to unify your brand, website, and
             message. Turning every touchpoint into a reflection of your vision
             that inspires trust, action, and loyalty.
-            <br />
-            From strategy to execution, design to optimisation, we deliver
-            tailored systems that perform today and compound tomorrow.
-          </p>,
+          </h3>,
         ]}
       />
       <ServicesTab />
