@@ -47,24 +47,36 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
                 src="/icons/arrow_back_ios_new_24dp_686767_FILL0_wght200_GRAD0_opsz24.svg"
               />
             </button>
+            <div className="relative w-full max-w-5xl mx-auto overflow-hidden">
+              <div className="flex items-center justify-between">
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={startIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="grid grid-cols-2 gap-[var(--global-margin-xs)] w-8/10 max-w-5xl mx-auto"
+                  >
+                    {visibleItems.map((item, idx) => {
+                      const { icon, textContent } = item || {};
+                      const key = icon?.title
+                        ? `${icon.title}-${idx}`
+                        : `icon-${idx}`;
 
-            <div className="grid grid-cols-2 gap-[var(--global-margin-xs)] w-8/10 max-w-5xl mx-auto">
-              {visibleItems.map((item, idx) => {
-                const { icon, textContent } = item || {};
-                const key = icon?.title
-                  ? `${icon.title}-${idx}`
-                  : `icon-${idx}`;
-
-                return (
-                  <Card key={key} icon={icon}>
-                    {textContent?.json && (
-                      <div className="text-sm flex flex-col gap-6">
-                        {documentToReactComponents(textContent.json)}
-                      </div>
-                    )}
-                  </Card>
-                );
-              })}
+                      return (
+                        <Card key={key} icon={icon}>
+                          {textContent?.json && (
+                            <div className="text-sm flex flex-col gap-6">
+                              {documentToReactComponents(textContent.json)}
+                            </div>
+                          )}
+                        </Card>
+                      );
+                    })}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
 
             <button
