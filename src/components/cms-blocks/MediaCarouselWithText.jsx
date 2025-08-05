@@ -38,7 +38,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
   };
 
   return (
-    <section className="w-full">
+    <section className="wrapper w-full">
       <AnimatePresence mode="wait">
         <motion.div
           key={activeIndex}
@@ -47,7 +47,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
           lazy="true"
-          className="relative w-full aspect-[16/9] overflow-hidden rounded-xl bg-black"
+          className="relative w-full aspect-[16/9] overflow-hidden rounded-lg bg-black"
         >
           {/* Image or Video */}
           {activeItem.mediaContent?.contentType?.startsWith("image/") ? (

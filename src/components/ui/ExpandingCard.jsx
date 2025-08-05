@@ -18,12 +18,12 @@ export default function ExpandingCard({
 
   return (
     <div
-      className="flex flex-col  bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-2xl shadow cursor-pointer transition duration-100  hover:translate-x-[2px] hover:bg-[var(--mesm-grey-dk)]"
+      className="flex flex-col  bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-2xl shadowtransition duration-100  hover:translate-x-[2px] hover:bg-[var(--mesm-grey-dk)]"
       {...props}
     >
       <button
         onClick={() => setExpanded((prev) => !prev)}
-        className="w-full flex justify-between items-center h-auto py-2 text-left transition text-md hover:opacity-70"
+        className="w-full flex justify-between items-center h-auto py-2 text-left transition text-md hover:opacity-70  cursor-pointer "
         aria-expanded={expanded}
         type="button"
       >

@@ -1,11 +1,10 @@
-// app/work/page.tsx (server component)
+// app/work/page.js
 import ProjectNavigationList from "@/components/cms-blocks/ProjectNavigationList";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 
 export default async function Work({ searchParams }) {
-  const activeTag = Array.isArray(searchParams?.tag)
-    ? searchParams.tag[0]
-    : searchParams?.tag ?? null;
+  const tagParam = searchParams?.tag;
+  const activeTag = Array.isArray(tagParam) ? tagParam[0] : tagParam ?? null;
 
   return (
     <div className="flex flex-col gap-[6rem] p-[var(--global-margin-lg)] min-h-screen">

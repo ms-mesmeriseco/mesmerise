@@ -2,7 +2,6 @@
 
 import { getClient } from "../../../lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import ServiceTags from "@/components/services/ServiceTags";
 
@@ -29,7 +28,7 @@ export default async function ProjectPage({ params }) {
         />
       </div>
 
-      <div className="col-span-12 lg:col-span-4 border-1 p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4">
+      <div className="col-span-12 lg:col-span-4 border-1 border-[var(--mesm-grey-dk)] p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4">
         <h1 className="font-medium">{page.projectTitle}</h1>
         <p className="text-sm opacity-60">{formattedDate}</p>
         <p className="text-sm opacity-60">{page.collaborationModel || ""}</p>

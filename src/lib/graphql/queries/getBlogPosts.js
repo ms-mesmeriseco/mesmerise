@@ -24,6 +24,34 @@ export const GET_BLOG_POSTS = gql`
         blogContent {
           json
           links {
+            entries {
+              block {
+                sys {
+                  id
+                }
+                __typename
+                ... on ListIconItem {
+                  icon {
+                    url
+                    title
+                    description
+                    width
+                    height
+                    contentType
+                    fileName
+                  }
+                  textContent {
+                    json
+                  }
+                }
+                ... on AccordionItem {
+                  entryTitle
+                  textContent {
+                    json
+                  }
+                }
+              }
+            }
             assets {
               block {
                 sys {

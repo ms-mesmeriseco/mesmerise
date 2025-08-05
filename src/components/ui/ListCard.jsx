@@ -1,6 +1,12 @@
+"use client";
+
 import { motion } from "framer-motion";
 
-export default function ListCard({ icon, children, ...props }) {
+export default function ListCard({ icon, children, outline, ...props }) {
+  const boxStyle = outline
+    ? "border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] duration-200"
+    : "";
+
   return (
     <motion.div
       whileHover={{
@@ -8,7 +14,7 @@ export default function ListCard({ icon, children, ...props }) {
         translateX: "2px",
       }}
       transition={{ damping: 20, duration: 0.1 }}
-      className="flex gap-8 items-center bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-2xl shadow cursor-pointer"
+      className={`flex gap-8 items-center bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-2xl shadow ${boxStyle}`}
       {...props}
     >
       {icon?.url && (

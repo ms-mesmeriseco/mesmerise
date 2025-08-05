@@ -6,22 +6,24 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import Image from "next/image";
 import BlogTOC from "@/components/blog/BlogTOC";
+import ExpandingCard from "@/components/ui/ExpandingCard";
+import ListCard from "@/components/ui/ListCard";
 
-function handleAnchorClick(e, id) {
-  e.preventDefault();
-  const headerHeight =
-    parseInt(
-      getComputedStyle(document.documentElement).getPropertyValue(
-        "--header-height"
-      )
-    ) || 80; // fallback to 80px
-  const el = document.getElementById(id);
-  if (el) {
-    const y =
-      el.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px extra spacing
-    window.scrollTo({ top: y, behavior: "smooth" });
-  }
-}
+// function handleAnchorClick(e, id) {
+//   e.preventDefault();
+//   const headerHeight =
+//     parseInt(
+//       getComputedStyle(document.documentElement).getPropertyValue(
+//         "--header-height"
+//       )
+//     ) || 80; // fallback to 80px
+//   const el = document.getElementById(id);
+//   if (el) {
+//     const y =
+//       el.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px extra spacing
+//     window.scrollTo({ top: y, behavior: "smooth" });
+//   }
+// }
 
 export default async function BlogPost({ params }) {
   const { slug } = params;
@@ -39,6 +41,13 @@ export default async function BlogPost({ params }) {
       assetMap[asset.sys.id] = asset;
     });
   }
+  const entryMap = {};
+  if (page.blogContent?.links?.entries?.block) {
+    page.blogContent.links.entries.block.forEach((entry) => {
+      entryMap[entry.sys.id] = entry;
+    });
+  }
+
   function getH3Anchors(json) {
     const anchors = [];
     if (!json?.content) return anchors;
@@ -108,6 +117,33 @@ export default async function BlogPost({ params }) {
         // fallback for other asset types
         return null;
       },
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+        const entryId = node.data.target.sys.id;
+        const entry = entryMap[entryId];
+        if (!entry) return null;
+
+        switch (entry.__typename) {
+          case "AccordionItem":
+            return (
+              <ExpandingCard
+                title={entry.entryTitle}
+                expandedContent={documentToReactComponents(
+                  entry.textContent?.json
+                )}
+              />
+            );
+
+          case "ListIconItem":
+            return (
+              <ListCard icon={entry.icon}>
+                {documentToReactComponents(entry.textContent?.json)}
+              </ListCard>
+            );
+
+          default:
+            return null;
+        }
+      },
     },
   };
 
@@ -149,7 +185,7 @@ export default async function BlogPost({ params }) {
           </aside>
         )}
 
-        <article className="max-w-xl w-full flex flex-col gap-6">
+        <article className="max-w-xl w-full flex flex-col gap-2">
           <h1 className="text-sm">{page.postHeading}</h1>
           <span className="text-sm text-[var(--mesm-l-grey)]">
             {formattedDate}
@@ -159,9 +195,10 @@ export default async function BlogPost({ params }) {
 
           <br />
           {page.blogContent?.json && (
-            <div className="[&>p+p]:mt-4">
+            <div className="[&>p+p]:mt-4 flex flex-col gap-4">
               {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
                 blog: true,
+                entryMap,
               })}
             </div>
           )}

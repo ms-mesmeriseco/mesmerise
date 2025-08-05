@@ -2,6 +2,8 @@ import React from "react";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import Image from "next/image";
+import ExpandingCard from "@/components/ui/ExpandingCard";
+import ListCard from "@/components/ui/ListCard";
 
 function replaceLineBreaks(text) {
   return text.split("\n").reduce((acc, segment, index) => {
@@ -22,6 +24,7 @@ function generateAnchorId(text = "") {
 // Accept optional assetMap and context
 export function getRichTextOptions(assetMap = {}, context = {}) {
   const isBlog = context.blog;
+  const entryMap = context.entryMap || {};
 
   return {
     renderText: (text) => replaceLineBreaks(text),
@@ -97,6 +100,33 @@ export function getRichTextOptions(assetMap = {}, context = {}) {
         }
 
         return null;
+      },
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+        const entryId = node.data.target.sys.id;
+        const entry = entryMap[entryId];
+        if (!entry) return null;
+
+        switch (entry.__typename) {
+          case "AccordionItem":
+            return (
+              <ExpandingCard
+                title={entry.entryTitle}
+                expandedContent={documentToReactComponents(
+                  entry.textContent?.json
+                )}
+              />
+            );
+
+          case "ListIconItem":
+            return (
+              <ListCard icon={entry.icon} outline="true">
+                {documentToReactComponents(entry.textContent?.json)}
+              </ListCard>
+            );
+
+          default:
+            return null;
+        }
       },
     },
   };
