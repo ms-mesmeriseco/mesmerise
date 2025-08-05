@@ -6,7 +6,7 @@ export default function Card({ icon, children }) {
   return (
     <motion.div
       initial={{
-        borderColor: "var(--mesm-grey)",
+        borderColor: "var(--mesm-grey-dk)",
         backgroundColor: "var(--mesm-grey-xd)",
       }}
       whileHover={{
@@ -14,7 +14,7 @@ export default function Card({ icon, children }) {
         backgroundColor: "var(--mesm-grey-dk)",
       }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="flex flex-col items-left text-left gap-6 min-h-full rounded-md p-[2rem] justify-top border-1 transition duration-100 ease-in-out  [&>p+p]:mt-4"
+      className="flex flex-col items-left text-left gap-6 min-h-full rounded-2xl p-[2rem] justify-top border-1 transition duration-100 ease-in-out  [&>p+p]:mt-4"
     >
       {icon?.url && (
         <Image

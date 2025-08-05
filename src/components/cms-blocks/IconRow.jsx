@@ -1,7 +1,7 @@
 "use client";
 
 import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import InView from "@/hooks/InView";
 import Card from "@/components/ui/Card";
@@ -28,23 +28,32 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
     <InView>
       <section className="wrapper w-full py-8 text-center">
         {renderRichTextWithBreaks(titleText.json)}
-       
+
         <br />
 
         {showCarousel ? (
           <div className="relative flex items-center justify-center">
             <button
               onClick={handlePrev}
-              className="absolute left-0 z-10 bg-[var(--mesm-grey-dk)] hover:bg-[var(--mesm-grey)] transition duration-200 cursor-pointer text-black pr-2 pl-1 py-1 rounded-full"
+              className="absolute left-0 z-10 hover:x-[2px] transition duration-200 cursor-pointer text-black p-3 rounded-full"
               disabled={startIndex === 0}
             >
-              <img className="rotate-90 w-10" src="/icons/arrow-down.svg"/>
+              <motion.img
+                whileHover={{
+                  translateX: "-2px",
+                }}
+                transition={{ duration: 0.2 }}
+                className="w-[24px]"
+                src="/icons/arrow_back_ios_new_24dp_686767_FILL0_wght200_GRAD0_opsz24.svg"
+              />
             </button>
 
             <div className="grid grid-cols-2 gap-[var(--global-margin-xs)] w-8/10 max-w-5xl mx-auto">
               {visibleItems.map((item, idx) => {
                 const { icon, textContent } = item || {};
-                const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;
+                const key = icon?.title
+                  ? `${icon.title}-${idx}`
+                  : `icon-${idx}`;
 
                 return (
                   <Card key={key} icon={icon}>
@@ -60,10 +69,17 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
 
             <button
               onClick={handleNext}
-              className="absolute right-0 z-10 bg-[var(--mesm-grey-dk)] hover:bg-[var(--mesm-grey)] transition duration-200 cursor-pointer text-black pl-2 pr-1 py-1 rounded-full"
+              className="absolute right-0 z-10 transition duration-200 cursor-pointer text-black pl-2 pr-1 py-1 rounded-full"
               disabled={startIndex + 2 >= iconItems.length}
             >
-              <img className="rotate-270 w-10" src="/icons/arrow-down.svg"/>
+              <motion.img
+                whileHover={{
+                  translateX: "2px",
+                }}
+                transition={{ duration: 0.2 }}
+                className="w-[24px]"
+                src="/icons/arrow_forward_ios_24dp_686767_FILL0_wght200_GRAD0_opsz24.svg"
+              />
             </button>
           </div>
         ) : (
