@@ -1,6 +1,5 @@
-import { getClient } from "../../../lib/apollo-client";
+import { getClient } from "@/lib/apollo-client";
 import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
-// import { motion } from "framer-motion"
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
@@ -9,46 +8,7 @@ import BlogTOC from "@/components/blog/BlogTOC";
 import ExpandingCard from "@/components/ui/ExpandingCard";
 import ListCard from "@/components/ui/ListCard";
 
-// function handleAnchorClick(e, id) {
-//   e.preventDefault();
-//   const headerHeight =
-//     parseInt(
-//       getComputedStyle(document.documentElement).getPropertyValue(
-//         "--header-height"
-//       )
-//     ) || 80; // fallback to 80px
-//   const el = document.getElementById(id);
-//   if (el) {
-//     const y =
-//       el.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px extra spacing
-//     window.scrollTo({ top: y, behavior: "smooth" });
-//   }
-// }
-
-export default async function BlogPost({ params }) {
-  const { slug } = params;
-  const { data } = await getClient().query({
-    query: GET_BLOG_POSTS,
-    variables: { slug },
-  });
-  const page = data.blogPostPageCollection.items[0];
-
-  if (!page) return <p>Blog post not found.</p>;
-
-  // Build asset map for embedded assets
-  const assetMap = {};
-  if (page.blogContent?.links?.assets?.block) {
-    page.blogContent.links.assets.block.forEach((asset) => {
-      assetMap[asset.sys.id] = asset;
-    });
-  }
-  const entryMap = {};
-  if (page.blogContent?.links?.entries?.block) {
-    page.blogContent.links.entries.block.forEach((entry) => {
-      entryMap[entry.sys.id] = entry;
-    });
-  }
-
+export default async function BlogPost({ entryMap, assetMap, richJson }) {
   function getH3Anchors(json) {
     const anchors = [];
     if (!json?.content) return anchors;
@@ -66,7 +26,7 @@ export default async function BlogPost({ params }) {
     return anchors;
   }
 
-  const h3Anchors = getH3Anchors(page.blogContent?.json);
+  const h3Anchors = getH3Anchors(richJson);
 
   const renderOptions = {
     renderNode: {
@@ -197,7 +157,7 @@ export default async function BlogPost({ params }) {
           <br />
           {page.blogContent?.json && (
             <div className="[&>p+p]:mt-4 flex flex-col gap-4">
-              {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
+              {renderRichTextWithBreaks(richJson, assetMap, {
                 blog: true,
                 entryMap,
               })}

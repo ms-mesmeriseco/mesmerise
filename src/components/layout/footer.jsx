@@ -5,7 +5,7 @@ import Image from "next/image";
 import { use, useEffect, useState } from "react";
 import { getClient } from "@/lib/apollo-client";
 import { GET_ALL_LANDING_PAGES } from "@/lib/graphql/queries/getLandingPages";
-import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
+import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
 export default function Footer() {
@@ -33,7 +33,7 @@ export default function Footer() {
     async function fetchBlogPosts() {
       try {
         const { data } = await getClient().query({
-          query: GET_BLOG_POSTS,
+          query: GET_ALL_BLOG_POSTS,
         });
         setBlogPosts(data?.blogPostPageCollection?.items || []);
       } catch (error) {
@@ -44,14 +44,14 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[var(--footer-bg)] text-[color:var(--footer-txt)] p-[var(--global-margin-lg)] h-[80vh]">
+    <footer className="bg-[var(--footer-bg)] text-[color:var(--footer-txt)] p-[var(--global-margin-lg)] h-[50vh]">
       <section
         data-marker=" "
         className="max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[var(--global-margin-sm)]"
       >
         {/* Spacer */}
         <div className="col-span-1">
-          <h5 className="text-lg font-semibold mb-2">Navigation</h5>
+          <h5 className="text-lg font-normal mb-2">Navigation</h5>
           <ul className="space-y-1 text-sm">
             <li>
               <a
@@ -81,7 +81,7 @@ export default function Footer() {
         </div>
         {/* Navigation */}
         <div className="col-span-1">
-          <h5 className="text-lg font-semibold mb-2">Landing Pages</h5>
+          <h5 className="text-lg font-normal mb-2">Landing Pages</h5>
           <ul className="space-y-1 text-sm">
             {landingPages.map((page) => (
               <li key={page.pageSlug}>
@@ -90,6 +90,8 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+            <br />
+            <h5 className="text-lg font-normal mb-2">Blog Pages</h5>
             {blogPosts.map((post) => (
               <li key={post.slug}>
                 <Link href={`/blog/${post.slug}`} className="hover:underline">
@@ -102,7 +104,7 @@ export default function Footer() {
 
         {/* Connect */}
         <div className="col-span-1">
-          <h5 className="text-lg font-semibold mb-2">
+          <h5 className="text-lg font-normal mb-2">
             <a href="/connect/">Connect</a>
           </h5>
           <ul className="space-y-1 text-sm">

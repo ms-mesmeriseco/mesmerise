@@ -262,6 +262,17 @@ footer ul li {
   list-style-type: none;
   margin: 0;
 }
+footer {
+  h5 {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+  a {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+}
+
 .no-list {
   list-style-type: none;
   margin: 0;

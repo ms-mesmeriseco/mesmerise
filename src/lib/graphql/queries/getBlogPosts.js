@@ -1,8 +1,9 @@
 import { gql } from "@apollo/client";
+import { GET_ACCORDION } from "./fragments/getAccordion.js";
 
 export const GET_BLOG_POSTS = gql`
-  {
-    blogPostPageCollection(limit: 10) {
+  query GetBlogPageBySlug($slug: String!) {
+    blogPostPageCollection(limit: 1, where: { slug: $slug }) {
       items {
         postTitle
         slug
@@ -68,6 +69,17 @@ export const GET_BLOG_POSTS = gql`
             }
           }
         }
+      }
+    }
+  }
+`;
+
+export const GET_ALL_BLOG_POSTS = gql`
+  query GetAllBlogPosts {
+    blogPostPageCollection(limit: 15) {
+      items {
+        postTitle
+        slug
       }
     }
   }
