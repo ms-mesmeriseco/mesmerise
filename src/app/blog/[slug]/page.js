@@ -9,22 +9,6 @@ import BlogTOC from "@/components/blog/BlogTOC";
 import ExpandingCard from "@/components/ui/ExpandingCard";
 import ListCard from "@/components/ui/ListCard";
 
-// function handleAnchorClick(e, id) {
-//   e.preventDefault();
-//   const headerHeight =
-//     parseInt(
-//       getComputedStyle(document.documentElement).getPropertyValue(
-//         "--header-height"
-//       )
-//     ) || 80; // fallback to 80px
-//   const el = document.getElementById(id);
-//   if (el) {
-//     const y =
-//       el.getBoundingClientRect().top + window.scrollY - headerHeight - 16; // 16px extra spacing
-//     window.scrollTo({ top: y, behavior: "smooth" });
-//   }
-// }
-
 export default async function BlogPost({ params }) {
   const { slug } = params;
   const { data } = await getClient().query({
@@ -45,6 +29,11 @@ export default async function BlogPost({ params }) {
   const entryMap = {};
   if (page.blogContent?.links?.entries?.block) {
     page.blogContent.links.entries.block.forEach((entry) => {
+      entryMap[entry.sys.id] = entry;
+    });
+  }
+  if (page.faqContent?.links?.entries?.block) {
+    page.faqContent.links.entries.block.forEach((entry) => {
       entryMap[entry.sys.id] = entry;
     });
   }
@@ -198,6 +187,14 @@ export default async function BlogPost({ params }) {
           {page.blogContent?.json && (
             <div className="[&>p+p]:mt-4 flex flex-col gap-4">
               {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
+                blog: true,
+                entryMap,
+              })}
+            </div>
+          )}
+          {page.faqContent?.json && (
+            <div className="[&>p+p]:mt-4 flex flex-col gap-4">
+              {renderRichTextWithBreaks(page.faqContent.json, assetMap, {
                 blog: true,
                 entryMap,
               })}

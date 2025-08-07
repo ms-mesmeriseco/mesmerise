@@ -69,6 +69,25 @@ export const GET_BLOG_POSTS = gql`
             }
           }
         }
+        faqContent {
+          json
+          links {
+            entries {
+              block {
+                sys {
+                  id
+                }
+                __typename
+                ... on AccordionItem {
+                  entryTitle
+                  textContent {
+                    json
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
