@@ -44,7 +44,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[var(--footer-bg)] text-[color:var(--footer-txt)] p-[var(--global-margin-lg)] h-[50vh]">
+    <footer className="bg-[var(--footer-bg)] text-[color:var(--footer-txt)] p-[var(--global-margin-lg)] h-full">
       <section
         data-marker=" "
         className="max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[var(--global-margin-sm)]"

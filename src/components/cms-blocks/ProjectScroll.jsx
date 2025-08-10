@@ -52,7 +52,7 @@ export default function ProjectScroll() {
   return (
     <section
       data-marker="work"
-      className="grid grid-cols-2 gap-[var(--global-margin-sm)] h-[600px] px-[var(--global-margin-lg)] py-[var(--global-margin-sm)]"
+      className="grid grid-cols-2 gap-[var(--global-margin-sm)] h-full px-[var(--global-margin-lg)] py-[var(--global-margin-sm)]"
     >
       {/* Column 1 */}
       <div className="flex flex-col gap-[var(--global-margin-sm)] h-full">

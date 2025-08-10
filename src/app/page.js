@@ -17,7 +17,7 @@ export default function HomePage() {
   return (
     <div className="relative m-[var(--global-margin-lg)] pt-[var(--header-height)]">
       <SectionMarker label={marker} />
-      <div className="pr-[var(--global-margin-xs)] flex flex-col gap-[8rem]">
+      <div className="pr-[var(--global-margin-xs)] flex flex-col gap-[4rem]">
         <HeroBlock />
 
         <AboutSection />
@@ -25,7 +25,7 @@ export default function HomePage() {
         <ProjectScroll />
 
         <ServicesList />
-        <ApproachSection />
+        {/* <ApproachSection /> */}
         <CollabModel />
         <BlogScroll />
         <section
