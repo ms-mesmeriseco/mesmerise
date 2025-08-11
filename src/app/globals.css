@@ -280,7 +280,9 @@ footer {
     font-weight: 600;
   }
 }
-
+.nav-list h3 {
+  font-weight: 200;
+}
 .no-list {
   list-style-type: none;
   margin: 0;

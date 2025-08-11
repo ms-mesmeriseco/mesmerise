@@ -8,7 +8,7 @@ export default function PrimaryButton({
   ...props
 }) {
   const isLarge = size === "large";
-  const basePadding = isLarge ? "2rem" : "1.5rem";
+  const basePadding = isLarge ? "1.5rem" : "1.5rem";
   const hoverPadding = isLarge ? "2.7rem" : "2rem";
   const height = isLarge ? "45px" : "32px";
   const radius = isLarge ? "rounded-xl" : "rounded-md";

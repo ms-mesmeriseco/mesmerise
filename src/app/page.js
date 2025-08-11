@@ -18,7 +18,7 @@ export default function HomePage() {
     <div className="relative m-[var(--global-margin-lg)] pt-[var(--header-height)]">
       <SectionMarker label={marker} />
       <div className="pr-[var(--global-margin-xs)] flex flex-col gap-[4rem]">
-        <HeroBlock />
+        {/* <HeroBlock /> */}
 
         <AboutSection />
 

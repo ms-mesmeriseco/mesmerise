@@ -24,6 +24,7 @@ export default function SecondaryButton({
         height,
         display: "inline-block",
         lineHeight: height,
+        boxSizing: "border-box",
       }}
       whileHover={{
         paddingLeft: hoverPadding,

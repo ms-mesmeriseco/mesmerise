@@ -8,7 +8,7 @@ export default function TrustBadges({ textContent, logos = [], scroll }) {
   const duplicatedLogos = scroll ? [...logos, ...logos] : logos;
 
   return (
-    <section className="w-full py-8 overflow-hidden">
+    <section className="w-full py-8 overflow-hidden h-full">
       <div className="flex gap-8 items-center">
         {/* Text content block (15%) */}
         {textContent?.json && (
@@ -20,13 +20,13 @@ export default function TrustBadges({ textContent, logos = [], scroll }) {
         <div
           className={`${
             textContent ? "w-10/12" : "w-12/12"
-          } w-10/12 overflow-hidden`}
+          } w-10/12 overflow-hidden relative`}
         >
                       {/* Left Gradient Overlay */}
-  <div className="pointer-events-none absolute left-0 top-0 h-full w-18 z-10 bg-gradient-to-r from-black to-transparent" />
+  <div className="pointer-events-none absolute left-0 top-0 h-full w-36 z-10 bg-gradient-to-r from-black to-transparent" />
   
   {/* Right Gradient Overlay */}
-  <div className="pointer-events-none absolute right-0 top-0 h-full w-18 z-10 bg-gradient-to-l from-black to-transparent" />
+  <div className="pointer-events-none absolute right-0 top-0 h-full w-36 z-10 bg-gradient-to-l from-black to-transparent" />
 
           <div
             className={`flex items-center gap-50 ${

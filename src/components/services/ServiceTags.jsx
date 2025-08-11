@@ -37,7 +37,7 @@ export default function ServiceTags({
         variants={container}
         initial="hidden"
         animate="show"
-        className="flex flex-wrap gap-[var(--global-margin-xs)]"
+        className="flex flex-wrap gap-[0.25rem]"
       >
         {items.map((tag, idx) => (
           <motion.button
@@ -45,7 +45,7 @@ export default function ServiceTags({
             variants={item}
             whileHover={{ opacity: 0.6 }}
             onClick={(e) => handleClick(tag, e)}
-            className="bg-[var(--mesm-red)] text-[var(--background)] rounded-full px-4 py-1 text-md font-normal whitespace-nowrap cursor-pointer transition"
+            className="bg-[var(--mesm-red)] text-[var(--background)] rounded-full px-[0.5rem] py-[0.15rem] text-sm font-normal whitespace-nowrap cursor-pointer transition"
             type="button"
           >
             {tag}

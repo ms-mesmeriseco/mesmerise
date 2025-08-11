@@ -8,6 +8,32 @@ import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import ServiceTags from "../services/ServiceTags";
 import { motion, AnimatePresence } from "framer-motion";
 
+/** ---------------- Allowlist of filterable tags ----------------
+ * Left side = UI label (what users click)
+ * Right side = one or more underlying Contentful tag names to match.
+ * Add synonyms/variants to the arrays as needed.
+ */
+const FILTER_MAP = {
+  "Web Design": ["Web Design"],
+  "Copywriting": ["Copywriting"],
+  "Search Engine Optimisation": ["Search Engine Optimisation"],
+  "Local SEO / GEO Targeting": [
+    "Local SEO & Geo Targeting",
+    "Local SEO / GEO Targeting",
+    "Local SEO / Geo Targeting"
+  ],
+  "Omni Channel Marketing": ["Omni-Channel Marketing", "Omni Channel Marketing"],
+  "Branding": ["Branding"],
+  "E-Commerce": ["E-Commerce", "E - Commerce", "Ecommerce"],
+  "Web Development": [
+    "Front-end Development",
+    "Back-end Development",
+    "CMS Integration"
+  ],
+};
+
+const normalize = (s) => (s || "").toString().trim().toLowerCase();
+
 export default function ProjectNavigationList({ activeTag = null }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,27 +58,47 @@ export default function ProjectNavigationList({ activeTag = null }) {
     fetchProjects();
   }, []);
 
-  // Sync tag with URL
+  // Build a set of present (normalized) tag names across all projects
+  const presentTagSet = useMemo(() => {
+    const set = new Set();
+    projects.forEach((p) =>
+      p.contentfulMetadata?.tags?.forEach((t) => set.add(normalize(t?.name)))
+    );
+    return set;
+  }, [projects]);
+
+  // Only show allowed labels that actually exist in data
+  const availableFilterLabels = useMemo(() => {
+    return Object.keys(FILTER_MAP).filter((label) =>
+      (FILTER_MAP[label] || []).some((canonical) =>
+        presentTagSet.has(normalize(canonical))
+      )
+    );
+  }, [presentTagSet]);
+
+  // Sync tag with URL (canonicalize to the UI label we store)
   useEffect(() => {
     const urlTag = searchParams.get("tag");
-    setSelectedTag(urlTag || activeTag || null);
+    const fromUrl =
+      Object.keys(FILTER_MAP).find((k) => normalize(k) === normalize(urlTag)) ||
+      null;
+
+    const fromProp =
+      Object.keys(FILTER_MAP).find((k) => normalize(k) === normalize(activeTag)) ||
+      null;
+
+    setSelectedTag(fromUrl ?? fromProp ?? null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, activeTag]);
 
-  // Collect all tags
-  const allTags = useMemo(() => {
-    const tagsSet = new Set();
-    projects.forEach((p) =>
-      p.contentfulMetadata?.tags?.forEach((t) => tagsSet.add(t.name))
-    );
-    return Array.from(tagsSet).sort((a, b) => a.localeCompare(b));
-  }, [projects]);
-
-  // Filter projects
+  // Filter projects using the selected UI label mapped to canonical tag names
   const filteredProjects = useMemo(() => {
     if (!selectedTag) return projects;
+    const candidates = new Set(
+      (FILTER_MAP[selectedTag] || [selectedTag]).map((n) => normalize(n))
+    );
     return projects.filter((p) =>
-      p.contentfulMetadata?.tags?.some((t) => t.name === selectedTag)
+      p.contentfulMetadata?.tags?.some((t) => candidates.has(normalize(t?.name)))
     );
   }, [projects, selectedTag]);
 
@@ -66,18 +112,15 @@ export default function ProjectNavigationList({ activeTag = null }) {
     }
   }, [isLoaded, selectedTag, filteredProjects.length]);
 
-  const handleSelectTag = (tag) => {
-    setSelectedTag(tag);
-    router.push(tag ? `/work?tag=${encodeURIComponent(tag)}` : "/work");
+  const handleSelectTag = (label) => {
+    setSelectedTag(label);
+    router.push(label ? `/work?tag=${encodeURIComponent(label)}` : "/work");
   };
 
   // Framer Motion variants
   const container = {
     hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.0035 },
-    },
+    show: { opacity: 1, transition: { staggerChildren: 0.0035 } },
   };
   const item = {
     hidden: { opacity: 0, transition: { staggerChildren: 0.0035 } },
@@ -85,9 +128,9 @@ export default function ProjectNavigationList({ activeTag = null }) {
   };
 
   return (
-    <section className="flex flex-col gap-[var(--global-margin-xs)]">
-      {/* Tag Filter Buttons */}
-      {isLoaded && allTags.length > 0 && (
+    <section className="flex flex-col gap-[var(--global-margin-xs)] nav-list">
+      {/* Tag Filter Buttons (from allowlist only) */}
+      {isLoaded && availableFilterLabels.length > 0 && (
         <motion.div
           variants={container}
           initial="hidden"
@@ -105,18 +148,19 @@ export default function ProjectNavigationList({ activeTag = null }) {
           >
             All
           </motion.button>
-          {allTags.map((tag) => (
+
+          {availableFilterLabels.map((label) => (
             <motion.button
-              key={tag}
+              key={label}
               variants={item}
               className={`px-4 py-1 rounded-lg ${
-                selectedTag === tag
+                selectedTag === label
                   ? "bg-[var(--mesm-blue)] text-[var(--background)]"
                   : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
               }`}
-              onClick={() => handleSelectTag(tag)}
+              onClick={() => handleSelectTag(label)}
             >
-              {tag}
+              {label}
             </motion.button>
           ))}
         </motion.div>
@@ -151,23 +195,45 @@ export default function ProjectNavigationList({ activeTag = null }) {
                 <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
                   {/* Row 1: Title + Year */}
                   <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-[var(--global-margin-md)]">
-                    <h3 className="">{project.projectTitle}</h3>
-                    <h3 className="">
-                      {new Date(project.projectDate).toLocaleDateString(
-                        "en-GB",
-                        { year: "numeric" }
-                      )}
+                    <h3>{project.projectTitle}</h3>
+                    <h3>
+                      {new Date(project.projectDate).toLocaleDateString("en-GB", {
+                        year: "numeric",
+                      })}
                     </h3>
                   </div>
-                  {/* Row 2: Tags */}
-                  <div className="mt-2 md:mt-0 pointer-events-none">
-                    <ServiceTags
-                      items={
-                        project.contentfulMetadata?.tags?.map((t) => t.name) ||
-                        []
-                      }
-                    />
-                  </div>
+
+                  {/* Row 2: Tags (only show allowed filter labels, up to 8) */}
+<div className="mt-2 md:mt-0 pointer-events-none">
+  {(() => {
+    const projectNames = new Set(
+      (project.contentfulMetadata?.tags || [])
+        .map(t => t?.name)
+        .filter(Boolean)
+        .map(s => s.toLowerCase().trim())
+    );
+
+    // Use the same order as the filter buttons (availableFilterLabels)
+    const labelsForProject = availableFilterLabels.filter(label =>
+      (FILTER_MAP[label] || []).some(alias =>
+        projectNames.has((alias || "").toLowerCase().trim())
+      )
+    );
+
+    const firstEight = labelsForProject.slice(0, 8);
+    const extra = Math.max(0, labelsForProject.length - firstEight.length);
+
+    return (
+      <div className="flex items-center gap-2 flex-wrap">
+        <ServiceTags items={firstEight} />
+        {extra > 0 && (
+          <span className="text-xs opacity-70">+{extra} more</span>
+        )}
+      </div>
+    );
+  })()}
+</div>
+
                 </div>
               </Link>
             </motion.div>
@@ -176,3 +242,4 @@ export default function ProjectNavigationList({ activeTag = null }) {
     </section>
   );
 }
+ 
