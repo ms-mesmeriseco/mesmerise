@@ -76,7 +76,7 @@ export default async function BlogPost({ params }) {
     : "";
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-0">
+    <div className="flex flex-col items-center justify-center min-h-screen gap-0 pt-18">
       {/* Optional Hero
       <div className="w-full aspect-[16/5] rounded-4xl h-[60vh] overflow-hidden mb-0 p-[var(--global-margin-sm)]">
         <img

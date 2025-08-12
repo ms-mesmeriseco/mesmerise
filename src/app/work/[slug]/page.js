@@ -18,7 +18,7 @@ export default async function ProjectPage({ params }) {
   if (!page) return <p>Blog post not found.</p>;
 
   return (
-    <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
+    <main className="pt-18 grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
       {/* --- HERO ROW --- */}
       <div className="col-span-12 lg:col-span-8 lg:h-[80vh]  md:h-[50vh] sm:h-[30vh] ">
         <img
