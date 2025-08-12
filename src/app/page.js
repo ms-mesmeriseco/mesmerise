@@ -196,7 +196,7 @@ export default function HomePage() {
     <main
       className={[
         "relative min-h-screen text-white transition-colors duration-700 px-8",
-        dark ? "bg-black" : "bg-red-600",
+        dark ? "bg-black" : "bg-[var(--mesm-red)]",
       ].join(" ")}
     >
       <SectionMarker label={marker} />
