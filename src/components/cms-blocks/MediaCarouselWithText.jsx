@@ -55,7 +55,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
               src={activeItem.mediaContent.url}
               alt={activeItem.labelText || "carousel image"}
               fill
-              className="object-cover opacity-80"
+              className="object-cover opacity-50 hover:opacity-80 duration-500"
               onLoad={handleMediaLoad}
             />
           ) : (
@@ -65,7 +65,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
               muted
               loop
               playsInline
-              className="w-full h-full object-cover opacity-80"
+              className="w-full h-full object-cover opacity-50 hover:opacity-80 duration-500"
               onLoadedData={handleMediaLoad}
             />
           )}
@@ -106,7 +106,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
           {items.map((item, idx) => (
             <motion.div
               key={idx}
-              className="relative flex flex-col items-start  mr-4"
+              className="relative flex flex-col items-start mr-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -117,7 +117,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                   setActiveIndex(idx);
                   setHasRendered(false);
                 }}
-                className={`text-left py-3 rounded-full transition-colors w-full ${
+                className={`text-left text-sm cursor-pointer text-[var(--mesm-l-grey)] py-3 rounded-full transition-colors w-full ${
                   idx === activeIndex
                     ? "text-foreground"
                     : "hover:bg-foreground/10"

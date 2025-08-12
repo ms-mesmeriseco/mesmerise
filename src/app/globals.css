@@ -64,7 +64,7 @@ body.page-connect {
   --foreground: #000000;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
-  --accent: var(--mesm-grey);
+  --accent: var(--mesm-red);
 }
 
 body.page-about {
@@ -171,7 +171,7 @@ button:focus {
 h1 {
   font-size: 4.22rem;
   line-height: 5.23rem;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 h2 {
@@ -195,7 +195,7 @@ h5 {
 }
 h6 {
   letter-spacing: 1px;
-  color: var(--mesm-grey);
+
   font-size: 0.778rem;
 }
 p {

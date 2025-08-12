@@ -1,5 +1,4 @@
 import { gql } from "@apollo/client";
-import { GET_ACCORDION } from "./fragments/getAccordion.js";
 
 export const GET_BLOG_POSTS = gql`
   query GetBlogPageBySlug($slug: String!) {
@@ -22,6 +21,7 @@ export const GET_BLOG_POSTS = gql`
           contentType
           fileName
         }
+
         blogContent {
           json
           links {
@@ -52,9 +52,39 @@ export const GET_BLOG_POSTS = gql`
                   }
                 }
               }
+              hyperlink {
+                sys {
+                  id
+                }
+                __typename
+                ... on BlogPostPage {
+                  slug
+                  postTitle
+                }
+                ... on LandingPage {
+                  pageSlug
+                  pageTitle
+                }
+                ... on ProjectPage {
+                  slug
+                }
+              }
             }
+
             assets {
               block {
+                sys {
+                  id
+                }
+                url
+                title
+                description
+                width
+                height
+                contentType
+                fileName
+              }
+              hyperlink {
                 sys {
                   id
                 }
@@ -69,6 +99,7 @@ export const GET_BLOG_POSTS = gql`
             }
           }
         }
+
         faqContent {
           json
           links {

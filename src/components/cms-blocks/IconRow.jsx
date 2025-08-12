@@ -26,7 +26,10 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
 
   return (
     <InView>
-      <section className="wrapper w-full py-8 text-center">
+      <section
+        data-marker="icon row"
+        className="wrapper w-full py-8 text-center"
+      >
         {renderRichTextWithBreaks(titleText.json)}
 
         <br />

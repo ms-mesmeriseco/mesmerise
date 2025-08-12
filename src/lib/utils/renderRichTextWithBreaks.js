@@ -4,6 +4,7 @@ import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import Image from "next/image";
 import ExpandingCard from "@/components/ui/ExpandingCard";
 import ListCard from "@/components/ui/ListCard";
+import Link from "next/link";
 
 function replaceLineBreaks(text) {
   return text.split("\n").reduce((acc, segment, index) => {
@@ -21,6 +22,19 @@ function generateAnchorId(text = "") {
     .replace(/[^\w-]/g, "");
 }
 
+function resolveInternalHref(entry) {
+  switch (entry?.__typename) {
+    case "BlogPostPage":
+      return `/blog/${entry.slug}`;
+    case "LandingPage":
+      return `/${entry.pageSlug}`;
+    case "ProjectPage":
+      return `/work/${entry.slug}`;
+    default:
+      return null;
+  }
+}
+
 // Accept optional assetMap and context
 export function getRichTextOptions(assetMap = {}, context = {}) {
   const isBlog = context.blog;
@@ -30,6 +44,25 @@ export function getRichTextOptions(assetMap = {}, context = {}) {
     renderText: (text) => replaceLineBreaks(text),
 
     renderNode: {
+      [INLINES.ENTRY_HYPERLINK]: (node, children) => {
+        const targetId = node?.data?.target?.sys?.id;
+        const entry = targetId ? entryMap[targetId] : null;
+        const href = entry ? resolveInternalHref(entry) : null;
+
+        if (!href) return <>{children}</>; // graceful fallback
+
+        return (
+          <Link
+            href={href}
+            className="inline-flex items-center gap-[0.35rem] text-[var(--accent)] no-underline"
+          >
+            <span className="relative link-text">
+              {children}
+              <span className="absolute left-0 bottom-[-2px] h-[1px] w-full bg-[var(--accent)] transform scale-x-0 origin-left transition-transform duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-x-100 peer-hover:scale-x-100"></span>
+            </span>
+          </Link>
+        );
+      },
       [INLINES.HYPERLINK]: (node, children) => {
         const url = node.data.uri;
         return (
@@ -90,7 +123,7 @@ export function getRichTextOptions(assetMap = {}, context = {}) {
                 controls
                 width={width}
                 height={height}
-                className="w-full h-auto rounded-xl max-h-[80vh]"
+                className="w-full h-auto rounded-md max-h-[80vh]"
               >
                 <source src={url} type={contentType} />
                 Your browser does not support the video tag.

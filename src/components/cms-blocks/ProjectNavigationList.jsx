@@ -183,11 +183,11 @@ export default function ProjectNavigationList({ activeTag = null }) {
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-wrap gap-2 mb-4 text-sm"
+          className="flex flex-wrap gap-1 mb-4 text-sm"
         >
           <motion.button
             variants={item}
-            className={`px-4 py-1 rounded-lg ${
+            className={`px-4 py-1 rounded-sm ${
               !selectedLabel && !selectedRaw
                 ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
                 : "bg-[var(--mesm-grey)] text-gray-800 cursor-pointer"
@@ -202,9 +202,9 @@ export default function ProjectNavigationList({ activeTag = null }) {
             <motion.button
               key={label}
               variants={item}
-              className={`px-4 py-1 rounded-lg ${
+              className={`px-4 py-1 rounded-sm ${
                 selectedLabel === label
-                  ? "bg-[var(--mesm-blue)] text-[var(--background)]"
+                  ? "bg-[var(--accent)] text-[var(--background)]"
                   : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
               }`}
               onClick={() => handleSelectLabel(label)}
@@ -244,7 +244,7 @@ export default function ProjectNavigationList({ activeTag = null }) {
               <Link href={`/work/${project.slug}`}>
                 <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
                   {/* Row 1: Title + Year */}
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-[var(--global-margin-md)]">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center">
                     <h3>{project.projectTitle}</h3>
                     <h3>
                       {new Date(project.projectDate).toLocaleDateString(
@@ -257,7 +257,7 @@ export default function ProjectNavigationList({ activeTag = null }) {
                   </div>
 
                   {/* Row 2: Tags — ONLY show quick-filter labels present on this project (up to 8) */}
-                  <div className="mt-2 md:mt-0 pointer-events-none">
+                  <div className="mt-0 md:mt-0 pointer-events-none">
                     {(() => {
                       const projectNames = new Set(
                         (project.contentfulMetadata?.tags || [])

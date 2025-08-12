@@ -9,11 +9,10 @@ export default function SecondaryButton({
 }) {
   const isLarge = size === "large";
 
-  const basePadding = isLarge ? "1.5rem" : "0.5rem";
-  const hoverPadding = isLarge ? "2rem" : "1.0rem";
-  const height = isLarge ? "45px" : "32px";
-
-  const radius = isLarge ? "rounded-xl" : "rounded-md";
+  const basePadding = isLarge ? "1.5rem" : "1rem";
+  const hoverPadding = isLarge ? "2rem" : "1.5rem";
+  const height = isLarge ? "40px" : "32px";
+  const radius = isLarge ? "rounded-md" : "rounded-xs";
 
   return (
     <motion.a
@@ -31,7 +30,7 @@ export default function SecondaryButton({
         paddingRight: hoverPadding,
       }}
       transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
-      className={`w-fit border border-[var(--foreground)] text-[var(--foreground)] text-sm ${radius} transition hover:bg-[var(--foreground)] hover:text-[var(--background)] ${className}`}
+      className={`w-fit text-[var(--background)] text-sm ${radius} transition bg-[var(--foreground)] hover:bg-[var(--accent)] hover:text-[var(--background)] ${className}`}
       {...props}
     >
       {children}
