@@ -2,6 +2,13 @@
 
 @font-face {
   font-family: "Neue Haas";
+  src: url("/fonts/neue-haas/NeueHaasDisplayXThin.ttf") format("truetype");
+  font-style: thin;
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplayLight.ttf") format("truetype");
   font-style: light;
   font-weight: 300;
@@ -216,6 +223,10 @@ p a::after {
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
 }
+.header-nav a {
+  font-weight: 300;
+  font-size: 1rem;
+}
 /* p a::after {
   content: url("/icons/link-arrow_MESM-10px.png");
   object-fit: contain;
@@ -281,11 +292,15 @@ footer {
   }
 }
 .nav-list h3 {
-  font-weight: 200;
+  font-weight: 300;
 }
 .no-list {
   list-style-type: none;
   margin: 0;
+}
+.text-stroke {
+  -webkit-text-stroke: 1px var(--foreground);
+  color: var(--background);
 }
 b {
   font-style: normal;

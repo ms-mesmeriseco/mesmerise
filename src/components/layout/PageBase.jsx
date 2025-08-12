@@ -42,7 +42,7 @@ export default function PageBase({ blocks }) {
       {...anim(opacity)}
       className="flex flex-col items-center justify-center min-h-screen mb-[10rem] md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)] md:mt-[var(--header-height)]"
     >
-      <main className="grid grid-cols-12 flex flex-col lg:gap-y-[10rem] md:gap-y-[6rem] gap-y-[4rem] w-full">
+      <main className="grid grid-cols-12 flex flex-col lg:gap-y-[6rem] md:gap-y-[4rem] gap-y-[4rem] w-full">
         {blocks.map((block, index) => {
           switch (block.__typename) {
             case "SingleColumnBlockBlank":
@@ -116,18 +116,21 @@ export default function PageBase({ blocks }) {
                 pills.push({
                   label: block.pillTwo,
                   content: block.pillTwoContent.json,
+                  media: block.pillTwoMedia || null,
                 });
               }
               if (block.pillThree && block.pillThreeContent?.json) {
                 pills.push({
                   label: block.pillThree,
                   content: block.pillThreeContent.json,
+                  media: block.pillThreeMedia || null,
                 });
               }
               if (block.pillFour && block.pillFourContent?.json) {
                 pills.push({
                   label: block.pillFour,
                   content: block.pillFourContent.json,
+                  media: block.pillFourMedia || null,
                 });
               }
               const assetMap = {};

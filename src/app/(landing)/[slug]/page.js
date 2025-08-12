@@ -12,7 +12,6 @@ export default async function LandingPage({ params }) {
   });
 
   const page = data.landingPageCollection.items[0];
-  console.log(data);
 
   if (!page) return <p>Page not found</p>;
 

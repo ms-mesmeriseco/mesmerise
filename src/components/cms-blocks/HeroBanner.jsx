@@ -9,19 +9,19 @@ const characterAnimation = {
   visible: (i) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.05 },
+    transition: { delay: i * 0.09 },
   }),
 };
 
-function AnimatedText({ text = " ", gradient }) {
+function AnimatedText({ text = " ", stroke }) {
   const safeText = typeof text === "string" ? text : "";
   const words = safeText.split(" ");
 
   return (
     <span
       className={
-        gradient
-          ? "bg-gradient-to-r from-[var(--mesm-red)] to-[var(--mesm-yellow)] bg-clip-text text-transparent"
+        stroke
+          ? "text-stroke"
           : ""
       }
       style={{ display: "inline-block", whiteSpace: "pre-wrap" }}
@@ -56,7 +56,7 @@ export default function HeroBanner({
   return (
     <InView>
       <div
-        className={`relative h-[45vh] overflow-hidden flex items-end justify-left rounded-4xl mx-[var(--global-margin-md)]`}
+        className={`wrapper relative md:h-[60vh] pt-[4rem]  overflow-hidden flex items-end justify-left rounded-4xl mx-[var(--global-margin-md)]`}
       >
         {heroMedia?.url &&
           (isVideo ? (
@@ -78,9 +78,9 @@ export default function HeroBanner({
 
         <div className="relative z-10 text-[var(--foreground)] text-left lg:max-w-[80vw] md:max-w-full sm:w-full p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] ">
           <h1>
-            <AnimatedText text={pageHeader} gradient />
+            <AnimatedText text={pageHeader} />
             <br />
-            <AnimatedText text={pageHeaderLine2} />
+            <AnimatedText text={pageHeaderLine2} stroke />
           </h1>
 
           <div className="text-md text-[var(--mesm-l-grey)]">

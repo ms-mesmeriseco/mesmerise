@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import { GET_PILL_BLOCK } from "./fragments/pillBlockFragment";
+import { PILL_BLOCK_FRAGMENT } from "./fragments/pillBlockFragment";
 import { GET_TRUST_BADGES } from "./fragments/trustBadgesFragment";
 import { GET_LIST_SWITCH } from "./fragments/getListSwitch";
 import { GET_HERO_DETAILS } from "./fragments/getHeroDetails";
@@ -70,7 +70,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   ${GET_HERO_DETAILS}
   ${GET_LIST_SWITCH}
   ${GET_TRUST_BADGES}
-  ${GET_PILL_BLOCK}
+  ${PILL_BLOCK_FRAGMENT}
 `;
 
 export const GET_ALL_LANDING_PAGES = gql`

@@ -8,27 +8,28 @@ import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import ServiceTags from "../services/ServiceTags";
 import { motion, AnimatePresence } from "framer-motion";
 
-/** ---------------- Allowlist of filterable tags ----------------
- * Left side = UI label (what users click)
- * Right side = one or more underlying Contentful tag names to match.
- * Add synonyms/variants to the arrays as needed.
+/** ---------------- Quick-filter allowlist ----------------
+ * UI label -> one or more underlying Contentful tag names (aliases)
  */
 const FILTER_MAP = {
-  "Web Design": ["Web Design"],
-  "Copywriting": ["Copywriting"],
+  "Web design": ["Web Design"],
+  Copywriting: ["Copywriting"],
   "Search Engine Optimisation": ["Search Engine Optimisation"],
   "Local SEO / GEO Targeting": [
     "Local SEO & Geo Targeting",
     "Local SEO / GEO Targeting",
-    "Local SEO / Geo Targeting"
+    "Local SEO / Geo Targeting",
   ],
-  "Omni Channel Marketing": ["Omni-Channel Marketing", "Omni Channel Marketing"],
-  "Branding": ["Branding"],
-  "E-Commerce": ["E-Commerce", "E - Commerce", "Ecommerce"],
-  "Web Development": [
+  "Omni Channel Marketing": [
+    "Omni-Channel Marketing",
+    "Omni Channel Marketing",
+  ],
+  Branding: ["Branding"],
+  "E - Commerce": ["E-Commerce", "E - Commerce", "Ecommerce"],
+  "web development": [
     "Front-end Development",
     "Back-end Development",
-    "CMS Integration"
+    "CMS Integration",
   ],
 };
 
@@ -39,9 +40,25 @@ export default function ProjectNavigationList({ activeTag = null }) {
   const searchParams = useSearchParams();
 
   const [projects, setProjects] = useState([]);
-  const [selectedTag, setSelectedTag] = useState(activeTag);
+  // If selection matches a quick-filter label, we store it here:
+  const [selectedLabel, setSelectedLabel] = useState(null);
+  // If selection is a raw/original tag not in quick filters, store here:
+  const [selectedRaw, setSelectedRaw] = useState(null);
+
   const [noMatchMessage, setNoMatchMessage] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  // Build alias -> label map (includes labels themselves)
+  const aliasToLabel = useMemo(() => {
+    const map = new Map();
+    Object.keys(FILTER_MAP).forEach((label) => {
+      map.set(normalize(label), label);
+      (FILTER_MAP[label] || []).forEach((alias) => {
+        map.set(normalize(alias), label);
+      });
+    });
+    return map;
+  }, []);
 
   // Fetch projects
   useEffect(() => {
@@ -58,7 +75,7 @@ export default function ProjectNavigationList({ activeTag = null }) {
     fetchProjects();
   }, []);
 
-  // Build a set of present (normalized) tag names across all projects
+  // Present tags across all projects (normalized)
   const presentTagSet = useMemo(() => {
     const set = new Set();
     projects.forEach((p) =>
@@ -67,53 +84,68 @@ export default function ProjectNavigationList({ activeTag = null }) {
     return set;
   }, [projects]);
 
-  // Only show allowed labels that actually exist in data
+  // Only render quick-filter buttons that actually appear in data
   const availableFilterLabels = useMemo(() => {
     return Object.keys(FILTER_MAP).filter((label) =>
-      (FILTER_MAP[label] || []).some((canonical) =>
-        presentTagSet.has(normalize(canonical))
+      (FILTER_MAP[label] || []).some((alias) =>
+        presentTagSet.has(normalize(alias))
       )
     );
   }, [presentTagSet]);
 
-  // Sync tag with URL (canonicalize to the UI label we store)
+  // Sync selection from URL or prop (accept ANY tag; map to label if possible)
   useEffect(() => {
-    const urlTag = searchParams.get("tag");
-    const fromUrl =
-      Object.keys(FILTER_MAP).find((k) => normalize(k) === normalize(urlTag)) ||
-      null;
-
-    const fromProp =
-      Object.keys(FILTER_MAP).find((k) => normalize(k) === normalize(activeTag)) ||
-      null;
-
-    setSelectedTag(fromUrl ?? fromProp ?? null);
+    const urlTag = searchParams.get("tag") ?? activeTag;
+    if (urlTag) {
+      const mapped = aliasToLabel.get(normalize(urlTag));
+      if (mapped) {
+        setSelectedLabel(mapped);
+        setSelectedRaw(null);
+      } else {
+        setSelectedLabel(null);
+        setSelectedRaw(urlTag);
+      }
+    } else {
+      setSelectedLabel(null);
+      setSelectedRaw(null);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, activeTag]);
+  }, [searchParams, activeTag, aliasToLabel]);
 
-  // Filter projects using the selected UI label mapped to canonical tag names
+  // Compute candidates for filtering
   const filteredProjects = useMemo(() => {
-    if (!selectedTag) return projects;
-    const candidates = new Set(
-      (FILTER_MAP[selectedTag] || [selectedTag]).map((n) => normalize(n))
-    );
+    if (!selectedLabel && !selectedRaw) return projects;
+
+    let candidates;
+    if (selectedLabel) {
+      candidates = new Set(
+        (FILTER_MAP[selectedLabel] || [selectedLabel]).map((n) => normalize(n))
+      );
+    } else {
+      candidates = new Set([normalize(selectedRaw)]);
+    }
+
     return projects.filter((p) =>
-      p.contentfulMetadata?.tags?.some((t) => candidates.has(normalize(t?.name)))
+      p.contentfulMetadata?.tags?.some((t) =>
+        candidates.has(normalize(t?.name))
+      )
     );
-  }, [projects, selectedTag]);
+  }, [projects, selectedLabel, selectedRaw]);
 
   // No match logic
   useEffect(() => {
     if (!isLoaded) return;
-    if (selectedTag && filteredProjects.length === 0) {
-      setNoMatchMessage(`No projects tagged "${selectedTag}".`);
+    const display = selectedLabel || selectedRaw;
+    if (display && filteredProjects.length === 0) {
+      setNoMatchMessage(`No projects tagged "${display}".`);
     } else {
       setNoMatchMessage(null);
     }
-  }, [isLoaded, selectedTag, filteredProjects.length]);
+  }, [isLoaded, selectedLabel, selectedRaw, filteredProjects.length]);
 
-  const handleSelectTag = (label) => {
-    setSelectedTag(label);
+  const handleSelectLabel = (label) => {
+    setSelectedLabel(label);
+    setSelectedRaw(null);
     router.push(label ? `/work?tag=${encodeURIComponent(label)}` : "/work");
   };
 
@@ -129,7 +161,23 @@ export default function ProjectNavigationList({ activeTag = null }) {
 
   return (
     <section className="flex flex-col gap-[var(--global-margin-xs)] nav-list">
-      {/* Tag Filter Buttons (from allowlist only) */}
+      {/* Active raw filter chip (for tags not in quick filters) */}
+      {isLoaded && selectedRaw && (
+        <div className="mb-2">
+          <span className="inline-flex items-center gap-2 text-sm px-3 py-1 rounded-lg bg-[var(--mesm-grey)] text-gray-800">
+            Filtering by “{selectedRaw}”
+            <button
+              onClick={() => handleSelectLabel(null)}
+              className="underline decoration-dotted"
+              type="button"
+            >
+              clear
+            </button>
+          </span>
+        </div>
+      )}
+
+      {/* Quick-filter buttons (allowlist only) */}
       {isLoaded && availableFilterLabels.length > 0 && (
         <motion.div
           variants={container}
@@ -140,11 +188,12 @@ export default function ProjectNavigationList({ activeTag = null }) {
           <motion.button
             variants={item}
             className={`px-4 py-1 rounded-lg ${
-              !selectedTag
+              !selectedLabel && !selectedRaw
                 ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
                 : "bg-[var(--mesm-grey)] text-gray-800 cursor-pointer"
             }`}
-            onClick={() => handleSelectTag(null)}
+            onClick={() => handleSelectLabel(null)}
+            type="button"
           >
             All
           </motion.button>
@@ -154,11 +203,12 @@ export default function ProjectNavigationList({ activeTag = null }) {
               key={label}
               variants={item}
               className={`px-4 py-1 rounded-lg ${
-                selectedTag === label
+                selectedLabel === label
                   ? "bg-[var(--mesm-blue)] text-[var(--background)]"
                   : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
               }`}
-              onClick={() => handleSelectTag(label)}
+              onClick={() => handleSelectLabel(label)}
+              type="button"
             >
               {label}
             </motion.button>
@@ -197,43 +247,50 @@ export default function ProjectNavigationList({ activeTag = null }) {
                   <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-[var(--global-margin-md)]">
                     <h3>{project.projectTitle}</h3>
                     <h3>
-                      {new Date(project.projectDate).toLocaleDateString("en-GB", {
-                        year: "numeric",
-                      })}
+                      {new Date(project.projectDate).toLocaleDateString(
+                        "en-GB",
+                        {
+                          year: "numeric",
+                        }
+                      )}
                     </h3>
                   </div>
 
-                  {/* Row 2: Tags (only show allowed filter labels, up to 8) */}
-<div className="mt-2 md:mt-0 pointer-events-none">
-  {(() => {
-    const projectNames = new Set(
-      (project.contentfulMetadata?.tags || [])
-        .map(t => t?.name)
-        .filter(Boolean)
-        .map(s => s.toLowerCase().trim())
-    );
+                  {/* Row 2: Tags — ONLY show quick-filter labels present on this project (up to 8) */}
+                  <div className="mt-2 md:mt-0 pointer-events-none">
+                    {(() => {
+                      const projectNames = new Set(
+                        (project.contentfulMetadata?.tags || [])
+                          .map((t) => t?.name)
+                          .filter(Boolean)
+                          .map((s) => normalize(s))
+                      );
 
-    // Use the same order as the filter buttons (availableFilterLabels)
-    const labelsForProject = availableFilterLabels.filter(label =>
-      (FILTER_MAP[label] || []).some(alias =>
-        projectNames.has((alias || "").toLowerCase().trim())
-      )
-    );
+                      const labelsForProject = availableFilterLabels.filter(
+                        (label) =>
+                          (FILTER_MAP[label] || []).some((alias) =>
+                            projectNames.has(normalize(alias))
+                          )
+                      );
 
-    const firstEight = labelsForProject.slice(0, 8);
-    const extra = Math.max(0, labelsForProject.length - firstEight.length);
+                      const firstEight = labelsForProject.slice(0, 8);
+                      const extra = Math.max(
+                        0,
+                        labelsForProject.length - firstEight.length
+                      );
 
-    return (
-      <div className="flex items-center gap-2 flex-wrap">
-        <ServiceTags items={firstEight} />
-        {extra > 0 && (
-          <span className="text-xs opacity-70">+{extra} more</span>
-        )}
-      </div>
-    );
-  })()}
-</div>
-
+                      return (
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <ServiceTags items={firstEight} />
+                          {extra > 0 && (
+                            <span className="text-xs opacity-70">
+                              +{extra} more
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })()}
+                  </div>
                 </div>
               </Link>
             </motion.div>
@@ -242,4 +299,3 @@ export default function ProjectNavigationList({ activeTag = null }) {
     </section>
   );
 }
- 

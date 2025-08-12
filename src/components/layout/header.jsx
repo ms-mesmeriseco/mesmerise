@@ -86,23 +86,23 @@ export default function Header() {
               </svg>
             </a>
           </span>
-          <span className="flex justify-center">
+          <span className="flex justify-center header-nav">
             {/* Menu */}
             <a
               href="/about"
-              className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)] ml-4"
+              className="text-[var(--foreground)] text-[var(--font-size)] ml-4"
             >
               About
             </a>
             <a
               href="/services"
-              className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)] ml-4"
+              className="text-[var(--foreground)] text-[var(--font-size)] ml-4"
             >
               Services
             </a>
             <a
               href="/work"
-              className="text-[var(--foreground)] text-[var(--font-size)] font-[var(--font-family)] ml-4"
+              className="text-[var(--foreground)] text-[var(--font-size)] ml-4"
             >
               Work
             </a>

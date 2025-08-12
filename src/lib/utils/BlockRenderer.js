@@ -22,7 +22,7 @@ export default function BlockRenderer({ block, center }) {
         <img
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className={`w-full h-auto rounded-lg shadow`}
+          className={`w-full h-auto rounded-md shadow  aspect-[6/4]`}
         />
       );
     case "Video":

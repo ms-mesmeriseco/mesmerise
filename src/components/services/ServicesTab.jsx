@@ -95,7 +95,7 @@ export default function ServicesTabs() {
           <button
             key={tab}
             onClick={() => setActive(tab)}
-            className={`text-md font-normal uppercase transition duration-200 px-4 py-1 rounded-md cursor-pointer ${
+            className={`text-md font-light uppercase transition duration-200 px-4 py-1 rounded-md cursor-pointer ${
               active === tab
                 ? "text-[var(--foreground)] opacity-100 hover:opacity-80"
                 : "opacity-50 hover:opacity-80"

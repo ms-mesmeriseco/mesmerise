@@ -7,7 +7,7 @@ export default async function Work({ searchParams }) {
   const activeTag = Array.isArray(tagParam) ? tagParam[0] : tagParam ?? null;
 
   return (
-    <div className="flex flex-col gap-[6rem] p-[var(--global-margin-lg)] min-h-screen mb-[4rem]">
+    <div className="flex flex-col gap-[1rem] p-[var(--global-margin-lg)] min-h-screen mb-[4rem]">
       <PageTitleLarge text="Work" />
       <ProjectNavigationList activeTag={activeTag} />
     </div>

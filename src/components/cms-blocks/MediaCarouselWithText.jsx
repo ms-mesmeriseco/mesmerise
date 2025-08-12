@@ -131,7 +131,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 <div className="absolute bottom-0 left-0 h-[0.1rem] bg-black w-full overflow-hidden">
                   <div
                     key={progressKey}
-                    className="h-full bg-[var(--mesm-l-grey)] animate-progress"
+                    className="h-full bg-[var(--mesm-yellow)] animate-progress"
                     style={{ animationDuration: `${TRANSITION_DURATION}ms` }}
                   />
                 </div>

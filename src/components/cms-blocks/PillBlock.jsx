@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function PillBlock({ pills = [], assetMap = {} }) {
@@ -38,8 +39,24 @@ export default function PillBlock({ pills = [], assetMap = {} }) {
       </div>
 
       {/* Bottom row: Active pill content */}
-      <div className="overflow-y-auto max-h-[70vh] px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] text-base leading-relaxed">
-        {renderRichTextWithBreaks(pills[activeIndex]?.content, assetMap)}
+      <div className="grid grid-cols-1 md:grid-cols-2 overflow-y-auto max-h-[70vh] px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] text-base leading-relaxed">
+        <div>
+          {renderRichTextWithBreaks(pills[activeIndex]?.content, assetMap)}
+        </div>
+      
+        {pills[activeIndex]?.media && (
+        <div className="relative w-full overflow-hidden rounded-md aspect-[6/4]">
+    {/* 4:6 == 2:3 portrait */}
+        <Image
+          src={pills[activeIndex].media.url}
+          alt={pills[activeIndex].media.url}
+          fill
+          className="object-cover object-center"
+          sizes="(min-width:1024px) 600px, (min-width:768px) 50vw, 100vw"
+          priority={activeIndex === 0}
+        />
+      </div>
+        )}
       </div>
     </section>
   );
