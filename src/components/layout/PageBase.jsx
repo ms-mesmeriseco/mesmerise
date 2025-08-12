@@ -42,7 +42,7 @@ export default function PageBase({ blocks }) {
       {...anim(opacity)}
       className="flex flex-col items-center justify-center min-h-screen mb-[10rem] md:p-[var(--global-margin-md)] sm:p-[var(--global-margin-lg)] md:mt-[var(--header-height)]"
     >
-      <main className="grid grid-cols-12 flex flex-col lg:gap-y-[6rem] md:gap-y-[4rem] gap-y-[4rem] w-full">
+      <main className="wrapper grid grid-cols-12 flex flex-col lg:gap-y-[6rem] md:gap-y-[4rem] gap-y-[4rem] w-full">
         {blocks.map((block, index) => {
           switch (block.__typename) {
             case "SingleColumnBlockBlank":

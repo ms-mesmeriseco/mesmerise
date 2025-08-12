@@ -32,9 +32,9 @@ export default function SingleCaseStudy({
   const [showResults, setShowResults] = useState(false);
 
   return (
-    <section className="flex flex-col md:flex-row gap-4 wrapper">
+    <section className="flex flex-col md:flex-row gap-4">
       {/* Left (Hero image with 16:9 ratio) */}
-      <div className="relative w-full md:w-3/4 aspect-[6/4] overflow-hidden rounded-xl">
+      <div className="relative md:w-3/4 aspect-[6/4] overflow-hidden rounded-xl">
         {heroMedia?.url && (
           <Image
             src={heroMedia.url}

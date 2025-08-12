@@ -52,20 +52,17 @@ export default function Connect() {
   return (
     <div className="flex flex-col min-h-screen gap-[8rem] p-[var(--global-margin-lg)]">
       <SectionMarker label={marker} />
-      <PageTitleLarge text="Services" label={marker} />
 
       <StaticTwoColumn
         label={"what's on offer"}
         column1={[
-          <h2 key="title" className="text-md md:text-6xl">
+          <h1
+            key="title"
+            className="text-md md:text-6xl page-title-large text-bold"
+          >
             Premium full service solutions, engineered with insight. Delivered
             with intent.
-          </h2>,
-          <h3 key="sub-title">
-            We take a holistic approach to unify your brand, website, and
-            message. Turning every touchpoint into a reflection of your vision
-            that inspires trust, action, and loyalty.
-          </h3>,
+          </h1>,
         ]}
       />
       <ServicesTab />

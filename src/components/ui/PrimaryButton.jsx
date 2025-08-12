@@ -1,5 +1,22 @@
 import { motion } from "framer-motion";
 
+const SIZES = {
+  small: {
+    height: 32,
+    padX: 24,
+    padXHover: 32,
+    radius: "rounded-sm",
+    text: "text-sm",
+  },
+  large: {
+    height: 45,
+    padX: 40,
+    padXHover: 44,
+    radius: "rounded-md",
+    text: "text-base",
+  },
+};
+
 export default function PrimaryButton({
   href = "#",
   children,
@@ -7,30 +24,36 @@ export default function PrimaryButton({
   extraClass = "",
   ...props
 }) {
-  const isLarge = size === "large";
-  const basePadding = isLarge ? "2.5rem" : "1.5rem";
-  const hoverPadding = isLarge ? "2.7rem" : "2rem";
-  const height = isLarge ? "45px" : "32px";
-  const radius = isLarge ? "rounded-md" : "rounded-xs";
+  const { height, padX, padXHover, radius, text } = SIZES[size] || SIZES.small;
 
   return (
     <motion.a
       href={href}
+      className={[
+        "inline-flex items-center justify-center w-fit",
+        "bg-[var(--mesm-grey-xd)]",
+        "border border-[color:var(--foregound)]", // keep your var name
+        "text-[color:var(--foregound)] font-medium",
+        "transition-colors duration-200",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
+        radius,
+        text,
+        extraClass,
+      ].join(" ")}
       style={{
-        paddingLeft: basePadding,
-        paddingRight: basePadding,
         height,
-        display: "inline-block",
-        lineHeight: height,
+        lineHeight: height + "px",
+        paddingLeft: padX,
+        paddingRight: padX,
       }}
       whileHover={{
-        paddingLeft: hoverPadding,
-        paddingRight: hoverPadding,
+        paddingLeft: padXHover,
+        paddingRight: padXHover,
         borderColor: "var(--accent)",
         color: "var(--accent)",
       }}
-      transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
-      className={`w-fit bg-[var(--mesm-grey-xd)] border-1 border-[var(--foregound)] text-sm text-[var(--foregound)] font-medium ${radius} transition ${extraClass}`}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "tween", ease: [0.4, 0, 0.2, 1], duration: 0.2 }}
       {...props}
     >
       {children}

@@ -1,4 +1,5 @@
 import PrimaryButton from "@/components/ui/PrimaryButton";
+import Link from "next/link";
 
 const offerings = [
   {
@@ -17,24 +18,20 @@ const offerings = [
 
 export default function CollabModel() {
   return (
-    <section
-      data-marker="how we work"
-      className="py-24 text-center px-[var(--global-margin-lg)]"
-    >
-      <h2 className="text-4xl md:text-6xl mb-20">Collaboration Models</h2>
+    <section data-marker="how we work" className="py-24 text-center">
 
-      <div className="flex flex-col md:flex-row justify-center items-stretch gap-[var(--global-margin-sm)]">
+      <div className="flex flex-col md:flex-row justify-center items-stretch gap-[var(--global-margin-xs)]">
         {offerings.map((pkg) => (
           <div
             key={pkg.title}
-            className=" flex-col flex gap-[var(--global-margin-lg)] justify-between w-[300px] md:w-[360px] border border-[var(--mesm-grey)] p-[var(--global-margin-md)] text-center rounded-3xl bg-[var(--background)] text-[var(--foreground)]"
+            className=" flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey)] p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] text-[var(--foreground)]"
           >
-            <h3 className="text-2xl font-bold">{pkg.title}</h3>
-            <p className="text-base opacity-80">{pkg.subheading}</p>
+            <h3 className="text-2xl font-bold w-1/2">{pkg.title}</h3>
+            <p className="text-base opacity-80 w-1/2">{pkg.subheading}</p>
 
-            <PrimaryButton href={pkg.cta.href} className="" size="large">
+            <a href={pkg.cta.href} size="large">
               {pkg.cta.label}
-            </PrimaryButton>
+            </a>
           </div>
         ))}
       </div>

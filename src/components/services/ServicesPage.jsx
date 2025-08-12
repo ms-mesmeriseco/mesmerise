@@ -15,7 +15,7 @@ export default function ServicesPage({
   processSteps,
 }) {
   return (
-    <div className="flex flex-col gap-[var(--global-margin-lg)]">
+    <div className="flex flex-col gap-[var(--global-margin-lg)] p-[var(--global-margin-lg)]">
       <section className="h-[70vh] flex items-center justify-center bg-[var(--mesm-blue)] rounded-xl"></section>
       {/* Tags */}
       <ServiceTags items={serviceTags} />

@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
  * UI label -> one or more underlying Contentful tag names (aliases)
  */
 const FILTER_MAP = {
-  "Web design": ["Web Design"],
+  "Web Design": ["Web Design"],
   Copywriting: ["Copywriting"],
   "Search Engine Optimisation": ["Search Engine Optimisation"],
   "Local SEO / GEO Targeting": [
@@ -26,7 +26,7 @@ const FILTER_MAP = {
   ],
   Branding: ["Branding"],
   "E - Commerce": ["E-Commerce", "E - Commerce", "Ecommerce"],
-  "web development": [
+  "Web Development": [
     "Front-end Development",
     "Back-end Development",
     "CMS Integration",

@@ -98,24 +98,27 @@ body.page-about {
   --mesm-l-grey: #d4d4d4;
   --header-height: 36px;
 }
-/* @media screen and (max-width: 768px) {
-  :root {
-    --global-margin-lg: 0.5rem;
-    --global-margin-md: 0.4rem;
-    --global-margin-sm: 0.3rem;
-    --global-margin-xs: 0.2rem;
-    --fw-m: calc(100vw - var(--global-margin-lg) * 2);
-    --fh-m: calc(100vh - var(--global-margin-lg) * 2);
-  }
-} */
+/* Header entrance */
+html[data-header-visible="false"] .site-header {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  pointer-events: none;
+  transition: opacity .3s, transform .3s;
+}
+html[data-header-visible="true"] .site-header {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ededed;
+/* Optional: your big hero text utility */
+@layer utilities {
+  .page-title-large { @apply text-5xl md:text-7xl font-semibold leading-[0.95] tracking-tight; }
+}
 
-  }
-} */
+/* Hide horizontal scrollbar for the project strip */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 
 html,
 body {
