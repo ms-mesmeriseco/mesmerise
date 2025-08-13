@@ -94,7 +94,7 @@ export default async function ProjectPage({ params }) {
                   className="w-full  h-[100vh] rounded-lg"
                 />
               ) : (
-                <img
+                <Image
                   src={media.url}
                   alt={`Gallery media ${idx}`}
                   className="w-full  h-[50vh] rounded-lg object-cover hover:opacity-80 transition-opacity"
