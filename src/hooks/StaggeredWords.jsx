@@ -3,9 +3,8 @@ import { motion } from "framer-motion";
 export default function StaggeredWords({
   text,
   className = "",
-  delay = 0.3,
+  delay = 0.5,
   as: As = "h1",
-  once = true,
   gradient,
 }) {
   const safeText = typeof text === "string" ? text : "";

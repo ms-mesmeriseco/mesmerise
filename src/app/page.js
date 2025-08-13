@@ -137,9 +137,10 @@ export default function HomePage() {
       <Splash innerRef={splashRef} label="HELLO" />
 
       <Statement innerRef={section2Ref} label="what we're about" />
+      <ProjectsRow />
 
       <SecondaryStatement />
-      <ProjectsRow />
+
       <CollabModel />
 
       <ServicesSection />
