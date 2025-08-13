@@ -50,10 +50,7 @@ export default function ProjectScroll() {
   };
 
   return (
-    <section
-      data-marker="work"
-      className="grid grid-cols-2 gap-[var(--global-margin-sm)] h-full px-[var(--global-margin-lg)] py-[var(--global-margin-sm)]"
-    >
+    <div className="grid grid-cols-2 gap-[var(--global-margin-sm)] h-full">
       {/* Column 1 */}
       <div className="flex flex-col gap-[var(--global-margin-sm)] h-full">
         {renderProject(projects[0], 0)}
@@ -71,6 +68,6 @@ export default function ProjectScroll() {
         </div>
         {renderProject(projects[5], 5)}
       </div>
-    </section>
+    </div>
   );
 }

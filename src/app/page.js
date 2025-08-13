@@ -79,7 +79,7 @@ function SecondaryStatement() {
   useSectionMarker();
   return (
     <section
-      data-marker="About"
+      data-marker="WHO WE ARE"
       className="min-h-[70vh] flex items-center justify-center px-6 text-white"
     >
       <div className="max-w-[900px] text-center text-balance">
@@ -95,15 +95,25 @@ function SecondaryStatement() {
 
 function ProjectsRow() {
   return (
-    <section className="relative py-12 md:py-16 text-white">
+    <section
+      data-marker="RESULTS"
+      className="relative py-12 md:py-16 text-white"
+    >
       <ProjectScroll />
+    </section>
+  );
+}
+function BlogsRow() {
+  return (
+    <section data-marker="BLOG" className="relative py-12 md:py-16 text-white">
+      <BlogScroll />
     </section>
   );
 }
 
 function ServicesSection() {
   return (
-    <section aria-label="Services" className="text-white">
+    <section data-marker="Services" className="text-white">
       <ServicesList />
     </section>
   );
@@ -134,7 +144,7 @@ export default function HomePage() {
 
       <ServicesSection />
 
-      <BlogScroll />
+      <BlogsRow />
     </main>
   );
 }

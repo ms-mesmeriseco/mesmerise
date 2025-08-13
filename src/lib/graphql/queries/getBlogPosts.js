@@ -130,6 +130,15 @@ export const GET_ALL_BLOG_POSTS = gql`
       items {
         postTitle
         slug
+        heroImage {
+          url
+          title
+          description
+          width
+          height
+          contentType
+          fileName
+        }
       }
     }
   }

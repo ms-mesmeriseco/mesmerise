@@ -4,29 +4,25 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getClient } from "@/lib/apollo-client";
-import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
+import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 
-export default function BlogListScroller() {
+export default function BlogScroll() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     async function fetchBlogPosts() {
       try {
-        const { data } = await getClient().query({ query: GET_BLOG_POSTS });
+        const { data } = await getClient().query({ query: GET_ALL_BLOG_POSTS });
         setPosts(data?.blogPostPageCollection?.items || []);
       } catch (error) {
         console.error("Failed to fetch blog posts:", error);
       }
     }
-
     fetchBlogPosts();
   }, []);
 
   return (
-    <section
-      data-marker="thoughts & feelings"
-      className="w-full py-[var(--global-margin-lg)] px-[var(--global-margin-sm)]"
-    >
+    <section className="w-full py-[var(--global-margin-lg)] px-[var(--global-margin-sm)]">
       <div className="flex overflow-x-auto gap-[var(--global-margin-sm)] pb-[var(--global-margin-sm)]">
         {posts.map((post, index) => (
           <Link
@@ -52,13 +48,6 @@ export default function BlogListScroller() {
               <div className="text-sm font-bold">
                 <h5>{post.postTitle}</h5>
               </div>
-              <h6 className="text-4xs">
-                {new Date(post.postDate).toLocaleDateString("en-AU", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </h6>
             </div>
           </Link>
         ))}
