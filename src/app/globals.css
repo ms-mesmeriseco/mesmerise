@@ -103,7 +103,7 @@ html[data-header-visible="false"] .site-header {
   opacity: 0;
   transform: translateY(-0.5rem);
   pointer-events: none;
-  transition: opacity .3s, transform .3s;
+  transition: opacity 0.3s, transform 0.3s;
 }
 html[data-header-visible="true"] .site-header {
   opacity: 1;
@@ -112,13 +112,18 @@ html[data-header-visible="true"] .site-header {
 
 /* Optional: your big hero text utility */
 @layer utilities {
-  .page-title-large { @apply text-5xl md:text-7xl font-semibold leading-[0.95] tracking-tight; }
+  .page-title-large {
+    @apply text-5xl md:text-7xl font-semibold leading-[0.95] tracking-tight;
+  }
 }
 
 /* Hide horizontal scrollbar for the project strip */
-.no-scrollbar { scrollbar-width: none; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
-
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
 html,
 body {
@@ -198,8 +203,9 @@ h5 {
 }
 h6 {
   letter-spacing: 1px;
-
   font-size: 0.778rem;
+  color: var(--foreground);
+  font-weight: 400;
 }
 p {
   font-size: 1rem;
