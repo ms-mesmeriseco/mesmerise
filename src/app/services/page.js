@@ -1,12 +1,12 @@
 "use client";
 
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
 import SectionMarker from "@/components/home/SectionMarker";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import ServicesTab from "@/components/services/ServicesTab";
 import SecondaryButton from "@/components/ui/SecondaryButton";
 import FAQ from "@/components/layout/FAQ";
+import StaggeredWords from "@/hooks/StaggeredWords";
 
 export default function Connect() {
   const marker = useSectionMarker();
@@ -56,22 +56,23 @@ export default function Connect() {
       <StaticTwoColumn
         label={"what's on offer"}
         column1={[
-          <h1
-            key="title"
-            className="text-md md:text-6xl page-title-large text-bold"
-          >
-            Premium full service solutions, engineered with insight. Delivered
-            with intent.
-          </h1>,
+          <StaggeredWords
+            text="Premium full service solutions, engineered with insight. Delivered
+            with intent."
+            className="page-title-large text-2xl md:text-4xl leading-tight"
+          />,
         ]}
       />
       <ServicesTab />
       <StaticTwoColumn
         label={"what's on offer"}
         column1={[
-          <h3 key="title" className="page-title-large">
-            Branding & Strategy
-          </h3>,
+          <StaggeredWords
+            as="h2"
+            text="Branding & Strategy"
+            className="page-title-large text-2xl md:text-4xl leading-tight"
+          />,
+          ,
           <p key="desc" className="text-lg">
             Our strategy offering uncovers what truly matters to your audience,
             your business, and your market, and harmonises them into a single,
@@ -91,9 +92,11 @@ export default function Connect() {
       <StaticTwoColumn
         label={"what's on offer"}
         column1={[
-          <h3 key="title" className="page-title-large">
-            Website
-          </h3>,
+          <StaggeredWords
+            as="h2"
+            text="Website"
+            className="page-title-large text-2xl md:text-4xl leading-tight"
+          />,
           <p key="desc" className="text-lg">
             Your website is paramount if you want to resonate deeply with the
             people that matter most to your business. Every interface, every
@@ -108,9 +111,11 @@ export default function Connect() {
       <StaticTwoColumn
         label={"what's on offer"}
         column1={[
-          <h3 key="title" className="page-title-large">
-            Performance & Growth
-          </h3>,
+          <StaggeredWords
+            as="h2"
+            text="Performance & Growth"
+            className="page-title-large text-2xl md:text-4xl leading-tight"
+          />,
           <p key="desc" className="text-lg">
             You don&apos;t need another agency “running ads”, you need a growth
             architect. We engineer performance-driven marketing strategies and
@@ -129,9 +134,11 @@ export default function Connect() {
       <StaticTwoColumn
         label={"what's on offer"}
         column1={[
-          <h3 key="title" className="page-title-large">
-            Business Consulting & Development
-          </h3>,
+          <StaggeredWords
+            as="h2"
+            text="Business Consulting & Development"
+            className="page-title-large text-2xl md:text-4xl leading-tight"
+          />,
           <p key="desc" className="text-lg">
             We help you future proof your business with cutting edge industry
             insights. This is for brands seeking strategic clarity and
