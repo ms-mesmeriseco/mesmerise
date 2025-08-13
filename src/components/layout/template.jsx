@@ -1,4 +1,11 @@
-export default function Inner({ children }) {
+"use client";
+
+import { motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+
+export default function Template({ children }) {
+  const pathname = usePathname();
+  const paddingTop = pathname === "/" ? "pt-0" : "pt-18";
   const anim = (variants) => {
     return {
       initial: "initial",
@@ -22,7 +29,10 @@ export default function Inner({ children }) {
       transition: { duration: 0.2 },
     },
   };
-  // Adjust padding as needed
 
-  return <div {...anim(opacity)}>{children}</div>;
+  return (
+    <motion.div {...anim(opacity)} className={`${paddingTop}`}>
+      {children}
+    </motion.div>
+  );
 }
