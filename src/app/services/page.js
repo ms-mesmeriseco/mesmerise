@@ -57,6 +57,7 @@ export default function Connect() {
         label={"what's on offer"}
         column1={[
           <StaggeredWords
+            key="h1"
             text="Premium full service solutions, engineered with insight. Delivered
             with intent."
             className="page-title-large text-2xl md:text-4xl leading-tight"
@@ -68,6 +69,7 @@ export default function Connect() {
         label={"what's on offer"}
         column1={[
           <StaggeredWords
+            key="h2"
             as="h2"
             text="Branding & Strategy"
             className="page-title-large text-2xl md:text-4xl leading-tight"
@@ -93,6 +95,7 @@ export default function Connect() {
         label={"what's on offer"}
         column1={[
           <StaggeredWords
+            key="h2"
             as="h2"
             text="Website"
             className="page-title-large text-2xl md:text-4xl leading-tight"
@@ -112,6 +115,7 @@ export default function Connect() {
         label={"what's on offer"}
         column1={[
           <StaggeredWords
+            hey="h2"
             as="h2"
             text="Performance & Growth"
             className="page-title-large text-2xl md:text-4xl leading-tight"
@@ -135,6 +139,7 @@ export default function Connect() {
         label={"what's on offer"}
         column1={[
           <StaggeredWords
+            key="h2"
             as="h2"
             text="Business Consulting & Development"
             className="page-title-large text-2xl md:text-4xl leading-tight"
