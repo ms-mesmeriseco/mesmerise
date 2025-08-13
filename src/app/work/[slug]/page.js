@@ -4,6 +4,7 @@ import { getClient } from "../../../lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import ServiceTags from "@/components/services/ServiceTags";
+import Image from "next/image";
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
@@ -18,10 +19,10 @@ export default async function ProjectPage({ params }) {
   if (!page) return <p>Blog post not found.</p>;
 
   return (
-    <main className="pt-18 grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
+    <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
       {/* --- HERO ROW --- */}
       <div className="col-span-12 lg:col-span-8 lg:h-[80vh]  md:h-[50vh] sm:h-[30vh] ">
-        <img
+        <Image
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
           className="w-full h-full object-cover rounded-lg"
