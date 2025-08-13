@@ -28,10 +28,7 @@ export default function Inner({ children }) {
   };
 
   return (
-    <motion.div
-      {...anim(opacity)}
-      className=""
-    >
+    <motion.div {...anim(opacity)} className="pt-18">
       {children}
     </motion.div>
   );

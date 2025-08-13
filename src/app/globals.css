@@ -109,6 +109,9 @@ html[data-header-visible="true"] .site-header {
   opacity: 1;
   transform: translateY(0);
 }
+html[data-header-visible="true"] .body-inner {
+  padding-top: 4rem;
+}
 
 /* Optional: your big hero text utility */
 @layer utilities {

@@ -8,7 +8,6 @@ import CollabModel from "@/components/home/CollabModel";
 import ProjectScroll from "@/components/cms-blocks/ProjectScroll";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import SectionMarker from "@/components/home/SectionMarker";
-import FeaturedCaseStudy from "@/components/home/FeaturedCaseStudy";
 import Scene from "@/components/three/Scene";
 import StaggeredWords from "@/hooks/StaggeredWords";
 // ---------- Utility: split text and stagger words ----------
