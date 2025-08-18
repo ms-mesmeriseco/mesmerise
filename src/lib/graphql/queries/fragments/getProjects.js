@@ -27,6 +27,8 @@ export const GET_PROJECT_DATA = gql`
     mediaGalleryCollection {
       items {
         url
+        width
+        height
       }
     }
     extendedDescription {

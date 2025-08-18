@@ -115,7 +115,7 @@ export default function Connect() {
         label={"what's on offer"}
         column1={[
           <StaggeredWords
-            hey="h2"
+            key="h2"
             as="h2"
             text="Performance & Growth"
             className="page-title-large text-2xl md:text-4xl leading-tight"

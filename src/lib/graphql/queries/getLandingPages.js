@@ -22,10 +22,8 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
         }
         pageTitle
         pageSlug
-        metaText {
-          json
-        }
-        pageBlocksCollection(limit: 16) {
+
+        pageBlocksCollection(limit: 10) {
           items {
             ... on ComponentHeroBanner {
               ...HeroDetails
@@ -79,6 +77,10 @@ export const GET_ALL_LANDING_PAGES = gql`
       items {
         pageTitle
         pageSlug
+        metaDescription {
+          json
+        }
+        metaTitle
       }
     }
   }

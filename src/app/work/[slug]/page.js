@@ -25,6 +25,8 @@ export default async function ProjectPage({ params }) {
         <Image
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
+          width={page.heroMedia.width}
+          height={page.heroMedia.height}
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
@@ -96,6 +98,8 @@ export default async function ProjectPage({ params }) {
               ) : (
                 <Image
                   src={media.url}
+                  width={media.width}
+                  height={media.height}
                   alt={`Gallery media ${idx}`}
                   className="w-full  h-[50vh] rounded-lg object-cover hover:opacity-80 transition-opacity"
                 />

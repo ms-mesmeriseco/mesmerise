@@ -9,7 +9,8 @@ export const PILL_BLOCK_FRAGMENT = gql`
     }
     pillOneMedia {
       url
-      
+      width
+      height
     }
     pillTwo
     pillTwoContent {
@@ -25,6 +26,5 @@ export const PILL_BLOCK_FRAGMENT = gql`
     pillFourContent {
       json
     }
-
   }
 `;
