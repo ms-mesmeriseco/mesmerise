@@ -26,7 +26,7 @@ export const GET_SINGLE_COLUMN = gql`
           ...AccordionWidgetFragment
         }
         ... on ListIcons {
-          listItemsCollection(limit: 12) {
+          listItemsCollection(limit: 15) {
             items {
               icon {
                 url

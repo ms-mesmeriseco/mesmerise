@@ -27,12 +27,8 @@ export const ASSET_HYPERLINK_FIELDS = gql`
       id
     }
     url
-    title
-    description
     width
     height
-    contentType
-    fileName
   }
 `;
 

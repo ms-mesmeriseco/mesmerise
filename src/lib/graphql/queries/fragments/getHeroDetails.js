@@ -9,7 +9,6 @@ export const GET_HERO_DETAILS = gql`
     ctaUrl
     heroMedia {
       url
-      title
       width
       height
       contentType

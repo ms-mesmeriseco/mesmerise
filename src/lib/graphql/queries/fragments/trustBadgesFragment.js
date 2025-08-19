@@ -1,20 +1,16 @@
 import { gql } from "@apollo/client";
 
 export const GET_TRUST_BADGES = gql`
-fragment TrustBadgesFragment on TrustBadges {
+  fragment TrustBadgesFragment on TrustBadges {
     textContent {
       json
     }
     scroll
-    logosCollection(limit: 5) {
+    logosCollection(limit: 8) {
       items {
         url
-        title
-        description
         width
         height
-        contentType
-        fileName
       }
     }
   }
