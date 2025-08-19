@@ -6,6 +6,7 @@ export const GET_BLOG_POSTS = gql`
       items {
         postTitle
         slug
+        metaTitle
         metaDescription {
           json
         }

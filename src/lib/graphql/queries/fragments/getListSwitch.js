@@ -21,4 +21,4 @@ export const GET_LIST_SWITCH = gql`
       }
     }
   }
-    `;
+`;

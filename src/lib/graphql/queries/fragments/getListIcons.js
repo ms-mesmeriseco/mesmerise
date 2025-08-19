@@ -6,7 +6,7 @@ export const GET_LIST_ICONS = gql`
       json
     }
     displayTwo
-    iconItemsCollection(limit: 4) {
+    iconItemsCollection(limit: 14) {
       items {
         ... on ListIconItem {
           icon {

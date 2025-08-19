@@ -179,7 +179,7 @@ button:focus {
 h1 {
   font-size: 4.22rem;
   line-height: 5.23rem;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 h2 {
@@ -188,9 +188,9 @@ h2 {
   font-weight: 400;
 }
 h3 {
-  font-size: 2.39rem;
-  line-height: 3rem;
-  font-weight: 600;
+  font-size: 3.39rem;
+  line-height: 3.79rem;
+  font-weight: 400;
 }
 h4 {
   font-size: 1.2rem;

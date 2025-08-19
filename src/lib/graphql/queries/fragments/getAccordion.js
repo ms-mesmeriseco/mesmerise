@@ -11,7 +11,7 @@ export const GET_ACCORDION = gql`
       contentType
       fileName
     }
-    accordionContentCollection(limit: 4) {
+    accordionContentCollection(limit: 15) {
       items {
         ... on AccordionItem {
           entryTitle
