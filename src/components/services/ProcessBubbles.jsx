@@ -75,7 +75,6 @@ function BubbleItem({
   spring,
   onToggle,
 }) {
-  // Local writing-mode we actually render with (flips AFTER instant hide)
   const [mode, setMode] = useState(
     isMobile ? "horizontal" : isOpen ? "horizontal" : "vertical"
   );
@@ -87,6 +86,14 @@ function BubbleItem({
       : isOpen
       ? "horizontal"
       : "vertical";
+
+    if (isMobile) {
+      // On mobile we bypass the stagger flip and force horizontal immediately
+      if (mode !== "horizontal") setMode("horizontal");
+      return;
+    }
+
+    // Desktop: trigger the staggered flip (handled by StaggeredChars -> onFlip)
     if (desired !== mode) setFlipSignal((n) => n + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, isMobile]);
@@ -100,7 +107,6 @@ function BubbleItem({
       className="relative"
       style={{ width, maxWidth: isMobile ? "100%" : maxItemWidth }}
     >
-      {/* Button (styling preserved) */}
       <motion.button
         type="button"
         onClick={onToggle}
@@ -113,10 +119,12 @@ function BubbleItem({
           "px-2 py-4 md:px-4 md:py-2",
           "outline-none focus-visible:ring-2 focus-visible:ring-black/10",
           "whitespace-nowrap",
+          "cursor-pointer",
         ].join(" ")}
         style={{
           backgroundColor: color,
-          writingMode, // vertical when collapsed (desktop), horizontal when open
+          // Hard-force horizontal on mobile so it never stays vertical
+          writingMode: isMobile ? "horizontal-tb" : writingMode,
           textOrientation: "mixed",
         }}
       >
@@ -128,17 +136,12 @@ function BubbleItem({
               text={item.title}
               flipSignal={flipSignal}
               spring={spring}
-              onFlip={() =>
-                setMode(
-                  isMobile ? "horizontal" : isOpen ? "horizontal" : "vertical"
-                )
-              }
+              onFlip={() => setMode(isOpen ? "horizontal" : "vertical")}
             />
           )}
         </h2>
       </motion.button>
 
-      {/* Expanded content (styling preserved) */}
       <AnimatePresence initial={false} mode="popLayout">
         {isOpen && (
           <motion.div
@@ -154,7 +157,11 @@ function BubbleItem({
               backdropFilter: "saturate(140%) blur(4px)",
             }}
           >
-            <span className="text-xl leading-relaxed text-[var(--background)]">
+            <span
+              className={`${
+                isMobile ? "text-md" : "text-xl"
+              } leading-relaxed text-[var(--background)]`}
+            >
               {item.content}
             </span>
           </motion.div>

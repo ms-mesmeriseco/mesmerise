@@ -1,6 +1,7 @@
 // app/services/website/page.jsx
 import ServicesHero from "@/components/services/ServicesHero.jsx";
 import ProcessBubbles from "@/components/services/ProcessBubbles";
+import PageTitleLarge from "@/components/layout/PageTitleLarge.jsx";
 
 import {
   heroMedia,
@@ -26,6 +27,7 @@ export default function WebsitePage() {
           // You can still pass processSteps here if your ServicesPage uses HorizontalAccordion.
           // We’re rendering ProcessBubbles below instead.
         />
+        <PageTitleLarge text="Process" />
 
         {/* Full-width row of process bubbles */}
         <div className="w-full py-12">

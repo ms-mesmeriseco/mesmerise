@@ -23,7 +23,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
         pageTitle
         pageSlug
 
-        pageBlocksCollection(limit: 10) {
+        pageBlocksCollection(limit: 20) {
           items {
             ... on ComponentHeroBanner {
               ...HeroDetails
