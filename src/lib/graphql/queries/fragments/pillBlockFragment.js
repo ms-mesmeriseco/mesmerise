@@ -15,15 +15,22 @@ export const PILL_BLOCK_FRAGMENT = gql`
     pillTwoContent {
       json
     }
-
+    pillTwoMedia {
+      url
+    }
     pillThree
     pillThreeContent {
       json
     }
-
+    pillThreeMedia {
+      url
+    }
     pillFour
     pillFourContent {
       json
+    }
+    pillFourMedia {
+      url
     }
   }
 `;

@@ -1,19 +1,32 @@
+"use client";
+
+import { useEffect, useState, use } from "react";
 import { getClient } from "@/lib/apollo-client";
 import { GET_LANDING_PAGE_BY_SLUG } from "@/lib/graphql/queries/getLandingPages";
 import PageBase from "@/components/layout/PageBase";
 import HeroBanner from "@/components/cms-blocks/HeroBanner";
 import TrustBadges from "@/components/cms-blocks/TrustBadges";
 
-export default async function LandingPage({ params }) {
-  const { slug } = params;
-  const { data } = await getClient().query({
-    query: GET_LANDING_PAGE_BY_SLUG,
-    variables: { slug },
-  });
+export default function LandingPage({ params }) {
+  const { slug } = use(params);
+  const [page, setPage] = useState(null);
 
-  const page = data.landingPageCollection.items[0];
+  useEffect(() => {
+    async function fetchLandingPage() {
+      try {
+        const { data } = await getClient().query({
+          query: GET_LANDING_PAGE_BY_SLUG,
+          variables: { slug },
+        });
+        setPage(data.landingPageCollection.items[0]);
+      } catch (error) {
+        console.error("Failed to fetch landing page:", error);
+      }
+    }
+    fetchLandingPage();
+  }, [slug]);
 
-  if (!page) return <p>Page not found</p>;
+  if (!page) return <p>Loading...</p>;
 
   const blocks = page.pageBlocksCollection.items;
 
