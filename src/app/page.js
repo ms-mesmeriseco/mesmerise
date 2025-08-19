@@ -67,7 +67,7 @@ function Statement({ innerRef }) {
       <div className="max-w-[1200px] text-center">
         <StaggeredWords
           as="h1"
-          text="We craft brand, web, and content experiences that feel inevitable."
+          text="We craft brand, web, and content experiences which look sexy, and convert."
           className="page-title-large leading-[0.95]"
         />
       </div>
