@@ -139,7 +139,11 @@ export default function PageBase({ blocks }) {
               });
               return (
                 <div className="col-span-12" key={`block-${index}`}>
-                  <PillBlock pills={pills} assetMap={assetMap} />
+                  <PillBlock
+                    pills={pills}
+                    blockTitle={block.blockTitle}
+                    assetMap={assetMap}
+                  />
                 </div>
               );
             case "SingleCaseStudy":

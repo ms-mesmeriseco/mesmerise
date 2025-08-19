@@ -5,16 +5,19 @@ import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function PillBlock({ pills = [], assetMap = {} }) {
+export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="wrapper flex flex-col gap-[var(--global-margin-sm)] min-h-[50vh]">
+    <section className="wrapper flex flex-col gap-[var(--global-margin-lg)] min-h-[50vh]">
+      {blockTitle && (
+        <h2 className="text-2xl font-semibold text-center">{blockTitle}</h2>
+      )}
       {/* Top row: Pill menu */}
-      <div className="flex justify-center">
+      <div className="flex justify-center w-full">
         <motion.div
           key="motion"
-          className="flex flex-row flex-wrap gap-[var(--global-margin-xs)] border border-[var(--mesm-grey-dk)] rounded-md p-1"
+          className="flex flex-row justify-between flex-wrap gap-[var(--global-margin-xs)] border border-[var(--mesm-grey-dk)] rounded-md p-1 w-full"
         >
           <AnimatePresence mode="wait">
             {pills.map((pill, idx) => (
@@ -25,10 +28,10 @@ export default function PillBlock({ pills = [], assetMap = {} }) {
                 transition={{ duration: 2 }}
                 key={idx}
                 onClick={() => setActiveIndex(idx)}
-                className={`whitespace-nowrap px-4 py-1 text-md font-medium rounded-sm transition-colors ${
+                className={`flex-1 whitespace-nowrap px-4 py-1 text-md font-medium rounded-sm transition-colors ${
                   idx === activeIndex
                     ? "bg-[var(--mesm-blue)] text-[var(--background)]"
-                    : " text-[var(--mesm-grey)] hover:opacity-80"
+                    : " text-[var(--foreground)] hover:text-[var(--mesm-grey)] cursor-pointer"
                 }`}
               >
                 {pill.label}
