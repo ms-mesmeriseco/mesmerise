@@ -75,7 +75,7 @@ export default function Connect() {
             className="page-title-large text-2xl md:text-4xl leading-tight"
           />,
           ,
-          <p key="desc" className="text-lg">
+          <p key="desc" className="p2">
             Our strategy offering uncovers what truly matters to your audience,
             your business, and your market, and harmonises them into a single,
             easy to implement plan. Brand ID, positioning and analytics
@@ -94,21 +94,26 @@ export default function Connect() {
       <StaticTwoColumn
         label={"what's on offer"}
         column1={[
-          <StaggeredWords
-            key="h2"
-            as="h2"
-            text="Website"
-            className="page-title-large text-2xl md:text-4xl leading-tight"
-          />,
-          <p key="desc" className="text-lg">
-            Your website is paramount if you want to resonate deeply with the
-            people that matter most to your business. Every interface, every
-            touchpoint, and every interaction is intentional. Designed to build
-            trust, connect with your audience, convert and of course Mesmerise.
-          </p>,
-          <SecondaryButton size="large" key="button" href="/services/website">
-            Learn more
-          </SecondaryButton>,
+          <div key="web" className="flex flex-col gap-6 w-[600px]">
+            <StaggeredWords
+              key="h2"
+              as="h2"
+              text="Website"
+              className="page-title-large text-2xl md:text-4xl leading-tight"
+            />
+
+            <p key="desc" className="p2">
+              Your website is paramount if you want to resonate deeply with the
+              people that matter most to your business. Every interface, every
+              touchpoint, and every interaction is intentional. Designed to
+              build trust, connect with your audience, convert and of course
+              Mesmerise.
+            </p>
+
+            <SecondaryButton size="large" key="button" href="/services/website">
+              Learn more
+            </SecondaryButton>
+          </div>,
         ]}
       />
       <StaticTwoColumn
@@ -120,7 +125,7 @@ export default function Connect() {
             text="Performance & Growth"
             className="page-title-large text-2xl md:text-4xl leading-tight"
           />,
-          <p key="desc" className="text-lg">
+          <p key="desc" className="p2">
             You don&apos;t need another agency “running ads”, you need a growth
             architect. We engineer performance-driven marketing strategies and
             omnipresent campaigns that deliver results across every channel your
@@ -144,7 +149,7 @@ export default function Connect() {
             text="Business Consulting & Development"
             className="page-title-large text-2xl md:text-4xl leading-tight"
           />,
-          <p key="desc" className="text-lg">
+          <p key="desc" className="p2">
             We help you future proof your business with cutting edge industry
             insights. This is for brands seeking strategic clarity and
             operational alignment, we serve as your trusted partner in growth.

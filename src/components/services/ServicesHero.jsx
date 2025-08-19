@@ -23,11 +23,6 @@ export default function ServicesHero({
       </section>
       {/* Tags */}
       <ServiceTags items={serviceTags} />
-      <StaticTwoColumn
-        label="ABOUT THIS SERVICE"
-        column1={column1Content}
-        column2={column2Content}
-      />
     </div>
   );
 }
