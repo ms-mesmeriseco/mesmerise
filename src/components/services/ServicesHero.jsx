@@ -18,7 +18,7 @@ export default function ServicesHero({
 }) {
   return (
     <div className="flex flex-col gap-[var(--global-margin-sm)]">
-      <section className="h-[70vh] flex items-center justify-center rounded-xl">
+      <section className="h-[70vh] flex items-center justify-center">
         {isVideo(heroMedia) ? (
           <video
             src={heroMedia}
@@ -26,13 +26,13 @@ export default function ServicesHero({
             loop
             muted
             playsInline
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-full object-cover rounded-sm"
           />
         ) : (
           <img
             src={heroMedia}
             alt="Hero Media"
-            className="w-full h-full object-cover rounded-lg"
+            className="w-full h-full object-cover rounded-sm"
           />
         )}
       </section>

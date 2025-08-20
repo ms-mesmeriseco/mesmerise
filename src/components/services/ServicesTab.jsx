@@ -95,7 +95,7 @@ export default function ServicesTabs() {
           <button
             key={tab}
             onClick={() => setActive(tab)}
-            className={`text-md font-light uppercase transition duration-200 px-4 py-1 rounded-md cursor-pointer ${
+            className={`md:text-md text-sm font-light uppercase transition duration-200 px-4 py-1 rounded-md cursor-pointer ${
               active === tab
                 ? "text-[var(--foreground)] opacity-100 hover:opacity-80"
                 : "opacity-50 hover:opacity-80"
@@ -114,7 +114,7 @@ export default function ServicesTabs() {
           initial="initial"
           animate="animate"
           exit="exit"
-          className="flex flex-wrap gap-[var(--global-margin-xs)] justify-center"
+          className="flex flex-wrap md:gap-[var(--global-margin-xs)] gap-1 justify-center"
         >
           {categories[active].map((tag, idx) => (
             <motion.button
@@ -122,7 +122,7 @@ export default function ServicesTabs() {
               variants={itemVariants}
               whileHover={{ opacity: 0.7 }}
               onClick={() => handleTagClick(tag)}
-              className="bg-[var(--mesm-blue)] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap cursor-pointer transition"
+              className="bg-[var(--mesm-blue)] text-[var(--background)] rounded-xl md:rounded-2xl md:px-4 md:py-2 px-2 py-1 md:text-5xl text-2xl font-normal whitespace-nowrap cursor-pointer transition"
               type="button"
             >
               {tag}

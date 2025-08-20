@@ -67,7 +67,7 @@ export default function Connect() {
           ]}
         />
       </div>
-      <section data-marker="CLICK ME" className="min-h-[80vh]">
+      <section data-marker="CLICK ME" className="md:min-h-[80vh] min-h-[50vh]">
       <ServicesTab />
       </section>
       <StaticTwoColumn
@@ -99,7 +99,7 @@ export default function Connect() {
       <StaticTwoColumn
         label={"WEBSITE"}
         column2={[
-          <div key="web" className="flex flex-col gap-6 w-[600px]">
+          <div key="web" className="flex flex-col gap-6">
             <StaggeredWords
               key="h2"
               as="h2"

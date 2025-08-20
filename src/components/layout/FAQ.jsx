@@ -11,7 +11,7 @@ export default function FAQ({
   return (
     <section
       data-marker={label}
-      className="wrapper grid grid-cols-[1fr_4fr_1fr] gap-y-[var(--global-margin-sm)]"
+      className="grid md:grid-cols-[1fr_4fr_1fr] grid-cols-1 gap-y-[var(--global-margin-sm)]"
     >
       <div className="col-span-12 text-center pb-[var(--global-margin-md)]">
         <h2 className="text-[6rem] font-normal">{title}</h2>

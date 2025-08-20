@@ -20,6 +20,7 @@ export default function WebsitePage() {
   return (
     <>
       <div className="p-[var(--global-margin-lg)] flex flex-col gap-6">
+
         <ServicesHero
           heroMedia={heroMedia}
           trustBadgeText={trustBadgeText}
@@ -30,7 +31,6 @@ export default function WebsitePage() {
           // You can still pass processSteps here if your ServicesPage uses HorizontalAccordion.
           // We’re rendering ProcessBubbles below instead.
         />
-
         <StaticTwoColumn
           label="ABOUT THIS SERVICE"
           column1={[
