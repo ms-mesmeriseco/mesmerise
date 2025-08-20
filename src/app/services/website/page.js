@@ -1,10 +1,12 @@
-// app/services/website/page.jsx
+"use client";
+
 import ServicesHero from "@/components/services/ServicesHero.jsx";
 import ProcessBubbles from "@/components/services/ProcessBubbles";
 import PageTitleLarge from "@/components/layout/PageTitleLarge.jsx";
 import PackagesRow from "@/components/services/PackagesRow.jsx";
 import StaticTwoColumn from "@/components/layout/StaticTwoColumn.jsx";
 import StaticSingleColumn from "@/components/layout/StaticSingleColumn.jsx";
+import SecondaryButton from "@/components/ui/SecondaryButton.jsx";
 
 import {
   heroMedia,
@@ -20,13 +22,11 @@ export default function WebsitePage() {
   return (
     <>
       <div className="p-[var(--global-margin-lg)] flex flex-col gap-6">
-
         <ServicesHero
           heroMedia={heroMedia}
+          heroTitle="Website"
           trustBadgeText={trustBadgeText}
           trustBadgeLogos={trustBadgeLogos}
-          column1Content={column1Content}
-          column2Content={column2Content}
           serviceTags={serviceTags}
           // You can still pass processSteps here if your ServicesPage uses HorizontalAccordion.
           // We’re rendering ProcessBubbles below instead.
@@ -48,18 +48,17 @@ export default function WebsitePage() {
           ]}
           column2={[""]}
         />
-        <br/>
-        <div  className="text-center">
-            <h2 className="page-title-large">Process</h2>
+        <br />
+        <div className="text-center">
+          <h2 className="page-title-large">Process</h2>
         </div>
-   
 
         {/* Full-width row of process bubbles */}
         <div className="w-full py-12">
           <ProcessBubbles items={processSteps} />
         </div>
-       <div  className="text-center">
-            <h2 className="page-title-large">Packages</h2>
+        <div className="text-center">
+          <h2 className="page-title-large">Packages</h2>
         </div>
         <PackagesRow />
         <br />
@@ -67,13 +66,20 @@ export default function WebsitePage() {
         <StaticSingleColumn
           label="ABOUT THIS SERVICE"
           column={[
-            <h1 key="heading" className="text-center page-title-large">
-              What We Build Isn&apos;t Just a Website, It&apos;s a Growth
-              Engine.
-            </h1>,
+            <div className="items-center flex flex-col gap-6">
+              <h2 key="heading" className="text-center page-title-large">
+                What We Build Isn&apos;t Just a Website, It&apos;s a Growth
+                Engine.
+              </h2>
+              <SecondaryButton key="button" size="large" href="/connect">
+                Learn more
+              </SecondaryButton>
+            </div>,
+            ,
           ]}
         />
         <br />
+
         <br />
       </div>
     </>

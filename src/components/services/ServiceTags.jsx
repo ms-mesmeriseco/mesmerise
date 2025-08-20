@@ -13,7 +13,7 @@ export default function ServiceTags({
     hidden: {},
     show: {
       transition: {
-        staggerChildren: 0.03,
+        staggerChildren: 0.09,
       },
     },
   };
