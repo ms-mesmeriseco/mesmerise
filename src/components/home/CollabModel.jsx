@@ -6,13 +6,13 @@ const offerings = [
     title: "Defined",
     subheading:
       "A fixed-scope engagement designed for specific, time-bound initiatives. Perfect when you need clarity, precision, and predictable delivery on a clearly defined project.",
-    cta: { label: "Learn more", href: "/collaboration/defined" },
+    cta: { label: "Learn more", href: "/defined" },
   },
   {
     title: "Perpetual",
     subheading:
       "An ongoing partnership built for continuous growth. Ideal when you want a trusted team by your side, evolving strategies, optimising campaigns, and supporting your ambitions over time.",
-    cta: { label: "Learn more", href: "/collaboration/perpetual" },
+    cta: { label: "Learn more", href: "/perpetual" },
   },
 ];
 
@@ -29,9 +29,9 @@ export default function CollabModel() {
             <h3 className="text-2xl font-bold w-1/2">{pkg.title}</h3>
             <p className="text-base opacity-80 w-1/2">{pkg.subheading}</p>
 
-            <a href={pkg.cta.href} size="large">
+            <Link href={pkg.cta.href} size="large" className="hover:text-[var(--mesm-blue)] duration-200">
               {pkg.cta.label}
-            </a>
+            </Link>
           </div>
         ))}
       </div>

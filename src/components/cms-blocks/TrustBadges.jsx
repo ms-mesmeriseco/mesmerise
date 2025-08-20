@@ -8,7 +8,7 @@ export default function TrustBadges({ textContent, logos = [], scroll }) {
   const duplicatedLogos = scroll ? [...logos, ...logos] : logos;
 
   return (
-    <section className="w-full py-8 overflow-hidden h-[15vh]">
+    <section className="w-full py-8 overflow-hidden h-full">
       <div className="flex gap-8 items-center">
         {/* Text content block (15%) */}
         {textContent?.json && (

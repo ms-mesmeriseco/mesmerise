@@ -57,7 +57,7 @@ export default function HeroBanner({
   return (
     <InView>
       <div
-        className={`relative h-[75vh] overflow-hidden flex items-center justify-left rounded-lg mx-[var(--global-margin-md)]`}
+        className={`relative h-[65vh] overflow-hidden flex items-center justify-left rounded-lg mx-[var(--global-margin-md)]`}
       >
         {heroMedia?.url &&
           (isVideo ? (
