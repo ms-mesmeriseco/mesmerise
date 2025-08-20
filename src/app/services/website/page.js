@@ -19,7 +19,7 @@ import {
 export default function WebsitePage() {
   return (
     <>
-      <div className=" p-[var(--global-margin-lg)] flex flex-col gap-6">
+      <div className="p-[var(--global-margin-lg)] flex flex-col gap-6">
         <ServicesHero
           heroMedia={heroMedia}
           trustBadgeText={trustBadgeText}
@@ -48,14 +48,19 @@ export default function WebsitePage() {
           ]}
           column2={[""]}
         />
-
-        <PageTitleLarge text="Process" />
+        <br/>
+        <div  className="text-center">
+            <h2 className="page-title-large">Process</h2>
+        </div>
+   
 
         {/* Full-width row of process bubbles */}
         <div className="w-full py-12">
           <ProcessBubbles items={processSteps} />
         </div>
-
+       <div  className="text-center">
+            <h2 className="page-title-large">Packages</h2>
+        </div>
         <PackagesRow />
         <br />
         <br />

@@ -21,7 +21,8 @@ function AnimatedText({ text = " ", gradient }) {
     <span
       className={
         gradient
-          ? "bg-gradient-to-r from-[var(--mesm-red)] to-[var(--mesm-yellow)] bg-clip-text text-transparent"
+          ? // ? "bg-gradient-to-r from-[var(--mesm-red)] to-[var(--mesm-yellow)] bg-clip-text text-transparent"
+            "text-stroke"
           : ""
       }
       style={{ display: "inline-block", whiteSpace: "pre-wrap" }}
@@ -56,7 +57,7 @@ export default function HeroBanner({
   return (
     <InView>
       <div
-        className={`wrapper relative md:h-[50vh] pt-[4rem]  overflow-hidden flex items-end justify-left rounded-4xl mx-[var(--global-margin-md)]`}
+        className={`relative h-[75vh] overflow-hidden flex items-center justify-left rounded-lg mx-[var(--global-margin-md)]`}
       >
         {heroMedia?.url &&
           (isVideo ? (
@@ -76,23 +77,26 @@ export default function HeroBanner({
             />
           ))}
 
-        <div className="relative z-10 text-[var(--foreground)] text-left lg:max-w-[80vw] md:max-w-full sm:w-full p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] ">
-          <h1>
-            <AnimatedText text={pageHeader} gradient />
+        <div className="wrapper relative z-10 text-[var(--foreground)] text-left w-full sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] ">
+          <div className=" sm:w-full">
+            <h1>
+              <AnimatedText text={pageHeader} />
+              <br />
+              <AnimatedText text={pageHeaderLine2} gradient />
+            </h1>
             <br />
-            <AnimatedText text={pageHeaderLine2} />
-          </h1>
 
-          <div className="text-md text-[var(--mesm-l-grey)]">
-            {pageSubtitle}
+            <div className="text-md text-[var(--mesm-l-grey)] p2">
+              {pageSubtitle}
+            </div>
+            <br />
+
+            {showCta && (
+              <PrimaryButton href={ctaUrl} extraClass="mt-4" size="large">
+                Learn More
+              </PrimaryButton>
+            )}
           </div>
-          <br />
-
-          {showCta && (
-            <PrimaryButton href={ctaUrl} extraClass="mt-4" size="large">
-              Learn More
-            </PrimaryButton>
-          )}
         </div>
 
         <div className="absolute inset-0 bg-black/40 z-[5]" />

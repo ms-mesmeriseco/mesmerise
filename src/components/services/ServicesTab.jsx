@@ -122,7 +122,7 @@ export default function ServicesTabs() {
               variants={itemVariants}
               whileHover={{ opacity: 0.7 }}
               onClick={() => handleTagClick(tag)}
-              className="bg-[#c1d2fc] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap cursor-pointer transition"
+              className="bg-[var(--mesm-blue)] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap cursor-pointer transition"
               type="button"
             >
               {tag}

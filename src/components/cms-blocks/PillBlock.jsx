@@ -42,13 +42,13 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
       </div>
 
       {/* Bottom row: Active pill content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 overflow-y-auto max-h-[70vh] px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] text-base leading-relaxed">
+      <div className="grid grid-cols-1 md:grid-cols-2 overflow-y-auto max-h-[70vh] px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] gap-18 text-base leading-relaxed">
         <div>
           {renderRichTextWithBreaks(pills[activeIndex]?.content, assetMap)}
         </div>
 
         {pills[activeIndex]?.media && (
-          <div className="relative w-[80%] m-auto overflow-hidden rounded-md aspect-[6/4]">
+          <div className="relative overflow-hidden rounded-md aspect-[6/4]">
             {/* 4:6 == 2:3 portrait */}
             <Image
               src={pills[activeIndex].media.url}

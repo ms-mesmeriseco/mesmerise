@@ -72,8 +72,6 @@ export default function PackagesRow() {
 
   return (
     <section className="w-full py-12  rounded-lg">
-      <h2 className="page-title-large">Packages</h2>
-      <br />
       <ToggleSwitch options={options} value={selected} onChange={setSelected} />
 
       <div className="wrapper  grid grid-cols-1 md:grid-cols-3 gap-2 w-full mx-auto">

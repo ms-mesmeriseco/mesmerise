@@ -1,7 +1,7 @@
 // content/services/website.jsx
 import React from "react";
 
-export const heroMedia = "/LogoMark.png";
+export const heroMedia = "/assets/pro-sculpt.mp4";
 
 export const trustBadgeText = "Trusted by...";
 export const trustBadgeLogos = [

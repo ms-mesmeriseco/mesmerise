@@ -4,7 +4,7 @@ export default function ToggleSwitch({ options = [], value, onChange }) {
       {options.map((option) => (
         <button
           key={option}
-          className={`flex-1 px-4 py-1 rounded-lg transition-colors ${
+          className={`flex-1 px-4 py-1 rounded-lg transition-colors cursor-pointer ${
             value === option
               ? "bg-[var(--mesm-l-grey)] text-black"
               : "bg-transparent text-[var(--foreground)]"

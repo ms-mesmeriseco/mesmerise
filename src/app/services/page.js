@@ -1,6 +1,7 @@
 "use client";
 
 import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
+import StaticSingleColumn from "@/components/layout/StaticSingleColumn";
 import SectionMarker from "@/components/home/SectionMarker";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import ServicesTab from "@/components/services/ServicesTab";
@@ -52,21 +53,25 @@ export default function Connect() {
   return (
     <div className="flex flex-col min-h-screen gap-[8rem] p-[var(--global-margin-lg)]">
       <SectionMarker label={marker} />
-
-      <StaticTwoColumn
-        label={"what's on offer"}
-        column1={[
-          <StaggeredWords
-            key="h1"
-            text="Premium full service solutions, engineered with insight. Delivered
+      <div className="text-center py-24">
+        <StaticSingleColumn
+          label={"HUMAN SERVICES"}
+          column={[
+            <StaggeredWords
+              key="h1"
+              text="Premium full service solutions, engineered with insight. Delivered
             with intent."
-            className="page-title-large text-2xl md:text-4xl leading-tight"
-          />,
-        ]}
-      />
+              className="page-title-large text-2xl md:text-4xl leading-tight"
+              center
+            />,
+          ]}
+        />
+      </div>
+      <section data-marker="CLICK ME" className="min-h-[80vh]">
       <ServicesTab />
+      </section>
       <StaticTwoColumn
-        label={"what's on offer"}
+        label={"STRATEGY"}
         column1={[
           <StaggeredWords
             key="h2"
@@ -92,8 +97,8 @@ export default function Connect() {
         ]}
       />
       <StaticTwoColumn
-        label={"what's on offer"}
-        column1={[
+        label={"WEBSITE"}
+        column2={[
           <div key="web" className="flex flex-col gap-6 w-[600px]">
             <StaggeredWords
               key="h2"
@@ -117,7 +122,7 @@ export default function Connect() {
         ]}
       />
       <StaticTwoColumn
-        label={"what's on offer"}
+        label={"MARKETING"}
         column1={[
           <StaggeredWords
             key="h2"
@@ -141,8 +146,8 @@ export default function Connect() {
         ]}
       />
       <StaticTwoColumn
-        label={"what's on offer"}
-        column1={[
+        label={"CONSULTING"}
+        column2={[
           <StaggeredWords
             key="h2"
             as="h2"

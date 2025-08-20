@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "framer-motion";
 import ServicesList from "@/components/home/ServicesList";
 import BlogScroll from "@/components/cms-blocks/BlogScroll";
 import CollabModel from "@/components/home/CollabModel";
@@ -10,9 +10,7 @@ import useSectionMarker from "@/hooks/useSectionMarker";
 import SectionMarker from "@/components/home/SectionMarker";
 import Scene from "@/components/three/Scene";
 import StaggeredWords from "@/hooks/StaggeredWords";
-// ---------- Utility: split text and stagger words ----------
 
-// ---------- Hook: toggle <html data-header-visible> & background color ----------
 function usePageStageController(splashRef, section2Ref) {
   const splashInView = useInView(splashRef, { amount: 0.2 });
   const hitSection2 = useInView(section2Ref, { amount: 0.2 });
@@ -44,7 +42,6 @@ function usePageStageController(splashRef, section2Ref) {
   return { dark: activated, headerVisible };
 }
 
-// ---------- Splash (Section 1) ----------
 function Splash({ innerRef }) {
   return (
     <section

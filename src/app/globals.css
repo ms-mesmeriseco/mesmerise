@@ -310,7 +310,7 @@ footer {
 }
 .text-stroke {
   -webkit-text-stroke: 1px var(--foreground);
-  color: var(--background);
+  color: rgba(0, 0, 0, 0);
 }
 b {
   font-style: normal;

@@ -114,12 +114,11 @@ function BubbleItem({
         layout
         transition={spring}
         className={[
-          "w-full select-none font-medium text-[var(--background)]",
-          "rounded-lg shadow-md",
-          "px-2 py-4 md:px-4 md:py-2",
+          "w-full select-none",
           "outline-none focus-visible:ring-2 focus-visible:ring-black/10",
           "whitespace-nowrap",
           "cursor-pointer",
+          "bg-[var(--mesm-blue)] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap cursor-pointer transition",
         ].join(" ")}
         style={{
           backgroundColor: color,
@@ -151,7 +150,7 @@ function BubbleItem({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={spring}
-            className="mt-3 rounded-lg bg-[var(--mesm-yellow)] p-4 text-left "
+            className="mt-3 rounded-2xl bg-[var(--mesm-yellow)] p-4 text-left "
             style={{
               maxWidth: isMobile ? "100%" : maxItemWidth,
               backdropFilter: "saturate(140%) blur(4px)",
@@ -160,7 +159,7 @@ function BubbleItem({
             <span
               className={`${
                 isMobile ? "text-md" : "text-xl"
-              } leading-relaxed text-[var(--background)]`}
+              } leading-relaxed text-[var(--background)] p2`}
             >
               {item.content}
             </span>

@@ -114,7 +114,9 @@ export default function ProjectNavigationList({ activeTag = null }) {
 
   // Compute candidates for filtering
   const filteredProjects = useMemo(() => {
-    if (!selectedLabel && !selectedRaw) return projects;
+    if (!selectedLabel && !selectedRaw) return [...projects].sort(
+      (a, b) => new Date(b.projectDate) - new Date(a.projectDate)
+    );
 
     let candidates;
     if (selectedLabel) {
@@ -125,11 +127,13 @@ export default function ProjectNavigationList({ activeTag = null }) {
       candidates = new Set([normalize(selectedRaw)]);
     }
 
-    return projects.filter((p) =>
-      p.contentfulMetadata?.tags?.some((t) =>
-        candidates.has(normalize(t?.name))
+    return projects
+      .filter((p) =>
+        p.contentfulMetadata?.tags?.some((t) =>
+          candidates.has(normalize(t?.name))
+        )
       )
-    );
+      .sort((a, b) => new Date(b.projectDate) - new Date(a.projectDate));
   }, [projects, selectedLabel, selectedRaw]);
 
   // No match logic
