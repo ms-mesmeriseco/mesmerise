@@ -38,6 +38,10 @@ function useHeaderGate() {
 }
 
 export default function Header() {
+    const [mounted, setMounted] = useState(false); // <-- add this
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const gateVisible = useHeaderGate();
   const [showWhileIdle, setShowWhileIdle] = useState(true);
   const timeoutRef = useRef(null);
@@ -48,13 +52,16 @@ export default function Header() {
     if (typeof window === "undefined") return;
 
     const handleScroll = () => {
-      if (!gateVisible) return; // if splash is in view, don’t bother animating
+      if (!gateVisible) return; // Only hide/show if header should be visible
       setShowWhileIdle(false);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => setShowWhileIdle(true), 300);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    if (gateVisible) {
+      window.addEventListener("scroll", handleScroll, { passive: true });
+    }
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
