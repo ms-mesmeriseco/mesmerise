@@ -66,8 +66,8 @@ export default function WebsitePage() {
         <StaticSingleColumn
           label="ABOUT THIS SERVICE"
           column={[
-            <div className="items-center flex flex-col gap-6">
-              <h2 key="heading" className="text-center page-title-large">
+            <div key="heading" className="items-center flex flex-col gap-6">
+              <h2 className="text-center page-title-large">
                 What We Build Isn&apos;t Just a Website, It&apos;s a Growth
                 Engine.
               </h2>

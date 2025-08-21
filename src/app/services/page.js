@@ -68,7 +68,7 @@ export default function Connect() {
         />
       </div>
       <section data-marker="CLICK ME" className="md:min-h-[80vh] min-h-[50vh]">
-      <ServicesTab />
+        <ServicesTab />
       </section>
       <StaticTwoColumn
         label={"STRATEGY"}

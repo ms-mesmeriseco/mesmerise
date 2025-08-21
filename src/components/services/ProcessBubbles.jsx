@@ -199,7 +199,7 @@ export default function ProcessBubbles({
     });
 
   const spring = useMemo(
-    () => ({ type: "spring", stiffness: 500, damping: 20, mass: 0.1 }),
+    () => ({ type: "spring", stiffness: 500, damping: 20, mass: 0.05 }),
     []
   );
 

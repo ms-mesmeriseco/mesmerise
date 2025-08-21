@@ -86,7 +86,7 @@ export default async function BlogPost({ params }) {
         />
       </div> */}
 
-      <main className="flex flex-col md:flex-row md:gap-8 gap-0 rounded-3xl w-full mx-auto px-4 pb-[30vh]">
+      <main className="flex flex-col md:flex-row md:gap-8 gap-0 rounded-3xl w-full mx-auto px-4 pt-18">
         {h3Anchors.length > 0 && (
           <aside
             className="

@@ -292,6 +292,7 @@ footer ul li {
   margin: 0;
 }
 footer {
+  margin-top: 30vh;
   h5 {
     font-size: 0.8rem;
     font-weight: 400;
