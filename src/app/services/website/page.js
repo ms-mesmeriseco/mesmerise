@@ -66,12 +66,12 @@ export default function WebsitePage() {
         <StaticSingleColumn
           label="ABOUT THIS SERVICE"
           column={[
-            <div key="heading" className="items-center flex flex-col gap-6">
-              <h2 className="text-center page-title-large">
+            <div key="h2" className="items-center flex flex-col gap-6">
+              <h2 key="header" className="text-center page-title-large">
                 What We Build Isn&apos;t Just a Website, It&apos;s a Growth
                 Engine.
               </h2>
-              <br />
+              <br key="br" />
               <SecondaryButton key="button" size="x-large" href="/connect">
                 Learn more
               </SecondaryButton>
