@@ -114,7 +114,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
             </button>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-[var(--global-margin-xs)]">
+          <div className="grid lg:auto-cols-auto md:grid-cols-3 sm:grid-cols-1 gap-[var(--global-margin-xs)]">
             {iconItems.map((item, idx) => {
               const { icon, textContent } = item || {};
               const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;

@@ -48,11 +48,15 @@ export default function HeroBanner({
   pageHeader,
   pageSubtitle,
   pageHeaderLine2,
-  mediaHeight,
+  heroAlignment,
   showCta = true,
   ctaUrl = "/connect",
 }) {
   const isVideo = heroMedia?.contentType?.includes("video");
+
+  const alignmentClasses = heroAlignment
+    ? "items-start text-left"
+    : "items-center justify-center text-center";
 
   return (
     <InView>
@@ -77,7 +81,9 @@ export default function HeroBanner({
             />
           ))}
 
-        <div className="wrapper relative z-10 text-[var(--foreground)] text-left w-full sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] ">
+        <div
+          className={`wrapper relative z-10 text-[var(--foreground)] ${alignmentClasses} w-full sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]`}
+        >
           <div className=" sm:w-full">
             <h1>
               <AnimatedText text={pageHeader} />

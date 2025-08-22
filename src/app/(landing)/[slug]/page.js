@@ -50,6 +50,7 @@ export default function LandingPage({ params }) {
             pageSubtitle={heroBlock.pageSubtitle}
             pageHeaderLine2={heroBlock.pageHeaderLine2}
             mediaHeight={heroBlock.mediaHeight}
+            heroAlignment={heroBlock.heroAlignment}
           />
         </div>
       )}
