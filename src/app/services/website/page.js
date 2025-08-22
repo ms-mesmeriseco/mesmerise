@@ -71,7 +71,8 @@ export default function WebsitePage() {
                 What We Build Isn&apos;t Just a Website, It&apos;s a Growth
                 Engine.
               </h2>
-              <SecondaryButton key="button" size="large" href="/connect">
+              <br />
+              <SecondaryButton key="button" size="x-large" href="/connect">
                 Learn more
               </SecondaryButton>
             </div>,

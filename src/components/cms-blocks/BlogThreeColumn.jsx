@@ -6,7 +6,7 @@ import Image from "next/image";
 import { getClient } from "@/lib/apollo-client";
 import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 
-export default function BlogScroll() {
+export default function BlogThreeColumn() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -23,31 +23,28 @@ export default function BlogScroll() {
 
   return (
     <section className="w-full py-[var(--global-margin-lg)] px-[var(--global-margin-sm)]">
-      <div className="flex overflow-x-auto gap-[var(--global-margin-sm)] pb-[var(--global-margin-sm)]">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-[var(--global-margin-sm)]">
         {posts.slice(0, 3).map((post, index) => (
           <Link
             key={`blog-${post.slug}-${index}`}
             href={`/blog/${post.slug}`}
-            className="relative group w-[32vw] h-[24vw] min-w-[16rem] rounded-md overflow-hidden border-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)] duration-200 flex-shrink-0"
+            className="group overflow-hidden border-[var(--foreground)] duration-200 flex flex-col h-fit"
           >
             {/* Image */}
             {post.heroImage?.url && (
               <Image
                 src={post.heroImage.url}
                 alt={post.heroImage.title || "Blog image"}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                width={post.heroImage.width || 800}
+                height={post.heroImage.height || 600}
+                className="object-cover w-full rounded-md "
+                style={{ display: "block" }}
               />
             )}
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            {/* Text */}
-            <div className="absolute bottom-[var(--global-margin-sm)] left-[var(--global-margin-sm)] text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-              <div className="text-sm font-bold">
-                <h5>{post.postTitle}</h5>
-              </div>
+            {/* Text below image */}
+            <div className="py-6">
+              <h4 className="text-sm font-bold">{post.postTitle}</h4>
             </div>
           </Link>
         ))}

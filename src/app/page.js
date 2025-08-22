@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import ServicesList from "@/components/home/ServicesList";
-import BlogScroll from "@/components/cms-blocks/BlogScroll";
+import BlogThreeColumn from "@/components/cms-blocks/BlogThreeColumn";
 import CollabModel from "@/components/home/CollabModel";
 import ProjectScroll from "@/components/cms-blocks/ProjectScroll";
 import useSectionMarker from "@/hooks/useSectionMarker";
@@ -103,7 +103,7 @@ function ProjectsRow() {
 function BlogsRow() {
   return (
     <section data-marker="BLOG" className="relative py-12 md:py-16 text-white">
-      <BlogScroll />
+      <BlogThreeColumn />
     </section>
   );
 }
