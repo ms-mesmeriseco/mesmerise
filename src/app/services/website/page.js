@@ -34,7 +34,7 @@ export default function WebsitePage() {
         <StaticTwoColumn
           label="ABOUT THIS SERVICE"
           column1={[
-            <p key="p" className="p2">
+            <p key="para" className="p2">
               Whether you’re a startup launching your first site or an
               enterprise ready to revitalise your digital presence, we build
               websites that align with your audience, strengthen your brand, and
@@ -67,7 +67,7 @@ export default function WebsitePage() {
           label="ABOUT THIS SERVICE"
           column={[
             <div key="heading" className="items-center flex flex-col gap-6">
-              <h2 className="text-center page-title-large">
+              <h2 key="h2" className="text-center page-title-large">
                 What We Build Isn&apos;t Just a Website, It&apos;s a Growth
                 Engine.
               </h2>
