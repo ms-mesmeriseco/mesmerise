@@ -11,61 +11,63 @@ export const trustBadgeLogos = [
 
 // Author rich content as JSX (fast to edit)
 export const column1Content = [
-  <h1 key="heading">
-    What We Build Isn&apos;t Just a Website, It&apos;s a Growth Engine.
-  </h1>,
-  <p key="p">
-    Whether you’re a startup launching your first site or an enterprise ready to
-    revitalise your digital presence, we build websites that align with your
-    audience, strengthen your brand, and deliver results that matter.
+  <p className="p2" key="para">
+    Whether you’re a bold startup finding your voice or an established business
+    ready to redefine your presence, we’re here to guide you through every stage
+    of your brand’s evolution.
     <br />
     <br />
-    Our research-driven, systemic approach ensures your website resonates with
-    your people, represents your business with integrity, and supports
-    meaningful growth long after launch.
+    We’ll equip you with the clarity, strategy, and creative direction to
+    connect with your audience, elevate your positioning, and inspire growth
+    that's enduring.
   </p>,
 ];
 
-export const column2Content = [""]; // keep shape consistent with your component
+export const column2Content = [
+  <h2 key="heading" className="text-center page-title-large">
+    We craft distinctive, flexible visual identities that capture the essence of
+    who you are and where you’re headed.
+  </h2>,
+];
 
 export const serviceTags = [
-  "Front-end Development",
-  "Back-end Systems",
-  "CMS Integration",
-  "Accessibility",
-  "Performance",
-  "SEO Foundations",
+  "Branding",
+  "Creative Direction",
+  "Marketing Materials",
+  "User Experience",
+  "UI Design",
+  "Interaction Design",
+  "Sound Design",
+  "Product Design",
+  "Prototyping",
+  "Web Design",
+  "Motion Graphics",
 ];
 
 export const processSteps = [
   {
     title: "1. Discovery",
     content:
-      "We analyse your business goals, audience, and market to lay the strategic foundation for a site that performs and connects.",
+      "We immerse ourselves in your business, your audience and the market, uncovering insights that shape your brand’s positioning and unlock strategic clarity.",
   },
   {
     title: "2. Ideation",
     content:
-      "Through architecture, wireframes, and style exploration, we develop concepts that align user needs with your vision.",
+      "Through lo-fi sketches, moodboards, and analysis of discovery data, we explore creative directions and present initial concepts to ensure alignment with your goals and vision from the very beginning.",
   },
   {
     title: "3. Design",
     content:
-      "We craft comprehensive, systematic designs that embody your brand, enhance usability, and meet your objectives.",
+      "We craft a cohesive, considered proposal that resonates with your audience and meets your business needs, bringing your brand to life with purpose and precision.",
   },
   {
-    title: "4. Development",
+    title: "4. Delivery",
     content:
-      "We bring your website to life with a tailored build that meets your technical needs and future-proofs your presence. Whether it be fully custom, or utilising a powerful web builder.",
+      "We deliver a complete, polished toolkit of visual, verbal and creative assets, empowering your team to present your brand consistently, with confidence and impact.",
   },
   {
-    title: "5. Quality Assurance",
+    title: "5. Activation",
     content:
-      "This is an important stage. Here, we can iron out any creases in design or build, ensuring your complete satisfaction with the finished product.",
-  },
-  {
-    title: "6. Handover",
-    content:
-      "Your fully functional website is handed over with all documentation and team training needed to manage it effectively.",
+      "We help you integrate your refreshed brand seamlessly across your website, products and campaigns, driving customer engagement and creating measurable impact.",
   },
 ];

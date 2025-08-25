@@ -6,7 +6,7 @@ import renderRichTextWithBreaks from "./renderRichTextWithBreaks";
 
 export default function BlockRenderer({ block, center }) {
   const textAlign = center
-    ? "m-auto prose max-w-none text-center lg:w-6/12 md:w-8/12 sm:w-10/12 gap-4 flex flex-col"
+    ? "m-auto prose max-w-none text-center w-10/12 gap-4 flex flex-col"
     : "prose max-w-none lg:w-12/12 md:w-12/12 sm:w-12/12";
   const widgetAlign = center ? " " : "w-full";
 

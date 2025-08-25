@@ -22,6 +22,7 @@ export const Q_HERO_BY_IDS = gql`
         sys {
           id
         }
+        ...HeroDetails
       }
     }
   }
@@ -30,7 +31,7 @@ export const Q_HERO_BY_IDS = gql`
 
 export const Q_ICONROW_BY_IDS = gql`
   query IconRowByIds($ids: [String!]!) {
-    results: iconRowCollection(where: { sys: { id_in: $ids } }, limit: 100) {
+    results: iconRowCollection(where: { sys: { id_in: $ids } }, limit: 5) {
       items {
         __typename
         sys {
@@ -45,10 +46,7 @@ export const Q_ICONROW_BY_IDS = gql`
 
 export const Q_TRUSTBADGES_BY_IDS = gql`
   query TrustBadgesByIds($ids: [String!]!) {
-    results: trustBadgesCollection(
-      where: { sys: { id_in: $ids } }
-      limit: 100
-    ) {
+    results: trustBadgesCollection(where: { sys: { id_in: $ids } }, limit: 2) {
       items {
         __typename
         sys {
@@ -65,7 +63,7 @@ export const Q_SWITCH_BY_IDS = gql`
   query SwitchByIds($ids: [String!]!) {
     results: listWithImageSwitchCollection(
       where: { sys: { id_in: $ids } }
-      limit: 100
+      limit: 2
     ) {
       items {
         __typename
@@ -81,7 +79,7 @@ export const Q_SWITCH_BY_IDS = gql`
 
 export const Q_PILLBLOCK_BY_IDS = gql`
   query PillBlockByIds($ids: [String!]!) {
-    results: pillBlockCollection(where: { sys: { id_in: $ids } }, limit: 100) {
+    results: pillBlockCollection(where: { sys: { id_in: $ids } }, limit: 3) {
       items {
         __typename
         sys {
@@ -98,7 +96,7 @@ export const Q_TWOCOL_BY_IDS = gql`
   query TwoColByIds($ids: [String!]!) {
     results: twoColumnBlockBlankCollection(
       where: { sys: { id_in: $ids } }
-      limit: 100
+      limit: 8
     ) {
       items {
         __typename
@@ -116,7 +114,7 @@ export const Q_SINGLECOL_BY_IDS = gql`
   query SingleColByIds($ids: [String!]!) {
     results: singleColumnBlockBlankCollection(
       where: { sys: { id_in: $ids } }
-      limit: 100
+      limit: 5
     ) {
       items {
         __typename
@@ -134,7 +132,7 @@ export const Q_THREECOL_BY_IDS = gql`
   query ThreeColByIds($ids: [String!]!) {
     results: threeColumnBlockBlankCollection(
       where: { sys: { id_in: $ids } }
-      limit: 100
+      limit: 5
     ) {
       items {
         __typename
@@ -152,7 +150,7 @@ export const Q_SINGLESTUDY_BY_IDS = gql`
   query SingleStudyByIds($ids: [String!]!) {
     results: singleCaseStudyCollection(
       where: { sys: { id_in: $ids } }
-      limit: 100
+      limit: 3
     ) {
       items {
         __typename
@@ -170,7 +168,7 @@ export const Q_MEDIACARO_BY_IDS = gql`
   query MediaCarouselByIds($ids: [String!]!) {
     results: mediaCarouselWithTextCollection(
       where: { sys: { id_in: $ids } }
-      limit: 100
+      limit: 3
     ) {
       items {
         __typename

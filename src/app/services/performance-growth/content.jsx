@@ -12,29 +12,34 @@ export const trustBadgeLogos = [
 // Author rich content as JSX (fast to edit)
 export const column1Content = [
   <h1 key="heading">
-    What We Build Isn&apos;t Just a Website, It&apos;s a Growth Engine.
+    Where strategy meets execution and execution delivers profound results.
   </h1>,
-  <p key="p">
-    Whether you’re a startup launching your first site or an enterprise ready to
-    revitalise your digital presence, we build websites that align with your
-    audience, strengthen your brand, and deliver results that matter.
+  <p key="p" className="p2">
+    You don’t need another agency to “run” your ads. You need growth architects
+    who engineer & execute desired outcomes.
     <br />
     <br />
-    Our research-driven, systemic approach ensures your website resonates with
-    your people, represents your business with integrity, and supports
-    meaningful growth long after launch.
+    With messaging that resonates, creative that connects, and landing pages
+    that feel like telepathy, every touchpoint is handcrafted with intent. Our
+    state of the art approach builds trust, wins attention, and consumes market
+    share.
   </p>,
 ];
 
 export const column2Content = [""]; // keep shape consistent with your component
 
 export const serviceTags = [
-  "Front-end Development",
-  "Back-end Systems",
-  "CMS Integration",
-  "Accessibility",
-  "Performance",
-  "SEO Foundations",
+  "Go-to-Market Strategy",
+  "Sales Enablement & Alignment",
+  "Systems & Processes",
+  "Workflow Optimisation",
+  "Customer Journey Maps",
+  "Positioning",
+  "Proposition Development",
+  "Product Research",
+  "Systems Optimisation & Implementation",
+  "Omni-Channel Marketing",
+  "Media Buying",
 ];
 
 export const processSteps = [

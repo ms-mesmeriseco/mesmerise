@@ -8,6 +8,7 @@ export const GET_LIST_ICONS = gql`
     displayTwo
     iconItemsCollection(limit: 14) {
       items {
+        __typename
         ... on ListIconItem {
           icon {
             url

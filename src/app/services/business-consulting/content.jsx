@@ -11,30 +11,36 @@ export const trustBadgeLogos = [
 
 // Author rich content as JSX (fast to edit)
 export const column1Content = [
-  <h1 key="heading">
-    What We Build Isn&apos;t Just a Website, It&apos;s a Growth Engine.
-  </h1>,
-  <p key="p">
-    Whether you’re a startup launching your first site or an enterprise ready to
-    revitalise your digital presence, we build websites that align with your
-    audience, strengthen your brand, and deliver results that matter.
-    <br />
-    <br />
-    Our research-driven, systemic approach ensures your website resonates with
-    your people, represents your business with integrity, and supports
-    meaningful growth long after launch.
+  <h1 key="heading">Make the right moves with insight and instinct</h1>,
+  <p key="p" className="p2">
+    For brands seeking strategic clarity and operational alignment, we serve as
+    your trusted partner in growth.
+  </p>,
+  <p key="p2">
+    We bring cutting-edge industry insights and proven expertise to help you
+    plan smarter, move faster, and execute with precision. Whether you’re
+    launching a product, entering a new market, or rethinking how your teams and
+    systems work together, we guide you to make informed, impactful decisions,
+    and turn ambition into action.
   </p>,
 ];
 
 export const column2Content = [""]; // keep shape consistent with your component
 
 export const serviceTags = [
-  "Front-end Development",
-  "Back-end Systems",
-  "CMS Integration",
-  "Accessibility",
-  "Performance",
-  "SEO Foundations",
+  "Competitor Analysis",
+  "Interviews & Workshops",
+  "Customer Research",
+  "Analytics Setup & Audit",
+  "Brand Strategy & Positioning",
+  "Developing Tone of Voice",
+  "Content Strategy",
+  "Personas & Archetypes",
+  "Customer Lifecycle",
+  "Paid Media Management",
+  "Search Engine Optimisation",
+  "Content Marketing",
+  "Local SEO & Geo Targeting",
 ];
 
 export const processSteps = [

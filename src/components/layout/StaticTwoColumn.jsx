@@ -1,7 +1,7 @@
- export default function StaticTwoColumn({ column1, column2, label }) {
+export default function StaticTwoColumn({ column1, column2, label }) {
   return (
     <section
-      className="grid grid-cols-1 md:grid-cols-2 gap-[var(--global-margin-lg)]"
+      className="grid grid-cols-1 md:grid-cols-2 gap-[var(--global-margin-lg)] items-center min-h-[50vh]"
       data-marker={label}
     >
       <div className="w-full flex flex-col justify-center gap-6">{column1}</div>

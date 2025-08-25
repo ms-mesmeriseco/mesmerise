@@ -25,17 +25,7 @@ export const GET_TWO_COLUMN = gql`
           ...AccordionWidgetFragment
         }
         ... on ListIcons {
-          listItemsCollection(limit: 12) {
-            items {
-              icon {
-                url
-                title
-              }
-              textContent {
-                json
-              }
-            }
-          }
+          ...ListIconsDetails
         }
       }
     }
@@ -56,17 +46,21 @@ export const GET_TWO_COLUMN = gql`
           ...AccordionWidgetFragment
         }
         ... on ListIcons {
-          listItemsCollection(limit: 4) {
-            items {
-              icon {
-                url
-                title
-              }
-              textContent {
-                json
-              }
-            }
-          }
+          ...ListIconsDetails
+        }
+      }
+    }
+  }
+
+  fragment ListIconsDetails on ListIcons {
+    listItemsCollection(limit: 15) {
+      items {
+        icon {
+          url
+          title
+        }
+        textContent {
+          json
         }
       }
     }

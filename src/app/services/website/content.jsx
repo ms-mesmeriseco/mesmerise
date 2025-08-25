@@ -2,6 +2,7 @@
 import React from "react";
 
 export const heroMedia = "/assets/pro-sculpt.mp4";
+import SecondaryButton from "@/components/ui/SecondaryButton.jsx";
 
 export const trustBadgeText = "Trusted by...";
 export const trustBadgeLogos = [
@@ -11,10 +12,7 @@ export const trustBadgeLogos = [
 
 // Author rich content as JSX (fast to edit)
 export const column1Content = [
-  <h1 key="heading">
-    What We Build Isn&apos;t Just a Website, It&apos;s a Growth Engine.
-  </h1>,
-  <p key="p">
+  <p key="para" className="p2">
     Whether you’re a startup launching your first site or an enterprise ready to
     revitalise your digital presence, we build websites that align with your
     audience, strengthen your brand, and deliver results that matter.
@@ -26,15 +24,29 @@ export const column1Content = [
   </p>,
 ];
 
-export const column2Content = [""]; // keep shape consistent with your component
+export const column2Content = [
+  <div key="h2" className="items-center flex flex-col gap-6">
+    <h2 className="text-center page-title-large">
+      What We Build Isn&apos;t Just a Website, It&apos;s a Growth Engine.
+    </h2>
+    <br />
+    <SecondaryButton size="x-large" href="/connect">
+      Learn more
+    </SecondaryButton>
+  </div>,
+]; // keep shape consistent with your component
 
 export const serviceTags = [
   "Front-end Development",
-  "Back-end Systems",
+  "Back-end Development",
   "CMS Integration",
+  "Systems Architecture",
+  "E-Commerce",
+  "Website Builders",
+  "Applications",
   "Accessibility",
-  "Performance",
-  "SEO Foundations",
+  "Performance Testing",
+  "Ongoing Support",
 ];
 
 export const processSteps = [

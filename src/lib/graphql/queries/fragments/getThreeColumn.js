@@ -7,41 +7,33 @@ export const GET_THREE_COLUMN = gql`
     column1Collection(limit: 1) {
       items {
         ... on ListSwitchItem {
-          entryTitle
-          textContent
-          listMedia {
-            url
-            width
-            height
-          }
+          ...ListitemDetails
         }
       }
     }
     column2Collection(limit: 1) {
       items {
         ... on ListSwitchItem {
-          entryTitle
-          textContent
-          listMedia {
-            url
-            width
-            height
-          }
+          ...ListitemDetails
         }
       }
     }
     column3Collection(limit: 1) {
       items {
         ... on ListSwitchItem {
-          entryTitle
-          textContent
-          listMedia {
-            url
-            width
-            height
-          }
+          ...ListitemDetails
         }
       }
+    }
+  }
+
+  fragment ListItemDetails on ListSwitchItem {
+    entryTitle
+    textContent
+    listMedia {
+      url
+      width
+      height
     }
   }
 `;

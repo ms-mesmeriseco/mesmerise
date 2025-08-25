@@ -9,6 +9,7 @@ import { GET_IMAGE } from "./fragments/getImage";
 import { GET_VIDEO } from "./fragments/getVideo";
 import { GET_TWO_COLUMN } from "./fragments/getTwoColumn";
 import { GET_SINGLE_COLUMN } from "./fragments/singleColumn";
+import { GET_THREE_COLUMN } from "./fragments/getThreeColumn";
 import { GET_SINGLE_CASESTUDY } from "./fragments/getSingleCaseStudy";
 import { GET_MEDIA_CAROUSEL } from "./fragments/getMediaCarousel";
 
@@ -61,6 +62,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   ${GET_SINGLE_CASESTUDY}
   ${GET_SINGLE_COLUMN}
   ${GET_TWO_COLUMN}
+
   ${GET_VIDEO}
   ${GET_IMAGE}
   ${GET_ACCORDION}
