@@ -44,6 +44,9 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on TwoColumnBlockBlank {
               ...TwoColumn
             }
+            ... on ThreeColumnBlockBlank {
+              ...ThreeColumn
+            }
             ... on SingleColumnBlockBlank {
               ...SingleColumn
             }
@@ -62,7 +65,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   ${GET_SINGLE_CASESTUDY}
   ${GET_SINGLE_COLUMN}
   ${GET_TWO_COLUMN}
-
+  ${GET_THREE_COLUMN}
   ${GET_VIDEO}
   ${GET_IMAGE}
   ${GET_ACCORDION}
