@@ -4,7 +4,6 @@ import { GET_IMAGE } from "./getImage";
 import { GET_ACCORDION } from "./getAccordion";
 import { GET_LIST_ICONS } from "./getListIcons";
 import { GET_LIST_SWITCH } from "./getListSwitch";
-import { CONTENT_RICH_TEXT_HYPERLINKS } from "./richTextHyperlinks";
 
 export const GET_SINGLE_COLUMN = gql`
   fragment SingleColumn on SingleColumnBlockBlank {
@@ -26,7 +25,7 @@ export const GET_SINGLE_COLUMN = gql`
           ...AccordionWidgetFragment
         }
         ... on ListIcons {
-          listItemsCollection(limit: 15) {
+          listItemsCollection(limit: 1) {
             items {
               icon {
                 url

@@ -38,7 +38,7 @@ export default function ProjectScroll() {
         <img
           src={project.heroMedia?.url}
           alt={project.heroMedia?.title || project.projectTitle}
-          className="w-full h-full object-cover"
+          className="w-full h-[30vh] object-cover"
         />
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end ">
           <span className="text-white text-sm text-left p-4">
@@ -50,19 +50,19 @@ export default function ProjectScroll() {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-[var(--global-margin-sm)] h-full">
+    <div className="grid grid-cols-2 gap-[var(--global-margin-xs)] h-full">
       {/* Column 1 */}
-      <div className="flex flex-col gap-[var(--global-margin-sm)] h-full">
+      <div className="flex flex-col gap-[var(--global-margin-xs)] h-full">
         {renderProject(projects[0], 0)}
-        <div className="flex gap-[var(--global-margin-sm)] flex-1">
+        <div className="flex gap-[var(--global-margin-xs)] flex-1">
           {renderProject(projects[1], 1)}
           {renderProject(projects[2], 2)}
         </div>
       </div>
 
       {/* Column 2 */}
-      <div className="flex flex-col gap-[var(--global-margin-sm)] h-full">
-        <div className="flex gap-[var(--global-margin-sm)] flex-1">
+      <div className="flex flex-col gap-[var(--global-margin-xs)] h-full">
+        <div className="flex gap-[var(--global-margin-xs)] flex-1">
           {renderProject(projects[3], 3)}
           {renderProject(projects[4], 4)}
         </div>

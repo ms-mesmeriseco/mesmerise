@@ -5,9 +5,9 @@ export const GET_PROJECT_PAGES = gql`
   query GetProjectPages {
     projectPageCollection {
       items {
-          ...ProjectData  
+        ...ProjectData
       }
     }
   }
-    ${GET_PROJECT_DATA}
+  ${GET_PROJECT_DATA}
 `;

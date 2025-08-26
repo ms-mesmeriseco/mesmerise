@@ -18,7 +18,7 @@ export const GET_THREE_COLUMN = gql`
         }
       }
     }
-    column3Collection(limit: 1) {
+    column1Collection(limit: 3) {
       items {
         ... on ListSwitchItem {
           ...ListitemDetails

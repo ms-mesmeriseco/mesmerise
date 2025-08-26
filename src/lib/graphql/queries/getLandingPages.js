@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import gqlmin from "gqlmin";
 import { PILL_BLOCK_FRAGMENT } from "./fragments/pillBlockFragment";
 import { GET_TRUST_BADGES } from "./fragments/trustBadgesFragment";
 import { GET_LIST_SWITCH } from "./fragments/getListSwitch";
@@ -23,7 +24,6 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
         }
         pageTitle
         pageSlug
-
         pageBlocksCollection(limit: 20) {
           items {
             ... on ComponentHeroBanner {
@@ -44,9 +44,6 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on TwoColumnBlockBlank {
               ...TwoColumn
             }
-            ... on ThreeColumnBlockBlank {
-              ...ThreeColumn
-            }
             ... on SingleColumnBlockBlank {
               ...SingleColumn
             }
@@ -65,7 +62,6 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   ${GET_SINGLE_CASESTUDY}
   ${GET_SINGLE_COLUMN}
   ${GET_TWO_COLUMN}
-  ${GET_THREE_COLUMN}
   ${GET_VIDEO}
   ${GET_IMAGE}
   ${GET_ACCORDION}
