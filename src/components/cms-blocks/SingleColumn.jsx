@@ -19,7 +19,7 @@ export default function SingleColumn({
     <InView>
       <section
         data-label={marker}
-        className="wrapper w-full m-auto flex flex-col gap-6 min-h-[50vh] justify-around"
+        className="wrapper w-full m-auto flex flex-col gap-2 py-18"
       >
         {content.map((block, index) => (
           <BlockRenderer key={`single-${index}`} block={block} center={align} />
