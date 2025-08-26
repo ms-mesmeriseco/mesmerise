@@ -8,6 +8,7 @@ import SwitchListAccordion from "@/components/cms-blocks/SwitchListAccordion";
 import PillBlock from "@/components/cms-blocks/PillBlock";
 import SingleCaseStudy from "@/components/cms-blocks/SingleCaseStudy";
 import MediaCarouselWithText from "@/components/cms-blocks/MediaCarouselWithText";
+import ThreeColumnImage from "@/components/cms-blocks/ThreeColumnImage";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -154,6 +155,17 @@ export default function PageBase({ blocks }) {
                     summary={block.summary}
                     results={block.results}
                     timeFrame={block.timeFrame}
+                  />
+                </div>
+              );
+            case "ThreeColumnBlockBlank":
+              return (
+                <div className="col-span-12" key={`block-${index}`}>
+                  <ThreeColumnImage
+                    textContentOne={block.textContentOne}
+                    textContentTwo={block.textContentTwo}
+                    textContentThree={block.textContentThree}
+                    mediaCollection={block.mediaCollection}
                   />
                 </div>
               );
