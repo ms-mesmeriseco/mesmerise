@@ -14,7 +14,13 @@ import { GET_THREE_COLUMN } from "./fragments/getThreeColumn";
 import { GET_SINGLE_CASESTUDY } from "./fragments/getSingleCaseStudy";
 import { GET_MEDIA_CAROUSEL } from "./fragments/getMediaCarousel";
 
-export const GET_LANDING_PAGE_BY_SLUG = gql`
+function minifyGraphQL(query) {
+  return query
+    .replace(/\s+/g, " ")
+    .replace(/\s*([{}():,])\s*/g, "$1")
+    .trim();
+}
+const rawQuery = `
   query GetLandingPageBySlug($slug: String!) {
     landingPageCollection(limit: 1, where: { pageSlug: $slug }) {
       items {
@@ -47,6 +53,9 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
             ... on SingleColumnBlockBlank {
               ...SingleColumn
             }
+            ... on ThreeColumnBlockBlank {
+              ...ThreeColumn
+            }
             ... on SingleCaseStudy {
               ...SingleStudy
             }
@@ -58,8 +67,15 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
       }
     }
   }
+`;
+
+const minifiedQuery = minifyGraphQL(rawQuery);
+
+export const GET_LANDING_PAGE_BY_SLUG = gql`
+  ${minifiedQuery}
   ${GET_MEDIA_CAROUSEL}
   ${GET_SINGLE_CASESTUDY}
+  ${GET_THREE_COLUMN}
   ${GET_SINGLE_COLUMN}
   ${GET_TWO_COLUMN}
   ${GET_VIDEO}

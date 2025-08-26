@@ -6,7 +6,6 @@ export const GET_VIDEO = gql`
       url
       width
       height
-      contentType
     }
   }
 `;

@@ -57,7 +57,6 @@ export default function LandingPage({ params }) {
       {trustBadgesBlock && (
         <div className="col-span-12" key="trust-badges">
           <TrustBadges
-            textContent={trustBadgesBlock.textContent}
             logos={trustBadgesBlock.logosCollection?.items || []}
             scroll={trustBadgesBlock.scroll}
           />

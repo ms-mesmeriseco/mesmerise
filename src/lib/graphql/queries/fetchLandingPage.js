@@ -70,5 +70,4 @@ export async function fetchLandingPage(client, slug) {
     },
     blocks: hydrated,
   };
-  console.log("hydrated blocks:", hydrated);
 }

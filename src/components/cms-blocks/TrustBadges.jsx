@@ -2,26 +2,15 @@
 
 import PropTypes from "prop-types";
 import Image from "next/image";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
-export default function TrustBadges({ textContent, logos = [], scroll }) {
+export default function TrustBadges({ logos = [], scroll = true }) {
   const duplicatedLogos = scroll ? [...logos, ...logos] : logos;
 
   return (
     <section className="w-full py-8 overflow-hidden h-full">
       <div className="flex gap-8 items-center">
-        {/* Text content block (15%) */}
-        {textContent?.json && (
-          <div className="w-2/12 min-w-[120px]">
-            {documentToReactComponents(textContent.json)}
-          </div>
-        )}
         {/* Logo area (85%) */}
-        <div
-          className={`${
-            textContent ? "w-10/12" : "w-12/12"
-          } w-10/12 overflow-hidden relative`}
-        >
+        <div className={"w-12/12 overflow-hidden relative"}>
           {/* Left Gradient Overlay */}
           <div className="pointer-events-none absolute left-0 top-0 h-full w-36 z-10 bg-gradient-to-r from-black to-transparent" />
 

@@ -32,7 +32,7 @@ export default function HorizontalAccordion({ steps = [] }) {
                   isActive ? "opacity-100" : "opacity-50 hover:opacity-80"
                 }`}
               >
-                <div className="h-[50px] border-b-1 text-left">
+                <div className="w-[40vh] h-[50px] border-b-1 text-left">
                   {step.title}
                 </div>
               </div>
