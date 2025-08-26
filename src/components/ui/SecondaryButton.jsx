@@ -13,9 +13,9 @@ export default function SecondaryButton({
 
   const basePadding = isLarge ? "1.5rem" : isXLarge ? "2rem" : "1rem";
   const hoverPadding = isLarge ? "2rem" : isXLarge ? "2.75rem" : "1.5rem";
-  const height = isLarge ? "40px" : isXLarge ? "64px" : "32px";
+  const height = isLarge ? "45px" : isXLarge ? "64px" : "32px";
   const radius = isLarge
-    ? "rounded-md"
+    ? "rounded-lg"
     : isXLarge
     ? "rounded-2xl"
     : "rounded-sm";

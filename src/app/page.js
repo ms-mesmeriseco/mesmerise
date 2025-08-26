@@ -11,6 +11,7 @@ import useSectionMarker from "@/hooks/useSectionMarker";
 import SectionMarker from "@/components/home/SectionMarker";
 import Scene from "@/components/three/Scene";
 import StaggeredWords from "@/hooks/StaggeredWords";
+import PageTitleLarge from "@/components/layout/PageTitleLarge";
 
 function usePageStageController(splashRef, section2Ref) {
   const splashInView = useInView(splashRef, { amount: 0.2 });
@@ -66,22 +67,7 @@ function Statement({ innerRef }) {
         <InView>
           <StaggeredWords
             as="h1"
-            text="We craft brand, web, and content experiences that look sexy,"
-            className="page-title-large"
-          />
-        </InView>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <InView>
-          <StaggeredWords
-            as="h1"
-            text="and convert."
+            text="We craft brand, web, and content experiences that look sexy, and convert."
             className="page-title-large"
           />
         </InView>
@@ -100,21 +86,9 @@ function SecondaryStatement() {
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords
           as="p"
-          text="Our approach is driven by analytics–bridging the gap between aesthetic solutions and the bottom line."
+          text="Our approach is driven by analytics–bridging the gap between aesthetic solutions and undeniable data."
           className="page-title-large"
         />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <InView>
-          <StaggeredWords
-            as="h1"
-            text="The Mesmerise collaboration model is split in two: Defined and Ongoing."
-            className="page-title-large "
-          />
-        </InView>
       </div>
     </section>
   );

@@ -147,6 +147,11 @@ export default function Connect() {
       />
       <StaticTwoColumn
         label={"CONSULTING"}
+        column1={
+          [
+            // <img key="img" src="/assets/strategy-diagram_MESM.png" width="300" />,
+          ]
+        }
         column2={[
           <StaggeredWords
             key="h2"

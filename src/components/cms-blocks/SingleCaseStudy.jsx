@@ -9,6 +9,7 @@ export default function SingleCaseStudy({
   summary,
   results,
   timeFrame,
+  showText,
 }) {
   const { caseStudy } = study;
   if (!caseStudy) return null;
@@ -32,46 +33,51 @@ export default function SingleCaseStudy({
   const [showResults, setShowResults] = useState(false);
 
   return (
-    <section className="flex flex-col md:flex-row gap-4">
-      {/* Left (Hero image with 16:9 ratio) */}
-      <div className="relative md:w-3/4 aspect-[6/4] overflow-hidden rounded-xl">
-        {heroMedia?.url && (
-          <Image
-            src={heroMedia.url}
-            alt={heroMedia.title || "Case Study Image"}
-            fill
-            className="object-cover rounded-xl aspect-6/19"
-            sizes="(max-width: 768px) 100vw, 75vw"
-          />
-        )}
+    <section className="relative w-full aspect-[6/4] overflow-hidden rounded-xl">
+      {/* Background Image */}
+      {heroMedia?.url && (
+        <Image
+          src={heroMedia.url}
+          alt={heroMedia.title || "Case Study Image"}
+          fill
+          className="object-cover rounded-xl duration-300"
+          sizes="100vw"
+          priority
+        />
+      )}
 
-        <div className="flex flex-row gap-12 absolute bottom-4 left-4 backdrop-blur p-4 rounded-2xl shadow-md text-sm">
-          {dataOne?.json && <div>{renderRichTextWithBreaks(dataOne.json)}</div>}
-          {dataTwo?.json && <div>{renderRichTextWithBreaks(dataTwo.json)}</div>}
-          {dataThree?.json && (
-            <div>{renderRichTextWithBreaks(dataThree.json)}</div>
-          )}
-        </div>
+      {/* Top Left: Data Points */}
+      <div className="absolute top-4 left-4 flex flex-col gap-3 backdrop-blur bg-white/10 p-4 rounded-xl shadow text-sm max-w-[60vw]">
+        {dataOne?.json && <div>{renderRichTextWithBreaks(dataOne.json)}</div>}
+        {dataTwo?.json && <div>{renderRichTextWithBreaks(dataTwo.json)}</div>}
+        {dataThree?.json && (
+          <div>{renderRichTextWithBreaks(dataThree.json)}</div>
+        )}
       </div>
 
-      {/* Right (Project info + dropdowns) */}
-      <div className="md:w-1/4 space-y-4 p-4">
-        <h3 className="text-lg font-semibold m-0">{projectTitle}</h3>
-        <span className="bg-[var(--mesm-red)] text-[var(--background)] text-sm py-2 px-4 rounded-full">
+      {/* Top Right: Project Title & Date */}
+      <div className="absolute top-4 right-4 flex flex-col items-end gap-2"></div>
+
+      {/* Bottom Right: Collapsibles */}
+
+      <div className="absolute bottom-4 right-4 w-[320px] max-w-[90vw] text-xs flex flex-col gap-4">
+        <h3 className="text-lg font-bold m-0">{projectTitle}</h3>
+        <span className="bg-[var(--mesm-blue)] text-[var(--background)] text-sm py-1 px-3 rounded-md w-fit">
           {formattedDate} – {collaborationModel ? "Defined" : "Ongoing"}
         </span>
 
-        {/* Collapsibles */}
+        {/* Only show if projectScope exists */}
+
         {projectScope?.json && (
-          <div className="text-xs flex flex-col gap-4 mt-4">
+          <>
             {/* Summary dropdown */}
-            <div className="border border-[var(--mesm-grey-dk)] rounded-md">
+            <div className="">
               <button
-                className="w-full text-left px-3 py-2 flex justify-between items-center bg-[var(--mesm-grey-xd)] hover:bg-[var(--mesm-grey-dk)] transition"
+                className="w-full text-left px-3 py-1 flex justify-between items-center cursor-pointer border-b-1"
                 onClick={() => setShowSummary(!showSummary)}
               >
-                <h6 className="text-xs m-0">SUMMARY</h6>
-                <span>{showSummary ? "▲" : "▼"}</span>
+                <h5 className="text-xs m-0">Summary</h5>
+                <h5>{showSummary ? "-" : "+"}</h5>
               </button>
               {showSummary && (
                 <div className="px-3 py-2">
@@ -81,21 +87,22 @@ export default function SingleCaseStudy({
             </div>
 
             {/* Results dropdown */}
-            <div className="border border-[var(--mesm-grey-dk)] rounded-md">
+            <div className="">
               <button
-                className="w-full text-left px-3 py-2 flex justify-between items-center bg-[var(--mesm-grey-xd)] hover:bg-[var(--mesm-grey-dk)] transition"
+                className="w-full text-left px-3 py-1 flex justify-between items-center cursor-pointer border-b-1"
                 onClick={() => setShowResults(!showResults)}
               >
-                <h6 className="text-xs m-0">RESULTS OVER {timeFrame}</h6>
-                <span>{showResults ? "▲" : "▼"}</span>
+                <h5 className="text-xs m-0">Results</h5>
+                <h5>{showResults ? "-" : "+"}</h5>
               </button>
               {showResults && (
                 <div className="px-3 py-2">
+                  {timeFrame}
                   {renderRichTextWithBreaks(results.json)}
                 </div>
               )}
             </div>
-          </div>
+          </>
         )}
       </div>
     </section>
