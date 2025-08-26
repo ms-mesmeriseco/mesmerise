@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
+import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
 import BlogThreeColumn from "@/components/cms-blocks/BlogThreeColumn";
 import CollabModel from "@/components/home/CollabModel";
@@ -62,11 +63,28 @@ function Statement({ innerRef }) {
       className="min-h-screen flex items-center justify-center px-6 text-white"
     >
       <div className="max-w-[1200px] text-center">
-        <StaggeredWords
-          as="h1"
-          text="We craft brand, web, and content experiences which look sexy, and convert."
-          className="page-title-large leading-[0.95]"
-        />
+        <InView>
+          <StaggeredWords
+            as="h1"
+            text="We craft brand, web, and content experiences that look sexy,"
+            className="page-title-large"
+          />
+        </InView>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <InView>
+          <StaggeredWords
+            as="h1"
+            text="and convert."
+            className="page-title-large"
+          />
+        </InView>
       </div>
     </section>
   );
@@ -79,12 +97,24 @@ function SecondaryStatement() {
       data-marker="WHO WE ARE"
       className="min-h-[70vh] flex items-center justify-center px-6 text-white"
     >
-      <div className="max-w-[900px] text-center text-balance">
+      <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords
           as="p"
-          text="We partner with founders and marketing teams across the East Coast to ship high-velocity creative: identity systems, bleeding-edge websites, and content that converts."
-          className="page-title-large text-2xl md:text-4xl leading-tight"
+          text="Our approach is driven by analytics–bridging the gap between aesthetic solutions and the bottom line."
+          className="page-title-large"
         />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <InView>
+          <StaggeredWords
+            as="h1"
+            text="The Mesmerise collaboration model is split in two: Defined and Ongoing."
+            className="page-title-large "
+          />
+        </InView>
       </div>
     </section>
   );
@@ -132,8 +162,9 @@ export default function HomePage() {
       <SectionMarker label={marker} />
 
       <Splash innerRef={splashRef} label="HELLO" />
-
-      <Statement innerRef={section2Ref} label="what we're about" />
+      <InView>
+        <Statement innerRef={section2Ref} label="what we're about" />
+      </InView>
       <ProjectsRow />
 
       <SecondaryStatement />

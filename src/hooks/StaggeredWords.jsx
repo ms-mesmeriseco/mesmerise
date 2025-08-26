@@ -1,18 +1,22 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export default function StaggeredWords({
   text,
   className = "",
-  delay = 0.5,
+  delay = 0.05,
   as: As = "h1",
   gradient,
 }) {
   const safeText = typeof text === "string" ? text : "";
   const words = safeText.split(" ");
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
 
   return (
     <As className={className}>
       <span
+        ref={ref}
         className="inline-block align-top"
         style={{ display: "inline-block", whiteSpace: "pre-wrap" }}
       >
@@ -25,7 +29,11 @@ export default function StaggeredWords({
                 : ""
             }`}
             initial={{ y: "0.1em", opacity: 0, filter: "blur(4px)" }}
-            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+            animate={
+              inView
+                ? { y: 0, opacity: 1, filter: "blur(0px)" }
+                : { y: "0.1em", opacity: 0, filter: "blur(4px)" }
+            }
             transition={{
               duration: 0.3,
               delay: delay + i * 0.06,
