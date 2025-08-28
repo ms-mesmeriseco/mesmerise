@@ -15,13 +15,13 @@ function Statement({ innerRef }) {
     <section
       ref={innerRef}
       data-marker="WHAT WE DO"
-      className="min-h-screen flex items-center justify-center px-6 text-white"
+      className="flex items-center justify-center px-6 text-white min-h-screen"
     >
       <div className="text-center">
         <InView>
           <StaggeredWords
             as="h2"
-            text="We craft brand, web, and content experiences that look sexy, and convert."
+            text="As ongoing partners, we focus on growth beyond numbers—instilling confidence and loyalty to produce brands people trust."
             className="page-title-medium"
           />
         </InView>
@@ -40,8 +40,8 @@ function SecondaryStatement() {
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords
           as="p"
-          text="There’s only one way to find out if we have what it takes (pssst it involves getting in touch...)"
-          className="page-title-medium"
+          text="For businesses who think exponentially."
+          className="page-title-large"
         />
       </div>
     </section>
@@ -85,51 +85,50 @@ export default function ContinuousCollab() {
             >
               <div className={bubble}>
                 <p className="p2">
-                  Business owners, start-ups and enterprise-level organisations
-                  that have a defined scope and need results delivered on time,
-                  on budget
+                  For ambitious startups, pioneering entrepreneurs and
+                  enterprise-level organisations looking for a long-term growth
+                  partner
                 </p>
               </div>
 
               <div className={bubble}>
                 <p className="p2">
-                  You’re just starting and need to carve out your branding,
-                  strategy and website
+                  Innovative business owners who want to stay ahead of the curve
+                  and be at the forefront of their industry
                 </p>
               </div>
 
               <div className={bubble}>
                 <p className="p2">
-                  Launching a new product or service and need marketing assets,
-                  landing pages and infrastructure to make an impact
+                  Enterprise organisations wanting to simplify their digital
+                  operations
                 </p>
               </div>
 
               <div className={bubble}>
                 <p className="p2">
-                  You want to test the market before you commit to a long-term
-                  investment
+                  Founders who want to spend less time worrying about leads and
+                  more time enjoying their weekends
                 </p>
               </div>
 
               <div className={bubble}>
                 <p className="p2">
-                  You need data unified and interpreted to make informed
-                  decisions
+                  Companies needing fresh content & dynamic digital
+                  infrastructure that delivers impressive results and keeps
+                  stakeholders gratified
                 </p>
               </div>
 
               <div className={bubble}>
                 <p className="p2">
-                  Time-bound seasonal campaigns that need precise execution
+                  CMO’s looking for a multi-disciplinary team that helps them
+                  execute and guide junior staff
                 </p>
               </div>
 
               <div className={bubble}>
-                <p className="p2">
-                  You’re launching and need a team of specialists to support
-                  your goals
-                </p>
+                <p className="p2">Brands looking to cement loyalty and trust</p>
               </div>
             </StaggeredChildren>,
           ]}
@@ -173,57 +172,53 @@ export default function ContinuousCollab() {
         <br />
         <h3 className="text-center">Next steps</h3>
         <SteppedAccordion
+          width="50vw"
           steps={[
             {
-              title: "1. Project Scope",
+              title: "1. Onboarding",
               content: (
                 <p>
-                  Together, we uncover your objectives, challenges, and what
-                  success looks like. From there, we shape a precise scope and a
-                  roadmap built around your goals.
+                  We start by understanding your objectives, establishing
+                  effective communication channels and integrating into your
+                  digital ecosystem.
                 </p>
               ),
             },
             {
-              title: "2. Research & Strategy",
+              title: "2. Plan & Prioritise",
               content: (
                 <p>
-                  We dive deep into research. Your market, audience,
-                  competitors, and current assets. This intelligence becomes the
-                  bedrock for a data-driven strategy that balances immediate
-                  wins with long-term growth.
+                  Together we define what matters most. Tasks are prioritised,
+                  balancing timelines with evolving needs.
                 </p>
               ),
             },
             {
-              title: "3. Design, Build, Create",
+              title: "3. Implementation",
               content: (
                 <p>
-                  This is where your vision becomes tangible. Whether it’s a new
-                  website, a campaign rollout, or a refined brand identity, we
-                  craft and develop with precision. Every detail is designed to
-                  elevate your business and move you closer to the outcomes that
-                  matter.
+                  We put our plans into action. Everything is executed with
+                  intent and attention to detail.
                 </p>
               ),
             },
             {
-              title: "4. Launch + Handover",
+              title: "4. Open Dialogue",
               content: (
                 <p>
-                  Your project goes live seamlessly and on schedule. We ensure
-                  you’re equipped with the knowledge, documentation and systems
-                  to harness your new assets.
+                  Progress is transparent and continuous. We share insights,
+                  invite feedback, and keep communication flowing so you’re
+                  always in the loop.
                 </p>
               ),
             },
             {
-              title: "5. Analytics",
+              title: "5. Evolution & Impact",
               content: (
                 <p>
-                  We analyse performance against goals, extract insights, and
-                  make refinements. From defined optimisation to continuous
-                  collaboration.
+                  We measure, refine, and adapt. Insights drive continuous
+                  improvement, helping to cement your business at the highest
+                  echelon of your industry.
                 </p>
               ),
             },

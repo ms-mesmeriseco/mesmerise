@@ -15,7 +15,7 @@ function Statement({ innerRef }) {
     <section
       ref={innerRef}
       data-marker="WHAT WE DO"
-      className="min-h-screen flex items-center justify-center px-6 text-white"
+      className="flex items-center justify-center px-6 text-white"
     >
       <div className="text-center">
         <InView>

@@ -265,9 +265,9 @@ a button:hover {
   font-weight: 400;
 }
 .page-title-medium {
-  font-size: 4.33rem;
-  line-height: 4.33rem;
-  max-width: 696px;
+  font-size: 8svw;
+  line-height: 8svw;
+  /* max-width: 780px; */
   font-weight: 400;
 }
 ul li {

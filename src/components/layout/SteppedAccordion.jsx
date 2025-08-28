@@ -1,27 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/**
- * SteppedAccordion
- *
- * A vertical list of steps with an increasing left margin (a responsive "step down" look).
- * Clicking a step toggles its content. Multiple steps can be open at once by default.
- *
- * Props:
- *  - steps: Array<{ title: React.ReactNode; content: React.ReactNode }>
- *  - singleOpen?: boolean           // if true, opening one closes others
- *  - defaultOpen?: number[]         // indices to start open
- *  - indent?: string                // CSS length for the base indent unit (default: 'clamp(8px, 2.6vw, 56px)')
- *  - className?: string             // wrapper classes
- */
 export default function SteppedAccordion({
   steps = [],
   singleOpen = false,
   defaultOpen = [],
   indent = "clamp(8px, 2.6vw, 56px)",
   className = "",
+  width = "60vw",
 }) {
   const [open, setOpen] = useState(() => new Set(defaultOpen));
 
@@ -71,7 +59,10 @@ export default function SteppedAccordion({
               variants={itemVariants}
               style={{ marginLeft: `calc(var(--step-indent) * ${i})` }}
             >
-              <div className="rounded-2xl border border-[var(--mesm-grey-dk)] text-[var(--background)] bg-[var(--background)]/80 backdrop-blur-sm shadow-sm overflow-hidden bg-[var(--mesm-red)] hover:opacity-80 duration-200 max-w-[40vw]">
+              <div
+                className="rounded-2xl border border-[var(--mesm-grey-dk)] text-[var(--background)] bg-[var(--background)]/80 backdrop-blur-sm shadow-sm overflow-hidden bg-[var(--mesm-red)] hover:opacity-80 duration-200"
+                style={{ maxWidth: width }}
+              >
                 {/* Header */}
                 <button
                   type="button"
@@ -133,20 +124,3 @@ export default function SteppedAccordion({
     </div>
   );
 }
-
-/**
- * Usage
- *
- * <SteppedAccordion
- *   steps={[
- *     { title: "① Alignment & Scope", content: <p>We define objectives, constraints, success metrics, and a crisp scope.</p> },
- *     { title: "② Insight & Strategy", content: <p>We research your market and craft a data-backed plan.</p> },
- *     { title: "③ Creative & Build", content: <p>Design and engineering iterate toward launch-ready assets.</p> },
- *     { title: "④ Launch & Activate", content: <p>Go-live with QA, handover, and training as needed.</p> },
- *     { title: "⑤ Review & Optimise", content: <p>Measure, learn, and plan the next cycle.</p> },
- *   ]}
- *   singleOpen={false}
- *   defaultOpen={[0]}
- *   indent="clamp(8px, 2.6vw, 56px)"
- * />
- */
