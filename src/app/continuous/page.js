@@ -48,13 +48,13 @@ function SecondaryStatement() {
   );
 }
 
-export default function DefinedCollab() {
+export default function ContinuousCollab() {
   const bubble =
     "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-300";
 
   return (
     <div className="p-[var(--global-margin-lg)]">
-      <PageTitleLarge text="Defined" />
+      <PageTitleLarge text="Continuous" />
       <div className="flex flex-col gap-8">
         {/* Intro paragraph with inline stagger */}
         <StaticTwoColumn
@@ -62,7 +62,7 @@ export default function DefinedCollab() {
             <StaggeredWords
               key="p"
               as="p"
-              text="Our Defined collaboration model is perfect for rebrands, strategic launches, omnipresent campaigns, and projects that demand flawless execution. We cut through complexity, focus on your goals, and give you the confidence of a partner who delivers with precision and care."
+              text="Our Continuous collaboration model is built for businesses that value consistency, compounding results, and proactive strategy. From ongoing refinement to new initiatives, we become an extension of your team. Ensuring your online presence adapts as you scale, your brand strengthens over time, and every decision is executed by analytical insight and attention to detail. "
               className="p3 min-h-[50vh]"
             />,
           ]}

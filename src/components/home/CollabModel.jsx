@@ -10,10 +10,10 @@ const offerings = [
     cta: { label: "Learn more", href: "/defined" },
   },
   {
-    title: "Ongoing",
+    title: "Continual",
     subheading:
       "An ongoing partnership built for continuous growth. Ideal when you want a trusted team by your side, evolving strategies, optimising campaigns, and supporting your ambitions over time.",
-    cta: { label: "Learn more", href: "/perpetual" },
+    cta: { label: "Learn more", href: "/continual" },
   },
 ];
 

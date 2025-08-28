@@ -110,13 +110,6 @@ html[data-header-visible="true"] .site-header {
   transform: translateY(0);
 }
 
-/* Optional: your big hero text utility */
-@layer utilities {
-  .page-title-large {
-    @apply text-5xl md:text-7xl font-semibold leading-[0.95] tracking-tight;
-  }
-}
-
 /* Hide horizontal scrollbar for the project strip */
 .no-scrollbar {
   scrollbar-width: none;
@@ -255,6 +248,11 @@ p a:focus::after {
   line-height: 1.8rem;
   font-weight: 400;
 }
+.p3 {
+  font-size: 1.8rem;
+  line-height: 2.1rem;
+  font-weight: 400;
+}
 a:hover {
   cursor: pointer;
 }
@@ -263,7 +261,13 @@ a button:hover {
 }
 .page-title-large {
   font-size: 6.44rem;
-  line-height: 6.77rem;
+  line-height: 6.44rem;
+  font-weight: 400;
+}
+.page-title-medium {
+  font-size: 4.33rem;
+  line-height: 4.33rem;
+  max-width: 696px;
   font-weight: 400;
 }
 ul li {
@@ -344,6 +348,13 @@ a:hover .inline-arrow {
   background-size: cover;
   filter: blur(2px);
 }
+figcaption {
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 @keyframes scroll-horizontal {
   0% {
     transform: translateX(0%);
@@ -358,10 +369,10 @@ a:hover .inline-arrow {
 }
 
 @media screen and (max-width: 600px) {
-  .page-title-large {
+  /* .page-title-large {
     font-size: 4.23rem;
     line-height: 4.23rem;
-  }
+  } */
   h1 {
     font-size: 2.77rem;
     line-height: 3.23rem;

@@ -4,7 +4,7 @@ import { useRef } from "react";
 export default function StaggeredWords({
   text,
   className = "",
-  delay = 0.05,
+  delay = 0.03,
   as: As = "h1",
   gradient,
 }) {
