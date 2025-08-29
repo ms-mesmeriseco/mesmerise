@@ -67,16 +67,16 @@ export default function Connect() {
           ]}
         />
       </div>
-      <section data-marker="CLICK ME" className="md:min-h-[80vh] min-h-[50vh]">
+      {/* <section data-marker="CLICK ME" className="md:min-h-[80vh] min-h-[50vh]">
         <ServicesTab />
-      </section>
+      </section> */}
       <StaticTwoColumn
         label={"STRATEGY"}
         column1={[
           <StaggeredWords
             key="h2"
             as="h2"
-            text="Branding & Strategy"
+            text="Strategy"
             className="page-title-large text-2xl md:text-4xl leading-tight"
           />,
           ,
@@ -87,18 +87,36 @@ export default function Connect() {
             frameworks serve as the bedrock, every insight is geared towards
             growth and market impact.
           </p>,
-          <SecondaryButton
-            size="large"
-            key="button"
-            href="/services/branding-strategy"
-          >
+          <SecondaryButton size="large" key="button" href="/services/strategy">
+            Learn more
+          </SecondaryButton>,
+        ]}
+      />
+      <StaticTwoColumn
+        label={"BRANDING"}
+        column2={[
+          <StaggeredWords
+            key="h2"
+            as="h2"
+            text="Branding"
+            className="page-title-large text-2xl md:text-4xl leading-tight"
+          />,
+          ,
+          <p key="desc" className="p2">
+            Our strategy offering uncovers what truly matters to your audience,
+            your business, and your market, and harmonises them into a single,
+            easy to implement plan. Brand ID, positioning and analytics
+            frameworks serve as the bedrock, every insight is geared towards
+            growth and market impact.
+          </p>,
+          <SecondaryButton size="large" key="button" href="/services/branding">
             Learn more
           </SecondaryButton>,
         ]}
       />
       <StaticTwoColumn
         label={"WEBSITE"}
-        column2={[
+        column1={[
           <div key="web" className="flex flex-col gap-6">
             <StaggeredWords
               key="h2"
@@ -122,8 +140,8 @@ export default function Connect() {
         ]}
       />
       <StaticTwoColumn
-        label={"MARKETING"}
-        column1={[
+        label={"PERFORMANCE"}
+        column2={[
           <StaggeredWords
             key="h2"
             as="h2"
@@ -147,16 +165,11 @@ export default function Connect() {
       />
       <StaticTwoColumn
         label={"CONSULTING"}
-        column1={
-          [
-            // <img key="img" src="/assets/strategy-diagram_MESM.png" width="300" />,
-          ]
-        }
-        column2={[
+        column1={[
           <StaggeredWords
             key="h2"
             as="h2"
-            text="Business Consulting & Development"
+            text="Analytics"
             className="page-title-large text-2xl md:text-4xl leading-tight"
           />,
           <p key="desc" className="p2">
@@ -167,11 +180,7 @@ export default function Connect() {
             or rethinking how teams work together, we guide you to make
             informed, impactful decisions.
           </p>,
-          <SecondaryButton
-            size="large"
-            key="button"
-            href="/services/business-consulting"
-          >
+          <SecondaryButton size="large" key="button" href="/services/analytics">
             Learn more
           </SecondaryButton>,
         ]}

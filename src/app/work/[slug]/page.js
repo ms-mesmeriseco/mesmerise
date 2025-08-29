@@ -68,6 +68,7 @@ export default async function ProjectPage({ params }) {
         {page.contentfulMetadata?.tags && (
           <ServiceTags
             items={page.contentfulMetadata.tags.map((tag) => tag.name)}
+            large={false}
           />
         )}
       </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ToggleSwitch from "@/components/ui/ToggleSwitch";
 import SecondaryButton from "@/components/ui/SecondaryButton";
+import PageTitleMedium from "../layout/PageTitleMedium";
 
 const PACKAGES = {
   SMB: [
@@ -72,6 +73,7 @@ export default function PackagesRow() {
 
   return (
     <section className="w-full py-12  rounded-lg">
+      <PageTitleMedium text="Packages" center />
       <ToggleSwitch options={options} value={selected} onChange={setSelected} />
 
       <div className="wrapper  grid grid-cols-1 md:grid-cols-3 gap-2 w-full mx-auto">

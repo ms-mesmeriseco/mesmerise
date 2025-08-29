@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 export default function ServiceTags({
   items = [],
   label = "Service Capabilities",
+  large = true,
 }) {
   const router = useRouter();
 
@@ -23,6 +24,13 @@ export default function ServiceTags({
     show: { opacity: 1 },
   };
 
+  const tagSize = [
+    large
+      ? "rounded-xl px-4 py-1 text-5xl text-[var(--background)]  bg-[var(--mesm-blue)]  hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)]"
+      : "rounded-md px-2 py-0 text-md hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] bg-[var(--mesm-red)] text-[var(--background)] duration-200",
+  ];
+  const gapSize = [large ? "gap-2" : "gap-1"];
+
   const handleClick = (tag, e) => {
     e.stopPropagation(); // Prevent parent link
     router.push(`/work?tag=${encodeURIComponent(tag)}`);
@@ -37,15 +45,14 @@ export default function ServiceTags({
         variants={container}
         initial="hidden"
         animate="show"
-        className="flex flex-wrap gap-2"
+        className={`flex flex-wrap ${gapSize}`}
       >
         {items.map((tag, idx) => (
           <motion.button
             key={idx}
             variants={item}
-            whileHover={{ opacity: 0.6 }}
             onClick={(e) => handleClick(tag, e)}
-            className="bg-[var(--mesm-blue)] text-[var(--background)] rounded-xl px-4 py-1 text-5xl font-normal whitespace-nowrap cursor-pointer transition"
+            className={`${tagSize} font-normal whitespace-nowrap cursor-pointer transition`}
             type="button"
           >
             {tag}

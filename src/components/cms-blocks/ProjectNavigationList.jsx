@@ -12,25 +12,29 @@ import { motion, AnimatePresence } from "framer-motion";
  * UI label -> one or more underlying Contentful tag names (aliases)
  */
 const FILTER_MAP = {
-  "Web Design": ["Web Design"],
-  Copywriting: ["Copywriting"],
-  "Search Engine Optimisation": ["Search Engine Optimisation"],
-  "Local SEO / GEO Targeting": [
+  Strategy: [
+    "Business Consulting",
+    "Content Strategy",
+    "Go-to-Market Strategy",
+  ],
+  Branding: [
+    "Tone of Voice",
+    "Brand Identity",
+    "Logo",
+    "Typography",
+    "Style Guide",
+    "Colour Palette",
+    "Creative Direction",
+  ],
+  Website: ["Website Builders", "Web Design"],
+  Performance: [
+    "Paid Media Management",
+    "Content Marketing",
     "Local SEO & Geo Targeting",
-    "Local SEO / GEO Targeting",
-    "Local SEO / Geo Targeting",
-  ],
-  "Omni Channel Marketing": [
+    "SEO",
     "Omni-Channel Marketing",
-    "Omni Channel Marketing",
   ],
-  Branding: ["Branding"],
-  "E - Commerce": ["E-Commerce", "E - Commerce", "Ecommerce"],
-  "Web Development": [
-    "Front-end Development",
-    "Back-end Development",
-    "CMS Integration",
-  ],
+  Analytics: ["Analytics Setup & Audit", "Web Traffic", "Reporting", "GA4"],
 };
 
 const normalize = (s) => (s || "").toString().trim().toLowerCase();
@@ -74,6 +78,15 @@ export default function ProjectNavigationList({ activeTag = null }) {
     }
     fetchProjects();
   }, []);
+
+  // Log title + tags
+  projects.forEach((p) => {
+    const tags = (p.contentfulMetadata?.tags || [])
+      .map((t) => t?.name)
+      .filter(Boolean)
+      .join(", ");
+    console.log(`${p.projectTitle}: ${tags}`);
+  });
 
   // Present tags across all projects (normalized)
   const presentTagSet = useMemo(() => {
@@ -188,11 +201,11 @@ export default function ProjectNavigationList({ activeTag = null }) {
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-wrap gap-1 mb-4 text-sm"
+          className="flex flex-wrap gap-1 mb-4 text-sm "
         >
           <motion.button
             variants={item}
-            className={`px-4 py-1 rounded-sm ${
+            className={`px-3 py-0 rounded-md h-6 hover:bg-[var(--mesm-yellow)]  ${
               !selectedLabel && !selectedRaw
                 ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
                 : "bg-[var(--mesm-grey)] text-gray-800 cursor-pointer"
@@ -207,9 +220,9 @@ export default function ProjectNavigationList({ activeTag = null }) {
             <motion.button
               key={label}
               variants={item}
-              className={`px-4 py-1 rounded-sm ${
+              className={`px-4 py-0 rounded-md h-6 hover:bg-[var(--mesm-yellow)] ${
                 selectedLabel === label
-                  ? "bg-[var(--accent)] text-[var(--background)]"
+                  ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
                   : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
               }`}
               onClick={() => handleSelectLabel(label)}
@@ -286,7 +299,7 @@ export default function ProjectNavigationList({ activeTag = null }) {
 
                       return (
                         <div className="flex items-center gap-2 flex-wrap">
-                          <ServiceTags items={firstEight} />
+                          <ServiceTags items={firstEight} large={false} />
                           {extra > 0 && (
                             <span className="text-xs opacity-70">
                               +{extra} more
