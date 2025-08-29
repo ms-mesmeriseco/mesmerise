@@ -20,7 +20,7 @@ export const CONTINUOUS_CONTENT = {
     "Enterprise organisations wanting to simplify their digital operations",
     "Founders who want to spend less time worrying about leads and more time enjoying their weekends",
     "Companies needing fresh content & dynamic digital infrastructure that delivers impressive results and keeps stakeholders gratified",
-    "CMO’s looking for a multi-disciplinary team that helps them execute and guide junior staff",
+    "CMO's looking for a multi-disciplinary team that helps them execute and guide junior staff",
     "Brands looking to cement loyalty and trust",
   ],
   carousel: {
@@ -47,7 +47,7 @@ export const CONTINUOUS_CONTENT = {
       },
     ],
     overlayHeading: "Selected Work",
-    overlayRange: "2022–2025",
+    overlayRange: "2022-2025",
     link: "/work",
     height: 460,
     rounded: "rounded-xl",
@@ -68,7 +68,7 @@ export const CONTINUOUS_CONTENT = {
     },
     {
       title: "4. Open Dialogue",
-      body: "Progress is transparent and continuous. We share insights, invite feedback, and keep communication flowing so you’re always in the loop.",
+      body: "Progress is transparent and continuous. We share insights, invite feedback, and keep communication flowing so you're always in the loop.",
     },
     {
       title: "5. Evolution & Impact",

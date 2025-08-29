@@ -10,18 +10,18 @@ export const DEFINED_CONTENT = {
     className: "page-title-large",
   },
   secondary: {
-    text: "There’s only one way to find out if we have what it takes (pssst it involves getting in touch...)",
+    text: "There's only one way to find out if we have what it takes (pssst it involves getting in touch...)",
     cta: "Say hi",
   },
   whoItsForTitle: "Who it's for",
   whoItsForItems: [
     "Business owners, start-ups and enterprise-level organisations that have a defined scope and need results delivered on time, on budget",
-    "You’re just starting and need to carve out your branding, strategy and website",
+    "You're just starting and need to carve out your branding, strategy and website",
     "Launching a new product or service and need marketing assets, landing pages and infrastructure to make an impact",
     "You want to test the market before you commit to a long-term investment",
     "You need data unified and interpreted to make informed decisions",
     "Time-bound seasonal campaigns that need precise execution",
-    "You’re launching and need a team of specialists to support your goals",
+    "You're launching and need a team of specialists to support your goals",
   ],
   carousel: {
     title: "How it might look",
@@ -47,7 +47,7 @@ export const DEFINED_CONTENT = {
       },
     ],
     overlayHeading: "Selected Work",
-    overlayRange: "2022–2025",
+    overlayRange: "2022-2025",
     link: "/work",
     height: 460,
     rounded: "rounded-xl",
@@ -64,11 +64,11 @@ export const DEFINED_CONTENT = {
     },
     {
       title: "3. Design, Build, Create",
-      body: "This is where your vision becomes tangible. Whether it’s a new website, a campaign rollout, or a refined brand identity, we craft and develop with precision. Every detail is designed to elevate your business and move you closer to the outcomes that matter.",
+      body: "This is where your vision becomes tangible. Whether it's a new website, a campaign rollout, or a refined brand identity, we craft and develop with precision. Every detail is designed to elevate your business and move you closer to the outcomes that matter.",
     },
     {
       title: "4. Launch + Handover",
-      body: "Your project goes live seamlessly and on schedule. We ensure you’re equipped with the knowledge, documentation and systems to harness your new assets.",
+      body: "Your project goes live seamlessly and on schedule. We ensure you're equipped with the knowledge, documentation and systems to harness your new assets.",
     },
     {
       title: "5. Analytics",
