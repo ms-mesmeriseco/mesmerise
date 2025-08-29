@@ -15,7 +15,7 @@ function Statement({ marker, text, className }) {
   return (
     <section
       data-marker={marker}
-      className="flex items-center justify-center px-6 text-white min-h-screen"
+      className="flex items-center justify-center  md:px-36 text-white min-h-screen"
     >
       <div className="text-center">
         <InView>
