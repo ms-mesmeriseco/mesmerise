@@ -10,66 +10,73 @@ import StaggeredChildren from "@/hooks/StaggeredChildren";
 import HorizontalScrollCarousel from "@/components/layout/HorizontalScrollCarousel";
 import SteppedAccordion from "@/components/layout/SteppedAccordion";
 import useSectionMarker from "@/hooks/useSectionMarker";
-import { DEFINED_CONTENT as C } from "./content";
 
-function Statement({ innerRef, marker, text }) {
+function Statement({ marker, text, className }) {
   return (
     <section
-      ref={innerRef}
       data-marker={marker}
       className="flex items-center justify-center px-6 text-white min-h-screen"
     >
       <div className="text-center">
         <InView>
-          <StaggeredWords as="h2" text={text} className="page-title-large" />
+          <StaggeredWords
+            as="h2"
+            text={text}
+            className={className ?? "page-title-large"}
+          />
         </InView>
       </div>
     </section>
   );
 }
 
-function SecondaryStatement({ marker, text, ctaLabel }) {
+function SecondaryStatement({ marker, text, cta }) {
   useSectionMarker();
   return (
     <section
       data-marker={marker}
-      className="min-h-screen flex items-center justify-center px-6 text-white"
+      className="min-h-[70vh] flex items-center justify-center px-6 text-white"
     >
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords as="p" text={text} className="page-title-large" />
-        <br />
-        <br />
-        <br />
-        <SecondaryButton size="x-large">{ctaLabel}</SecondaryButton>
+        {cta ? (
+          <>
+            <br />
+            <br />
+            <br />
+            <SecondaryButton size="x-large">{cta}</SecondaryButton>
+          </>
+        ) : null}
       </div>
     </section>
   );
 }
 
-export default function DefinedCollab() {
+export default function CollabTemplate({ content, currentSlug }) {
   const bubble =
     "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-300";
 
   return (
     <div className="p-[var(--global-margin-lg)]">
-      <PageTitleLarge text={C.pageTitle} />
-      <div className="flex flex-col gap-4">
-        {/* Intro paragraph */}
+      <PageTitleLarge text={content.pageTitle} />
+
+      <div className="flex flex-col gap-8">
+        {/* Intro */}
         <StaticTwoColumn
           column1={[
             <StaggeredWords
               key="p"
               as="p"
-              text={C.intro}
+              text={content.intro}
               className="p3 min-h-[50vh]"
             />,
           ]}
         />
 
-        {/* WHO IT'S FOR */}
+        {/* Who it's for */}
         <StaticTwoColumn
           label="WHO IT'S FOR"
-          column1={[<h3 key="h3">{C.whoItsForTitle}</h3>]}
+          column1={[<h3 key="h3">{content.whoItsForTitle}</h3>]}
           column2={[
             <StaggeredChildren
               key="intro"
@@ -81,7 +88,7 @@ export default function DefinedCollab() {
               blur={4}
               className="flex flex-col gap-4"
             >
-              {C.whoItsForItems.map((item, i) => (
+              {content.whoItsForItems.map((item, i) => (
                 <div className={bubble} key={i}>
                   <p className="p2">{item}</p>
                 </div>
@@ -90,32 +97,39 @@ export default function DefinedCollab() {
           ]}
         />
 
-        <Statement marker={C.markerWhatWeDo} text={C.statementText} />
+        {/* Big statement */}
+        <Statement
+          marker={content.markers.what}
+          text={content.statement.text}
+          className={content.statement.className}
+        />
 
+        {/* Carousel */}
         <HorizontalScrollCarousel
-          title={C.carousel.title}
-          center={C.carousel.center}
-          images={C.carousel.images}
+          title={content.carousel.title}
+          center={content.carousel.center}
+          images={content.carousel.images}
           overlayText={
             <>
-              <strong>{C.carousel.overlayHeading}</strong>
+              <strong>{content.carousel.overlayHeading}</strong>
               <br />
-              {C.carousel.overlayRange}
+              {content.carousel.overlayRange}
             </>
           }
-          link={C.carousel.link}
-          height={C.carousel.height}
-          rounded={C.carousel.rounded}
+          link={content.carousel.link}
+          height={content.carousel.height}
+          rounded={content.carousel.rounded}
         />
 
         <br />
         <br />
         <br />
 
+        {/* Steps */}
         <SteppedAccordion
-          title="Next steps"
+          title={content.stepsTitle}
           center
-          steps={C.steps.map(({ title, body }) => ({
+          steps={content.steps.map(({ title, body }) => ({
             title,
             content: <p>{body}</p>,
           }))}
@@ -124,13 +138,15 @@ export default function DefinedCollab() {
           indent="clamp(8px, 2.6vw, 56px)"
         />
 
+        {/* Secondary */}
         <SecondaryStatement
-          marker={C.markerWhoWeAre}
-          text={C.secondaryText}
-          ctaLabel={C.ctaLabel}
+          marker={content.markers.who}
+          text={content.secondary.text}
+          cta={content.secondary.cta}
         />
 
-        <CollabToggle />
+        {/* Toggle that navigates between routes */}
+        <CollabToggle current={currentSlug} />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import PrimaryButton from "@/components/ui/PrimaryButton";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import Link from "next/link";
 
@@ -7,13 +6,13 @@ const offerings = [
     title: "Defined",
     subheading:
       "A fixed-scope engagement designed for specific, time-bound initiatives. Perfect when you need clarity, precision, and predictable delivery on a clearly defined project.",
-    cta: { label: "Learn more", href: "/defined" },
+    cta: { label: "Learn more", href: "/collaboration/defined" },
   },
   {
     title: "Continual",
     subheading:
       "An ongoing partnership built for continuous growth. Ideal when you want a trusted team by your side, evolving strategies, optimising campaigns, and supporting your ambitions over time.",
-    cta: { label: "Learn more", href: "/continual" },
+    cta: { label: "Learn more", href: "/collaboration/continual" },
   },
 ];
 

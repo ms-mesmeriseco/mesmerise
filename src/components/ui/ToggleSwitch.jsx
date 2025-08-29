@@ -6,7 +6,7 @@ export default function ToggleSwitch({ options = [], value, onChange }) {
           key={option}
           className={`flex-1 px-4 py-1 rounded-lg transition-colors cursor-pointer ${
             value === option
-              ? "bg-[var(--mesm-l-grey)] text-black"
+              ? "bg-[var(--mesm-red)] text-black"
               : "bg-transparent text-[var(--foreground)]"
           }`}
           onClick={() => onChange(option)}
