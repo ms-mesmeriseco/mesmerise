@@ -35,7 +35,7 @@ function SecondaryStatement({ marker, text, cta }) {
   return (
     <section
       data-marker={marker}
-      className="min-h-[70vh] flex items-center justify-center px-6 text-white"
+      className="min-h-screen flex items-center justify-center px-6 text-white"
     >
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords as="p" text={text} className="page-title-large" />
@@ -54,7 +54,7 @@ function SecondaryStatement({ marker, text, cta }) {
 
 export default function CollabTemplate({ content, currentSlug }) {
   const bubble =
-    "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-300";
+    "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-blue)] duration-150";
 
   return (
     <div className="p-[var(--global-margin-lg)]">
@@ -77,9 +77,9 @@ export default function CollabTemplate({ content, currentSlug }) {
             <StaggeredChildren
               key="intro"
               as="div"
-              baseDelay={0.5}
-              perItem={0.2}
-              duration={0.35}
+              baseDelay={0.1}
+              perItem={0.09}
+              duration={0.15}
               y="0.15em"
               blur={4}
               className="flex flex-col gap-4"
@@ -132,6 +132,7 @@ export default function CollabTemplate({ content, currentSlug }) {
           singleOpen={false}
           defaultOpen={[0]}
           indent="clamp(8px, 2.6vw, 56px)"
+          width="20vw"
         />
 
         {/* Secondary */}

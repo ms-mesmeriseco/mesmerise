@@ -53,6 +53,7 @@ export default function HorizontalScrollCarousel({
       <PageTitleMedium text={title} center={center} />
 
       <div className={`relative ${className}`} style={{ height }}>
+        {/* <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[var(--background)] to-transparent z-20" /> */}
         {/* Scroll container */}
         <ul
           ref={scrollerRef}

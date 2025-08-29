@@ -64,10 +64,7 @@ export default function SteppedAccordion({
                 variants={itemVariants}
                 style={{ marginLeft: `calc(var(--step-indent) * ${i})` }}
               >
-                <div
-                  className="rounded-2xl border border-[var(--mesm-grey-dk)] text-[var(--background)] bg-[var(--background)]/80 backdrop-blur-sm shadow-sm overflow-hidden bg-[var(--mesm-red)] hover:opacity-80 duration-200"
-                  style={{ maxWidth: width }}
-                >
+                <div className="rounded-2xl border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)]/80 backdrop-blur-sm shadow-sm overflow-hidden bg-[var(--background)] hover:bg-[var(--mesm-blue)] duration-200 md:max-w-[50vw] max-w-full">
                   {/* Header */}
                   <button
                     type="button"
