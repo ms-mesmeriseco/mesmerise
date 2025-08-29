@@ -3,16 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import PageTitleMedium from "../layout/PageTitleMedium";
 
-/* Split to renderable chars (preserve spaces) */
 function splitToChars(str = "") {
   return [...str].map((ch) => (ch === " " ? "\u00A0" : ch));
 }
 
-/* Staggered IN only:
-   - on flipSignal change: instantly hide all chars
-   - call onFlip() so parent can switch writing-mode
-   - then stagger them back in */
 function StaggeredChars({ text, flipSignal, spring, onFlip }) {
   const controls = useAnimation();
 
@@ -64,14 +60,12 @@ function StaggeredChars({ text, flipSignal, spring, onFlip }) {
   );
 }
 
-/* One bubble (keeps your exact styling) */
 function BubbleItem({
   item,
   isOpen,
   isMobile,
   width,
   maxItemWidth,
-  color,
   spring,
   onToggle,
 }) {
@@ -86,19 +80,19 @@ function BubbleItem({
       : isOpen
       ? "horizontal"
       : "vertical";
-
     if (isMobile) {
-      // On mobile we bypass the stagger flip and force horizontal immediately
       if (mode !== "horizontal") setMode("horizontal");
       return;
     }
-
-    // Desktop: trigger the staggered flip (handled by StaggeredChars -> onFlip)
     if (desired !== mode) setFlipSignal((n) => n + 1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, isMobile]);
+  }, [isOpen, isMobile]); // eslint-disable-line
 
   const writingMode = mode === "vertical" ? "vertical-rl" : "horizontal-tb";
+
+  // ----- COLORS (simple) -----
+  const bubbleColorClasses = isOpen
+    ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
+    : "bg-[var(--background)] text-[var(--mesm-l-grey)] border-1 border-[var(--mesm-grey-dk)] hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] duration-150";
 
   return (
     <motion.div
@@ -114,15 +108,12 @@ function BubbleItem({
         layout
         transition={spring}
         className={[
-          "w-full select-none",
-          "outline-none focus-visible:ring-2 focus-visible:ring-black/10",
-          "whitespace-nowrap",
-          "cursor-pointer",
-          "bg-[var(--mesm-blue)] text-[var(--background)] rounded-2xl px-4 py-2 text-5xl font-normal whitespace-nowrap cursor-pointer transition",
+          "w-full select-none outline-none focus-visible:ring-2 focus-visible:ring-black/10",
+          "whitespace-nowrap cursor-pointer rounded-2xl px-4 py-2 text-5xl font-normal transition",
+          bubbleColorClasses, // ← here
         ].join(" ")}
         style={{
-          backgroundColor: color,
-          // Hard-force horizontal on mobile so it never stays vertical
+          // force horizontal on mobile
           writingMode: isMobile ? "horizontal-tb" : writingMode,
           textOrientation: "mixed",
         }}
@@ -150,7 +141,7 @@ function BubbleItem({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={spring}
-            className="mt-3 rounded-2xl bg-[var(--mesm-yellow)] p-4 text-left "
+            className="mt-3 rounded-2xl p-4 text-left bg-[var(--mesm-yellow)] border-1 border-[var(--mesm-grey-dk)]"
             style={{
               maxWidth: isMobile ? "100%" : maxItemWidth,
               backdropFilter: "saturate(140%) blur(4px)",
@@ -172,7 +163,6 @@ function BubbleItem({
 
 export default function ProcessBubbles({
   items = [],
-  color = "var(--mesm-blue, #274CFF)",
   maxItemWidth = 480,
   collapsedWidth = 64,
 }) {
@@ -205,10 +195,11 @@ export default function ProcessBubbles({
 
   return (
     <section className="w-full">
+      <PageTitleMedium text={"Process"} center />
       <motion.div
         layout
         transition={spring}
-        className="flex w-full flex-wrap items-start content-start gap-2"
+        className="flex w-full flex-wrap items-start content-start gap-3"
       >
         {items.map((it, idx) => {
           const isOpen = openSet.has(idx);
@@ -226,7 +217,6 @@ export default function ProcessBubbles({
               isMobile={isMobile}
               width={width}
               maxItemWidth={maxItemWidth}
-              color={color}
               spring={spring}
               onToggle={() => toggle(idx)}
             />

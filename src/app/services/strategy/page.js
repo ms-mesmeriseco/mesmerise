@@ -13,11 +13,11 @@ import {
   PACKAGES,
 } from "./content.jsx";
 
-export default function PerformancePage() {
+export default function StrategyPage() {
   return (
     <>
       <ServicePageBase
-        heroTitle={"Performance & Growth"}
+        heroTitle={"Strategy"}
         heroMedia={heroMedia}
         serviceTags={serviceTags}
         para1Content={para1Content}

@@ -114,9 +114,10 @@ export default function ProjectNavigationList({ activeTag = null }) {
 
   // Compute candidates for filtering
   const filteredProjects = useMemo(() => {
-    if (!selectedLabel && !selectedRaw) return [...projects].sort(
-      (a, b) => new Date(b.projectDate) - new Date(a.projectDate)
-    );
+    if (!selectedLabel && !selectedRaw)
+      return [...projects].sort(
+        (a, b) => new Date(b.projectDate) - new Date(a.projectDate)
+      );
 
     let candidates;
     if (selectedLabel) {

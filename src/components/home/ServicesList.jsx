@@ -1,9 +1,14 @@
+"use client";
+
+import Link from "next/link";
+
 export default function ServicesList() {
   const services = [
-    "Branding & Strategy",
-    "Website",
-    "Growth Marketing",
-    "Business Consulting & Development",
+    { name: "Strategy", slug: "/services/strategy" },
+    { name: "Branding", slug: "/services/branding" },
+    { name: "Website", slug: "/services/website" },
+    { name: "Performance & Growth", slug: "/services/performance-growth" },
+    { name: "Analytics", slug: "/services/analytics" },
   ];
 
   return (
@@ -13,13 +18,15 @@ export default function ServicesList() {
     >
       <ul className="space-y-8">
         {services.map((s, idx) => (
-          <li
-            key={idx}
-            className="border-b border-current px-[var(--global-margin-lg)] py-[var(--global-margin-sm)] text-4xl md:text-6xl font-medium
-                       transition-all duration-200 ease-in-out
-                       opacity-30 hover:opacity-100 hover:translate-x-4 no-list page-title-large"
-          >
-            {s}
+          <li key={idx} className="no-list">
+            <Link
+              href={s.slug}
+              className="block border-b border-current px-[var(--global-margin-lg)] py-[var(--global-margin-sm)] 
+                         text-4xl md:text-6xl font-medium transition-all duration-200 ease-in-out
+                         opacity-30 hover:opacity-100 hover:translate-x-4 page-title-large"
+            >
+              {s.name}
+            </Link>
           </li>
         ))}
       </ul>

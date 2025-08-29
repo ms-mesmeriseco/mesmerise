@@ -11,30 +11,14 @@ export const trustBadgeLogos = [
 ];
 
 // Author rich content as JSX (fast to edit)
-export const column1Content = [
-  <p key="para" className="p2">
-    Whether you’re a startup launching your first site or an enterprise ready to
-    revitalise your digital presence, we build websites that align with your
-    audience, strengthen your brand, and deliver results that matter.
-    <br />
-    <br />
-    Our research-driven, systemic approach ensures your website resonates with
-    your people, represents your business with integrity, and supports
-    meaningful growth long after launch.
-  </p>,
-];
+export const para1Content =
+  "Whether you’re a startup launching your first site or an enterprise ready to revitalise your digital presence, we build websites that align with your audience, strengthen your brand, and deliver results that matter.";
 
-export const column2Content = [
-  <div key="h2" className="items-center flex flex-col gap-6">
-    <h2 className="text-center page-title-large">
-      What We Build Isn&apos;t Just a Website, It&apos;s a Growth Engine.
-    </h2>
-    <br />
-    <SecondaryButton size="x-large" href="/connect">
-      Learn more
-    </SecondaryButton>
-  </div>,
-]; // keep shape consistent with your component
+export const para2Content =
+  "Our research-driven, systemic approach ensures your website resonates with your people, represents your business with integrity, and supports meaningful growth long after launch.";
+
+export const para3Content =
+  "Unsure about what you need? Explore our basis of collaboration, to work out if an ongoing approach is better suited to your business. ";
 
 export const serviceTags = [
   "Front-end Development",

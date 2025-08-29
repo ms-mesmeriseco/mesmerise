@@ -2,58 +2,97 @@
 
 import ServicesHero from "@/components/services/ServicesHero.jsx";
 import ProcessBubbles from "@/components/services/ProcessBubbles";
-import StaticTwoColumn from "@/components/layout/StaticTwoColumn.jsx";
-import StaticSingleColumn from "@/components/layout/StaticSingleColumn.jsx";
-import SecondaryButton from "@/components/ui/SecondaryButton.jsx";
+import StaggeredWords from "@/hooks/StaggeredWords";
+import CollabModel from "../home/CollabModel";
+import InView from "@/hooks/InView";
+import SecondaryButton from "@/components/ui/SecondaryButton";
+
+function IntroPara({ text }) {
+  return (
+    <section className="flex items-center justify-left text-white min-h-[70vh] md:max-w-3/4">
+      <div className="text-left">
+        <InView>
+          <StaggeredWords as="h2" text={text} className="page-title-medium" />
+        </InView>
+      </div>
+    </section>
+  );
+}
+
+function SecondPara({ text }) {
+  return (
+    <section className="flex items-center justify-right ml-auto text-white min-h-[70vh] md:max-w-3/4">
+      <div className="text-left">
+        <InView>
+          <StaggeredWords as="h2" text={text} className="page-title-medium" />
+        </InView>
+      </div>
+    </section>
+  );
+}
+function ThirdPara({ text }) {
+  return (
+    <section className="flex items-center justify-center text-white min-h-[70vh] md:w-3/4 px-6">
+      <div className="text-left">
+        <InView>
+          <StaggeredWords as="h2" text={text} className="page-title-medium" />
+        </InView>
+      </div>
+    </section>
+  );
+}
+
+function FinalCTA() {
+  return (
+    <section className="flex items-center justify-center text-white min-h-[70vh]">
+      <div className="text-center">
+        <InView>
+          <StaggeredWords
+            as="h2"
+            text="There’s only one way to find out if we have what it takes (pssst it involves getting in touch...)"
+            className="page-title-large md:px-18"
+          />
+          <br />
+          <br />
+          <br />
+          <SecondaryButton size="x-large">Say Hi</SecondaryButton>
+        </InView>
+      </div>
+    </section>
+  );
+}
 
 export default function ServicePageBase({
   heroTitle,
   heroMedia,
-  trustBadgeText,
-  trustBadgeLogos,
   serviceTags,
-  paraContent1,
+  para1Content,
   processSteps,
-  paraContent2,
+  para2Content,
+  para3Content,
   customBlock,
 }) {
   return (
     <>
-      <div className="p-[var(--global-margin-lg)] flex flex-col gap-6">
+      <div className="p-[var(--global-margin-lg)] flex flex-col gap-8">
         <ServicesHero
           heroMedia={heroMedia}
           heroTitle={heroTitle}
-          trustBadgeText={trustBadgeText}
-          trustBadgeLogos={trustBadgeLogos}
           serviceTags={serviceTags}
         />
-        <StaticTwoColumn
-          label="ABOUT THIS SERVICE"
-          column1={[paraContent1]}
-          column2={[""]}
-        />
-        <br />
-        <div className="text-center">
-          <h2 className="page-title-large">Process</h2>
-        </div>
+        <IntroPara text={para1Content} />
 
         {/* Full-width row of process bubbles */}
-        <div className="w-full py-12">
+        <div className="w-full">
           <ProcessBubbles items={processSteps} />
         </div>
-        <div className="text-center">
-          <h2 className="page-title-large">Packages</h2>
-        </div>
-        <div>{customBlock}</div>
-        <br />
-        <br />
-        <StaticSingleColumn
-          label="ABOUT THIS SERVICE"
-          column={[paraContent2]}
-        />
-        <br />
 
-        <br />
+        <SecondPara text={para2Content} />
+
+        <div>{customBlock}</div>
+        <ThirdPara text={para3Content} />
+        <CollabModel />
+        <FinalCTA />
       </div>
     </>
   );

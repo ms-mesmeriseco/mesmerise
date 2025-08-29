@@ -1,4 +1,4 @@
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import PageTitleMedium from "@/components/layout/PageTitleMedium";
 import Link from "next/link";
 
 const offerings = [
@@ -18,16 +18,19 @@ const offerings = [
 
 export default function CollabModel() {
   return (
-    <section data-marker="how we work" className="py-24 text-center">
-      <PageTitleLarge text="Collaboration Models" />
+    <section
+      data-marker="how we work"
+      className="py-24 text-center flex flex-col"
+    >
+      <PageTitleMedium text="Collaboration Models" center />
       <br />
-      <div className="flex flex-col md:flex-row justify-center h-[60vh] items-stretch gap-[var(--global-margin-xs)]">
+      <div className="flex flex-1 flex-col md:flex-row justify-center items-stretch gap-[var(--global-margin-xs)]">
         {offerings.map((pkg) => (
           <div
             key={pkg.title}
             className=" flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey)] hover:border-[var(--foreground)] duration-200 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] text-[var(--foreground)]"
           >
-            <h3 className="page-title-large font-bold w-1/2">{pkg.title}</h3>
+            <h3 className="page-title-medium font-bold w-1/2">{pkg.title}</h3>
             <div>
               <p className="text-base p2">{pkg.subheading}</p>
               <br />

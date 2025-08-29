@@ -10,10 +10,16 @@ function isVideo(src) {
 export default function ServicesHero({ heroTitle, serviceTags, heroMedia }) {
   return (
     <div className="flex flex-col gap-[var(--global-margin-sm)]">
-      {/* <PageTitleLarge text={heroTitle} /> */}
-      <h1 className="page-title-large">{heroTitle}</h1>
+      <PageTitleLarge text={heroTitle} />
       <ServiceTags items={serviceTags} />
-      <section className="h-[50vh] flex items-center justify-center">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <section className="max-h-[90vh]  flex items-center justify-center">
         {isVideo(heroMedia) ? (
           <video
             src={heroMedia}
@@ -21,13 +27,13 @@ export default function ServicesHero({ heroTitle, serviceTags, heroMedia }) {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover rounded-2xl"
+            className="w-full h-full md:aspect-16/9 object-cover rounded-lg"
           />
         ) : (
           <img
             src={heroMedia}
             alt="Hero Media"
-            className="w-full h-full object-cover rounded-2xl"
+            className="w-full h-full  md:aspect-16/9 object-cover rounded-lg"
           />
         )}
       </section>

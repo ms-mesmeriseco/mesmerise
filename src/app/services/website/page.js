@@ -5,10 +5,9 @@ import PackagesRow from "@/components/services/PackagesRow.jsx";
 
 import {
   heroMedia,
-  trustBadgeText,
-  trustBadgeLogos,
-  column1Content,
-  column2Content,
+  para1Content,
+  para2Content,
+  para3Content,
   serviceTags,
   processSteps,
   PACKAGES,
@@ -20,12 +19,11 @@ export default function WebsitePage() {
       <ServicePageBase
         heroTitle={"Website"}
         heroMedia={heroMedia}
-        trustBadgeText={trustBadgeText}
-        trustBadgeLogos={trustBadgeLogos}
         serviceTags={serviceTags}
-        paraContent1={column1Content}
+        para1Content={para1Content}
+        para2Content={para2Content}
+        para3Content={para3Content}
         processSteps={processSteps}
-        paraContent2={column2Content}
         customBlock={<PackagesRow packageData={PACKAGES} />}
       />
     </>

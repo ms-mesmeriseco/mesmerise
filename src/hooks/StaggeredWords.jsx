@@ -1,3 +1,5 @@
+"use client";
+
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -7,6 +9,7 @@ export default function StaggeredWords({
   delay = 0.03,
   as: As = "h1",
   gradient,
+  small,
 }) {
   const safeText = typeof text === "string" ? text : "";
   const words = safeText.split(" ");

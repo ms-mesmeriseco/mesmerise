@@ -1,10 +1,15 @@
+import StaggeredWords from "@/hooks/StaggeredWords";
 export default function PageTitleLarge({ text, center }) {
   const textAlign = [center ? "text-center" : "text-left"];
   return (
     <div
-      className={`flex justify-start items-end pt-36 border-b-1 border-[var(--foreground)] ${textAlign}`}
+      className={`flex justify-start items-end pt-36 border-b-1 border-[var(--foreground)] h-full ${textAlign}`}
     >
-      <h1 className="font-normal page-title-large">{text}</h1>
+      <StaggeredWords
+        as="h1"
+        text={text}
+        className="font-normal page-title-large"
+      />
     </div>
   );
 }

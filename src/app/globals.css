@@ -261,12 +261,12 @@ a button:hover {
 }
 .page-title-large {
   font-size: 6.44rem;
-  line-height: 6.44rem;
+  line-height: 7.23rem;
   font-weight: 400;
 }
 .page-title-medium {
   font-size: 3.23rem;
-  line-height: 3.23rem;
+  line-height: 3.77rem;
   /* max-width: 780px; */
   font-weight: 400;
 }
@@ -371,7 +371,7 @@ figcaption {
 @media screen and (max-width: 600px) {
   .page-title-large {
     font-size: 3rem;
-    line-height: 3rem;
+    line-height: 3.6rem;
   }
   .page-title-medium {
     font-size: 2.4rem;
