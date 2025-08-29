@@ -54,7 +54,7 @@ function SecondaryStatement({ marker, text, cta }) {
 
 export default function CollabTemplate({ content, currentSlug }) {
   const bubble =
-    "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-blue)] duration-150";
+    "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-150";
 
   return (
     <div className="p-[var(--global-margin-lg)]">
