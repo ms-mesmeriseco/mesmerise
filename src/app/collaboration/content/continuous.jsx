@@ -11,16 +11,16 @@ export const CONTINUOUS_CONTENT = {
   },
   secondary: {
     text: "For businesses who think exponentially.",
-    cta: null, // no CTA on this one (kept optional)
+    cta: null,
   },
-  whoItsForTitle: "Who it's for",
+  whoItsForTitle: "Who it’s for",
   whoItsForItems: [
     "For ambitious startups, pioneering entrepreneurs and enterprise-level organisations looking for a long-term growth partner",
     "Innovative business owners who want to stay ahead of the curve and be at the forefront of their industry",
     "Enterprise organisations wanting to simplify their digital operations",
     "Founders who want to spend less time worrying about leads and more time enjoying their weekends",
     "Companies needing fresh content & dynamic digital infrastructure that delivers impressive results and keeps stakeholders gratified",
-    "CMO's looking for a multi-disciplinary team that helps them execute and guide junior staff",
+    "CMOs looking for a multi-disciplinary team that helps them execute and guide junior staff",
     "Brands looking to cement loyalty and trust",
   ],
   carousel: {
@@ -68,7 +68,7 @@ export const CONTINUOUS_CONTENT = {
     },
     {
       title: "4. Open Dialogue",
-      body: "Progress is transparent and continuous. We share insights, invite feedback, and keep communication flowing so you're always in the loop.",
+      body: "Progress is transparent and continuous. We share insights, invite feedback, and keep communication flowing so you’re always in the loop.",
     },
     {
       title: "5. Evolution & Impact",
