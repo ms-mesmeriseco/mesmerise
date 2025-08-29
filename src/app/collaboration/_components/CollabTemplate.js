@@ -35,7 +35,7 @@ function SecondaryStatement({ marker, text, cta }) {
   return (
     <section
       data-marker={marker}
-      className="min-h-screen flex items-center justify-center px-6 text-white"
+      className="min-h-[70vh] flex items-center justify-center px-6 text-white"
     >
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords as="p" text={text} className="page-title-large" />
@@ -64,12 +64,9 @@ export default function CollabTemplate({ content, currentSlug }) {
         {/* Intro */}
         <StaticTwoColumn
           column1={[
-            <StaggeredWords
-              key="p"
-              as="p"
-              text={content.intro}
-              className="p3 min-h-[50vh]"
-            />,
+            <p key="p" className="p3 min-h-[50vh]">
+              {content.intro}
+            </p>,
           ]}
         />
 
