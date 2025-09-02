@@ -4,7 +4,6 @@ import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
 import StaticSingleColumn from "@/components/layout/StaticSingleColumn";
 import SectionMarker from "@/components/home/SectionMarker";
 import useSectionMarker from "@/hooks/useSectionMarker";
-import ServicesTab from "@/components/services/ServicesTab";
 import SecondaryButton from "@/components/ui/SecondaryButton";
 import FAQ from "@/components/layout/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
