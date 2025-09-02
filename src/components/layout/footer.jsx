@@ -79,7 +79,7 @@ export default function Footer() {
             </li>
           </ul>
         </div>
-        {/* Navigation */}
+        {/* Navigation
         <div className="col-span-1">
           <h5 className="text-lg font-normal mb-2">Landing Pages</h5>
           <ul className="space-y-1 text-sm">
@@ -100,7 +100,7 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         {/* Connect */}
         <div className="col-span-1">
