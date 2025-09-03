@@ -45,7 +45,9 @@ export default function SteppedAccordion({
 
   return (
     <div>
-      <PageTitleMedium text={title} center={center} />
+      {/* <PageTitleMedium text={title} center={center} /> */}
+      <h6>{title}</h6>
+      <br />
       <div
         className={`relative ${className}`}
         style={{ "--step-indent": "10vw" }}
@@ -64,7 +66,7 @@ export default function SteppedAccordion({
                 variants={itemVariants}
                 style={{ marginLeft: `calc(var(--step-indent) * ${i})` }}
               >
-                <div className="rounded-2xl border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)]/80 backdrop-blur-sm shadow-sm overflow-hidden bg-[var(--background)] hover:bg-[var(--mesm-blue)] duration-200 md:max-w-[50vw] max-w-full">
+                <div className="rounded-2xl border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)]/80 backdrop-blur-sm shadow-sm overflow-hidden bg-[var(--background)] hover:bg-[var(--mesm-red)] duration-200 md:max-w-[50vw] max-w-full">
                   {/* Header */}
                   <button
                     type="button"

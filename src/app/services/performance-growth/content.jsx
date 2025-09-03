@@ -21,16 +21,14 @@ export const para3Content =
   "Unsure about what you need? Explore our basis of collaboration, to work out if an ongoing approach is better suited to your business. ";
 
 export const serviceTags = [
-  "Front-end Development",
-  "Back-end Development",
-  "CMS Integration",
-  "Systems Architecture",
-  "E-Commerce",
-  "Website Builders",
-  "Applications",
-  "Accessibility",
-  "Performance Testing",
-  "Ongoing Support",
+  "Ad creative",
+  "Marketing Materials",
+  "Paid Media Management",
+  "Search Engine Optimisation",
+  "Content Marketing",
+  "Local SEO & Geo Targeting",
+  "Customer Lifecycle",
+  "Omni-Channel Marketing",
 ];
 
 export const processSteps = [

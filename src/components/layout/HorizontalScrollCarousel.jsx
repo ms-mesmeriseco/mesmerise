@@ -50,7 +50,9 @@ export default function HorizontalScrollCarousel({
 
   return (
     <div>
-      <PageTitleMedium text={title} center={center} />
+      {/* <PageTitleMedium text={title} center={center} /> */}
+      <h6>{title}</h6>
+      <br />
 
       <div className={`relative ${className}`} style={{ height }}>
         {/* <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[var(--background)] to-transparent z-20" /> */}

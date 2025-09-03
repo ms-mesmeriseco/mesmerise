@@ -4,40 +4,29 @@ export default function SecondaryButton({
   href = "#",
   children,
   className = "",
-  size = "small", // default to "small"
+  size = "small", // "small" | "large" | "x-large"
   ...props
 }) {
-  const isLarge = size === "large";
-  const isXLarge = size === "x-large";
-  const isSmall = size === "small";
+  const SIZE_MAP = {
+    small: { radius: "rounded-md  ", font: "text-sm leading-none" },
+    large: { radius: "rounded-lg  ", font: "text-xl" },
+    "x-large": {
+      radius: "rounded-xl ",
+      font: "text-5xl",
+    },
+  };
 
-  const basePadding = isLarge ? "1.5rem" : isXLarge ? "2rem" : "1rem";
-  const hoverPadding = isLarge ? "2rem" : isXLarge ? "2.75rem" : "1.5rem";
-  const height = isLarge ? "45px" : isXLarge ? "64px" : "32px";
-  const radius = isLarge
-    ? "rounded-lg"
-    : isXLarge
-    ? "rounded-2xl"
-    : "rounded-sm";
-  const fontSize = isLarge ? "text-lg" : isXLarge ? "text-3xl" : "text-sm";
+  const { radius, font } = SIZE_MAP[size] || SIZE_MAP.small;
 
   return (
     <motion.a
       href={href}
-      style={{
-        paddingLeft: basePadding,
-        paddingRight: basePadding,
-        height,
-        display: "inline-block",
-        lineHeight: height,
-        boxSizing: "border-box",
-      }}
-      whileHover={{
-        paddingLeft: hoverPadding,
-        paddingRight: hoverPadding,
-      }}
+      whileHover={{ paddingLeft: "16px", paddingRight: "16px" }}
       transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
-      className={`w-fit text-[var(--background)] ${fontSize} ${radius} transition bg-[var(--foreground)] hover:bg-[var(--accent)] hover:text-[var(--background)] ${className}`}
+      className={`w-fit text-[var(--foreground)] border-[var(--foreground)] border-1 ${font} ${radius}transition hover:bg-[var(--mesm-blue)] hover:border-[var(--mesm-blue)] hover:text-[var(--background)] ${(size =
+        "small"
+          ? "px-2 py-1"
+          : (size = "large" ? "px-3 py-1" : "px-4 py-3"))}  ${className}`}
       {...props}
     >
       {children}

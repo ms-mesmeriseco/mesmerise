@@ -72,7 +72,7 @@ export default function CollabTemplate({ content, currentSlug }) {
 
         {/* Who it's for */}
         <StaticTwoColumn
-          column1={[<h3 key="h3">{content.whoItsForTitle}</h3>]}
+          column1={[<h6 key="h6">{content.whoItsForTitle}</h6>]}
           column2={[
             <StaggeredChildren
               key="intro"

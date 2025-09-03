@@ -87,12 +87,12 @@ function BubbleItem({
     if (desired !== mode) setFlipSignal((n) => n + 1);
   }, [isOpen, isMobile]); // eslint-disable-line
 
-  const writingMode = mode === "vertical" ? "vertical-rl" : "horizontal-tb";
+  const writingMode = mode === "vertical" ? "sideways-lr" : "horizontal-tb";
 
   // ----- COLORS (simple) -----
   const bubbleColorClasses = isOpen
     ? "bg-[var(--background)] text-[var(--mesm-l-grey)] border-1 border-[var(--mesm-grey-dk)] "
-    : "bg-[var(--mesm-yellow)] text-[var(--background)] border-1 border-[var(--mesm-grey-dk)] hover:bg-[var(--background)] hover:text-[var(--mesm-l-grey)]  duration-150";
+    : "bg-[var(--mesm-yellow)] text-[var(--background)] border-1 border-[var(--mesm-grey-dk)] hover:bg-[var(--background)] hover:text-[var(--mesm-l-grey)] duration-150";
 
   return (
     <motion.div
@@ -108,8 +108,8 @@ function BubbleItem({
         layout
         transition={spring}
         className={[
-          "w-full select-none outline-none focus-visible:ring-2 focus-visible:ring-black/10",
-          "whitespace-nowrap cursor-pointer rounded-2xl px-4 py-2 text-5xl font-normal transition",
+          "justify-center select-none outline-none focus-visible:ring-2 focus-visible:ring-black/10",
+          "whitespace-nowrap cursor-pointer rounded-2xl px-3 py-1 font-normal transition leading-none",
           bubbleColorClasses, // ← here
         ].join(" ")}
         style={{
@@ -118,7 +118,7 @@ function BubbleItem({
           textOrientation: "mixed",
         }}
       >
-        <h2>
+        <span className="md:text-[72px] text-[36px]">
           {isMobile ? (
             item.title
           ) : (
@@ -129,7 +129,7 @@ function BubbleItem({
               onFlip={() => setMode(isOpen ? "horizontal" : "vertical")}
             />
           )}
-        </h2>
+        </span>
       </motion.button>
 
       <AnimatePresence initial={false} mode="popLayout">
@@ -141,7 +141,7 @@ function BubbleItem({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={spring}
-            className="mt-3 rounded-2xl p-4 text-left bg-[var(--background)] text-[var(--mesm-l-grey)] border-1 border-[var(--mesm-grey-dk)] "
+            className="mt-3 rounded-xl p-4 text-left bg-[var(--background)] text-[var(--mesm-l-grey)] border-1 border-[var(--mesm-grey-dk)] "
             style={{
               maxWidth: isMobile ? "100%" : maxItemWidth,
               backdropFilter: "saturate(140%) blur(4px)",
@@ -149,7 +149,7 @@ function BubbleItem({
           >
             <span
               className={`${
-                isMobile ? "text-md" : "text-xl"
+                isMobile ? "text-md" : "text-5xl"
               } leading-relaxed p2`}
             >
               {item.content}
@@ -164,7 +164,7 @@ function BubbleItem({
 export default function ProcessBubbles({
   items = [],
   maxItemWidth = 480,
-  collapsedWidth = 64,
+  collapsedWidth = 80,
 }) {
   const [openSet, setOpenSet] = useState(() => new Set());
   const [isMobile, setIsMobile] = useState(false);
@@ -195,7 +195,6 @@ export default function ProcessBubbles({
 
   return (
     <section className="w-full">
-      <PageTitleMedium text={"Process"} center />
       <motion.div
         layout
         transition={spring}

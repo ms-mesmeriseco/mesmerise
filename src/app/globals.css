@@ -260,7 +260,7 @@ a button:hover {
   cursor: pointer;
 }
 .page-title-xl {
-  font-size: 7.23rem;
+  font-size: 8.23rem;
   line-height: 9.23rem;
   font-weight: 400;
 }
@@ -376,6 +376,35 @@ figcaption {
 
 .animate-scroll-horizontal {
   animation: scroll-horizontal 30s linear infinite;
+}
+
+@media screen and (max-width: 1080px) {
+  .page-title-xl {
+    font-size: 4.77rem;
+    line-height: 5rem;
+    font-weight: 400;
+  }
+  .page-title-large {
+    font-size: 4.23rem;
+    line-height: 4.23rem;
+  }
+  .page-title-medium {
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+  }
+  .p3 {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    font-weight: 400;
+  }
+  h1 {
+    font-size: 2.77rem;
+    line-height: 3.23rem;
+  }
+  h2 {
+    font-size: 2.17rem;
+    line-height: 2.56rem;
+  }
 }
 
 @media screen and (max-width: 600px) {

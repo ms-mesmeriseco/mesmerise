@@ -11,6 +11,7 @@ import {
   serviceTags,
   processSteps,
   PACKAGES,
+  finalCTA,
 } from "./content.jsx";
 
 export default function WebsitePage() {
@@ -25,6 +26,7 @@ export default function WebsitePage() {
         para3Content={para3Content}
         processSteps={processSteps}
         customBlock={<PackagesRow packageData={PACKAGES} />}
+        finalCTA={finalCTA}
       />
     </>
   );

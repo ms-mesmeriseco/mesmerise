@@ -82,10 +82,10 @@ export default function PackagesRow() {
             key={pkg.title}
             className="bg-[var(--mesm-grey-xd)] rounded-md shadow-lg p-8 flex flex-col gap-12 h-fit border border-[var(--mesm-grey-dk)] hover:border-[var(--foreground)] transition duration-600 text-left"
           >
-            <h2>{pkg.title}</h2>
+            <h3>{pkg.title}</h3>
 
             {pkg.features.map((f) => (
-              <p className="p2" key={f}>
+              <p className="p2 opacity-30" key={f}>
                 {f}
               </p>
             ))}

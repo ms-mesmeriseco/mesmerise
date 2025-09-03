@@ -1,60 +1,31 @@
 import { motion } from "framer-motion";
 
-const SIZES = {
-  small: {
-    height: 32,
-    padX: 24,
-    padXHover: 32,
-    radius: "rounded-sm",
-    text: "text-sm",
-  },
-  large: {
-    height: 45,
-    padX: 40,
-    padXHover: 44,
-    radius: "rounded-md",
-    text: "text-base",
+const SIZE_MAP = {
+  small: { radius: "rounded-md  ", font: "text-sm leading-none" },
+  large: { radius: "rounded-lg  ", font: "text-xl" },
+  "x-large": {
+    radius: "rounded-xl ",
+    font: "text-5xl",
   },
 };
-
 export default function PrimaryButton({
   href = "#",
   children,
-  size = "small",
-  extraClass = "",
+  className = "",
+  size = "small", // "small" | "large" | "x-large"
   ...props
 }) {
-  const { height, padX, padXHover, radius, text } = SIZES[size] || SIZES.small;
+  const { radius, font } = SIZE_MAP[size] || SIZE_MAP.small;
 
   return (
     <motion.a
       href={href}
-      className={[
-        "inline-flex items-center justify-center w-fit",
-        "bg-[var(--mesm-grey-xd)]",
-        "border border-[color:var(--foregound)]", // keep your var name
-        "text-[color:var(--foregound)] font-medium",
-        "transition-colors duration-200",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
-        radius,
-        text,
-        extraClass,
-      ].join(" ")}
-      style={{
-        height,
-        lineHeight: height + "px",
-        paddingLeft: padX,
-        paddingRight: padX,
-      }}
-      whileHover={{
-        paddingLeft: padXHover,
-        paddingRight: padXHover,
-        borderColor: "var(--accent)",
-        color: "var(--accent)",
-      }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "tween", ease: [0.4, 0, 0.2, 1], duration: 0.2 }}
-      {...props}
+      whileHover={{ paddingLeft: "12px", paddingRight: "12px" }}
+      transition={{ type: "tween", ease: "easeInOut", duration: 0.3 }}
+      className={`border-1 w-fit bg-[var(--foreground)] border-[var(--foreground)] text-[var(--background)] hover:bg-transparent hover:border-[var(--mesm-blue)] hover:text-[var(--mesm-blue)] ${font} ${radius} ${(size =
+        "small"
+          ? "px-2 py-1"
+          : (size = "large" ? "px-3 py-1" : "px-4 py-3"))}  ${className}`}
     >
       {children}
     </motion.a>

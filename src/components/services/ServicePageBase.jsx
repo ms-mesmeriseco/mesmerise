@@ -5,7 +5,12 @@ import ProcessBubbles from "@/components/services/ProcessBubbles";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import CollabModel from "../home/CollabModel";
 import InView from "@/hooks/InView";
-import SecondaryButton from "@/components/ui/SecondaryButton";
+import PrimaryButton from "@/components/ui/PrimaryButton";
+import ServiceTags from "./ServiceTags";
+
+function isVideo(src) {
+  return /\.(mp4|webm|ogg)$/i.test(src);
+}
 
 function IntroPara({ text }) {
   return (
@@ -42,20 +47,20 @@ function ThirdPara({ text }) {
   );
 }
 
-function FinalCTA() {
+function FinalCTA({ text }) {
   return (
     <section className="flex items-center justify-center text-white min-h-[70vh]">
-      <div className="text-center">
+      <div className="text-center max-w-[1180px]">
         <InView>
           <StaggeredWords
             as="h2"
-            text="There’s only one way to find out if we have what it takes (pssst it involves getting in touch...)"
+            text={text}
             className="page-title-large md:px-18"
           />
           <br />
           <br />
           <br />
-          <SecondaryButton size="x-large">Say Hi</SecondaryButton>
+          <PrimaryButton size="x-large">Say Hi</PrimaryButton>
         </InView>
       </div>
     </section>
@@ -71,28 +76,46 @@ export default function ServicePageBase({
   para2Content,
   para3Content,
   customBlock,
+  finalCTA,
 }) {
   return (
     <>
       <div className="p-[var(--global-margin-lg)] flex flex-col gap-8">
+        <section className="max-h-full  flex items-center justify-center">
+          {isVideo(heroMedia) ? (
+            <video
+              src={heroMedia}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full md:aspect-16/9 object-cover rounded-lg"
+            />
+          ) : (
+            <img
+              src={heroMedia}
+              alt="Hero Media"
+              className="w-full h-full  md:aspect-16/9 object-cover rounded-lg"
+            />
+          )}
+        </section>
         <ServicesHero
           heroMedia={heroMedia}
           heroTitle={heroTitle}
           serviceTags={serviceTags}
         />
         <IntroPara text={para1Content} />
+        <h6>What we offer</h6>
 
-        {/* Full-width row of process bubbles */}
-        <div className="w-full">
-          <ProcessBubbles items={processSteps} />
-        </div>
+        <ServiceTags items={serviceTags} />
 
         <SecondPara text={para2Content} />
-
+        <h6>Process</h6>
+        <ProcessBubbles items={processSteps} />
         <div>{customBlock}</div>
         <ThirdPara text={para3Content} />
         <CollabModel />
-        <FinalCTA />
+        <FinalCTA text={finalCTA} />
       </div>
     </>
   );

@@ -1,129 +1,61 @@
-// content/services/website.jsx
-import React from "react";
-
 export const heroMedia = "/assets/pro-sculpt.mp4";
-import SecondaryButton from "@/components/ui/SecondaryButton.jsx";
 
-export const trustBadgeText = "Trusted by...";
-export const trustBadgeLogos = [
-  { url: "/logoMark-SVG_mesm.svg", title: "Client 1" },
-  { url: "/logoMark-SVG_mesm.svg", title: "Client 2" },
-];
-
-// Author rich content as JSX (fast to edit)
 export const para1Content =
-  "Whether you’re a startup launching your first site or an enterprise ready to revitalise your digital presence, we build websites that align with your audience, strengthen your brand, and deliver results that matter.";
+  "A strong brand identity is the bedrock for every part of your business. It informs how you communicate—from the stories you tell, to the content you publish.";
 
 export const para2Content =
-  "Our research-driven, systemic approach ensures your website resonates with your people, represents your business with integrity, and supports meaningful growth long after launch.";
+  "Branding has moved on from brick and mortar. While that will never die, how you present across digital platforms is integral to your overall marketing presence.";
 
 export const para3Content =
-  "Unsure about what you need? Explore our basis of collaboration, to work out if an ongoing approach is better suited to your business. ";
+  "Done right, your brand doesn't just help you stand out. It gives your business a clear identity that earns trust, drives recognition, and leaves an impression.";
 
 export const serviceTags = [
-  "Front-end Development",
-  "Back-end Development",
-  "CMS Integration",
-  "Systems Architecture",
-  "E-Commerce",
-  "Website Builders",
-  "Applications",
-  "Accessibility",
-  "Performance Testing",
-  "Ongoing Support",
+  "Brand Strategy & Positioning",
+
+  "Tone of Voice",
+
+  "Branding",
+
+  "Logo",
+
+  "Typography",
+
+  "Style Guide",
+
+  "Colour Palette",
+
+  "Creative Direction",
+
+  "Motion Graphics",
 ];
 
 export const processSteps = [
   {
-    title: "1. Discovery",
+    title: "1. Discovery & Scope",
     content:
-      "We analyse your business goals, audience, and market to lay the strategic foundation for a site that performs and connects.",
+      "The very first stage of engagement. We start by digging into who you are, who you serve, and where you want to go. We develop a deep understanding of your business DNA and the emotional desires that drive your audience. Based on what we find, we’ll agree on your businesses needs (AKA the scope), and devise a tailored set of offerings.",
   },
   {
     title: "2. Ideation",
     content:
-      "Through architecture, wireframes, and style exploration, we develop concepts that align user needs with your vision.",
+      "Here, we compile references, mood boards, and create rough sketches. This phase is all about conversation, and ensuring that our visions are aligned before getting down to business. ",
   },
   {
     title: "3. Design",
     content:
-      "We craft comprehensive, systematic designs that embody your brand, enhance usability, and meet your objectives.",
+      "We’ll present a concept and open up the floor for conversation. Taking an iterative approach, we move through creation, presentation, and feedback to get to the core of your brand. This stage can be in depth, or quick and dirty. Typically, you’ll receive a style guide - the complexity of this depends on the complexity of your needs. We consider each element, from logo, to which fonts are ‘you’, and your brands chosen colour palette. This phase is usually constrained to a set number of feedback rounds.",
   },
   {
-    title: "4. Development",
+    title: "4. Delivery",
     content:
-      "We bring your website to life with a tailored build that meets your technical needs and future-proofs your presence. Whether it be fully custom, or utilising a powerful web builder.",
+      "We send through all assets in clearly labelled, easy to access folders - this might include logo, style guide, graphic elements, imagery, motion or video (depending on the project offerings). ",
   },
   {
-    title: "5. Quality Assurance",
+    title: "5. Integration",
     content:
-      "This is an important stage. Here, we can iron out any creases in design or build, ensuring your complete satisfaction with the finished product.",
-  },
-  {
-    title: "6. Handover",
-    content:
-      "Your fully functional website is handed over with all documentation and team training needed to manage it effectively.",
+      "Ensuring your brand identity is integrated and launched effectively across digital and physical. We know this doesn’t always go smoothly, so we’ll be around to help during the process.",
   },
 ];
 
-export const PACKAGES = {
-  SMB: [
-    {
-      title: "Get Online Fast",
-      price: "Start from",
-      features: [
-        "Fast, lean, and strategic, perfect for Minimum Viable Products, new ideas, or getting your first site live quickly while leaving room to grow.",
-      ],
-      outcome:
-        "A polished, professional site built to meet immediate needs and budgets.",
-    },
-    {
-      title: "Level Up & Polish",
-      price: "$2,500",
-      features: [
-        "Refine and enhance your current site’s design, usability, and messaging to keep it effective and engaging — without starting from scratch.",
-      ],
-      outcome:
-        "A refreshed digital presence that feels new and performs better.",
-    },
-    {
-      title: "Fresh Start",
-      price: "$5,000",
-      features: [
-        "A ground-up rebuild that defines your online identity, optimises conversions, and provides a scalable foundation for growth.",
-      ],
-      outcome:
-        "A website that grows with your business and earns trust from day one.",
-    },
-  ],
-  Enterprise: [
-    {
-      title: "Website Surge",
-      price: "Custom",
-      features: [
-        "A rapid-response site solution for product launches, campaigns, or departmental initiatives — delivered with speed, precision, and enterprise-level quality.",
-      ],
-      outcome:
-        "A focused, professional site for immediate impact without compromise.",
-    },
-
-    {
-      title: "Website Refresh",
-      price: "$20,000",
-      features: [
-        "Modernise and optimise your existing site with improved user experience, accessibility, and performance while maintaining alignment with your corporate identity and governance.",
-      ],
-      outcome:
-        "A more efficient, impactful site that stays ahead of expectations.",
-    },
-    {
-      title: "Website Transformation",
-      price: "$10,000",
-      features: [
-        "A full-scale overhaul of your site, built to align with corporate strategy, support multi-department needs, and ensure security, scalability, and compliance.",
-      ],
-      outcome:
-        "A future-proofed digital platform that strengthens trust, supports growth, and empowers internal teams to deliver more.",
-    },
-  ],
-};
+export const finalCTA =
+  "Reach out to discover how we can elevate your positioning and drive growth";

@@ -4,7 +4,7 @@ import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
 import StaticSingleColumn from "@/components/layout/StaticSingleColumn";
 import SectionMarker from "@/components/home/SectionMarker";
 import useSectionMarker from "@/hooks/useSectionMarker";
-import SecondaryButton from "@/components/ui/SecondaryButton";
+import Button from "@/components/ui/Button";
 import FAQ from "@/components/layout/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
 
@@ -71,7 +71,7 @@ export default function Connect() {
       </section> */}
       <StaticTwoColumn
         label={"STRATEGY"}
-        column1={[
+        column2={[
           <StaggeredWords
             key="h2"
             as="h2"
@@ -79,21 +79,22 @@ export default function Connect() {
             className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
           ,
-          <p key="desc" className="p2">
-            Our strategy offering uncovers what truly matters to your audience,
-            your business, and your market, and harmonises them into a single,
-            easy to implement plan. Brand ID, positioning and analytics
-            frameworks serve as the bedrock, every insight is geared towards
-            growth and market impact.
+          <p key="desc" className="p3">
+            A successful business starts with clarity.
           </p>,
-          <SecondaryButton size="large" key="button" href="/services/strategy">
+          <Button
+            size="large"
+            variant="secondary"
+            key="button"
+            href="/services/strategy"
+          >
             Learn more
-          </SecondaryButton>,
+          </Button>,
         ]}
       />
       <StaticTwoColumn
         label={"BRANDING"}
-        column2={[
+        column1={[
           <StaggeredWords
             key="h2"
             as="h2"
@@ -101,21 +102,23 @@ export default function Connect() {
             className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
           ,
-          <p key="desc" className="p2">
-            Our strategy offering uncovers what truly matters to your audience,
-            your business, and your market, and harmonises them into a single,
-            easy to implement plan. Brand ID, positioning and analytics
-            frameworks serve as the bedrock, every insight is geared towards
-            growth and market impact.
+          <p key="desc" className="p3">
+            Spark curiosity, ignite emotion, and build trust in the blink of an
+            eye.
           </p>,
-          <SecondaryButton size="large" key="button" href="/services/branding">
+          <Button
+            size="large"
+            variant="secondary"
+            key="button"
+            href="/services/branding"
+          >
             Learn more
-          </SecondaryButton>,
+          </Button>,
         ]}
       />
       <StaticTwoColumn
         label={"WEBSITE"}
-        column1={[
+        column2={[
           <div key="web" className="flex flex-col gap-6">
             <StaggeredWords
               key="h2"
@@ -124,54 +127,53 @@ export default function Connect() {
               className="page-title-xl text-2xl md:text-4xl leading-tight"
             />
 
-            <p key="desc" className="p2">
-              Your website is paramount if you want to resonate deeply with the
-              people that matter most to your business. Every interface, every
-              touchpoint, and every interaction is intentional. Designed to
-              build trust, connect with your audience, convert and of course
-              Mesmerise.
+            <p key="desc" className="p3">
+              We build expressive websites that engage and convert.
             </p>
 
-            <SecondaryButton size="large" key="button" href="/services/website">
+            <Button
+              size="large"
+              variant="secondary"
+              key="button"
+              href="/services/website"
+            >
               Learn more
-            </SecondaryButton>
+            </Button>
           </div>,
         ]}
       />
       <StaticTwoColumn
         label={"PERFORMANCE"}
-        column2={[
+        column1={[
           <StaggeredWords
             key="h2"
             as="h2"
             text="Performance & Growth"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
-          <p key="desc" className="p2">
-            You don&apos;t need another agency “running ads”, you need a growth
-            architect. We engineer performance-driven marketing strategies and
-            omnipresent campaigns that deliver results across every channel your
-            audience uses.
+          <p key="desc" className="p3">
+            Attention is fleeting, trust is not.
           </p>,
-          <SecondaryButton
+          <Button
             size="large"
+            variant="secondary"
             key="button"
             href="/services/performance-growth"
           >
             Learn more
-          </SecondaryButton>,
+          </Button>,
         ]}
       />
       <StaticTwoColumn
         label={"CONSULTING"}
-        column1={[
+        column2={[
           <StaggeredWords
             key="h2"
             as="h2"
             text="Analytics"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
-          <p key="desc" className="p2">
+          <p key="desc" className="p3">
             We help you future proof your business with cutting edge industry
             insights. This is for brands seeking strategic clarity and
             operational alignment, we serve as your trusted partner in growth.
@@ -179,9 +181,14 @@ export default function Connect() {
             or rethinking how teams work together, we guide you to make
             informed, impactful decisions.
           </p>,
-          <SecondaryButton size="large" key="button" href="/services/analytics">
+          <Button
+            size="large"
+            variant="secondary"
+            key="button"
+            href="/services/analytics"
+          >
             Learn more
-          </SecondaryButton>,
+          </Button>,
         ]}
       />
       <FAQ

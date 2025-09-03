@@ -26,10 +26,10 @@ export default function ServiceTags({
 
   const tagSize = [
     large
-      ? "rounded-xl px-4 py-1 text-5xl text-[var(--background)]  bg-[var(--mesm-blue)]  hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)]"
+      ? "md:rounded-xl md:px-3 md:py-1 md:text-5xl text-[var(--background)]  bg-[var(--mesm-blue)]  hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] rounded-md px-3 py-[0.05rem] text-2xl"
       : "rounded-md px-2 py-0 text-md hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] bg-[var(--mesm-red)] text-[var(--background)] duration-200",
   ];
-  const gapSize = [large ? "gap-2" : "gap-1"];
+  const gapSize = [large ? "md:gap-2 gap-1" : "gap-1"];
 
   const handleClick = (tag, e) => {
     e.stopPropagation(); // Prevent parent link

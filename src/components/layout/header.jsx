@@ -3,8 +3,7 @@
 import { useEffect, useState, useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import PrimaryButton from "../ui/PrimaryButton";
-import SecondaryButton from "../ui/SecondaryButton";
+import Button from "../ui/Button";
 
 function useHeaderGate() {
   const pathname = usePathname();
@@ -38,7 +37,7 @@ function useHeaderGate() {
 }
 
 export default function Header() {
-    const [mounted, setMounted] = useState(false); // <-- add this
+  const [mounted, setMounted] = useState(false); // <-- add this
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -143,12 +142,9 @@ export default function Header() {
           </span>
 
           <span className="flex gap-2 justify-end">
-            <PrimaryButton key="button" href="/connect">
+            <Button key="button" size="small" variant="primary" href="/connect">
               Connect
-            </PrimaryButton>
-            <SecondaryButton key="button2" href="/connect">
-              Learn more
-            </SecondaryButton>
+            </Button>
           </span>
         </motion.header>
       )}

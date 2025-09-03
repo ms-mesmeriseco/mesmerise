@@ -1,7 +1,6 @@
 "use client";
 
 import ServicePageBase from "@/components/services/ServicePageBase.jsx";
-import PackagesRow from "@/components/services/PackagesRow.jsx";
 
 import {
   heroMedia,
@@ -10,7 +9,7 @@ import {
   para3Content,
   serviceTags,
   processSteps,
-  PACKAGES,
+  finalCTA,
 } from "./content.jsx";
 
 export default function BrandingPage() {
@@ -24,7 +23,7 @@ export default function BrandingPage() {
         para2Content={para2Content}
         para3Content={para3Content}
         processSteps={processSteps}
-        customBlock={<PackagesRow packageData={PACKAGES} />}
+        finalCTA={finalCTA}
       />
     </>
   );

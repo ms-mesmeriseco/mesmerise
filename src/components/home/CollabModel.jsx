@@ -1,5 +1,4 @@
-import PageTitleMedium from "@/components/layout/PageTitleMedium";
-import Link from "next/link";
+import Button from "../ui/Button";
 
 const offerings = [
   {
@@ -18,11 +17,9 @@ const offerings = [
 
 export default function CollabModel() {
   return (
-    <section
-      data-marker="how we work"
-      className="py-24 text-center flex flex-col"
-    >
-      <PageTitleMedium text="Collaboration Models" center />
+    <section data-marker="how we work" className="py-24 flex flex-col">
+      <h6>Collaboration Models</h6>
+      {/* <PageTitleMedium text="Collaboration Models" center /> */}
       <br />
       <div className="flex flex-1 flex-col md:flex-row justify-center items-stretch gap-[var(--global-margin-xs)]">
         {offerings.map((pkg) => (
@@ -32,16 +29,12 @@ export default function CollabModel() {
           >
             <h3 className="page-title-medium font-bold w-1/2">{pkg.title}</h3>
             <div>
-              <p className="text-base p2">{pkg.subheading}</p>
+              <p className="text-base p2 opacity-50">{pkg.subheading}</p>
               <br />
               <div className="w-full flex justify-end">
-                <Link
-                  href={pkg.cta.href}
-                  size="large"
-                  className="hover:text-[var(--mesm-blue)] duration-200 text-3xl opacity-70 hover:opacity-100"
-                >
+                <Button href={pkg.cta.href} size="large" variant="secondary">
                   {pkg.cta.label}
-                </Link>
+                </Button>
               </div>
             </div>
           </div>
