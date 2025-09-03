@@ -6,7 +6,7 @@ import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
 import BlogThreeColumn from "@/components/cms-blocks/BlogThreeColumn";
 import CollabModel from "@/components/home/CollabModel";
-import ProjectScroll from "@/components/cms-blocks/ProjectScroll";
+import ProjectGrid from "@/components/cms-blocks/ProjectGrid";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import SectionMarker from "@/components/home/SectionMarker";
 import Scene from "@/components/three/Scene";
@@ -80,7 +80,7 @@ function SecondaryStatement() {
   useSectionMarker();
   return (
     <section
-      data-marker="WHO WE ARE"
+      data-marker="WHAT WE BRING"
       className="min-h-[70vh] flex items-center justify-center px-6 text-white"
     >
       <div className="max-w-[1200px] text-center text-balance">
@@ -97,16 +97,19 @@ function SecondaryStatement() {
 function ProjectsRow() {
   return (
     <section
-      data-marker="RESULTS"
+      data-marker="How it looks"
       className="relative py-12 md:py-16 text-white"
     >
-      <ProjectScroll />
+      <ProjectGrid />
     </section>
   );
 }
 function BlogsRow() {
   return (
-    <section data-marker="BLOG" className="relative py-12 md:py-16 text-white">
+    <section
+      data-marker="WHAT WE KNOW"
+      className="relative py-12 md:py-16 text-white"
+    >
       <BlogThreeColumn />
     </section>
   );
@@ -135,7 +138,7 @@ export default function HomePage() {
     >
       <SectionMarker label={marker} />
 
-      <Splash innerRef={splashRef} label="HELLO" />
+      <Splash innerRef={splashRef} label="Mmm" />
       <InView>
         <Statement innerRef={section2Ref} label="what we're about" />
       </InView>

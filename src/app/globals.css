@@ -360,6 +360,11 @@ figcaption {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+.markers {
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--mesm-foreground);
+}
 @keyframes scroll-horizontal {
   0% {
     transform: translateX(0%);

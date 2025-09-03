@@ -13,7 +13,7 @@ export default function ServicesList() {
 
   return (
     <section
-      data-marker="capabilities"
+      data-marker="OUR CORE OFFERINGS"
       className="min-h-screen flex flex-col justify-center"
     >
       <ul className="space-y-8">

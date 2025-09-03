@@ -5,7 +5,7 @@ import Link from "next/link";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 
-export default function ProjectScroll() {
+export default function ProjectGrid() {
   const [projects, setProjects] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -38,7 +38,7 @@ export default function ProjectScroll() {
         <img
           src={project.heroMedia?.url}
           alt={project.heroMedia?.title || project.projectTitle}
-          className="w-full h-[30vh] object-cover"
+          className="w-full h-[40vh] object-cover"
         />
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end ">
           <span className="text-white text-sm text-left p-4">

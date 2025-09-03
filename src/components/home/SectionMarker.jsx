@@ -4,7 +4,7 @@ export default function SectionMarker({ label }) {
       className="fixed right-5 top-1/2 -translate-y-1/2 opacity-80 rotate-90 origin-bottom-right 
                      text-sm tracking-widest uppercase pointer-events-none z-50"
     >
-      <h6>{label}</h6>
+      <h6 className="markers">{label}</h6>
     </span>
   );
 }
