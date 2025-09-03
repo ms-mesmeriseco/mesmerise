@@ -76,7 +76,7 @@ export default function Connect() {
             key="h2"
             as="h2"
             text="Strategy"
-            className="page-title-large text-2xl md:text-4xl leading-tight"
+            className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
           ,
           <p key="desc" className="p2">
@@ -98,7 +98,7 @@ export default function Connect() {
             key="h2"
             as="h2"
             text="Branding"
-            className="page-title-large text-2xl md:text-4xl leading-tight"
+            className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
           ,
           <p key="desc" className="p2">
@@ -121,7 +121,7 @@ export default function Connect() {
               key="h2"
               as="h2"
               text="Website"
-              className="page-title-large text-2xl md:text-4xl leading-tight"
+              className="page-title-xl text-2xl md:text-4xl leading-tight"
             />
 
             <p key="desc" className="p2">
@@ -145,7 +145,7 @@ export default function Connect() {
             key="h2"
             as="h2"
             text="Performance & Growth"
-            className="page-title-large text-2xl md:text-4xl leading-tight"
+            className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
           <p key="desc" className="p2">
             You don&apos;t need another agency “running ads”, you need a growth
@@ -169,7 +169,7 @@ export default function Connect() {
             key="h2"
             as="h2"
             text="Analytics"
-            className="page-title-large text-2xl md:text-4xl leading-tight"
+            className="page-title-xl text-2xl md:text-4xl leading-tight"
           />,
           <p key="desc" className="p2">
             We help you future proof your business with cutting edge industry
