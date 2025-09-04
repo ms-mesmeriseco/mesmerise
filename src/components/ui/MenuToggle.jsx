@@ -4,13 +4,14 @@ import { useRouter, usePathname } from "next/navigation";
 import ToggleSwitch from "./ToggleSwitch";
 
 // Labels shown in the toggle
-const OPTIONS = ["About", "Services", "Work"];
+const OPTIONS = ["About", "Services", "Work", "Connect"];
 
 // Destination paths for each label
 const PATHS = {
   About: "/about",
   Services: "/services",
   Work: "/work",
+  Connect: "/connect",
 };
 
 // URL segment aliases that should map to each label
@@ -18,6 +19,7 @@ const ALIASES = {
   About: ["about", "company"],
   Services: ["services", "service"],
   Work: ["work", "projects", "project", "portfolio", "case-studies"],
+  Connect: ["connect", "contact"],
 };
 
 function normalizeBase(base) {
@@ -64,15 +66,17 @@ export default function MenuToggle({ base = "/" }) {
   };
 
   return (
-    <div className="w-full fixed bottom-4 left-0 flex justify-center">
-      <ToggleSwitch
-        options={OPTIONS}
-        value={value}
-        onChange={handleChange}
-        aria-label="Navigate primary sections"
-        selectedBg="var(--mesm-blue)"
-        textSize="xl"
-      />
+    <div className="menu-toggle flex justify-center ">
+      <div className="w-full h-200px">
+        <ToggleSwitch
+          options={OPTIONS}
+          value={value}
+          onChange={handleChange}
+          aria-label="Navigate primary sections"
+          selectedBg="var(--mesm-blue)"
+          textSize="xl"
+        />
+      </div>
     </div>
   );
 }

@@ -33,7 +33,7 @@ export default function CollabToggle({ base = "/collaboration" }) {
   };
 
   return (
-    <div className="w-full fixed bottom-4 left-0 flex justify-center">
+    <div className="w-full fixed bottom-16 left-0 flex justify-center">
       <ToggleSwitch
         options={["Defined", "Continuous"]}
         value={value}

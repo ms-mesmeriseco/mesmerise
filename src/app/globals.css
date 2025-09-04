@@ -77,6 +77,7 @@ body.page-about {
 :root {
   --foreground: #ffffff;
   --background: #000000;
+  --background-o: rgba(0, 0, 0, 0.68);
   --footer-bg: var(--mesm-blue);
   --foot-txt: #000000;
   --padding: 1.5rem;
@@ -364,6 +365,15 @@ figcaption {
   font-weight: 600;
   letter-spacing: 2px;
   color: var(--mesm-foreground);
+}
+
+.menu-toggle {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: fit-content;
 }
 @keyframes scroll-horizontal {
   0% {

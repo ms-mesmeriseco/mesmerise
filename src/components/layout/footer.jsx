@@ -44,14 +44,14 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[var(--footer-bg)] text-[color:var(--footer-txt)] p-[var(--global-margin-lg)] h-full">
+    <footer className="relative z-200 bg-[var(--footer-bg)] text-[color:var(--footer-txt)] p-[var(--global-margin-lg)] min-h-[70vh]">
       <section
         data-marker=" "
         className="max-w-7xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[var(--global-margin-sm)]"
       >
         {/* Spacer */}
         <div className="col-span-1">
-          <h5 className="text-lg font-normal mb-2">Navigation</h5>
+          <h5 className="text-lg font-normal mb-2">Site Map</h5>
           <ul className="space-y-1 text-sm">
             <li>
               <a
@@ -75,6 +75,34 @@ export default function Footer() {
                 className="text-[var(--font-size)] font-[var(--font-family)]"
               >
                 Work
+              </a>
+            </li>
+            <li>
+              <a
+                href="/connect"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Contact
+              </a>
+            </li>
+            <br />
+            <li>
+              <h5 className="text-lg font-normal mb-2">Collaboration Models</h5>
+            </li>
+            <li>
+              <a
+                href="/connect"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Defined
+              </a>
+            </li>
+            <li>
+              <a
+                href="/collaborative"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Collaborative
               </a>
             </li>
           </ul>
@@ -104,9 +132,7 @@ export default function Footer() {
 
         {/* Connect */}
         <div className="col-span-1">
-          <h5 className="text-lg font-normal mb-2">
-            <a href="/connect/">Connect</a>
-          </h5>
+          <h5 className="text-lg font-normal mb-2">Snoop</h5>
           <ul className="space-y-1 text-sm">
             <li>
               <a href="#">LinkedIn</a>
