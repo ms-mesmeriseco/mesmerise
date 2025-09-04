@@ -4,10 +4,10 @@ import { motion } from "framer-motion";
 
 const SIZE_MAP = {
   small: {
-    radius: "rounded-md",
+    radius: "rounded-lg",
     font: "text-sm leading-none",
     px: 12, // px-2
-    py: 4, // py-1
+    py: 6, // py-1
     hoverDeltaX: 4,
   },
   large: {

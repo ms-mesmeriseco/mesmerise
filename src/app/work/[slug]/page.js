@@ -24,7 +24,7 @@ export default async function ProjectPage({ params }) {
   return (
     <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
       {/* --- HERO ROW --- */}
-      <div className="col-span-12 lg:col-span-8 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] ">
+      <div className="col-span-12 lg:col-span-8 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] h-screen">
         <Image
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
@@ -34,7 +34,7 @@ export default async function ProjectPage({ params }) {
         />
       </div>
 
-      <div className="col-span-12 lg:col-span-4 border-1 border-[var(--mesm-grey-dk)] p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4">
+      <div className="col-span-12 lg:col-span-4 border-1 border-[var(--mesm-grey-dk)] p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] h-screen">
         <h1 className="font-medium">{page.projectTitle}</h1>
         <h6 className="opacity-40">{formattedDate}</h6>
         <h6 className="opacity-40">{page.collaborationModel || ""}</h6>
@@ -123,12 +123,26 @@ export default async function ProjectPage({ params }) {
 
       {/* --- MEDIA GALLERY --- */}
       <div className="col-span-12 grid grid-cols-12 gap-[var(--global-margin-sm)]">
-        {page.mediaGalleryCollection?.items?.map((media, idx) => {
-          const isEven = idx % 2 === 0;
-          const colSpan = isEven ? "col-span-12" : "col-span-6";
+        {page.mediaGalleryCollection?.items?.map((media, idx, arr) => {
+          const mod = idx % 3; // 0 -> full, 1 & 2 -> halves
+          const isLast = idx === arr.length - 1;
+
+          // default: full-width
+          let colSpan = "col-span-12";
+
+          if (mod !== 0) {
+            // half-width on md+, full on mobile
+            colSpan = "col-span-12 md:col-span-6";
+
+            // if we end on a single half (mod === 1 and it's the last), make it full
+            if (isLast && mod === 1) colSpan = "col-span-12";
+          }
+
+          const isVideo = media.url?.includes(".mp4");
+
           return (
             <div key={idx} className={colSpan}>
-              {media.url.includes(".mp4") ? (
+              {isVideo ? (
                 <video
                   src={media.url}
                   controls

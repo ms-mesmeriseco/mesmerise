@@ -203,6 +203,7 @@ h6 {
   font-size: 0.778rem;
   color: var(--foreground);
   font-weight: 400;
+  /* text-transform: uppercase; */
 }
 p {
   font-size: 1rem;
