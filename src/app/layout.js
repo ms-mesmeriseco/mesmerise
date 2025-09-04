@@ -1,5 +1,6 @@
 /** @type {import("next").Viewport} */
 import Header from "@/components/layout/header";
+import MenuToggle from "@/components/ui/MenuToggle";
 import Footer from "@/components/layout/footer";
 import Inner from "@/components/layout/Inner";
 import Template from "@/components/layout/template";
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         <Template>
           <Inner>{children}</Inner>
         </Template>
+        <MenuToggle />
         <Footer />
       </body>
     </html>

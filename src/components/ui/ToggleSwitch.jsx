@@ -1,20 +1,51 @@
-export default function ToggleSwitch({ options = [], value, onChange }) {
+export default function ToggleSwitch({
+  options = [],
+  value,
+  onChange,
+  selectedBg = "var(--mesm-red)", // CSS color for the ACTIVE button
+  selectedTextClass = "text-black", // Tailwind text class for ACTIVE state
+  textSize = "sm", // "xs" | "sm" | "base" | "lg" | "xl"
+  className = "",
+}) {
+  const sizeClass =
+    {
+      xs: "text-xs",
+      sm: "text-sm",
+      base: "text-base",
+      lg: "text-lg",
+      xl: "text-xl",
+    }[textSize] || "text-sm";
+
   return (
-    <div className="flex items-center gap-2 bg-[var(--mesm-grey-xd)] rounded-lg p-1 border border-1 border-[var(--mesm-grey-dk)] w-fit mx-auto mb-8 text-sm">
-      {options.map((option) => (
-        <button
-          key={option}
-          className={`flex-1 px-4 py-1 rounded-lg transition-colors cursor-pointer ${
-            value === option
-              ? "bg-[var(--mesm-red)] text-black"
-              : "bg-transparent text-[var(--foreground)]"
-          }`}
-          onClick={() => onChange(option)}
-          type="button"
-        >
-          {option}
-        </button>
-      ))}
+    <div
+      className={[
+        "flex items-center gap-2",
+        "bg-[var(--mesm-grey-xd)]",
+        "rounded-lg p-1",
+        "border border-[var(--mesm-grey-dk)]",
+        "w-fit mx-auto mb-8",
+        sizeClass,
+        className,
+      ].join(" ")}
+    >
+      {options.map((option) => {
+        const isActive = value === option;
+        return (
+          <button
+            key={option}
+            type="button"
+            onClick={() => onChange(option)}
+            aria-pressed={isActive}
+            className={[
+              "flex-1 px-4 py-1 rounded-lg transition-colors cursor-pointer focus:outline-none",
+              isActive ? selectedTextClass : "text-[var(--foreground)]",
+            ].join(" ")}
+            style={isActive ? { backgroundColor: selectedBg } : undefined}
+          >
+            {option}
+          </button>
+        );
+      })}
     </div>
   );
 }

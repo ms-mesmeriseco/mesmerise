@@ -74,7 +74,7 @@ export default function HorizontalScrollCarousel({
             const content = (
               <motion.figure
                 key={i}
-                className={`relative shrink-0 snap-start ${rounded} overflow-hidden shadow-sm hover:shadow-md transition-shadow`}
+                className={`relative shrink-0 snap-start overflow-hidden shadow-sm hover:shadow-md transition-shadow`}
                 style={{
                   width: Math.min(720, Math.max(280, height * 1.6)),
                   height,
