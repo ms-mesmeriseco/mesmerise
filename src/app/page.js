@@ -69,6 +69,7 @@ function Statement({ innerRef }) {
             as="h1"
             text="We craft brand, web, and content experiences that look sexy, and convert."
             className="page-title-large"
+            margin="-40% 0px"
           />
         </InView>
       </div>
@@ -88,6 +89,7 @@ function SecondaryStatement() {
           as="p"
           text="Bridging the gap between aesthetic solutions and undeniable data."
           className="page-title-large"
+          margin="-40% 0px"
         />
       </div>
     </section>

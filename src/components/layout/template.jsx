@@ -31,7 +31,7 @@ export default function Template({ children }) {
   };
 
   return (
-    <motion.div {...anim(opacity)} className={`${paddingTop}`}>
+    <motion.div {...anim(opacity)} className={`${paddingTop} min-h-screen`}>
       {children}
     </motion.div>
   );
