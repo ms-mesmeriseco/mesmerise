@@ -141,15 +141,16 @@ export default function HomePage() {
       <SectionMarker label={marker} />
 
       <Splash innerRef={splashRef} label="Mmm" />
+
+      <Statement innerRef={section2Ref} label="what we're about" />
+
       <InView>
-        <Statement innerRef={section2Ref} label="what we're about" />
+        <ProjectsRow />
       </InView>
-      <ProjectsRow />
-
       <SecondaryStatement />
-
-      <CollabModel />
-
+      <InView>
+        <CollabModel />
+      </InView>
       <ServicesSection />
 
       {/* <BlogsRow /> */}

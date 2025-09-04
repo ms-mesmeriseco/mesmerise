@@ -91,7 +91,7 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/connect"
+                href="/collaboration/defined"
                 className="text-[var(--font-size)] font-[var(--font-family)]"
               >
                 Defined
@@ -99,10 +99,10 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="/collaborative"
+                href="/collaboration/continuous"
                 className="text-[var(--font-size)] font-[var(--font-family)]"
               >
-                Collaborative
+                Continuous
               </a>
             </li>
           </ul>

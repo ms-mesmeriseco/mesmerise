@@ -9,10 +9,14 @@ export default function InView({
   },
   once = true,
   as: Tag = "div",
+  // NEW: root margin. Default = trigger at viewport center.
+  // Use "-40% 0px -40% 0px" for a 20% tall center "band" instead of a line.
+  margin = "-30% 0px -30% 0px",
+  amount = "some", // keep default threshold behavior
   ...rest
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once });
+  const isInView = useInView(ref, { once, margin, amount });
 
   return (
     <motion.div

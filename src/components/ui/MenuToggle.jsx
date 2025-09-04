@@ -2,16 +2,16 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import ToggleSwitch from "./ToggleSwitch";
+import { motion } from "framer-motion";
 
 // Labels shown in the toggle
-const OPTIONS = ["About", "Services", "Work", "Connect"];
+const OPTIONS = ["About", "Services", "Work"];
 
 // Destination paths for each label
 const PATHS = {
   About: "/about",
   Services: "/services",
   Work: "/work",
-  Connect: "/connect",
 };
 
 // URL segment aliases that should map to each label
@@ -67,7 +67,15 @@ export default function MenuToggle({ base = "/" }) {
 
   return (
     <div className="menu-toggle flex justify-center ">
-      <div className="w-full h-200px">
+      <motion.div
+        initial={{ opacity: 0, y: "20px" }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.3, delay: 0.8 },
+        }}
+        className="w-full h-200px"
+      >
         <ToggleSwitch
           options={OPTIONS}
           value={value}
@@ -76,7 +84,7 @@ export default function MenuToggle({ base = "/" }) {
           selectedBg="var(--mesm-blue)"
           textSize="xl"
         />
-      </div>
+      </motion.div>
     </div>
   );
 }

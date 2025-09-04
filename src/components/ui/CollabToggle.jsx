@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation";
 import ToggleSwitch from "./ToggleSwitch";
+import { motion } from "framer-motion";
 
 /**
  * CollabToggle
@@ -33,13 +34,17 @@ export default function CollabToggle({ base = "/collaboration" }) {
   };
 
   return (
-    <div className="w-full fixed bottom-16 left-0 flex justify-center">
+    <motion.div
+      initial={{ opacity: 0, y: "20px" }}
+      animate={{ opacity: 1, y: 0, transition: { duration: 0.3, delay: 0.8 } }}
+      className="w-full fixed bottom-16 left-0 flex justify-center"
+    >
       <ToggleSwitch
         options={["Defined", "Continuous"]}
         value={value}
         onChange={handleChange}
         aria-label="Switch collaboration mode"
       />
-    </div>
+    </motion.div>
   );
 }
