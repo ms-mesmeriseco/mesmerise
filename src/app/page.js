@@ -83,7 +83,7 @@ function SecondaryStatement() {
       data-marker="WHAT WE BRING"
       className="min-h-[70vh] flex items-center justify-center px-6 text-white"
     >
-      <div className="max-w-[1080px] text-center text-balance">
+      <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords
           as="p"
           text="Bridging the gap between aesthetic solutions and undeniable data."
@@ -150,7 +150,7 @@ export default function HomePage() {
 
       <ServicesSection />
 
-      <BlogsRow />
+      {/* <BlogsRow /> */}
     </main>
   );
 }

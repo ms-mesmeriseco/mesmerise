@@ -220,9 +220,9 @@ export default function ProjectNavigationList({ activeTag = null }) {
             <motion.button
               key={label}
               variants={item}
-              className={`px-4 py-0 rounded-md h-6 hover:bg-[var(--mesm-yellow)] ${
+              className={`px-3 py-0 rounded-md h-6 hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] ${
                 selectedLabel === label
-                  ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
+                  ? "bg-[var(--mesm-yellow)] text-[var(--mesm-grey)]"
                   : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
               }`}
               onClick={() => handleSelectLabel(label)}
@@ -262,16 +262,16 @@ export default function ProjectNavigationList({ activeTag = null }) {
               <Link href={`/work/${project.slug}`}>
                 <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
                   {/* Row 1: Title + Year */}
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-                    <h3>{project.projectTitle}</h3>
-                    <h3>
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
+                    <h2>{project.projectTitle}</h2>
+                    <h2>
                       {new Date(project.projectDate).toLocaleDateString(
                         "en-GB",
                         {
                           year: "numeric",
                         }
                       )}
-                    </h3>
+                    </h2>
                   </div>
 
                   {/* Row 2: Tags — ONLY show quick-filter labels present on this project (up to 8) */}

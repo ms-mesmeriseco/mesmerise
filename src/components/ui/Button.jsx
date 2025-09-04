@@ -6,23 +6,23 @@ const SIZE_MAP = {
   small: {
     radius: "rounded-md",
     font: "text-sm leading-none",
-    px: 16, // px-2
+    px: 12, // px-2
     py: 4, // py-1
-    hoverDeltaX: 6,
+    hoverDeltaX: 4,
   },
   large: {
-    radius: "rounded-lg",
+    radius: "rounded-xl",
     font: "text-xl",
-    px: 12, // px-3
-    py: 4, // py-2
-    hoverDeltaX: 8,
+    px: 16, // px-3
+    py: 5, // py-2
+    hoverDeltaX: 6,
   },
   "x-large": {
-    radius: "rounded-xl",
+    radius: "rounded-2xl",
     font: "text-5xl",
     px: 24, // px-6
-    py: 8, // py-2
-    hoverDeltaX: 10,
+    py: 7, // py-2
+    hoverDeltaX: 8,
   },
 };
 

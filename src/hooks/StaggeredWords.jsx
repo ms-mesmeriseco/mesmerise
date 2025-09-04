@@ -10,11 +10,12 @@ export default function StaggeredWords({
   as: As = "h1",
   gradient,
   small,
+  margin = "-10% 0px",
 }) {
   const safeText = typeof text === "string" ? text : "";
   const words = safeText.split(" ");
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-40% 0px" });
+  const inView = useInView(ref, { once: true, margin: margin });
 
   return (
     <As className={className}>

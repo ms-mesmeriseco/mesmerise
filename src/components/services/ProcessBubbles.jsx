@@ -163,7 +163,7 @@ function BubbleItem({
 
 export default function ProcessBubbles({
   items = [],
-  maxItemWidth = 480,
+  maxItemWidth = 645,
   collapsedWidth = 80,
 }) {
   const [openSet, setOpenSet] = useState(() => new Set());

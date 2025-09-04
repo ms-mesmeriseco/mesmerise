@@ -77,11 +77,16 @@ export default function Connect() {
             as="h2"
             text="Strategy"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
+            margin="-40% 0px"
           />,
-          ,
-          <p key="desc" className="p3">
-            A successful business starts with clarity.
-          </p>,
+          <StaggeredWords
+            as="p"
+            text="A successful business starts with clarity."
+            className="p3  max-w-[80%]"
+            key="p"
+            margin="-40% 0px"
+          />,
+
           <Button
             size="large"
             variant="secondary"
@@ -100,12 +105,17 @@ export default function Connect() {
             as="h2"
             text="Branding"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
+            margin="-40% 0px"
           />,
-          ,
-          <p key="desc" className="p3">
-            Spark curiosity, ignite emotion, and build trust in the blink of an
-            eye.
-          </p>,
+          <StaggeredWords
+            as="p"
+            text="Spark curiosity, ignite emotion, and build trust in the blink of an
+            eye."
+            className="p3  max-w-[80%]"
+            key="p"
+            margin="-40% 0px"
+          />,
+
           <Button
             size="large"
             variant="secondary"
@@ -119,27 +129,28 @@ export default function Connect() {
       <StaticTwoColumn
         label={"WEBSITE"}
         column2={[
-          <div key="web" className="flex flex-col gap-6">
-            <StaggeredWords
-              key="h2"
-              as="h2"
-              text="Website"
-              className="page-title-xl text-2xl md:text-4xl leading-tight"
-            />
-
-            <p key="desc" className="p3">
-              We build expressive websites that engage and convert.
-            </p>
-
-            <Button
-              size="large"
-              variant="secondary"
-              key="button"
-              href="/services/website"
-            >
-              Learn more
-            </Button>
-          </div>,
+          <StaggeredWords
+            key="h2"
+            as="h2"
+            text="Website"
+            className="page-title-xl text-2xl md:text-4xl leading-tight"
+            margin="-40% 0px"
+          />,
+          <StaggeredWords
+            as="p"
+            text="We build expressive websites that engage and convert."
+            className="p3  max-w-[80%]"
+            key="p"
+            margin="-40% 0px"
+          />,
+          <Button
+            size="large"
+            variant="secondary"
+            key="button"
+            href="/services/website"
+          >
+            Learn more
+          </Button>,
         ]}
       />
       <StaticTwoColumn
@@ -150,10 +161,16 @@ export default function Connect() {
             as="h2"
             text="Performance & Growth"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
+            margin="-40% 0px"
           />,
-          <p key="desc" className="p3">
-            Attention is fleeting, trust is not.
-          </p>,
+          <StaggeredWords
+            as="p"
+            text="Attention is fleeting, trust is not."
+            className="p3  max-w-[80%]"
+            key="p"
+            margin="-40% 0px"
+          />,
+
           <Button
             size="large"
             variant="secondary"
@@ -172,15 +189,16 @@ export default function Connect() {
             as="h2"
             text="Analytics"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
+            margin="-40% 0px"
           />,
-          <p key="desc" className="p3">
-            We help you future proof your business with cutting edge industry
-            insights. This is for brands seeking strategic clarity and
-            operational alignment, we serve as your trusted partner in growth.
-            Perfect if you&apos;re launching a product, entering a new market,
-            or rethinking how teams work together, we guide you to make
-            informed, impactful decisions.
-          </p>,
+          <StaggeredWords
+            as="p"
+            text="When you understand the data, decision-making becomes simple."
+            className="p3  max-w-[80%]"
+            key="p"
+            margin="-40% 0px"
+          />,
+
           <Button
             size="large"
             variant="secondary"
@@ -191,14 +209,20 @@ export default function Connect() {
           </Button>,
         ]}
       />
-      <FAQ
+      {/* <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br /> */}
+      {/* <FAQ
         label="common questions"
         title="Frequently Asked Questions"
         accordionItems={servicesFAQ.map((item) => ({
           question: item.question,
           textContent: item.textContent,
         }))}
-      />
+      /> */}
       {/* Bottom Row */}
     </div>
   );

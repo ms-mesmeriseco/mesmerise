@@ -5,7 +5,7 @@ import ProcessBubbles from "@/components/services/ProcessBubbles";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import CollabModel from "../home/CollabModel";
 import InView from "@/hooks/InView";
-import PrimaryButton from "@/components/ui/PrimaryButton";
+import Button from "@/components/ui/Button";
 import ServiceTags from "./ServiceTags";
 
 function isVideo(src) {
@@ -17,7 +17,12 @@ function IntroPara({ text }) {
     <section className="flex items-center justify-left text-white min-h-[70vh] md:max-w-3/4">
       <div className="text-left">
         <InView>
-          <StaggeredWords as="h2" text={text} className="page-title-medium" />
+          <StaggeredWords
+            as="h2"
+            text={text}
+            className="page-title-medium"
+            margin="-40% 0px"
+          />
         </InView>
       </div>
     </section>
@@ -29,7 +34,12 @@ function SecondPara({ text }) {
     <section className="flex items-center justify-right ml-auto text-white min-h-[70vh] md:max-w-3/4">
       <div className="text-left">
         <InView>
-          <StaggeredWords as="h2" text={text} className="page-title-medium" />
+          <StaggeredWords
+            as="h2"
+            text={text}
+            className="page-title-medium"
+            margin="-40% 0px"
+          />
         </InView>
       </div>
     </section>
@@ -40,7 +50,12 @@ function ThirdPara({ text }) {
     <section className="flex items-center justify-center text-white min-h-[70vh] md:w-3/4 px-6">
       <div className="text-left">
         <InView>
-          <StaggeredWords as="h2" text={text} className="page-title-medium" />
+          <StaggeredWords
+            as="h2"
+            text={text}
+            className="page-title-medium"
+            margin="-40% 0px"
+          />
         </InView>
       </div>
     </section>
@@ -56,11 +71,12 @@ function FinalCTA({ text }) {
             as="h2"
             text={text}
             className="page-title-large md:px-18"
+            margin="-40% 0px"
           />
           <br />
           <br />
           <br />
-          <PrimaryButton size="x-large">Say Hi</PrimaryButton>
+          <Button size="x-large">Say Hi</Button>
         </InView>
       </div>
     </section>
@@ -81,7 +97,7 @@ export default function ServicePageBase({
   return (
     <>
       <div className="p-[var(--global-margin-lg)] flex flex-col gap-8">
-        <section className="max-h-full  flex items-center justify-center">
+        <section className="max-h-full flex items-center justify-center">
           {isVideo(heroMedia) ? (
             <video
               src={heroMedia}
@@ -89,13 +105,13 @@ export default function ServicePageBase({
               loop
               muted
               playsInline
-              className="w-full h-full md:aspect-16/9 object-cover rounded-lg"
+              className="w-full h-full md:aspect-16/9 object-cover "
             />
           ) : (
             <img
               src={heroMedia}
               alt="Hero Media"
-              className="w-full h-full  md:aspect-16/9 object-cover rounded-lg"
+              className="w-full h-full  md:aspect-16/9 object-cover "
             />
           )}
         </section>

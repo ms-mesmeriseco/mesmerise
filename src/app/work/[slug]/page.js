@@ -5,6 +5,9 @@ import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import ServiceTags from "@/components/services/ServiceTags";
 import Image from "next/image";
+import StaggeredChildren from "@/hooks/StaggeredChildren";
+import StaggeredWords from "@/hooks/StaggeredWords";
+import richTextParagraphs from "@/lib/utils/richTextParagraphs";
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
@@ -12,22 +15,22 @@ export default async function ProjectPage({ params }) {
   const page = data.projectPageCollection.items.find(
     (post) => post.slug === slug
   );
+  if (!page) return <p>Blog post not found.</p>;
+
   const formattedDate = new Date(page.projectDate).toLocaleString("en-AU", {
     year: "numeric",
   });
 
-  if (!page) return <p>Blog post not found.</p>;
-
   return (
     <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
       {/* --- HERO ROW --- */}
-      <div className="col-span-12 lg:col-span-8 lg:h-[80vh]  md:h-[50vh] sm:h-[30vh] ">
+      <div className="col-span-12 lg:col-span-8 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] ">
         <Image
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
           width={page.heroMedia.width}
           height={page.heroMedia.height}
-          className="w-full h-full object-cover rounded-lg"
+          className="w-full h-full object-cover"
         />
       </div>
 
@@ -38,32 +41,64 @@ export default async function ProjectPage({ params }) {
 
         {page.projectScope?.json && (
           <>
-            <h6 className="opacity-40">PROJECT SCOPE</h6>
+            <StaggeredWords
+              as="h6"
+              text="PROJECT SCOPE"
+              className="opacity-60"
+            />
             <div className="text-base leading-relaxed [&>p+p]:mt-4">
-              {renderRichTextWithBreaks(page.projectScope.json)}
+              {richTextParagraphs(page.projectScope.json).map((p, i) => (
+                <StaggeredWords
+                  key={i}
+                  as="p"
+                  className="mb-4"
+                  text={p}
+                  // you can pass per-paragraph delays if your StaggeredWords supports it
+                />
+              ))}
             </div>
+
+            {/* Optional non-animated fallback (keep or remove): */}
+            {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">
+              {renderRichTextWithBreaks(page.projectScope.json)}
+            </div> */}
           </>
         )}
       </div>
 
       {page.dataOne?.json && (
         <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left py-6 border-t border-[var(--mesm-grey)]">
+          {" "}
           <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4">
-            {renderRichTextWithBreaks(page.dataOne.json)}
-          </div>
+            {" "}
+            <StaggeredChildren baseDelay={0}>
+              {" "}
+              {renderRichTextWithBreaks(page.dataOne.json)}{" "}
+            </StaggeredChildren>{" "}
+          </div>{" "}
           {page.dataTwo?.json && (
             <div className="text-base leading-relaxed [&>p+p]:mt-4">
-              {renderRichTextWithBreaks(page.dataTwo.json)}
+              {" "}
+              <StaggeredChildren baseDelay={0.2}>
+                {" "}
+                {renderRichTextWithBreaks(page.dataTwo.json)}{" "}
+              </StaggeredChildren>{" "}
             </div>
-          )}
+          )}{" "}
           {page.dataThree?.json && (
             <div className="text-base leading-relaxed [&>p+p]:mt-4">
-              {renderRichTextWithBreaks(page.dataThree.json)}
+              {" "}
+              <StaggeredChildren baseDelay={0.4}>
+                {" "}
+                {renderRichTextWithBreaks(page.dataThree.json)}{" "}
+              </StaggeredChildren>{" "}
             </div>
           )}
         </div>
       )}
+
       <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]"></div>
+
       <div className="inline-flex col-span-12 items-center gap-2">
         {page.contentfulMetadata?.tags && (
           <ServiceTags
@@ -72,12 +107,16 @@ export default async function ProjectPage({ params }) {
           />
         )}
       </div>
+
       <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]"></div>
+
       {/* --- EXTENDED DESCRIPTION (right half below) --- */}
       {page.extendedDescription?.json && (
-        <div className="col-span-12 lg:col-start-7 lg:col-end-13">
+        <div className="col-span-12 lg:col-start-7 lg:col-end-13 min-h-[50vh]">
           <div className="text-base leading-relaxed [&>p+p]:mt-4">
-            {renderRichTextWithBreaks(page.extendedDescription.json)}
+            {richTextParagraphs(page.extendedDescription.json).map((p, i) => (
+              <StaggeredWords key={i} as="p" text={p} />
+            ))}
           </div>
         </div>
       )}
@@ -87,14 +126,13 @@ export default async function ProjectPage({ params }) {
         {page.mediaGalleryCollection?.items?.map((media, idx) => {
           const isEven = idx % 2 === 0;
           const colSpan = isEven ? "col-span-12" : "col-span-6";
-
           return (
-            <div key={idx} className={`${colSpan}`}>
+            <div key={idx} className={colSpan}>
               {media.url.includes(".mp4") ? (
                 <video
                   src={media.url}
                   controls
-                  className="w-full  h-[100vh] rounded-lg"
+                  className="w-full h-[50vh] object-cover"
                 />
               ) : (
                 <Image
@@ -102,7 +140,7 @@ export default async function ProjectPage({ params }) {
                   width={media.width}
                   height={media.height}
                   alt={`Gallery media ${idx}`}
-                  className="w-full  h-[50vh] rounded-lg object-cover hover:opacity-80 transition-opacity"
+                  className="w-full h-[50vh] object-cover hover:opacity-80 transition-opacity"
                 />
               )}
             </div>

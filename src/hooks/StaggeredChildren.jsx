@@ -12,7 +12,7 @@ export default function StaggeredChildren({
   perItem = 0.02,
   duration = 0.15,
   once = true,
-  margin = "-40% 0px",
+  margin = "-10% 0px",
   inline = false,
   y = "0.1em",
   blur = 4,
