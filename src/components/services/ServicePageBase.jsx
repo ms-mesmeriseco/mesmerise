@@ -76,7 +76,9 @@ function FinalCTA({ text }) {
           <br />
           <br />
           <br />
-          <Button size="x-large">Say Hi</Button>
+          <Button size="x-large" href="/connect">
+            Say Hi
+          </Button>
         </InView>
       </div>
     </section>

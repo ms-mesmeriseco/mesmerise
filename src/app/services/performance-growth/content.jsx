@@ -12,13 +12,13 @@ export const trustBadgeLogos = [
 
 // Author rich content as JSX (fast to edit)
 export const para1Content =
-  "Whether you’re a startup launching your first site or an enterprise ready to revitalise your digital presence, we build websites that align with your audience, strengthen your brand, and deliver results that matter.";
+  "Attention is fleeting, trust is not. Our omnipresent campaigns capture both, turning passing interest into conviction and conviction into clients.";
 
 export const para2Content =
-  "Our research-driven, systemic approach ensures your website resonates with your people, represents your business with integrity, and supports meaningful growth long after launch.";
+  "Marketing is like oxygen to your business. Without a strategy for growth, your business is suffocating–you’re invisible and have no predictable way of generating revenue.";
 
 export const para3Content =
-  "Unsure about what you need? Explore our basis of collaboration, to work out if an ongoing approach is better suited to your business. ";
+  "Our state-of-the-art campaigns build trust with prospects and lower your cost per acquisition.";
 
 export const serviceTags = [
   "Ad creative",
@@ -35,93 +35,34 @@ export const processSteps = [
   {
     title: "1. Discovery",
     content:
-      "We analyse your business goals, audience, and market to lay the strategic foundation for a site that performs and connects.",
+      "We start by digging into your audience, reviewing past campaigns, and analysing competitive data to uncover unique opportunities in the market.",
   },
   {
-    title: "2. Ideation",
+    title: "2. Strategy",
     content:
-      "Through architecture, wireframes, and style exploration, we develop concepts that align user needs with your vision.",
+      "Next, we map the customer journey. Every stage of awareness is considered, from strangers seeing you for the first time to prospects on the edge of conversion. Your brand shows up with relevance, not noise.",
   },
   {
-    title: "3. Design",
+    title: "3. Creative",
     content:
-      "We craft comprehensive, systematic designs that embody your brand, enhance usability, and meet your objectives.",
+      "We create content mapped to each stage of awareness, meeting prospects where they are. Educational assets build authority, while creative assets capture attention.",
   },
   {
-    title: "4. Development",
+    title: "4. Campaigns",
     content:
-      "We bring your website to life with a tailored build that meets your technical needs and future-proofs your presence. Whether it be fully custom, or utilising a powerful web builder.",
+      "With the foundations in place, we create omnipresent campaigns that show up where your audience is searching for answers or scrolling for connection, turning curiosity into trust and trust into action.",
   },
   {
-    title: "5. Quality Assurance",
+    title: "5. Optimisation",
     content:
-      "This is an important stage. Here, we can iron out any creases in design or build, ensuring your complete satisfaction with the finished product.",
+      "We refine continuously, tracking competitive data metrics, split testing hero sections, and sharpening creative to ensure your investment is generating a healthy return.",
   },
   {
-    title: "6. Handover",
+    title: "6. Scale",
     content:
-      "Your fully functional website is handed over with all documentation and team training needed to manage it effectively.",
+      "Once we dial in, we expand with purpose. Scaling becomes sustainable, momentum compounds, and customers evolve into loyal advocates of your brand.",
   },
 ];
 
-export const PACKAGES = {
-  SMB: [
-    {
-      title: "Get Online Fast",
-      price: "Start from",
-      features: [
-        "Fast, lean, and strategic, perfect for Minimum Viable Products, new ideas, or getting your first site live quickly while leaving room to grow.",
-      ],
-      outcome:
-        "A polished, professional site built to meet immediate needs and budgets.",
-    },
-    {
-      title: "Level Up & Polish",
-      price: "$2,500",
-      features: [
-        "Refine and enhance your current site’s design, usability, and messaging to keep it effective and engaging — without starting from scratch.",
-      ],
-      outcome:
-        "A refreshed digital presence that feels new and performs better.",
-    },
-    {
-      title: "Fresh Start",
-      price: "$5,000",
-      features: [
-        "A ground-up rebuild that defines your online identity, optimises conversions, and provides a scalable foundation for growth.",
-      ],
-      outcome:
-        "A website that grows with your business and earns trust from day one.",
-    },
-  ],
-  Enterprise: [
-    {
-      title: "Website Surge",
-      price: "Custom",
-      features: [
-        "A rapid-response site solution for product launches, campaigns, or departmental initiatives — delivered with speed, precision, and enterprise-level quality.",
-      ],
-      outcome:
-        "A focused, professional site for immediate impact without compromise.",
-    },
-
-    {
-      title: "Website Refresh",
-      price: "$20,000",
-      features: [
-        "Modernise and optimise your existing site with improved user experience, accessibility, and performance while maintaining alignment with your corporate identity and governance.",
-      ],
-      outcome:
-        "A more efficient, impactful site that stays ahead of expectations.",
-    },
-    {
-      title: "Website Transformation",
-      price: "$10,000",
-      features: [
-        "A full-scale overhaul of your site, built to align with corporate strategy, support multi-department needs, and ensure security, scalability, and compliance.",
-      ],
-      outcome:
-        "A future-proofed digital platform that strengthens trust, supports growth, and empowers internal teams to deliver more.",
-    },
-  ],
-};
+export const finalCTA =
+  "Cash flow becomes steady, new opportunities arrive predictably, and growth feels certain.";

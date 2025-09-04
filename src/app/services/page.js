@@ -77,14 +77,14 @@ export default function Connect() {
             as="h2"
             text="Strategy"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
           <StaggeredWords
             as="p"
             text="A successful business starts with clarity."
             className="p3  max-w-[80%]"
             key="p"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
 
           <Button
@@ -105,7 +105,7 @@ export default function Connect() {
             as="h2"
             text="Branding"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
           <StaggeredWords
             as="p"
@@ -113,7 +113,7 @@ export default function Connect() {
             eye."
             className="p3  max-w-[80%]"
             key="p"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
 
           <Button
@@ -134,14 +134,14 @@ export default function Connect() {
             as="h2"
             text="Website"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
           <StaggeredWords
             as="p"
             text="We build expressive websites that engage and convert."
             className="p3  max-w-[80%]"
             key="p"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
           <Button
             size="large"
@@ -161,14 +161,14 @@ export default function Connect() {
             as="h2"
             text="Performance & Growth"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
           <StaggeredWords
             as="p"
             text="Attention is fleeting, trust is not."
             className="p3  max-w-[80%]"
             key="p"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
 
           <Button
@@ -189,14 +189,14 @@ export default function Connect() {
             as="h2"
             text="Analytics"
             className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
           <StaggeredWords
             as="p"
             text="When you understand the data, decision-making becomes simple."
             className="p3  max-w-[80%]"
             key="p"
-            margin="-40% 0px"
+            margin="-20% 0px"
           />,
 
           <Button

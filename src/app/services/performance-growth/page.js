@@ -10,7 +10,6 @@ import {
   para3Content,
   serviceTags,
   processSteps,
-  PACKAGES,
 } from "./content.jsx";
 
 export default function PerformancePage() {
@@ -24,7 +23,6 @@ export default function PerformancePage() {
         para2Content={para2Content}
         para3Content={para3Content}
         processSteps={processSteps}
-        customBlock={<PackagesRow packageData={PACKAGES} />}
       />
     </>
   );

@@ -1,129 +1,46 @@
-// content/services/website.jsx
-import React from "react";
-
 export const heroMedia = "/assets/pro-sculpt.mp4";
-import SecondaryButton from "@/components/ui/SecondaryButton.jsx";
 
-export const trustBadgeText = "Trusted by...";
-export const trustBadgeLogos = [
-  { url: "/logoMark-SVG_mesm.svg", title: "Client 1" },
-  { url: "/logoMark-SVG_mesm.svg", title: "Client 2" },
-];
-
-// Author rich content as JSX (fast to edit)
 export const para1Content =
-  "Whether you’re a startup launching your first site or an enterprise ready to revitalise your digital presence, we build websites that align with your audience, strengthen your brand, and deliver results that matter.";
+  "Drowning in data? Get clear, actionable insights that give you stability and direction.";
 
 export const para2Content =
-  "Our research-driven, systemic approach ensures your website resonates with your people, represents your business with integrity, and supports meaningful growth long after launch.";
+  "Analytics reporting & comprehensive data analysis uncovers the patterns behind performance, showing you what drives revenue, where opportunities are hiding, and how to make better decisions with clarity. ";
 
 export const para3Content =
-  "Unsure about what you need? Explore our basis of collaboration, to work out if an ongoing approach is better suited to your business. ";
+  "Instead of guessing why campaigns stall, or which channel brings in the highest-value clients, you finally have a single source of truth.";
 
 export const serviceTags = [
-  "Front-end Development",
-  "Back-end Development",
-  "CMS Integration",
-  "Systems Architecture",
-  "E-Commerce",
-  "Website Builders",
-  "Applications",
-  "Accessibility",
-  "Performance Testing",
-  "Ongoing Support",
+  "Analytics Setup & Audit",
+
+  "Web Traffic",
+
+  "Reporting",
+
+  "GA4",
 ];
 
 export const processSteps = [
   {
-    title: "1. Discovery",
+    title: "1. Onboarding",
     content:
-      "We analyse your business goals, audience, and market to lay the strategic foundation for a site that performs and connects.",
+      "We begin by understanding your business, goals, and current setup. We get permissions across your core data dashboards. This ensures our analytics framework is tailored to the outcomes that matter most to you.",
   },
   {
-    title: "2. Ideation",
+    title: "2. Discovery",
     content:
-      "Through architecture, wireframes, and style exploration, we develop concepts that align user needs with your vision.",
+      "We dig into valuable metrics and find what’s holding your business back. We cover all your touch points. User behaviour, landing page experience, paid media campaigns, search engine optimisation, email flows and creative assets. ",
   },
   {
-    title: "3. Design",
+    title: "3. Unification",
     content:
-      "We craft comprehensive, systematic designs that embody your brand, enhance usability, and meet your objectives.",
+      "We bring it all together across your analytics, ad platforms and CRM into one connected system. Instead of juggling fragmented reports, you finally see the full picture.",
   },
   {
-    title: "4. Development",
+    title: "4. Reporting",
     content:
-      "We bring your website to life with a tailored build that meets your technical needs and future-proofs your presence. Whether it be fully custom, or utilising a powerful web builder.",
-  },
-  {
-    title: "5. Quality Assurance",
-    content:
-      "This is an important stage. Here, we can iron out any creases in design or build, ensuring your complete satisfaction with the finished product.",
-  },
-  {
-    title: "6. Handover",
-    content:
-      "Your fully functional website is handed over with all documentation and team training needed to manage it effectively.",
+      "We cut through the noise and deliver a clear report you can actually use. You’ll know what’s working, what isn’t, and where to focus your resources next.",
   },
 ];
 
-export const PACKAGES = {
-  SMB: [
-    {
-      title: "Get Online Fast",
-      price: "Start from",
-      features: [
-        "Fast, lean, and strategic, perfect for Minimum Viable Products, new ideas, or getting your first site live quickly while leaving room to grow.",
-      ],
-      outcome:
-        "A polished, professional site built to meet immediate needs and budgets.",
-    },
-    {
-      title: "Level Up & Polish",
-      price: "$2,500",
-      features: [
-        "Refine and enhance your current site’s design, usability, and messaging to keep it effective and engaging — without starting from scratch.",
-      ],
-      outcome:
-        "A refreshed digital presence that feels new and performs better.",
-    },
-    {
-      title: "Fresh Start",
-      price: "$5,000",
-      features: [
-        "A ground-up rebuild that defines your online identity, optimises conversions, and provides a scalable foundation for growth.",
-      ],
-      outcome:
-        "A website that grows with your business and earns trust from day one.",
-    },
-  ],
-  Enterprise: [
-    {
-      title: "Website Surge",
-      price: "Custom",
-      features: [
-        "A rapid-response site solution for product launches, campaigns, or departmental initiatives — delivered with speed, precision, and enterprise-level quality.",
-      ],
-      outcome:
-        "A focused, professional site for immediate impact without compromise.",
-    },
-
-    {
-      title: "Website Refresh",
-      price: "$20,000",
-      features: [
-        "Modernise and optimise your existing site with improved user experience, accessibility, and performance while maintaining alignment with your corporate identity and governance.",
-      ],
-      outcome:
-        "A more efficient, impactful site that stays ahead of expectations.",
-    },
-    {
-      title: "Website Transformation",
-      price: "$10,000",
-      features: [
-        "A full-scale overhaul of your site, built to align with corporate strategy, support multi-department needs, and ensure security, scalability, and compliance.",
-      ],
-      outcome:
-        "A future-proofed digital platform that strengthens trust, supports growth, and empowers internal teams to deliver more.",
-    },
-  ],
-};
+export const finalCTA =
+  "Have you ever looked at numbers and thoughts: woah this is beautiful? We have.";
