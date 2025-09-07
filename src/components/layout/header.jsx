@@ -68,7 +68,7 @@ export default function Header() {
     }
   }, []);
 
-  const isVisible = gateVisible && showWhileIdle;
+  const isVisible = true;
 
   return (
     <AnimatePresence>
@@ -109,7 +109,7 @@ export default function Header() {
           <span className="justify-self-end">
             <Button
               size="small"
-              variant="primary"
+              variant="secondary"
               href="/connect"
               className="shadow-xl"
             >

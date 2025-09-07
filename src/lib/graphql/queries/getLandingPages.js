@@ -1,9 +1,7 @@
 import { gql } from "@apollo/client";
-import gqlmin from "gqlmin";
 import { PILL_BLOCK_FRAGMENT } from "./fragments/pillBlockFragment";
 import { GET_TRUST_BADGES } from "./fragments/trustBadgesFragment";
 import { GET_LIST_SWITCH } from "./fragments/getListSwitch";
-import { GET_HERO_DETAILS } from "./fragments/getHeroDetails";
 import { GET_LIST_ICONS } from "./fragments/getListIcons";
 import { GET_ACCORDION } from "./fragments/getAccordion";
 import { GET_IMAGE } from "./fragments/getImage";
@@ -13,6 +11,7 @@ import { GET_SINGLE_COLUMN } from "./fragments/singleColumn";
 import { GET_THREE_COLUMN } from "./fragments/getThreeColumn";
 import { GET_SINGLE_CASESTUDY } from "./fragments/getSingleCaseStudy";
 import { GET_MEDIA_CAROUSEL } from "./fragments/getMediaCarousel";
+import { GET_TABLE } from "./fragments/getTable";
 
 function minifyGraphQL(query) {
   return query
@@ -30,16 +29,23 @@ const rawQuery = `
         }
         pageTitle
         pageSlug
-        pageBlocksCollection(limit: 20) {
+        metaDesc
+        media {
+        width
+        height
+        url
+        }
+        line1
+        line2
+        sub
+        align
+        pageBlocksCollection(limit: 15) {
           items {
-            ... on ComponentHeroBanner {
-              ...HeroDetails
+            ... on TrustBadges {
+              ...TrustBadgesFragment
             }
             ... on IconRow {
               ...IconRowFragment
-            }
-            ... on TrustBadges {
-              ...TrustBadgesFragment
             }
             ... on ListWithImageSwitch {
               ...SwitchListDetails
@@ -62,6 +68,9 @@ const rawQuery = `
             ... on MediaCarouselWithText {
               ...MediaCarouselWithTextFragment
             }
+            ...on ComparisonTable {
+              ...TableFragment
+            }
           }
         }
       }
@@ -82,10 +91,10 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   ${GET_IMAGE}
   ${GET_ACCORDION}
   ${GET_LIST_ICONS}
-  ${GET_HERO_DETAILS}
   ${GET_LIST_SWITCH}
   ${GET_TRUST_BADGES}
   ${PILL_BLOCK_FRAGMENT}
+  ${GET_TABLE}
 `;
 
 export const GET_ALL_LANDING_PAGES = gql`

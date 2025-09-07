@@ -45,12 +45,11 @@ export default function LandingPage({ params }) {
       {heroBlock && (
         <div className="col-span-12 mb-[2rem]" key="hero-banner">
           <HeroBanner
-            heroMedia={heroBlock.heroMedia}
-            pageHeader={heroBlock.pageHeader}
-            pageSubtitle={heroBlock.pageSubtitle}
-            pageHeaderLine2={heroBlock.pageHeaderLine2}
-            mediaHeight={heroBlock.mediaHeight}
-            heroAlignment={heroBlock.heroAlignment}
+            heroMedia={page.media}
+            pageHeader={page.line1}
+            pageSubtitle={page.sub}
+            pageHeaderLine2={page.line2}
+            heroAlignment={page.align}
           />
         </div>
       )}

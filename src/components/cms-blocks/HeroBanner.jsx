@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import PrimaryButton from "../ui/PrimaryButton";
+import Button from "../ui/Button";
 import InView from "@/hooks/InView";
 
 const characterAnimation = {
@@ -98,9 +98,14 @@ export default function HeroBanner({
             <br />
 
             {showCta && (
-              <PrimaryButton href={ctaUrl} extraClass="mt-4" size="large">
+              <Button
+                href="/connect"
+                extraClass="mt-4"
+                variant="primary"
+                size="large"
+              >
                 Learn More
-              </PrimaryButton>
+              </Button>
             )}
           </div>
         </div>
