@@ -30,20 +30,23 @@ const rawQuery = `
         pageTitle
         pageSlug
         metaDesc
-        media {
-        width
-        height
-        url
-        }
         line1
         line2
         sub
+        heroList {
+        json
+        }
         align
+        trustCollection (limit:8) {
+          items {
+            url
+            description
+            height
+            width
+          }
+        }
         pageBlocksCollection(limit: 15) {
           items {
-            ... on TrustBadges {
-              ...TrustBadgesFragment
-            }
             ... on IconRow {
               ...IconRowFragment
             }
@@ -92,7 +95,6 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
   ${GET_ACCORDION}
   ${GET_LIST_ICONS}
   ${GET_LIST_SWITCH}
-  ${GET_TRUST_BADGES}
   ${PILL_BLOCK_FRAGMENT}
   ${GET_TABLE}
 `;

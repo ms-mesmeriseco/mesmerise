@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Environment, SpotLight } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import LogoModel2 from "./LogoModel2.jsx";
 
@@ -34,15 +34,18 @@ export default function Scene() {
       />
 
       {/* Rim/back light (gives edge highlight) */}
-      <spotLight
+      <SpotLight
         position={[-2, 1.2, -2]}
         angle={0.7}
-        penumbra={0.6}
-        intensity={1.4}
+        // penumbra={0.6}
+        // intensity={1.4}
+        attenuation={5}
+        anglePower={5}
       />
 
       {/* Top light */}
       <pointLight position={[0, 3, 0]} intensity={0.7} />
+      <Environment files="/hdr/Light_Arches_E.hdr" background={true} />
 
       <LogoModel2 />
       <EffectComposer>

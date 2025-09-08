@@ -58,6 +58,6 @@ export default function LogoModel2(props) {
   }, [scene, maps]);
 
   return (
-    <primitive scale={[0.5, 0.5, 0.5]} ref={group} object={scene} {...props} />
+    <primitive scale={[0.4, 0.4, 0.4]} ref={group} object={scene} {...props} />
   );
 }

@@ -2,6 +2,7 @@
 
 import PropTypes from "prop-types";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TrustBadges({ logos = [], scroll = true }) {
   const duplicatedLogos = scroll ? [...logos, ...logos] : logos;
@@ -25,14 +26,20 @@ export default function TrustBadges({ logos = [], scroll = true }) {
             }`}
           >
             {duplicatedLogos.map((logo, idx) => (
-              <Image
+              <Link
                 key={`logo-${idx}`}
-                src={logo.url}
-                alt={logo.title || ""}
-                width={96}
-                height={96}
-                className="object-contain"
-              />
+                href={logo.description}
+                className="contents"
+                target="_blank"
+              >
+                <Image
+                  src={logo.url}
+                  alt={logo.title || ""}
+                  width={96}
+                  height={96}
+                  className="object-contain"
+                />
+              </Link>
             ))}
           </div>
         </div>

@@ -19,8 +19,8 @@ const SIZE_MAP = {
   },
   "x-large": {
     radius: "rounded-2xl",
-    font: "text-5xl",
-    px: 24, // px-6
+    font: "text-2xl",
+    px: 20, // px-6
     py: 7, // py-2
     hoverDeltaX: 8,
   },
@@ -38,7 +38,7 @@ const VARIANTS = {
 export default function Button({
   href = "#",
   children,
-  className = "",
+  extraClass = "",
   size = "small", // "small" | "large" | "x-large"
   variant = "primary", // "primary" | "secondary"
   ...props
@@ -63,7 +63,7 @@ export default function Button({
         paddingRight: cfg.px + cfg.hoverDeltaX,
       }}
       transition={{ type: "tween", ease: "easeInOut", duration: 0.25 }}
-      className={`inline-block border w-fit select-none ${cfg.radius} ${cfg.font} ${variantClasses} ${className}`}
+      className={`inline-block border w-fit select-none ${cfg.radius} ${cfg.font} ${variantClasses} ${extraClass}`}
       {...props}
     >
       {children}

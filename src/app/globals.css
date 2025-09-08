@@ -261,6 +261,10 @@ a:hover {
 a button:hover {
   cursor: pointer;
 }
+.landing-title {
+  font-size: 6rem;
+  line-height: 6.77rem;
+}
 .page-title-xl {
   font-size: 8.23rem;
   line-height: 9.23rem;
@@ -419,6 +423,10 @@ figcaption {
 }
 
 @media screen and (max-width: 600px) {
+  .landing-title {
+    font-size: 4rem;
+    line-height: 4.77rem;
+  }
   .page-title-xl {
     font-size: 4.77rem;
     line-height: 5rem;

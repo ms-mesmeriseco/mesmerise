@@ -111,7 +111,7 @@ export default function Header() {
               size="small"
               variant="secondary"
               href="/connect"
-              className="shadow-xl"
+              extraClass="shadow-xl"
             >
               Connect
             </Button>

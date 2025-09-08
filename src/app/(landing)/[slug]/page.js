@@ -30,37 +30,27 @@ export default function LandingPage({ params }) {
 
   const blocks = page.pageBlocksCollection.items;
 
-  // Find the HeroBanner block
-  const heroBlock = blocks.find(
-    (block) => block.__typename === "ComponentHeroBanner"
-  );
-
-  // Find the TrustBadges block
-  const trustBadgesBlock = blocks.find(
-    (block) => block.__typename === "TrustBadges"
-  );
-
   return (
     <>
-      {heroBlock && (
-        <div className="col-span-12 mb-[2rem]" key="hero-banner">
+      <div className="h-[calc(100vh-80px)] flex flex-col justify-between">
+        <div
+          className="col-span-12 mb-[2rem] h-full flex items-center justify-center"
+          key="hero-banner"
+        >
           <HeroBanner
             heroMedia={page.media}
             pageHeader={page.line1}
             pageSubtitle={page.sub}
             pageHeaderLine2={page.line2}
             heroAlignment={page.align}
+            heroList={page.heroList}
           />
         </div>
-      )}
-      {trustBadgesBlock && (
+
         <div className="col-span-12" key="trust-badges">
-          <TrustBadges
-            logos={trustBadgesBlock.logosCollection?.items || []}
-            scroll={trustBadgesBlock.scroll}
-          />
+          <TrustBadges logos={page.trustCollection?.items} />
         </div>
-      )}
+      </div>
       <PageBase blocks={blocks} />
     </>
   );
