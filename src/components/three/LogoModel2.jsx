@@ -7,9 +7,11 @@ import {
   SRGBColorSpace,
   LinearSRGBColorSpace,
 } from "three";
+import { useFrame } from "@react-three/fiber";
 
 export default function LogoModel2(props) {
   const group = useRef();
+  const modelRef = useRef();
   const { scene } = useGLTF("/models/logo_glass3.glb"); // your path
 
   // Load non-color maps (keep them in linear color space)
@@ -35,6 +37,12 @@ export default function LogoModel2(props) {
     maps[k].anisotropy = 8;
   }
 
+  useFrame(() => {
+    if (modelRef.current) {
+      modelRef.current.rotation.y += 0.001;
+    }
+  });
+
   useLayoutEffect(() => {
     // Apply to all MeshStandard/Physical materials in the model
     scene.traverse((obj) => {
@@ -47,9 +55,9 @@ export default function LogoModel2(props) {
         mat.bumpMap = maps.bumpMap || null;
 
         // Sensible defaults—adjust to taste
-        mat.metalness = 0.0; // unless it’s metal
-        mat.roughness = 0.6; // base value; roughnessMap will modulate it
-        mat.bumpScale = 0.03; // very small; bump can get noisy fast
+        mat.metalness = 0.8; // unless it’s metal
+        mat.roughness = 0.1; // base value; roughnessMap will modulate it
+        mat.bumpScale = 0.06; // very small; bump can get noisy fast
         if (mat.normalScale) mat.normalScale = new Vector2(1, 1);
 
         mat.needsUpdate = true;
@@ -58,6 +66,12 @@ export default function LogoModel2(props) {
   }, [scene, maps]);
 
   return (
-    <primitive scale={[0.4, 0.4, 0.4]} ref={group} object={scene} {...props} />
+    <primitive
+      scale={[0.4, 0.4, 0.4]}
+      rotation={[0, 3, 0]}
+      ref={(group, modelRef)}
+      object={scene}
+      {...props}
+    />
   );
 }

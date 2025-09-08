@@ -1,5 +1,7 @@
+// Scene.jsx
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, SpotLight } from "@react-three/drei";
+import { OrbitControls, Environment } from "@react-three/drei";
+
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import LogoModel2 from "./LogoModel2.jsx";
 
@@ -7,47 +9,58 @@ export default function Scene() {
   return (
     <Canvas
       shadows
-      className="w-[100%] h-[100%]"
       camera={{ position: [0, 0, -2], fov: 45 }}
+      gl={{ antialias: true, physicallyCorrectLights: true }}
     >
-      {/* Controls (optional) */}
+      {/* Optional controls */}
       <OrbitControls enableDamping />
+      <color attach="background" args={["#ff3700"]} />
 
-      {/* Subtle ambient base */}
-      <ambientLight intensity={0.2} />
+      {/* === HDRI: photo-studio_4K.exr (Equirectangular, strength ~0.25) === */}
+      {/* In Blender the strength is 0.25; Drei's Environment uses intensity. */}
+      <Environment
+        files="/hdr/photo-studio_4K-red.exr"
+        background={false}
+        intensity={0.1}
+      />
 
-      {/* Key light (brightest, front-right) */}
-      <spotLight
-        position={[2.5, 1.5, 2.5]}
-        angle={0.6}
-        penumbra={0.5}
-        intensity={2.2}
+      {/* === Lights from screenshots === */}
+      {/* Subtle base */}
+      <ambientLight intensity={0.25} />
+
+      {/* Fill A (Point_Fill)  X=3535.5mm, Y=-3535.5mm, Z=5000mm */}
+      <pointLight
+        position={[3.5355, -3.5355, 5]}
+        intensity={3} // Blender showed Power=1000, Exposure=0; this 3–4 is a good starting point
+        distance={0}
+        decay={2}
         castShadow
       />
 
-      {/* Fill light (front-left, softer) */}
-      <spotLight
-        position={[-1.5, 0.8, 2]}
-        angle={0.8}
-        penumbra={0.6}
-        intensity={0.9}
+      {/* Fill B (second fill in screenshots)  X=-2191.9mm, Y=-4494mm, Z=5000mm */}
+      <pointLight
+        position={[-2.1919, -4.494, 5]}
+        intensity={2.5}
+        distance={0}
+        decay={2}
       />
 
-      {/* Rim/back light (gives edge highlight) */}
-      <SpotLight
-        position={[-2, 1.2, -2]}
-        angle={0.7}
-        // penumbra={0.6}
-        // intensity={1.4}
-        attenuation={5}
-        anglePower={5}
+      {/* Key (Point_Key)  X=60.504mm, Y=0, Z=2178.6mm  -> sits almost in front */}
+      <pointLight
+        position={[0.0605, 0, 2.1786]}
+        intensity={6}
+        distance={0}
+        decay={2}
+        castShadow
       />
 
-      {/* Top light */}
-      <pointLight position={[0, 3, 0]} intensity={0.7} />
-      <Environment files="/hdr/Light_Arches_E.hdr" background={true} />
+      {/* Sun (Directional)  Exposure=10, Angle≈0.526° in Blender.
+          Three.js has no "angle" on directional; use intensity + a broad direction. */}
+      <directionalLight position={[5, 5, 5]} intensity={2.5} castShadow />
 
       <LogoModel2 />
+
+      {/* Gentle highlight bloom like a photo studio */}
       <EffectComposer>
         <Bloom
           luminanceThreshold={0.9}
