@@ -19,7 +19,7 @@ export default function Scene() {
       {/* === HDRI: photo-studio_4K.exr (Equirectangular, strength ~0.25) === */}
       {/* In Blender the strength is 0.25; Drei's Environment uses intensity. */}
       <Environment
-        files="/hdr/photo-studio_4K-red.exr"
+        files="/hdr/photo-studio_4K-red-2.exr"
         background={false}
         intensity={0.1}
       />
@@ -31,7 +31,7 @@ export default function Scene() {
       {/* Fill A (Point_Fill)  X=3535.5mm, Y=-3535.5mm, Z=5000mm */}
       <pointLight
         position={[3.5355, -3.5355, 5]}
-        intensity={3} // Blender showed Power=1000, Exposure=0; this 3–4 is a good starting point
+        intensity={1} // Blender showed Power=1000, Exposure=0; this 3–4 is a good starting point
         distance={0}
         decay={2}
         castShadow
@@ -49,7 +49,7 @@ export default function Scene() {
       <pointLight
         position={[0.0605, 0, 2.1786]}
         intensity={6}
-        distance={0}
+        distance={4}
         decay={2}
         castShadow
       />
@@ -61,13 +61,13 @@ export default function Scene() {
       <LogoModel2 />
 
       {/* Gentle highlight bloom like a photo studio */}
-      <EffectComposer>
+      {/* <EffectComposer>
         <Bloom
           luminanceThreshold={0.9}
           luminanceSmoothing={0.1}
-          intensity={0.35}
+          intensity={0.25}
         />
-      </EffectComposer>
+      </EffectComposer> */}
     </Canvas>
   );
 }
