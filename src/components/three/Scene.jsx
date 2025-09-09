@@ -13,7 +13,7 @@ export default function Scene() {
       <Environment files="/hdr/photo-studio_4K.exr" />
 
       <Model />
-      <color attach="background" args={["#ff3700"]} />
+      {/* <color attach="background" args={["#ff3700"]} /> */}
     </Canvas>
   );
 }

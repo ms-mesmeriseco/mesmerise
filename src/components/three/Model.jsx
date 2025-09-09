@@ -8,7 +8,7 @@ export default function Model() {
   const mesh = useRef();
 
   useFrame(() => {
-    mesh.current.rotation.y += 0.005;
+    mesh.current.rotation.y += 0.003;
   });
 
   return (
@@ -26,7 +26,7 @@ export default function Model() {
         <MeshTransmissionMaterial
           backside
           backsideThickness={1}
-          samples={24}
+          samples={30}
           thickness={0.2}
           anisotropicBlur={0.1}
           iridescence={0.1}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useInView, motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
@@ -11,10 +11,9 @@ import ProjectGrid from "@/components/cms-blocks/ProjectGrid";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import SectionMarker from "@/components/home/SectionMarker";
 import StaggeredWords from "@/hooks/StaggeredWords";
-// import Scene from "@/components/three/Scene";
+import LoadingSplash from "@/components/home/LoadingSplash";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), {
-  loading: () => <p>Loading...</p>,
   ssr: false,
 });
 
@@ -56,6 +55,8 @@ function Splash({ innerRef }) {
       data-marker="HELLO"
       className="m-0 p-0 h-[100vh] w-[100%]"
     >
+      {/* <LoadingSplash /> */}
+
       <Scene />
     </section>
   );
@@ -140,7 +141,7 @@ export default function HomePage() {
     <main
       className={[
         "relative min-h-screen text-white transition-colors duration-700 px-8",
-        dark ? "bg-black" : "bg-[var(--mesm-red)]",
+        dark ? "bg-black" : "bg-black",
       ].join(" ")}
     >
       <SectionMarker label={marker} />
