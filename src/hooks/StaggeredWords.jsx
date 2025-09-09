@@ -8,30 +8,37 @@ export default function StaggeredWords({
   className = "",
   delay = 0.03,
   as: As = "h1",
-  gradient,
+  gradient = false,
+  glass = false,
   small,
   margin = "-10% 0px",
 }) {
   const safeText = typeof text === "string" ? text : "";
   const words = safeText.split(" ");
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: margin });
+  const inView = useInView(ref, { once: true, margin });
+
+  // Per-word class (for gradient)
+  const wordClass = gradient
+    ? "bg-linear-40 from-[var(--mesm-red)] to-[var(--dark-grey)] bg-clip-text text-transparent"
+    : "";
+
+  // Wrapper class (for glass effect)
+  const wrapperClass = glass
+    ? "px-4 py-1 rounded-4xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] text-stroke"
+    : "";
 
   return (
     <As className={className}>
       <span
         ref={ref}
-        className="inline-block align-top"
+        className={`inline-block align-top ${wrapperClass}`}
         style={{ display: "inline-block", whiteSpace: "pre-wrap" }}
       >
         {words.map((word, i) => (
           <motion.span
             key={i}
-            className={`inline-block will-change-transform  ${
-              gradient
-                ? "bg-gradient-to-r from-[var(--mesm-red)] to-[var(--mesm-yellow)] bg-clip-text text-transparent"
-                : ""
-            }`}
+            className={`inline-block will-change-transform ${wordClass}`}
             initial={{ y: "0.1em", opacity: 0, filter: "blur(4px)" }}
             animate={
               inView

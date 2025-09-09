@@ -18,18 +18,18 @@ export default function Model() {
         font="/fonts/neue-haas/NeueHaasDisplayMedium.ttf"
         color={"white"}
         letterSpacing={0.2}
-        position={[0, 0, -3]}
+        position={[0, 0, -50]}
       >
-        MESMERISE
+        We don't just run adds
       </Text> */}
       <mesh ref={mesh} {...nodes.Logo}>
         <MeshTransmissionMaterial
           backside
           backsideThickness={1}
           samples={30}
-          thickness={0.2}
+          thickness={0.05}
           anisotropicBlur={0.1}
-          iridescence={0.1}
+          iridescence={0.4}
           iridescenceIOR={1}
           //   iridescenceThicknessRange={[0, 1400]}
           clearcoat={1}

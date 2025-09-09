@@ -22,7 +22,7 @@ export default function ListIcons({ items = [] }) {
       variants={container}
       initial="hidden"
       animate={isInView ? "show" : "hidden"}
-      className="grid grid-cols-1 sm:grid-cols-1 gap-4"
+      className="grid grid-cols-1 sm:grid-cols-1 gap-2"
     >
       {items.map((item, index) => (
         <motion.li variants={child} key={index} className=" no-list">

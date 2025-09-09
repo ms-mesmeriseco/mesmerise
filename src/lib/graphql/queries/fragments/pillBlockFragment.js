@@ -2,7 +2,7 @@
 import { gql } from "@apollo/client";
 
 export const PILL_BLOCK_FRAGMENT = gql`
-  fragment PillBlockFragment on PillBlock {
+  fragment Pill on PillBlock {
     pillOne
     blockTitle
     pillOneContent {

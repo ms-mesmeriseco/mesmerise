@@ -43,7 +43,7 @@ export const processSteps = [
   {
     title: "3. Design",
     content:
-      "We’ll present a concept and open up the floor for conversation. Taking an iterative approach, we move through creation, presentation, and feedback to get to the core of your brand. This stage can be in depth, or quick and dirty. Typically, you’ll receive a style guide - the complexity of this depends on the complexity of your needs. We consider each element, from logo, to which fonts are ‘you’, and your brands chosen colour palette. This phase is usually constrained to a set number of feedback rounds.",
+      "We’ll present a concept and open up the floor for conversation. Taking an iterative approach, we move through creation, presentation, and feedback to get to the core of your brand. Typically, you’ll receive a style guide - the complexity of this depends on the complexity of your needs. We consider each element, from logo, to which fonts are ‘you’, and your brands chosen colour palette. This phase is usually constrained to a set number of feedback rounds.",
   },
   {
     title: "4. Delivery",

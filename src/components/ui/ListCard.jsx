@@ -14,7 +14,7 @@ export default function ListCard({ icon, children, outline, ...props }) {
         translateX: "2px",
       }}
       transition={{ damping: 20, duration: 0.1 }}
-      className={`flex gap-8 items-center bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-xs shadow ${boxStyle}`}
+      className={`flex gap-8 items-center bg-[var(--mesm-grey-xd)] border-1 border-[var(--mesm-grey-dk)] py-4 px-8 rounded-md shadow ${boxStyle}`}
       {...props}
     >
       {icon?.url && (

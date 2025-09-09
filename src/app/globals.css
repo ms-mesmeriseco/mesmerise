@@ -45,6 +45,7 @@ body.page-landing {
   --footer-txt: #000000;
   --accent: var(--mesm-yellow);
 }
+
 body.page-blog {
   h1 {
     font-size: 2.39rem;
@@ -72,7 +73,7 @@ body.page-about {
   --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
-  --accent: var(--mesm-blue);
+  --accent: var(--mesm-yellow);
 }
 :root {
   --foreground: #ffffff;
@@ -94,6 +95,7 @@ body.page-about {
   --mesm-red: hsl(13, 100%, 50%);
   --mesm-blue: #c1d2fc;
   --mesm-grey: #686767;
+  --dark-grey: rgb(66, 66, 66);
   --mesm-grey-dk: rgba(255, 255, 255, 0.1);
   --mesm-grey-xd: rgba(255, 255, 255, 0.05);
   --mesm-l-grey: #d4d4d4;
@@ -134,6 +136,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* padding: --padding; */
   font-size: 18px;
+  line-height: 32px;
   font-family: "Neue Haas";
   font-weight: 400;
 }
@@ -269,6 +272,7 @@ a button:hover {
   cursor: pointer;
 }
 .landing-title {
+  font-weight: 400;
   font-size: 6rem;
   line-height: 6.77rem;
 }

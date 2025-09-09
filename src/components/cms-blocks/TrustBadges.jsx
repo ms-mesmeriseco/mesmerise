@@ -35,8 +35,8 @@ export default function TrustBadges({ logos = [], scroll = true }) {
                 <Image
                   src={logo.url}
                   alt={logo.title || ""}
-                  width={96}
-                  height={96}
+                  width={64}
+                  height={64}
                   className="object-contain"
                 />
               </Link>

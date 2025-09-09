@@ -5,6 +5,7 @@ import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { AnimatePresence, motion } from "framer-motion";
+import InView from "@/hooks/InView";
 
 const TRANSITION_DURATION = 4200; // in ms
 
@@ -38,125 +39,127 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
   };
 
   return (
-    <section className="wrapper w-full">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          lazy="true"
-          className="relative w-full aspect-[16/9] overflow-hidden rounded-lg bg-black"
-        >
-          {/* Image or Video */}
-          {activeItem.mediaContent?.contentType?.startsWith("image/") ? (
-            <Image
-              src={activeItem.mediaContent.url}
-              alt={activeItem.labelText || "carousel image"}
-              fill
-              className="object-cover opacity-50 hover:opacity-80 duration-500"
-              onLoad={handleMediaLoad}
-            />
-          ) : (
-            <video
-              src={activeItem.mediaContent.url}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover opacity-50 hover:opacity-80 duration-500"
-              onLoadedData={handleMediaLoad}
-            />
-          )}
+    <InView>
+      <section className="wrapper w-full min-h-[80vh] justify-center">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            lazy="true"
+            className="relative w-full aspect-[16/9] overflow-hidden bg-black"
+          >
+            {/* Image or Video */}
+            {activeItem.mediaContent?.contentType?.startsWith("image/") ? (
+              <Image
+                src={activeItem.mediaContent.url}
+                alt={activeItem.labelText || "carousel image"}
+                fill
+                className="object-cover hover:opacity-50 opacity-90 duration-500"
+                onLoad={handleMediaLoad}
+              />
+            ) : (
+              <video
+                src={activeItem.mediaContent.url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover opacity-50 hover:opacity-80 duration-500"
+                onLoadedData={handleMediaLoad}
+              />
+            )}
 
-          {/* Overlay text */}
-          {activeItem.textContent?.json && (
-            <AnimatePresence mode="wait">
+            {/* Overlay text */}
+            {activeItem.textContent?.json && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.1 }}
+                  lazy="true"
+                  className="absolute top-1 left-1 text-white p-4 rounded-lg max-w-[50%] text-sm z-10"
+                >
+                  {documentToReactComponents(activeItem.textContent.json, {
+                    renderNode: {
+                      [BLOCKS.HEADING_3]: (_node, children) => (
+                        <h3 className="text-lg font-bold">{children}</h3>
+                      ),
+                      [BLOCKS.HEADING_4]: (_node, children) => (
+                        <h4 className="text-base font-medium">{children}</h4>
+                      ),
+                    },
+                  })}
+                </motion.div>
+              </AnimatePresence>
+            )}
+          </motion.div>
+        </AnimatePresence>
+        {/* Labels grid */}
+        <div
+          className="grid mt-4 gap-2 font-medium"
+          style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
+        >
+          <AnimatePresence mode="wait">
+            {items.map((item, idx) => (
               <motion.div
-                key={activeIndex}
+                key={idx}
+                className="relative flex flex-col items-start mr-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.1 }}
                 lazy="true"
-                className="absolute top-1 left-1 text-white p-4 rounded-lg max-w-[50%] text-sm z-10"
               >
-                {documentToReactComponents(activeItem.textContent.json, {
-                  renderNode: {
-                    [BLOCKS.HEADING_3]: (_node, children) => (
-                      <h3 className="text-lg font-bold">{children}</h3>
-                    ),
-                    [BLOCKS.HEADING_4]: (_node, children) => (
-                      <h4 className="text-base font-medium">{children}</h4>
-                    ),
-                  },
-                })}
+                <button
+                  onClick={() => {
+                    setActiveIndex(idx);
+                    setHasRendered(false);
+                  }}
+                  className={`text-left text-sm cursor-pointer text-[var(--mesm-l-grey)] py-3 rounded-full transition-colors w-full ${
+                    idx === activeIndex
+                      ? "text-foreground"
+                      : "hover:bg-foreground/10"
+                  }`}
+                >
+                  {item.labelText || `Slide ${idx + 1}`}
+                </button>
+
+                {/* Progress bar under active button */}
+                {idx === activeIndex && hasRendered && (
+                  <div className="absolute bottom-0 left-0 h-[0.1rem] bg-black w-full overflow-hidden">
+                    <div
+                      key={progressKey}
+                      className="h-full bg-[var(--mesm-yellow)] animate-progress"
+                      style={{ animationDuration: `${TRANSITION_DURATION}ms` }}
+                    />
+                  </div>
+                )}
               </motion.div>
-            </AnimatePresence>
-          )}
-        </motion.div>
-      </AnimatePresence>
-      {/* Labels grid */}
-      <div
-        className="grid mt-4 gap-2 font-medium"
-        style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
-      >
-        <AnimatePresence mode="wait">
-          {items.map((item, idx) => (
-            <motion.div
-              key={idx}
-              className="relative flex flex-col items-start mr-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              lazy="true"
-            >
-              <button
-                onClick={() => {
-                  setActiveIndex(idx);
-                  setHasRendered(false);
-                }}
-                className={`text-left text-sm cursor-pointer text-[var(--mesm-l-grey)] py-3 rounded-full transition-colors w-full ${
-                  idx === activeIndex
-                    ? "text-foreground"
-                    : "hover:bg-foreground/10"
-                }`}
-              >
-                {item.labelText || `Slide ${idx + 1}`}
-              </button>
+            ))}
+          </AnimatePresence>
+        </div>
 
-              {/* Progress bar under active button */}
-              {idx === activeIndex && hasRendered && (
-                <div className="absolute bottom-0 left-0 h-[0.1rem] bg-black w-full overflow-hidden">
-                  <div
-                    key={progressKey}
-                    className="h-full bg-[var(--mesm-yellow)] animate-progress"
-                    style={{ animationDuration: `${TRANSITION_DURATION}ms` }}
-                  />
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {/* Animations */}
-      <style jsx>{`
-        @keyframes progress {
-          from {
-            width: 0%;
+        {/* Animations */}
+        <style jsx>{`
+          @keyframes progress {
+            from {
+              width: 0%;
+            }
+            to {
+              width: 100%;
+            }
           }
-          to {
-            width: 100%;
+          .animate-progress {
+            animation-name: progress;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
           }
-        }
-        .animate-progress {
-          animation-name: progress;
-          animation-timing-function: linear;
-          animation-fill-mode: forwards;
-        }
-      `}</style>
-    </section>
+        `}</style>
+      </section>
+    </InView>
   );
 }

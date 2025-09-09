@@ -37,6 +37,11 @@ const rawQuery = `
         json
         }
         align
+        media {
+        url
+        contentType
+       
+        }
         trustCollection (limit:8) {
           items {
             url
@@ -51,10 +56,10 @@ const rawQuery = `
               ...IconRowFragment
             }
             ... on ListWithImageSwitch {
-              ...SwitchListDetails
+              ...Switch
             }
             ... on PillBlock {
-              ...PillBlockFragment
+              ...Pill
             }
             ... on TwoColumnBlockBlank {
               ...TwoColumn

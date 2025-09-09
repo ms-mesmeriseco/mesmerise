@@ -12,10 +12,11 @@ import useSectionMarker from "@/hooks/useSectionMarker";
 import SectionMarker from "@/components/home/SectionMarker";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import LoadingSplash from "@/components/home/LoadingSplash";
+import Scene from "@/components/three/Scene";
 
-const Scene = dynamic(() => import("@/components/three/Scene"), {
-  ssr: false,
-});
+// const Scene = dynamic(() => import("@/components/three/Scene"), {
+//   ssr: false,
+// });
 
 function usePageStageController(splashRef, section2Ref) {
   const splashInView = useInView(splashRef, { amount: 0.2 });

@@ -12,13 +12,13 @@ const characterAnimation = {
   visible: (i) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.09 },
+    transition: { delay: i * 0.035 },
   }),
 };
 
 function AnimatedText({ text = " ", gradient }) {
-  const safeText = typeof text === "string" ? text : "";
-  const words = safeText.split(" ");
+  const words = text.split(" ");
+
   return (
     <span
       className={
@@ -122,7 +122,7 @@ export default function HeroBanner({
 
   return (
     <InView>
-      <div className="relative h-[65vh] overflow-hidden flex items-center justify-left rounded-lg mx-[var(--global-margin-md)]">
+      <div className="relative h-[65vh] w-screen overflow-hidden flex flex-col items-center justify-center mx-[var(--global-margin-md)]">
         {heroMedia?.url &&
           (isVideo ? (
             <video
@@ -142,83 +142,66 @@ export default function HeroBanner({
           ))}
 
         <div
-          className={`wrapper relative z-10 text-[var(--foreground)] ${alignmentClasses} w-full sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]`}
+          className={`wrapper relative z-10 flex flex-col items-center text-[var(--foreground)] ${alignmentClasses} sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] sm:w-full`}
         >
-          <div className="sm:w-full">
-            <span>
-              <StaggeredWords
-                as="h1"
-                className="landing-title"
-                text={pageHeader}
-              />
+          <h1>
+            <AnimatedText text={pageHeader} gradient />
+            <br />
+            <AnimatedText text={pageHeaderLine2} />
+          </h1>
 
-              <StaggeredWords
-                as="h1"
-                className="landing-title"
-                text={pageHeaderLine2}
-              />
-            </span>
+          {/* ---------- Hero List ---------- */}
+          {!!listItems.length && (
+            <>
+              <br />
+              <div
+                className={[
+                  "list-none opacity-80",
 
-            {pageSubtitle && (
-              <>
-                <br />
-                <StaggeredWords
-                  as="p"
-                  className="p2 text-[var(--mesm-l-grey)] opacity-35"
-                  text={pageSubtitle}
-                />
-              </>
-            )}
-
-            {/* ---------- Hero List ---------- */}
-            {!!listItems.length && (
-              <>
-                <br />
-                <div
-                  className={[
-                    // remove default bullets and spacing
-                    "list-none opacity-80",
-                    // left = vertical stack; center = grid with max 3 per row
-                    isLeft
-                      ? "flex flex-col items-start gap-2"
-                      : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 justify-items-center",
-                    // text alignment
-                    isLeft ? "text-left" : "text-center",
-                  ].join(" ")}
-                  role="list"
-                >
-                  {listItems.map((item, i) => (
-                    <div
-                      key={`hero-li-${i}`}
-                      role="listitem"
-                      className={[
-                        "px-3 py-1 rounded-full border",
-                        "border-[var(--mesm-grey-dk)]/40 bg-black/20",
-                        "backdrop-blur-[1px]",
-                        "text-md leading-tight",
-                        isLeft ? "w-auto" : "w-full max-w-[22rem]",
-                      ].join(" ")}
-                    >
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-
-            {showCta && (
-              <>
-                <br />
-                <Button
-                  href={ctaUrl}
-                  extraClass="mt-4"
-                  variant="primary"
-                  size="large"
-                >
-                  Learn More
-                </Button>
-              </>
-            )}
+                  isLeft
+                    ? "flex flex-col items-start gap-1 justify-around"
+                    : "flex flex-col md:flex-row gap-1 items-center justify-around",
+                  // text alignment
+                  isLeft ? "text-left" : "text-center",
+                ].join(" ")}
+                role="list"
+              >
+                {listItems.map((item, i) => (
+                  <div
+                    key={`hero-li-${i}`}
+                    role="listitem"
+                    className={[
+                      "px-4 py-1 rounded-2xl border border-[var(--mesm-grey)] flex flex-row items-center  gap-2",
+                      "hover:border-[var(--foreground)] duration-200",
+                      "backdrop-blur-[1px]",
+                      "text-2xl leading-tight",
+                      isLeft ? "w-auto" : "w-auto",
+                    ].join(" ")}
+                  >
+                    <img
+                      width={24}
+                      height={24}
+                      // className="border-2 rounded-full border-[var(--mesm-blue)]"
+                      src="/icons/check_32dp_FFFFFF_FILL0_wght300_GRAD0_opsz40.png"
+                    />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          <div
+            className={heroAlignment ? "flex flex-row gap-4" : "flex-col gap6"}
+          >
+            <StaggeredWords as="p" className="p2 mt-6" text={pageSubtitle} />
+            <Button
+              href={ctaUrl}
+              extraClass="mt-4"
+              variant="primary"
+              size="x-large"
+            >
+              Learn More
+            </Button>
           </div>
         </div>
 
