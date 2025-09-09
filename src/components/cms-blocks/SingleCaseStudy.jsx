@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 
 export default function SingleCaseStudy({
@@ -59,48 +60,88 @@ export default function SingleCaseStudy({
       <div className="absolute top-4 right-4 flex flex-col items-end gap-2"></div>
 
       {/* Bottom Right: Collapsibles */}
-
-      <div className="absolute bottom-4 right-4 w-[320px] max-w-[90vw] text-xs flex flex-col gap-4">
+      <div className="absolute bottom-4 right-4 w-[320px] max-w-[90vw] text-xs flex flex-col">
         <h3 className="text-lg font-bold m-0">{projectTitle}</h3>
-        <span className="bg-[var(--mesm-blue)] text-[var(--background)] text-sm py-1 px-3 rounded-md w-fit">
+        <span className="bg-[var(--mesm-yellow)] text-[var(--background)] text-sm py-1 px-3 rounded-lg w-fit">
           {formattedDate} – {collaborationModel ? "Defined" : "Ongoing"}
         </span>
 
         {/* Only show if projectScope exists */}
-
         {projectScope?.json && (
           <>
             {/* Summary dropdown */}
-            <div className="">
+            <div className="border-b-1">
               <button
-                className="w-full text-left px-3 py-1 flex justify-between items-center cursor-pointer border-b-1"
-                onClick={() => setShowSummary(!showSummary)}
+                className="w-full text-left px-1 py-1 flex justify-between items-center cursor-pointer"
+                onClick={() => setShowSummary((s) => !s)}
+                aria-expanded={showSummary}
+                aria-controls="summary-panel"
               >
-                <h5 className="text-xs m-0">Summary</h5>
-                <h5>{showSummary ? "-" : "+"}</h5>
+                <span className="text-lg m-0">Summary</span>
+                <motion.span
+                  className="text-lg m-0 inline-block"
+                  animate={{ rotate: showSummary ? 45 : 0 }}
+                  transition={{ type: "tween", duration: 0.2 }}
+                >
+                  +
+                </motion.span>
               </button>
-              {showSummary && (
-                <div className="px-3 py-2">
-                  {renderRichTextWithBreaks(summary.json)}
-                </div>
-              )}
+
+              <AnimatePresence initial={false}>
+                {showSummary && (
+                  <motion.div
+                    id="summary-panel"
+                    key="summary"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.28, ease: "easeInOut" }}
+                    className="overflow-hidden px-3"
+                  >
+                    <div className="py-2">
+                      {renderRichTextWithBreaks(summary.json)}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Results dropdown */}
-            <div className="">
+            <div className=" border-b-1">
               <button
-                className="w-full text-left px-3 py-1 flex justify-between items-center cursor-pointer border-b-1"
-                onClick={() => setShowResults(!showResults)}
+                className="w-full text-left px-1 py-1 flex justify-between items-center cursor-pointer"
+                onClick={() => setShowResults((s) => !s)}
+                aria-expanded={showResults}
+                aria-controls="results-panel"
               >
-                <h5 className="text-xs m-0">Results</h5>
-                <h5>{showResults ? "-" : "+"}</h5>
+                <span className="text-lg m-0">Results</span>
+                <motion.span
+                  className="text-lg m-0 inline-block"
+                  animate={{ rotate: showResults ? 45 : 0 }}
+                  transition={{ type: "tween", duration: 0.2 }}
+                >
+                  +
+                </motion.span>
               </button>
-              {showResults && (
-                <div className="px-3 py-2">
-                  {timeFrame}
-                  {renderRichTextWithBreaks(results.json)}
-                </div>
-              )}
+
+              <AnimatePresence initial={false}>
+                {showResults && (
+                  <motion.div
+                    id="results-panel"
+                    key="results"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.28, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <div className="px-3 py-2">
+                      {timeFrame}
+                      {renderRichTextWithBreaks(results.json)}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </>
         )}

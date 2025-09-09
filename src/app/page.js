@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
+import dynamic from "next/dynamic";
 import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
 import BlogThreeColumn from "@/components/cms-blocks/BlogThreeColumn";
@@ -9,9 +10,13 @@ import CollabModel from "@/components/home/CollabModel";
 import ProjectGrid from "@/components/cms-blocks/ProjectGrid";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import SectionMarker from "@/components/home/SectionMarker";
-import Scene from "@/components/three/Scene";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+// import Scene from "@/components/three/Scene";
+
+const Scene = dynamic(() => import("@/components/three/Scene"), {
+  loading: () => <p>Loading...</p>,
+  ssr: false,
+});
 
 function usePageStageController(splashRef, section2Ref) {
   const splashInView = useInView(splashRef, { amount: 0.2 });
