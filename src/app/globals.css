@@ -43,7 +43,7 @@ body.page-landing {
   --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
-  --accent: var(--mesm-blue);
+  --accent: var(--mesm-yellow);
 }
 body.page-blog {
   h1 {

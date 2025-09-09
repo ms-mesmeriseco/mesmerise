@@ -33,6 +33,9 @@ const VARIANTS = {
   secondary:
     "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)] " +
     "hover:bg-[var(--foreground)] hover:text-[var(--background)]",
+  accent:
+    "bg-[var(--accent)] border-[var(--accent)] text-[var(--background)] " +
+    "hover:bg-transparent hover:text-[var(--accent)]",
 };
 
 export default function Button({

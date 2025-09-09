@@ -109,7 +109,7 @@ export default function Header() {
           <span className="justify-self-end">
             <Button
               size="small"
-              variant="secondary"
+              variant="accent"
               href="/connect"
               extraClass="shadow-xl"
             >
