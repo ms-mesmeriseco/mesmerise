@@ -72,7 +72,7 @@ export default function Header() {
         <video
           src="/assets/glassBSDF_transparent-320px.mp4"
           className={[
-            "h-[4rem] block transition-opacity duration-500",
+            "h-[3rem] block transition-opacity duration-500",
             sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
           ].join(" ")}
           aria-hidden={sceneInView}
