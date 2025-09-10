@@ -191,7 +191,11 @@ export default function HeroBanner({
             </>
           )}
           <div
-            className={heroAlignment ? "flex flex-row gap-4" : "flex-col gap6"}
+            className={
+              heroAlignment
+                ? "flex md:flex-row sm:flex-col gap-4"
+                : "flex-col gap6"
+            }
           >
             <StaggeredWords as="p" className="p2 mt-6" text={pageSubtitle} />
             <Button

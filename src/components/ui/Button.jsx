@@ -14,8 +14,8 @@ const SIZE_MAP = {
     radius: "md:rounded-xl rounded-2xl",
     font: "md:text-xl text-lg",
     px: 16, // px-3
-    py: 5, // py-2
-    hoverDeltaX: 6,
+    py: 4, // py-2
+    hoverDeltaX: 0,
   },
   "x-large": {
     radius: "rounded-2xl",
@@ -34,8 +34,8 @@ const VARIANTS = {
     "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)] " +
     "hover:bg-[var(--foreground)] hover:text-[var(--background)]",
   accent:
-    "bg-[var(--accent)] border-[var(--accent)] text-[var(--background)] " +
-    "hover:bg-transparent hover:text-[var(--accent)]",
+    "bg-[var(--accent)]/90 border-[var(--foreground)]/40 text-[var(--background)]/90 " +
+    "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
 };
 
 export default function Button({

@@ -10,69 +10,69 @@ export default function Header() {
   const headerRef = useRef(null);
   const [sceneInView, setSceneInView] = useState(false);
 
-  const isContact = pathname === "/connect";
+  const isConnect = pathname === "/connect";
   const blackLogo = "/WordMark_Spaced-BLACK.png";
 
-  // Track the home scene's visibility (if present)
+  // Observe the home scene
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const el = document.querySelector("#home-scene");
-    // If there is no scene on this page, ensure logo video shows
     if (!el) {
+      // On non-home pages (or if the section isn't mounted), show the video
       setSceneInView(false);
       return;
     }
 
+    // Account for fixed header height so intersection is correct
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(
+      "--header-height"
+    );
+    const headerH = parseInt(raw) || 0;
+
     const io = new IntersectionObserver(
       ([entry]) => {
-        // Any intersection hides the header video
+        // Any overlap hides the video (use threshold: [1] to hide only when fully visible)
         setSceneInView(entry.isIntersecting && entry.intersectionRatio > 0);
       },
-      {
-        root: null,
-        // threshold: [0]  // any intersection (default behavior)
-        // If you want to hide ONLY when fully visible and show as soon as it’s < 100%:
-        // threshold: [1.0]
-        threshold: [0],
-      }
+      { root: null, rootMargin: `-${headerH}px 0px 0px 0px`, threshold: [0] }
     );
 
     io.observe(el);
     return () => io.disconnect();
   }, [pathname]);
 
-  // Expose header height (if you rely on it for layout offset)
+  // Keep --header-height up to date
   useLayoutEffect(() => {
     if (headerRef.current) {
-      const h = headerRef.current.offsetHeight;
-      document.documentElement.style.setProperty("--header-height", `${h}px`);
+      document.documentElement.style.setProperty(
+        "--header-height",
+        `${headerRef.current.offsetHeight}px`
+      );
     }
   }, []);
 
-  // Optional: provide default top padding if you haven't elsewhere
-  useEffect(() => {
-    const root = document.documentElement;
-    const prev = root.style.paddingTop;
-    if (!prev) root.style.paddingTop = "var(--header-height)";
-    return () => {
-      root.style.paddingTop = prev;
-    };
-  }, []);
+  // (Optional) global top padding if you rely on it
+  // useEffect(() => {
+  //   const root = document.documentElement;
+  //   const prev = root.style.paddingTop;
+  //   if (!prev) root.style.paddingTop = "var(--header-height)";
+  //   return () => {
+  //     root.style.paddingTop = prev;
+  //   };
+  // }, []);
 
   return (
     <header
       ref={headerRef}
-      className="site-header fixed top-0 h-fit left-0 right-0 z-300 w-full box-border
-                 grid grid-cols-[auto_1fr_auto] items-center md:py-4 md:px-8 px-4 py-2
-                 pointer-events-auto bg-black shadow-lg/20"
+      className="site-header h-[5rem] fixed top-0 left-0 right-0 z-300 w-full box-border
+                 grid grid-cols-[auto_1fr_auto] items-center py-4 px-8 bg-black"
     >
-      {/* Left: Logo */}
       <Link href="/" aria-label="Go to homepage" className="justify-self-start">
         <video
           src="/assets/glassBSDF_transparent-320px.mp4"
           className={[
-            "h-[3rem] block transition-opacity duration-500",
+            "w-[6rem] block transition-opacity duration-500",
             sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
           ].join(" ")}
           aria-hidden={sceneInView}
@@ -84,12 +84,10 @@ export default function Header() {
         />
       </Link>
 
-      {/* Middle: spacer */}
       <span />
 
-      {/* Right: Connect button (hide on /connect if you want) */}
       <span className="justify-self-end">
-        {isContact ? null : (
+        {!isConnect && (
           <Button
             size="large"
             variant="accent"

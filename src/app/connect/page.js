@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import StaggeredWords from "@/hooks/StaggeredWords";
+import CopyEmailButton from "@/components/ui/CopyEmailButton";
 
 const SERVICE_OPTIONS = [
   "Branding",
@@ -31,8 +33,8 @@ function Chip({ label, selected, onClick }) {
         "px-3 py-0 rounded-xl border-1 transition-colors",
         "border-[var(--mesm-grey-dk)] cursor-pointer",
         selected
-          ? "bg-[var(--mesm-blue)] text-[var(--foreground)] border-transparent"
-          : "bg-[var(--foreground)] text-[var(--background)] hover:bg-transparent hover:text-[var(--foreground)] hover:border-[var(--foreground)]",
+          ? "bg-[var(--mesm-blue)]  text-[var(--background)] border-transparent"
+          : "bg-[var(--foreground)] text-[var(--background)] hover:bg-transparent hover:text-[var(--mesm-grey)] hover:border-[var(--mesm-grey-dk)]",
       ].join(" ")}
     >
       {label}
@@ -111,7 +113,7 @@ export default function Connect() {
       <div className="flex w-full justify-between gap-[var(--global-margin-sm)]">
         {/* Form */}
         <div className="w-full md:w-1/2 p-[var(--global-margin-xs)]">
-          <h3 className="text-xl mb-4">Send us a love letter</h3>
+          <StaggeredWords as="h3" text="Send us a love letter" />
 
           <form className="space-y-6 w-full" onSubmit={onSubmit} noValidate>
             {/* Honeypot (hidden) */}
@@ -209,9 +211,9 @@ export default function Connect() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full bg-none rounded-md border-1 border-[var(--foreground)] duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] py-2 font-normal disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-none rounded-2xl border-1 border-[var(--foreground)] duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] py-2 font-normal disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <p>{submitting ? "Sending..." : "Submit"}</p>
+              <p className="p2">{submitting ? "Sending..." : "Submit"}</p>
             </button>
 
             {status && (
@@ -232,14 +234,19 @@ export default function Connect() {
       {/* Bottom Row (unchanged) */}
       <div className="flex h-[40vh] gap-[var(--global-margin-sm)]">
         <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
-          <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
-            Call
-          </button>
+          <a
+            href="tel:+61477210477"
+            className="w-full h-full text-4xl font-normal text-left flex-start flex"
+          >
+            <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
+              Call
+              <br />
+              +614 77 210 477
+            </button>
+          </a>
         </div>
         <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
-          <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
-            Email
-          </button>
+          <CopyEmailButton email="hello@mesmeriseco.com" label="Email" />
         </div>
       </div>
     </div>

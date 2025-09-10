@@ -38,7 +38,7 @@ export default function ToggleSwitch({
             onClick={() => onChange(option)}
             aria-pressed={isActive}
             className={[
-              "flex-1 px-4 py-1 rounded-xl transition-colors cursor-pointer focus:outline-none border-1 border-transparent hover:border-[var(--mesm-blue)]",
+              "flex-1 px-4 py-1 rounded-xl transition-colors cursor-pointer focus:outline-none border-1 border-transparent hover:border-[var(--mesm-grey)]",
               isActive ? selectedTextClass : "text-[var(--foreground)]",
             ].join(" ")}
             style={isActive ? { backgroundColor: selectedBg } : undefined}

@@ -1,18 +1,28 @@
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, Text, MeshTransmissionMaterial } from "@react-three/drei";
 
 export default function Model() {
   const { nodes, materials } = useGLTF("/models/MESM_logo.glb");
-  const { viewport } = useThree();
+  const { viewport, size } = useThree();
   const mesh = useRef();
 
   useFrame(() => {
     mesh.current.rotation.y += 0.003;
   });
 
+  const scale = useMemo(() => {
+    const isMobile = size.width < 600;
+    const isTable = size.width < 1080;
+    return isMobile
+      ? viewport.width / 3
+      : isTable
+      ? viewport.width / 6
+      : viewport.width / 8;
+  }, [size.width, viewport.width]);
+
   return (
-    <group scale={viewport.width / 8}>
+    <group scale={scale}>
       {/* <Text
         fontSize={1.2}
         font="/fonts/neue-haas/NeueHaasDisplayMedium.ttf"

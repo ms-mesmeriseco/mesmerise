@@ -9,7 +9,7 @@ export default function Scene() {
     <Canvas style={{ backgroundColor: "black" }}>
       {/* <OrbitControls enableDamping /> */}
 
-      <directionalLight intensity={0.25} position={[0, 3, 2]} />
+      <directionalLight intensity={0.25} position={[0, 1, 2]} />
       <Environment files="/hdr/photo-studio_4K.exr" />
 
       <Model />

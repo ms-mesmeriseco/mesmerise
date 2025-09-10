@@ -81,7 +81,7 @@ export default function MenuToggle({ base = "/" }) {
           value={value}
           onChange={handleChange}
           aria-label="Navigate primary sections"
-          selectedBg="var(--mesm-blue)"
+          selectedBg="var(--foreground)"
           textSize="xl"
         />
       </motion.div>
