@@ -11,7 +11,7 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
 
   return (
     <InView>
-      <section className="wrapper flex flex-col gap-[var(--global-margin-lg)] min-h-[80vh] justify-center">
+      <section className="flex flex-col gap-[var(--global-margin-lg)] min-h-[80vh] justify-center">
         {blockTitle && (
           <h2 className="text-2xl font-semibold text-center mb-4">
             {blockTitle}
