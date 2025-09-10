@@ -24,7 +24,7 @@ export default async function ProjectPage({ params }) {
   return (
     <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-lg)]">
       {/* --- HERO ROW --- */}
-      <div className="col-span-12 lg:col-span-8 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] h-screen">
+      <div className="col-span-12 md:col-span-8 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[80vh]">
         <Image
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
@@ -34,7 +34,7 @@ export default async function ProjectPage({ params }) {
         />
       </div>
 
-      <div className="col-span-12 lg:col-span-4 border-1 border-[var(--mesm-grey-dk)] p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] h-screen">
+      <div className="col-span-12 lg:col-span-4 border-1 border-[var(--mesm-grey-dk)] p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] h-[80vh]">
         <h1 className="font-medium">{page.projectTitle}</h1>
         <h6 className="opacity-40">{formattedDate}</h6>
         <h6 className="opacity-40">{page.collaborationModel || ""}</h6>
@@ -43,7 +43,7 @@ export default async function ProjectPage({ params }) {
           <>
             <StaggeredWords
               as="h6"
-              text="PROJECT SCOPE"
+              text="Project scope"
               className="opacity-60"
             />
             {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">

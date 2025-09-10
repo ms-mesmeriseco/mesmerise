@@ -18,9 +18,9 @@ const SIZE_MAP = {
     hoverDeltaX: 0,
   },
   "x-large": {
-    radius: "rounded-2xl",
-    font: "md:text-2xl text-lg",
-    px: 20, // px-6
+    radius: "md:rounded-2xl rounded-5xl",
+    font: "md:text-2xl text-xl",
+    px: 32, // px-6
     py: 7, // py-2
     hoverDeltaX: 8,
   },
@@ -34,7 +34,7 @@ const VARIANTS = {
     "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)] " +
     "hover:bg-[var(--foreground)] hover:text-[var(--background)]",
   accent:
-    "bg-[var(--accent)]/90 border-[var(--foreground)]/40 text-[var(--background)]/90 " +
+    "bg-[var(--accent)]/98 border-[var(--foreground)]/40 text-[var(--background)]/90 " +
     "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
 };
 

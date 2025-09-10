@@ -44,7 +44,7 @@ function Splash({ innerRef }) {
       ref={innerRef}
       id="home-scene"
       data-marker="HELLO"
-      className="m-0 p-0 h-screen w-[100%]"
+      className="m-0 p-0 md:h-screen h-[80vh] w-[100%]"
     >
       {/* <LoadingSplash /> */}
 

@@ -4,17 +4,14 @@ import { useRouter, usePathname } from "next/navigation";
 import ToggleSwitch from "./ToggleSwitch";
 import { motion } from "framer-motion";
 
-// Labels shown in the toggle
 const OPTIONS = ["About", "Services", "Work"];
 
-// Destination paths for each label
 const PATHS = {
   About: "/about",
   Services: "/services",
   Work: "/work",
 };
 
-// URL segment aliases that should map to each label
 const ALIASES = {
   About: ["about", "company"],
   Services: ["services", "service"],
@@ -45,7 +42,7 @@ function labelFromPath(pathname, baseNorm) {
   const rest = stripBase(pathname, baseNorm);
   const seg = firstSegment(rest).toLowerCase();
   const hit = OPTIONS.find((label) => ALIASES[label].includes(seg));
-  return hit || ""; // default section if unknown
+  return hit || "";
 }
 
 function joinPaths(baseNorm, path) {
@@ -65,8 +62,25 @@ export default function MenuToggle({ base = "/" }) {
     if (href !== pathname) router.push(href);
   };
 
+  // Only show on these pages (on mobile)
+  const SHOW_ON = [
+    "/",
+    "/about",
+    "/connect",
+    "/services",
+    "/collaboration/defined",
+    "/collaboration/continuous",
+  ];
+  const shouldShowOnMobile =
+    SHOW_ON.includes(pathname) || pathname.startsWith("/services/");
+
   return (
-    <div className="menu-toggle flex justify-center ">
+    <div
+      className={[
+        "menu-toggle flex justify-center",
+        shouldShowOnMobile ? "flex" : "hidden md:flex",
+      ].join(" ")}
+    >
       <motion.div
         initial={{ opacity: 0, y: "20px" }}
         animate={{

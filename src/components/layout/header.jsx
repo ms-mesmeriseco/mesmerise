@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/Button";
@@ -8,51 +8,41 @@ import Button from "../ui/Button";
 export default function Header() {
   const pathname = usePathname();
   const headerRef = useRef(null);
-  const [sceneInView, setSceneInView] = useState(false);
 
-  const isConnect = pathname === "/connect";
-  const blackLogo = "/WordMark_Spaced-BLACK.png";
+  // Route checks
+  const isHome = pathname === "/";
+  const isAbout = pathname === "/about" || pathname.startsWith("/about/");
+  const isConnect = pathname === "/connect" || pathname.startsWith("/connect/");
+  const isServices =
+    pathname === "/services" || pathname.startsWith("/services/");
+  const isCollab =
+    pathname === "/collaboration" || pathname.startsWith("/collaboration/");
+  const showMobileStickyCTA = !(
+    isHome ||
+    isAbout ||
+    isConnect ||
+    isServices ||
+    isCollab
+  ); // 👈 show on all other pages
+  const headerCtaClass = !showMobileStickyCTA
+    ? "inline-flex"
+    : "hidden md:inline-flex";
 
-  // Observe the home scene
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  // Logo colour: black on /connect, white elsewhere (your existing rule)
+  const isContact = isConnect;
+  const logo = isContact
+    ? "/WordMark_Spaced-BLACK.png"
+    : "/WordMark_Spaced-WHITE.png";
 
-    const el = document.querySelector("#home-scene");
-    if (!el) {
-      // On non-home pages (or if the section isn't mounted), show the video
-      setSceneInView(false);
-      return;
-    }
-
-    // Account for fixed header height so intersection is correct
-    const raw = getComputedStyle(document.documentElement).getPropertyValue(
-      "--header-height"
-    );
-    const headerH = parseInt(raw) || 0;
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        // Any overlap hides the video (use threshold: [1] to hide only when fully visible)
-        setSceneInView(entry.isIntersecting && entry.intersectionRatio > 0);
-      },
-      { root: null, rootMargin: `-${headerH}px 0px 0px 0px`, threshold: [0] }
-    );
-
-    io.observe(el);
-    return () => io.disconnect();
-  }, [pathname]);
-
-  // Keep --header-height up to date
+  // Expose header height as a CSS var so the page can offset content if needed
   useLayoutEffect(() => {
     if (headerRef.current) {
-      document.documentElement.style.setProperty(
-        "--header-height",
-        `${headerRef.current.offsetHeight}px`
-      );
+      const h = headerRef.current.offsetHeight;
+      document.documentElement.style.setProperty("--header-height", `${h}px`);
     }
   }, []);
 
-  // (Optional) global top padding if you rely on it
+  // Optional: apply top padding globally if you don't handle it elsewhere
   // useEffect(() => {
   //   const root = document.documentElement;
   //   const prev = root.style.paddingTop;
@@ -63,41 +53,68 @@ export default function Header() {
   // }, []);
 
   return (
-    <header
-      ref={headerRef}
-      className="site-header h-[5rem] fixed top-0 left-0 right-0 z-300 w-full box-border
-                 grid grid-cols-[auto_1fr_auto] items-center py-4 px-8 bg-black"
-    >
-      <Link href="/" aria-label="Go to homepage" className="justify-self-start">
-        <video
-          src="/assets/glassBSDF_transparent-320px.mp4"
-          className={[
-            "w-[6rem] block transition-opacity duration-500",
-            sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
-          ].join(" ")}
-          aria-hidden={sceneInView}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
-      </Link>
+    <>
+      <header
+        ref={headerRef}
+        className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
+                   grid grid-cols-[auto_1fr_auto] items-center py-4 px-8
+                   pointer-events-auto bg-black"
+      >
+        {/* Left: Logo (video on non-connect pages, static black on connect) */}
+        <Link
+          href="/"
+          aria-label="Go to homepage"
+          className="justify-self-start"
+        >
+          <video
+            src="/assets/glassBSDF_transparent-320px.mp4"
+            className="md:h-[3rem] h-[3rem] block"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+        </Link>
 
-      <span />
+        {/* Middle: spacer */}
+        <span />
 
-      <span className="justify-self-end">
-        {!isConnect && (
-          <Button
-            size="large"
-            variant="accent"
-            href="/connect"
-            extraClass="shadow-xl"
+        {/* Right: Connect button — visible on desktop/tablet, hidden on mobile */}
+        <span className="justify-self-end">
+          {!isConnect && (
+            <span className={headerCtaClass}>
+              <Button
+                size="large"
+                variant="accent"
+                href="/connect"
+                extraClass="shadow-xl"
+              >
+                Connect
+              </Button>
+            </span>
+          )}
+        </span>
+      </header>
+
+      {/* Mobile sticky CTA (full-width, bottom). Hidden on /, /about, /connect */}
+      {showMobileStickyCTA && (
+        <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden pb-2 px-2">
+          <div
+            className="px-4 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
+                          "
           >
-            Connect
-          </Button>
-        )}
-      </span>
-    </header>
+            <Button
+              size="x-large"
+              variant="accent"
+              href="/connect"
+              extraClass="w-full justify-center text-center text-lg shadow-lg shadow-white/30"
+            >
+              Connect +614 77 210 477
+            </Button>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

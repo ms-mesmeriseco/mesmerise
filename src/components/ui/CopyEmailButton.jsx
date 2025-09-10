@@ -48,7 +48,7 @@ function CopyEmailButton({
       <button
         onClick={handleClick}
         className={[
-          "w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex",
+          "w-full h-full md:text-4xl text-2xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex",
           className,
         ].join(" ")}
         aria-label={`Copy ${email} to clipboard`}

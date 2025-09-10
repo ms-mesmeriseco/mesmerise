@@ -232,13 +232,13 @@ export default function Connect() {
       </div>
 
       {/* Bottom Row (unchanged) */}
-      <div className="flex h-[40vh] gap-[var(--global-margin-sm)]">
+      <div className="flex flex-col md:flex-row md:h-[40vh] h-[60vh] gap-[var(--global-margin-xs)]">
         <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
           <a
             href="tel:+61477210477"
-            className="w-full h-full text-4xl font-normal text-left flex-start flex"
+            className="w-full h-full  font-normal text-left flex-start flex"
           >
-            <button className="w-full h-full text-4xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
+            <button className="w-full h-full md:text-4xl text-2xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
               Call
               <br />
               +614 77 210 477
