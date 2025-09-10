@@ -50,7 +50,7 @@ export default function Connect() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen gap-[8rem] p-[var(--global-margin-lg)]">
+    <div className="flex flex-col min-h-screen gap-[8rem] p-[var(--global-margin-md)]">
       <SectionMarker label={marker} />
       <div className="text-center py-24">
         <StaticSingleColumn

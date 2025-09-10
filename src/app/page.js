@@ -13,6 +13,7 @@ import SectionMarker from "@/components/home/SectionMarker";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import LoadingSplash from "@/components/home/LoadingSplash";
 import Scene from "@/components/three/Scene";
+import ProjectRail from "@/components/cms-blocks/ProjectRail";
 
 // const Scene = dynamic(() => import("@/components/three/Scene"), {
 //   ssr: false,
@@ -60,9 +61,9 @@ function Statement({ innerRef }) {
     <section
       ref={innerRef}
       data-marker="WHAT WE DO"
-      className="min-h-screen flex items-center justify-center px-6 text-white"
+      className="min-h-[70vh] flex items-center justify-center text-white"
     >
-      <div className="max-w-[1200px] text-center">
+      <div className="max-w-[1200px]">
         <InView>
           <StaggeredWords
             as="h1"
@@ -82,9 +83,9 @@ function SecondaryStatement() {
   return (
     <section
       data-marker="WHAT WE BRING"
-      className="min-h-[70vh] flex items-center justify-center px-6 text-white"
+      className="min-h-[70vh] flex items-center justify-center text-white"
     >
-      <div className="max-w-[1200px] text-center text-balance">
+      <div className="max-w-[1200px] text-left text-balance">
         <StaggeredWords
           as="p"
           text="Bridging the gap between aesthetic solutions and undeniable data."
@@ -103,7 +104,7 @@ function ProjectsRow() {
       data-marker="How it looks"
       className="relative py-12 md:py-16 text-white"
     >
-      <ProjectGrid />
+      <ProjectRail tag="highlight" />
     </section>
   );
 }
@@ -135,7 +136,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-white transition-colors duration-700 px-8",
+        "relative min-h-screen text-white transition-colors duration-700 p-[var(--global-margin-md)]",
         dark ? "bg-black" : "bg-black",
       ].join(" ")}
     >
@@ -149,7 +150,7 @@ export default function HomePage() {
         <ProjectsRow />
       </InView>
       <SecondaryStatement />
-      <InView>
+      <InView once={false}>
         <CollabModel />
       </InView>
       <ServicesSection />

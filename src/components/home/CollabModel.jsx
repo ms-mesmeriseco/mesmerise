@@ -20,8 +20,8 @@ export default function CollabModel() {
     <section data-marker="how we work" className="py-24 flex flex-col">
       <h6>Collaboration Models</h6>
       {/* <PageTitleMedium text="Collaboration Models" center /> */}
-      <br />
-      <div className="flex flex-1 flex-col md:flex-row justify-center items-stretch gap-[var(--global-margin-xs)]">
+
+      <div className="flex flex-1 flex-col md:flex-row justify-center items-stretch gap-[var(--global-margin-xs)]  border-t border-b border-[var(--mesm-grey)] py-6">
         {offerings.map((pkg) => (
           <div
             key={pkg.title}

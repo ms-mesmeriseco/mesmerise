@@ -21,7 +21,7 @@ export default function ApproachSection() {
           </p>
         </div>
       </div>
-      <div className="flex flex-col justify-center gap-6 p-[var(--global-margin-lg)]">
+      <div className="flex flex-col justify-center gap-6 p-[var(--global-margin-md)]">
         {" "}
         <div className="flex flex-col gap-6 bg-yellow-300 p-6 rounded-md h-full"></div>
       </div>
