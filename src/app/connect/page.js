@@ -163,7 +163,7 @@ export default function Connect() {
             {/* Services Multi-Select */}
             <fieldset className="space-y-3">
               <legend className="block text-md tracking-wide">
-                How can we help you?
+                What are you interested in?
               </legend>
               <div className="flex flex-wrap gap-1">
                 {SERVICE_OPTIONS.map((s) => (
@@ -180,7 +180,7 @@ export default function Connect() {
             {/* Budget Multi-Select */}
             <fieldset className="space-y-3">
               <legend className="block text-md tracking-wide">
-                What's your budget?
+                Do you have a budget?
               </legend>
               <div className="flex flex-wrap gap-1">
                 {BUDGET_OPTIONS.map((b) => (
