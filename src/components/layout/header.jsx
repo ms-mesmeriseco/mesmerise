@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/Button";
@@ -8,6 +8,7 @@ import Button from "../ui/Button";
 export default function Header() {
   const pathname = usePathname();
   const headerRef = useRef(null);
+  const [sceneInView, setSceneInView] = useState(false);
 
   // Route checks
   const isHome = pathname === "/";
@@ -42,6 +43,35 @@ export default function Header() {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const el = document.querySelector("#home-scene");
+    if (!el) {
+      setSceneInView(false);
+      return;
+    }
+
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(
+      "--header-height"
+    );
+    const headerH = parseInt(raw) || 0;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        // Any overlap hides the video (use threshold: [1] to hide only when fully visible)
+        setSceneInView(entry.isIntersecting && entry.intersectionRatio > 0);
+      },
+      {
+        root: null,
+        rootMargin: `-${headerH}px 0px 0px 0px`,
+        threshold: [0],
+      }
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, [pathname]);
   // Optional: apply top padding globally if you don't handle it elsewhere
   // useEffect(() => {
   //   const root = document.documentElement;
@@ -68,12 +98,17 @@ export default function Header() {
         >
           <video
             src="/assets/glassBSDF_transparent-320px.mp4"
-            className="md:h-[3rem] h-[3rem] block"
+            className={[
+              "md:h-[3rem] h-[3rem] block transition-opacity duration-100",
+              sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
+            ].join(" ")}
             autoPlay
             muted
             loop
+            reversed
             playsInline
             preload="auto"
+            aria-hidden={sceneInView}
           />
         </Link>
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useInView, motion } from "framer-motion";
-import dynamic from "next/dynamic";
+
 import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
 import BlogThreeColumn from "@/components/cms-blocks/BlogThreeColumn";
@@ -40,16 +40,18 @@ function usePageStageController(splashRef, section2Ref) {
 
 function Splash({ innerRef }) {
   return (
-    <section
-      ref={innerRef}
-      id="home-scene"
-      data-marker="HELLO"
-      className="m-0 p-0 md:h-screen h-[80vh] w-[100%]"
-    >
-      {/* <LoadingSplash /> */}
+    <InView once={false}>
+      <section
+        ref={innerRef}
+        id="home-scene"
+        data-marker="HELLO"
+        className="m-0 p-0 md:h-screen h-[80vh] w-[100%]"
+      >
+        {/* <LoadingSplash /> */}
 
-      <Scene />
-    </section>
+        <Scene />
+      </section>
+    </InView>
   );
 }
 
