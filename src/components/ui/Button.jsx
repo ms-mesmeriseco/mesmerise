@@ -11,15 +11,15 @@ const SIZE_MAP = {
     hoverDeltaX: 4,
   },
   large: {
-    radius: "rounded-xl",
-    font: "text-xl",
+    radius: "md:rounded-xl rounded-2xl",
+    font: "md:text-xl text-lg",
     px: 16, // px-3
     py: 5, // py-2
     hoverDeltaX: 6,
   },
   "x-large": {
     radius: "rounded-2xl",
-    font: "text-2xl",
+    font: "md:text-2xl text-lg",
     px: 20, // px-6
     py: 7, // py-2
     hoverDeltaX: 8,

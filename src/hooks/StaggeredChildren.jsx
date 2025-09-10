@@ -11,7 +11,7 @@ export default function StaggeredChildren({
   baseDelay = 0.5,
   perItem = 0.02,
   duration = 0.15,
-  once = true,
+  once = false,
   margin = "-10% 0px",
   inline = false,
   y = "0.1em",

@@ -38,7 +38,9 @@
 
 body.page-home,
 body.page-blog,
-body.page-landing {
+body.page-landing,
+body.page-connect,
+body.page-about {
   --background: #000000;
   --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
@@ -60,21 +62,21 @@ body.page-blog {
   }
 }
 
-body.page-connect {
+/* body.page-connect {
   --background: var(--mesm-yellow);
   --foreground: #000000;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
   --accent: var(--mesm-red);
-}
+} */
 
-body.page-about {
+/* body.page-about {
   --background: var(--mesm-red);
   --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
   --accent: var(--mesm-yellow);
-}
+} */
 :root {
   --foreground: #ffffff;
   --background: #000000;

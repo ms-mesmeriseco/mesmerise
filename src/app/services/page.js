@@ -62,6 +62,7 @@ export default function Connect() {
             with intent."
               className="page-title-large text-2xl md:text-4xl leading-tight"
               center
+              once={false}
             />,
           ]}
         />

@@ -49,7 +49,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             lazy="true"
-            className="relative w-full aspect-[16/9] overflow-hidden bg-black"
+            className="relative w-full md:aspect-[16/9] aspect-[5/6] overflow-hidden bg-black"
           >
             {/* Image or Video */}
             {activeItem.mediaContent?.contentType?.startsWith("image/") ? (
@@ -57,7 +57,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 src={activeItem.mediaContent.url}
                 alt={activeItem.labelText || "carousel image"}
                 fill
-                className="object-cover hover:opacity-50 opacity-90 duration-500"
+                className="object-cover hover:opacity-50 md:opacity-90 opacity-50 duration-500"
                 onLoad={handleMediaLoad}
               />
             ) : (
@@ -67,7 +67,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 muted
                 loop
                 playsInline
-                className="w-full h-full object-cover opacity-50 hover:opacity-80 duration-500"
+                className="w-full h-full object-cover hover:opacity-50 md:opacity-90 opacity-50 duration-500"
                 onLoadedData={handleMediaLoad}
               />
             )}
@@ -82,7 +82,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.1 }}
                   lazy="true"
-                  className="absolute top-1 left-1 text-white p-4 rounded-lg max-w-[50%] text-sm z-10"
+                  className="absolute top-1 left-1 text-white md:p-4 p-2 rounded-lg md:max-w-[50%] max-w-[100%] text-sm z-10"
                 >
                   {documentToReactComponents(activeItem.textContent.json, {
                     renderNode: {

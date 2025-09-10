@@ -14,14 +14,14 @@ export default function SwitchListAccordion({ items }) {
         <video
           src={media.url}
           controls
-          className="w-full h-full object-cover rounded-xl"
+          className="w-full h-full object-cover rounded-xl md:aspect-[9/16] aspect-[6/4]"
           autoPlay
           muted
           loop
           style={{
             width: "auto",
             maxHeight: "80vh",
-            aspectRatio: "9/16",
+
             pointerEvents: "none",
           }}
           loading="lazy"
@@ -32,8 +32,8 @@ export default function SwitchListAccordion({ items }) {
       <img
         src={media.url}
         alt={media.title || ""}
-        style={{ width: "auto", maxHeight: "80vh", aspectRatio: "9/16" }}
-        className="w-full h-full object-cover rounded-xl"
+        style={{ width: "auto", maxHeight: "80vh" }}
+        className="w-full h-full object-cover rounded-xl md:aspect-[9/16] aspect-[6/4]"
         loading="lazy"
       />
     );
@@ -108,7 +108,7 @@ export default function SwitchListAccordion({ items }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.1 }}
-                className="aspect-[9/16] h-[80vh] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] transition duration-200 ease-in-out flex items-center justify-center"
+                className=" md:aspect-[9/16] aspect-[6/4] h-[80vh] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] transition duration-200 ease-in-out flex items-center justify-center"
               >
                 {renderMedia(items[activeIndex].listMedia)}
               </motion.div>
@@ -166,7 +166,7 @@ export default function SwitchListAccordion({ items }) {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.98 }}
                     transition={{ duration: 0.2 }}
-                    className="aspect-[9/16] h-[60vh] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] mt-4 flex items-center justify-center"
+                    className=" h-[60vh] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] mt-4 flex items-center justify-center"
                   >
                     {renderMedia(item.listMedia)}
                   </motion.div>

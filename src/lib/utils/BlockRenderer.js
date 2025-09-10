@@ -22,7 +22,7 @@ export default function BlockRenderer({ block, center }) {
         <img
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className={`w-full h-auto rounded-md shadow  aspect-[6/4]`}
+          className={`w-full h-auto shadow  aspect-[6/4]`}
         />
       );
     case "Video":
@@ -30,7 +30,7 @@ export default function BlockRenderer({ block, center }) {
         <video
           src={block.videoContent?.url}
           controls
-          className="w-1/2 h-auto rounded-lg shadow"
+          className="w-1/2 h-auto shadow"
         >
           Your browser does not support the video tag.
         </video>

@@ -12,11 +12,12 @@ export default function StaggeredWords({
   glass = false,
   small,
   margin = "-10% 0px",
+  once = true,
 }) {
   const safeText = typeof text === "string" ? text : "";
   const words = safeText.split(" ");
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin });
+  const inView = useInView(ref, { once, margin });
 
   // Per-word class (for gradient)
   const wordClass = gradient

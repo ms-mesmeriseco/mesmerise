@@ -42,6 +42,7 @@ function Splash({ innerRef }) {
   return (
     <section
       ref={innerRef}
+      id="home-scene"
       data-marker="HELLO"
       className="m-0 p-0 h-[80vh] w-[100%]"
     >
@@ -66,6 +67,7 @@ function Statement({ innerRef }) {
             text="We craft brand, web, and content experiences that look sexy, and convert."
             className="page-title-large"
             margin="-40% 0px"
+            once={false}
           />
         </InView>
       </div>
@@ -86,6 +88,7 @@ function SecondaryStatement() {
           text="Bridging the gap between aesthetic solutions and undeniable data."
           className="page-title-large"
           margin="-40% 0px"
+          once={false}
         />
       </div>
     </section>

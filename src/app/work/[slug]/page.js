@@ -46,7 +46,7 @@ export default async function ProjectPage({ params }) {
               text="PROJECT SCOPE"
               className="opacity-60"
             />
-            <div className="text-base leading-relaxed [&>p+p]:mt-4">
+            {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">
               {richTextParagraphs(page.projectScope.json).map((p, i) => (
                 <StaggeredWords
                   key={i}
@@ -56,12 +56,12 @@ export default async function ProjectPage({ params }) {
                   // you can pass per-paragraph delays if your StaggeredWords supports it
                 />
               ))}
-            </div>
+            </div> */}
 
             {/* Optional non-animated fallback (keep or remove): */}
-            {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">
+            <div className="text-base leading-relaxed [&>p+p]:mt-4">
               {renderRichTextWithBreaks(page.projectScope.json)}
-            </div> */}
+            </div>
           </>
         )}
       </div>
@@ -113,10 +113,13 @@ export default async function ProjectPage({ params }) {
       {/* --- EXTENDED DESCRIPTION (right half below) --- */}
       {page.extendedDescription?.json && (
         <div className="col-span-12 lg:col-start-7 lg:col-end-13 min-h-[50vh]">
-          <div className="text-base leading-relaxed [&>p+p]:mt-4">
+          {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">
             {richTextParagraphs(page.extendedDescription.json).map((p, i) => (
               <StaggeredWords key={i} as="p" text={p} />
             ))}
+          </div> */}
+          <div className="text-base leading-relaxed [&>p+p]:mt-4">
+            {renderRichTextWithBreaks(page.extendedDescription.json)}
           </div>
         </div>
       )}
