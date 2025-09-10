@@ -34,19 +34,8 @@ function usePageStageController(splashRef, section2Ref) {
     }
   }, [hitSection2, splashInView]);
 
-  // Header visibility = NOT seeing Splash
-  const headerVisible = splashInView === false;
-
-  useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.setAttribute(
-        "data-header-visible",
-        headerVisible ? "true" : "false"
-      );
-    }
-  }, [headerVisible]);
-
-  return { dark: activated, headerVisible };
+  // 🔥 Do NOT set data-header-visible anymore
+  return { dark: activated };
 }
 
 function Splash({ innerRef }) {
@@ -54,7 +43,7 @@ function Splash({ innerRef }) {
     <section
       ref={innerRef}
       data-marker="HELLO"
-      className="m-0 p-0 h-[100vh] w-[100%]"
+      className="m-0 p-0 h-[80vh] w-[100%]"
     >
       {/* <LoadingSplash /> */}
 

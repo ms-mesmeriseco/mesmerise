@@ -45,7 +45,7 @@ function labelFromPath(pathname, baseNorm) {
   const rest = stripBase(pathname, baseNorm);
   const seg = firstSegment(rest).toLowerCase();
   const hit = OPTIONS.find((label) => ALIASES[label].includes(seg));
-  return hit || "About"; // default section if unknown
+  return hit || ""; // default section if unknown
 }
 
 function joinPaths(baseNorm, path) {
