@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function ListCard({ icon, children, outline, ...props }) {
   const boxStyle = outline
-    ? "border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] duration-200"
+    ? "border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey-dk)] duration-200"
     : "";
 
   return (

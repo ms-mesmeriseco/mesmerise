@@ -119,7 +119,7 @@ export default function ProjectRail({
       <div
         ref={scrollerRef}
         className="relative w-full overflow-x-auto overflow-y-visible snap-x snap-mandatory scroll-smooth
-                   [scrollbar-width:none] [-ms-overflow-style:none] border-t border-b border-[var(--mesm-grey)]"
+                   [scrollbar-width:none] [-ms-overflow-style:none] border-t border-b border-[var(--mesm-grey-dk)]"
         style={{ scrollbarWidth: "none" }}
         aria-label="Project rail"
       >
@@ -154,10 +154,10 @@ export default function ProjectRail({
                 <motion.div
                   variants={cardVariants}
                   animate={showDetails ? "focus" : "idle"}
-                  className="relative w-[70vw] sm:w-[46vw] md:w-[36vw] lg:w-[32vw]"
+                  className="relative w-[70vw] sm:w-[46vw] md:w-[36vw] lg:w-[24vw]"
                 >
                   {/* Media with 2:3 aspect (4/6) */}
-                  <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-[var(--mesm-grey)] bg-black/20">
+                  <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-[var(--mesm-grey-dk)] bg-black/20">
                     {src ? (
                       <Image
                         src={src}
@@ -183,7 +183,7 @@ export default function ProjectRail({
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-black/45 backdrop-blur-[2px] text-white p-3 flex flex-col justify-between"
+                            className="absolute inset-0 bg-black/45 backdrop-blur-[2px]  text-white p-3 flex flex-col justify-between"
                           >
                             {doc && (
                               <div className="prose-invert prose-p:my-1 leading-relaxed">

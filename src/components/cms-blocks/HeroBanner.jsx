@@ -18,7 +18,6 @@ const characterAnimation = {
 
 function AnimatedText({ text = " ", gradient }) {
   const words = text.split(" ");
-
   return (
     <span
       className={
@@ -45,28 +44,23 @@ function AnimatedText({ text = " ", gradient }) {
   );
 }
 
-/* ----------- Utilities to extract list items from Rich Text JSON ----------- */
-// Works with Contentful-like schema: unordered-list, ordered-list, list-item, paragraph, text
+/* ----------- Rich Text list helpers ----------- */
 function textFromNode(node) {
   if (!node) return "";
   if (node.nodeType === "text") return node.value || "";
   const children = node.content || [];
   return children.map(textFromNode).join("");
 }
-
 function collectListItems(node, out) {
   if (!node) return;
   const { nodeType, content = [] } = node;
-
   if (nodeType === "unordered-list" || nodeType === "ordered-list") {
     content.forEach((li) => {
       if (li?.nodeType === "list-item") {
-        // A list-item can contain paragraphs or nested lists.
         const text = li.content
           ?.map((child) => {
             if (child?.nodeType === "paragraph")
               return textFromNode(child).trim();
-            // Handle nested lists inside list items (optional)
             if (
               child?.nodeType === "unordered-list" ||
               child?.nodeType === "ordered-list"
@@ -84,11 +78,8 @@ function collectListItems(node, out) {
       }
     });
   }
-
-  // Traverse children to find lists anywhere in the tree
   content.forEach((c) => collectListItems(c, out));
 }
-
 function getListItemsFromRichText(doc) {
   if (!doc || typeof doc !== "object") return [];
   const items = [];
@@ -102,110 +93,141 @@ export default function HeroBanner({
   pageHeader,
   pageSubtitle,
   pageHeaderLine2,
-  heroAlignment, // truthy = left/vertical, falsy = center/horizontal grid
+  heroAlignment, // truthy = left/vertical, falsy = center/horizontal (stack)
   showCta = true,
   ctaUrl = "/connect",
-  heroList, // { json: <RichTextDocument> } expected
+  heroList, // { json }
 }) {
   const isVideo = heroMedia?.contentType?.includes("video");
-
-  const alignmentClasses = heroAlignment
-    ? "items-start text-left"
-    : "items-center justify-center text-center";
-
+  const isLeft = !!heroAlignment;
   const listItems = useMemo(
     () => getListItemsFromRichText(heroList?.json),
     [heroList]
   );
 
-  const isLeft = !!heroAlignment;
+  // Layout: left-aligned = two columns; center = stacked
+  const containerClasses = isLeft
+    ? [
+        "wrapper pt-[var(--header-height)] relative w-screen",
+        "mx-[var(--global-margin-md)]",
+        "flex flex-col md:flex-row items-center md:items-stretch justify-between",
+        "gap-[var(--global-margin-lg)]",
+      ].join(" ")
+    : [
+        "wrapper pt-[var(--header-height)] relative w-screen",
+        "mx-[var(--global-margin-md)]",
+        "flex flex-col items-center justify-center",
+        "gap-[var(--global-margin-lg)]",
+        "text-center",
+      ].join(" ");
+
+  const textColClasses = isLeft
+    ? [
+        "flex-1 min-w-0",
+        "flex flex-col items-start text-left",
+        "text-[var(--foreground)]",
+        "sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
+      ].join(" ")
+    : [
+        "w-full max-w-4xl",
+        "flex flex-col items-center text-center",
+        "text-[var(--foreground)]",
+        "sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
+      ].join(" ");
+
+  const mediaColClasses = isLeft
+    ? [
+        "flex-1 min-w-0 w-1/2",
+        "flex items-center justify-center",
+        "md:max-h-[30vh]",
+      ].join(" ")
+    : [
+        "w-3/4 max-w-4xl aspect-[16/9]",
+        "flex items-center justify-center",
+        "md:max-h-[30vh]",
+      ].join(" ");
+
+  const listWrapClasses = isLeft
+    ? "flex flex-col items-start gap-2 list-none opacity-80 text-left"
+    : "flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-2 list-none opacity-80 text-center";
+
+  const pillClasses =
+    "px-4 py-1 rounded-2xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-2 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-md leading-tight";
 
   return (
     <InView>
-      <div className="relative h-[65vh] w-screen overflow-hidden flex flex-col items-center justify-center mx-[var(--global-margin-md)]">
-        {heroMedia?.url &&
-          (isVideo ? (
-            <video
-              src={heroMedia.url}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ) : (
-            <img
-              src={heroMedia.url}
-              alt={heroMedia.title || ""}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          ))}
+      <div className={containerClasses}>
+        {/* TEXT COLUMN */}
+        <div className={textColClasses}>
+          <StaggeredWords
+            as="h1"
+            text={(pageHeader || "") + " " + (pageHeaderLine2 || "")}
+          />
 
-        <div
-          className={`wrapper relative z-10 flex flex-col items-center text-[var(--foreground)] ${alignmentClasses} sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] sm:w-full`}
-        >
-          <h1>
-            <AnimatedText text={pageHeader} gradient />
-            <br />
-            <AnimatedText text={pageHeaderLine2} />
-          </h1>
-
-          {/* ---------- Hero List ---------- */}
           {!!listItems.length && (
-            <>
-              <br />
-              <div
-                className={[
-                  "list-none opacity-80",
-
-                  isLeft
-                    ? "flex flex-col items-start gap-1 justify-around"
-                    : "flex flex-col md:flex-row gap-1 items-center justify-around",
-                  // text alignment
-                  isLeft ? "text-left" : "text-center",
-                ].join(" ")}
-                role="list"
-              >
-                {listItems.map((item, i) => (
-                  <div
-                    key={`hero-li-${i}`}
-                    role="listitem"
-                    className={[
-                      "px-4 py-1 rounded-2xl border border-[var(--mesm-grey)] flex flex-row items-center  gap-2",
-                      "hover:border-[var(--foreground)] duration-200",
-                      "backdrop-blur-[1px]",
-                      "text-2xl leading-tight",
-                      isLeft ? "w-auto" : "w-auto",
-                    ].join(" ")}
-                  >
-                    <img
-                      width={24}
-                      height={24}
-                      // className="border-2 rounded-full border-[var(--mesm-blue)]"
-                      src="/icons/check_32dp_FFFFFF_FILL0_wght300_GRAD0_opsz40.png"
-                    />
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </>
+            <div className={listWrapClasses} role="list">
+              {listItems.map((item, i) => (
+                <div
+                  key={`hero-li-${i}`}
+                  role="listitem"
+                  className={pillClasses}
+                >
+                  <img
+                    width={24}
+                    height={24}
+                    src="/icons/check_32dp_FFFFFF_FILL0_wght300_GRAD0_opsz40.png"
+                    alt=""
+                  />
+                  {item}
+                </div>
+              ))}
+            </div>
           )}
+
           <div
-            className={heroAlignment ? "flex flex-col gap-4" : "flex-col gap6"}
+            className={isLeft ? "flex flex-col gap-4" : "flex flex-col gap-6"}
           >
-            <StaggeredWords as="p" className="p2 mt-6" text={pageSubtitle} />
-            <Button
-              href={ctaUrl}
-              extraClass="mt-4"
-              variant="primary"
-              size="x-large"
-            >
-              Learn More
-            </Button>
+            <StaggeredWords as="p" className="mt-6" text={pageSubtitle} />
+            {showCta && (
+              <Button
+                href={ctaUrl}
+                extraClass="mt-4"
+                variant="primary"
+                size="x-large"
+              >
+                Learn More
+              </Button>
+            )}
           </div>
         </div>
 
-        <div className="absolute inset-0 bg-black/40 z-[5]" />
+        {/* MEDIA COLUMN / SECTION */}
+        {heroMedia?.url && (
+          <div className={mediaColClasses}>
+            {isVideo ? (
+              <video
+                src={heroMedia.url}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className={
+                  isLeft ? "w-full object-cover rounded-lg" : "w-3/4 rounded-lg"
+                }
+              />
+            ) : (
+              <img
+                src={heroMedia.url}
+                alt={heroMedia.title || ""}
+                className={
+                  isLeft
+                    ? "w-full object-cover rounded-lg"
+                    : "w-full rounded-lg"
+                }
+              />
+            )}
+          </div>
+        )}
       </div>
     </InView>
   );

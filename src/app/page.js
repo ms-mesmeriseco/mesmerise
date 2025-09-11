@@ -41,12 +41,12 @@ function usePageStageController(splashRef, section2Ref) {
 
 function Splash({ innerRef }) {
   return (
-    <InView once={false}>
+    <InView once={true} margin="-60% 0px -60% 0px">
       <section
         ref={innerRef}
         id="home-scene"
         data-marker="HELLO"
-        className="m-0 p-0 md:h-screen h-[80vh] w-[100%]"
+        className="p-0 h-screen w-[100%] border-b mb-12 border-[var(--mesm-grey-dk)]"
       >
         {/* <LoadingSplash /> */}
 
@@ -61,9 +61,9 @@ function Statement({ innerRef }) {
     <section
       ref={innerRef}
       data-marker="WHAT WE DO"
-      className="min-h-[70vh] flex items-center justify-center text-white"
+      className="min-h-[50vh] flex items-start justify-center text-white"
     >
-      <div className="max-w-[1200px]">
+      <div className="">
         <InView>
           <StaggeredWords
             as="h1"
@@ -83,9 +83,9 @@ function SecondaryStatement() {
   return (
     <section
       data-marker="WHAT WE BRING"
-      className="min-h-[70vh] flex items-center justify-center text-white"
+      className="min-h-[50vh] flex items-start justify-center text-white"
     >
-      <div className="max-w-[1200px] text-left text-balance">
+      <div className="">
         <StaggeredWords
           as="p"
           text="Bridging the gap between aesthetic solutions and undeniable data."
@@ -131,7 +131,7 @@ export default function HomePage() {
   const splashRef = useRef(null);
   const section2Ref = useRef(null);
   const { dark } = usePageStageController(splashRef, section2Ref);
-  const marker = useSectionMarker();
+  // const marker = useSectionMarker();
 
   return (
     <main
@@ -140,7 +140,7 @@ export default function HomePage() {
         dark ? "bg-black" : "bg-black",
       ].join(" ")}
     >
-      <SectionMarker label={marker} />
+      {/* <SectionMarker label={marker} /> */}
 
       <Splash innerRef={splashRef} label="Mmm" />
 
@@ -153,7 +153,9 @@ export default function HomePage() {
       <InView once={false}>
         <CollabModel />
       </InView>
-      <ServicesSection />
+      <InView>
+        <ServicesSection />
+      </InView>
 
       {/* <BlogsRow /> */}
     </main>
