@@ -45,7 +45,7 @@ body.page-about {
   --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
-  --accent: var(--mesm-yellow);
+  --accent: #81ffc0;
 }
 
 body.page-blog {

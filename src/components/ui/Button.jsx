@@ -34,7 +34,7 @@ const VARIANTS = {
     "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)] " +
     "hover:bg-[var(--foreground)] hover:text-[var(--background)]",
   accent:
-    "bg-[var(--accent)]/98 border-[var(--foreground)]/40 text-[var(--background)]/90 " +
+    "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98 " +
     "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
 };
 

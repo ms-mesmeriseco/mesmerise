@@ -157,7 +157,7 @@ export default function ProjectRail({
                   className="relative w-[70vw] sm:w-[46vw] md:w-[36vw] lg:w-[24vw]"
                 >
                   {/* Media with 2:3 aspect (4/6) */}
-                  <div className="relative aspect-[2/3] overflow-hidden rounded-xl border border-[var(--mesm-grey-dk)] bg-black/20">
+                  <div className="relative aspect-[2/3] overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)] bg-black/20">
                     {src ? (
                       <Image
                         src={src}

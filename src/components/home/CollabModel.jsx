@@ -21,7 +21,7 @@ export default function CollabModel() {
       <h6>Collaboration Models</h6>
       {/* <PageTitleMedium text="Collaboration Models" center /> */}
 
-      <div className="flex flex-1 flex-col md:flex-row justify-center items-stretch gap-[var(--global-margin-xs)]  border-t border-b border-[var(--mesm-grey-dk)] py-6">
+      <div className="grid md:grid-cols-2 justify-center items-stretch gap-[var(--global-margin-xs)]  border-t border-b border-[var(--mesm-grey-dk)] py-6">
         {offerings.map((pkg) => (
           <div
             key={pkg.title}

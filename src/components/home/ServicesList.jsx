@@ -25,7 +25,7 @@ export default function ServicesList() {
           >
             <Link
               href={s.slug}
-              className="block border-1 border-[var(--mesm-grey)] my-4 rounded-md px-[var(--global-margin-lg)] py-[var(--global-margin-sm)] 
+              className="block border-1 border-[var(--mesm-grey)] my-2 rounded-md px-[var(--global-margin-lg)] py-[var(--global-margin-sm)] 
                          text-4xl md:text-6xl font-medium transition-all duration-200 ease-in-out
                          opacity-30 hover:opacity-100 hover:translate-x-1 page-title-large"
             >

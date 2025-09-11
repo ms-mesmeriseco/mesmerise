@@ -88,7 +88,7 @@ export default function Header() {
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
                    grid grid-cols-[auto_1fr_auto] items-center py-4 px-8
-                   pointer-events-auto bg-black"
+                   pointer-events-auto bg-transparent"
       >
         {/* Left: Logo (video on non-connect pages, static black on connect) */}
         <Link
