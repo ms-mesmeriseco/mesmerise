@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 import Button from "../ui/Button";
+import TrustBadges from "./TrustBadges";
 
 /* ---------- tiny helpers ---------- */
 function textFromNode(node) {
@@ -58,7 +59,7 @@ function PillList({ items }) {
         <div
           key={`li-${i}`}
           role="listitem"
-          className="px-4 py-1 rounded-2xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-2 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-md leading-tight"
+          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-2 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-md leading-tight"
         >
           <img
             width={24}
@@ -76,11 +77,21 @@ function PillList({ items }) {
 function MediaDisplay({ media }) {
   if (!media?.url) return null;
   const isVideo = media?.contentType?.includes("video");
-  const common = "w-full h-auto rounded-2xl";
   return isVideo ? (
-    <video src={media.url} autoPlay muted loop playsInline className={common} />
+    <video
+      src={media.url}
+      autoPlay
+      muted
+      playsInline
+      controls
+      className="absolute inset-0 w-full h-full object-cover  border-1 border-[var(--mesm-grey)]"
+    />
   ) : (
-    <img src={media.url} alt={media.title || ""} className={common} />
+    <img
+      src={media.url}
+      alt={media.title || ""}
+      className="absolute inset-0 w-full h-full object-cover border-1 border-[var(--mesm-grey)]"
+    />
   );
 }
 
@@ -93,6 +104,7 @@ export default function CenterHero({
   heroList, // { json }
   showCta = true,
   ctaUrl = "/connect",
+  logos,
 }) {
   const listItems = useMemo(
     () => getListItemsFromRichText(heroList?.json || {}),
@@ -101,47 +113,48 @@ export default function CenterHero({
 
   return (
     <InView>
-      <section
-        className={[
-          "wrapper relative w-screen overflow-hidden",
-          "mx-[var(--global-margin-md)]",
-          "flex flex-col items-center justify-center",
-          "gap-[var(--global-margin-lg)]",
-          "text-center",
-        ].join(" ")}
-      >
-        {/* Text block */}
-        <div
-          className={[
-            "w-full max-w-4xl",
-            "flex flex-col items-center text-center",
-            "text-[var(--foreground)]",
-            "sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
-          ].join(" ")}
-        >
-          <StaggeredWords
-            as="h1"
-            text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
-          />
-          <PillList items={listItems} />
-          <div className="flex flex-col gap-6 items-center">
-            <StaggeredWords as="p" className="mt-6" text={pageSubtitle} />
-            {showCta && (
-              <Button
-                href={ctaUrl}
-                extraClass="mt-4"
-                variant="primary"
-                size="x-large"
-              >
-                Learn More
-              </Button>
-            )}
-          </div>
-        </div>
+      <section className="relative w-screen min-h-screen overflow-x-hidden text-center">
+        <div className="mx-[var(--global-margin-md)] flex flex-col items-center">
+          {/* Top stack: text + badges take most of the viewport */}
+          <div className="w-full flex flex-col items-center justify-between min-h-[85vh] py-24">
+            <div className="wrapper w-full max-w-4xl text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]">
+              <StaggeredWords
+                as="h1"
+                text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
+              />
+              <br />
+              <PillList items={listItems} />
+              <br />
+              <div className="flex flex-col gap-6 items-center">
+                <StaggeredWords as="p" className="mt-6" text={pageSubtitle} />
 
-        {/* Media below */}
-        <div className="w-full max-w-4xl flex items-center justify-center md:max-h-[70vh]">
-          <MediaDisplay media={heroMedia} />
+                {showCta && (
+                  <Button
+                    href={ctaUrl}
+                    extraClass="mt-4"
+                    variant="primary"
+                    size="x-large"
+                  >
+                    Learn More
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Trust badges (still in the top stack) */}
+            {logos?.length ? (
+              <div className="w-full">
+                <TrustBadges logos={logos} />
+              </div>
+            ) : null}
+          </div>
+
+          {/* Media below: 16:9 and 3/4 width on desktop (full on mobile) */}
+          <div className="md:w-3/4 w-full flex items-center justify-center pb-16">
+            <div className="relative w-full md:w-3/4 aspect-[16/9] rounded-lg overflow-hidden">
+              <MediaDisplay media={heroMedia} />
+            </div>
+          </div>
         </div>
       </section>
     </InView>

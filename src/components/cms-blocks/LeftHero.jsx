@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 import Button from "../ui/Button";
+import TrustBadges from "./TrustBadges";
 
 /* ---------- tiny helpers (shared) ---------- */
 function textFromNode(node) {
@@ -59,7 +60,7 @@ function PillList({ items, align = "left" }) {
         <div
           key={`li-${i}`}
           role="listitem"
-          className="px-4 py-1 rounded-2xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-2 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-md leading-tight"
+          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-2 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-md leading-tight"
         >
           <img
             width={24}
@@ -78,9 +79,8 @@ function MediaDisplay({ media, fill = false }) {
   if (!media?.url) return null;
   const isVideo = media?.contentType?.includes("video");
   const common = fill
-    ? "w-full h-full object-cover rounded-2xl"
-    : "w-full h-auto rounded-2xl";
-
+    ? "w-full h-full object-cover rounded-lg border-1 border-[var(--mesm-grey)]"
+    : "w-full h-full object-cover rounded-lg border-1 border-[var(--mesm-grey)]";
   return isVideo ? (
     <video src={media.url} autoPlay muted loop playsInline className={common} />
   ) : (
@@ -97,6 +97,7 @@ export default function LeftHero({
   heroList, // { json }
   showCta = true,
   ctaUrl = "/connect",
+  logos,
 }) {
   const listItems = useMemo(
     () => getListItemsFromRichText(heroList?.json || {}),
@@ -105,19 +106,23 @@ export default function LeftHero({
 
   return (
     <InView>
+      {/* Grid lets us reorder on mobile and pin badges to base on desktop */}
       <section
         className={[
-          "wrapper relative w-screen overflow-hidden",
+          "relative w-screen overflow-hidden py-12 max-w-[1120px] mx-auto",
           "mx-[var(--global-margin-md)]",
-          "flex flex-col md:flex-row items-center md:items-stretch justify-between",
-          "gap-[var(--global-margin-lg)]",
+          // Mobile: single column; Desktop: 2 columns + bottom row for badges
+          "grid grid-cols-1 md:grid-cols-2 md:grid-rows-[1fr_auto]",
+          "gap-[var(--global-margin-xs)]",
+          "md:min-h-screen", // full screen height on md+
         ].join(" ")}
       >
-        {/* Text left */}
+        {/* TEXT — mobile order 1; desktop row 1 col 1 */}
         <div
           className={[
-            "flex-1 min-w-0",
-            "flex flex-col items-start text-left",
+            "order-1 md:order-none",
+            "md:row-start-1 md:col-start-1 md:col-span-",
+            "flex flex-col justify-center text-left",
             "text-[var(--foreground)]",
             "sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
           ].join(" ")}
@@ -142,9 +147,28 @@ export default function LeftHero({
           </div>
         </div>
 
-        {/* Media right */}
-        <div className="flex-1 min-w-0 flex items-center justify-center md:max-h-[70vh]">
-          <MediaDisplay media={heroMedia} fill />
+        {/* TRUST BADGES — mobile order 2; desktop bottom row spanning both cols */}
+        <div
+          className={[
+            "order-2 md:order-none",
+            "md:row-start-2 md:col-span-2 md:self-end w-full",
+          ].join(" ")}
+          key="trust-badges"
+        >
+          <TrustBadges logos={logos} />
+        </div>
+
+        {/* MEDIA — mobile order 3; desktop row 1 col 2 */}
+        <div
+          className={[
+            "order-3 md:order-none",
+            "md:row-start-1 md:col-start-2",
+            "flex items-center justify-center md:max-h-[70vh]",
+          ].join(" ")}
+        >
+          <div className="w-full">
+            <MediaDisplay media={heroMedia} fill />
+          </div>
         </div>
       </section>
     </InView>

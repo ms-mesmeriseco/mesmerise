@@ -42,7 +42,7 @@ export default function SwitchListAccordion({ items }) {
   return (
     <InView>
       {/* Desktop/tablet layout */}
-      <section className="wrapper hidden md:grid grid-cols-[1fr_auto] md:gap-8 gap-0 min-h-[80vh] items-center justify-center">
+      <section className="hidden md:grid grid-cols-[1fr_auto] md:gap-8 gap-0 min-h-[80vh] items-center justify-center">
         {/* Left column: Accordion */}
         <div className="flex flex-col h-[80vh] justify-center gap-6">
           {items.map((item, idx) => (
@@ -117,7 +117,7 @@ export default function SwitchListAccordion({ items }) {
         </div>
       </section>
       {/* Mobile layout */}
-      <section className="wrapper md:hidden flex flex-col min-h-[80vh] gap-8 items-center justify-center">
+      <section className="md:hidden flex flex-col min-h-[80vh] gap-8 items-center justify-center">
         {items.map((item, idx) => (
           <div key={item.entryTitle || idx} className="w-full">
             <div className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto ease-in-out">
