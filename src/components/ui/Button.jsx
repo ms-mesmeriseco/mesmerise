@@ -18,7 +18,7 @@ const SIZE_MAP = {
     hoverDeltaX: 0,
   },
   "x-large": {
-    radius: "md:rounded-2xl rounded-5xl",
+    radius: "rounded-2xl",
     font: "md:text-2xl text-xl",
     px: 32, // px-6
     py: 7, // py-2
