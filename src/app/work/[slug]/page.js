@@ -7,7 +7,7 @@ import ServiceTags from "@/components/services/ServiceTags";
 import Image from "next/image";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import richTextParagraphs from "@/lib/utils/richTextParagraphs";
+import addClassToParagraphs from "@/lib/utils/addClassToParagraphs";
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
@@ -67,9 +67,9 @@ export default async function ProjectPage({ params }) {
       </div>
 
       {page.dataOne?.json && (
-        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left py-6 border-t border-[var(--mesm-grey)]">
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-[10rem]">
           {" "}
-          <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4">
+          <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
             {" "}
             <StaggeredChildren baseDelay={0}>
               {" "}
@@ -77,7 +77,7 @@ export default async function ProjectPage({ params }) {
             </StaggeredChildren>{" "}
           </div>{" "}
           {page.dataTwo?.json && (
-            <div className="text-base leading-relaxed [&>p+p]:mt-4">
+            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
               {" "}
               <StaggeredChildren baseDelay={0.2}>
                 {" "}
@@ -86,7 +86,7 @@ export default async function ProjectPage({ params }) {
             </div>
           )}{" "}
           {page.dataThree?.json && (
-            <div className="text-base leading-relaxed [&>p+p]:mt-4">
+            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
               {" "}
               <StaggeredChildren baseDelay={0.4}>
                 {" "}
@@ -112,20 +112,24 @@ export default async function ProjectPage({ params }) {
 
       {/* --- EXTENDED DESCRIPTION (right half below) --- */}
       {page.extendedDescription?.json && (
-        <div className="col-span-12 lg:col-start-7 lg:col-end-13 min-h-[50vh]">
+        <div className="col-span-12 min-h-[50vh]  border-b border-[var(--mesm-grey)] ">
           {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">
             {richTextParagraphs(page.extendedDescription.json).map((p, i) => (
               <StaggeredWords key={i} as="p" text={p} />
             ))}
           </div> */}
-          <div className="text-base leading-relaxed [&>p+p]:mt-4">
-            {renderRichTextWithBreaks(page.extendedDescription.json)}
+
+          <div className="text-base md:w-1/2 ml-auto w-full  leading-relaxed [&>p+p]:mt-4 p2">
+            {addClassToParagraphs(
+              renderRichTextWithBreaks(page.extendedDescription.json),
+              "p2"
+            )}
           </div>
         </div>
       )}
 
       {/* --- MEDIA GALLERY --- */}
-      <div className="col-span-12 grid grid-cols-12 gap-[var(--global-margin-sm)]">
+      <div className="col-span-12 grid grid-cols-12 gap-[var(--global-margin-sm)]pt-4">
         {page.mediaGalleryCollection?.items?.map((media, idx, arr) => {
           const mod = idx % 3; // 0 -> full, 1 & 2 -> halves
           const isLast = idx === arr.length - 1;

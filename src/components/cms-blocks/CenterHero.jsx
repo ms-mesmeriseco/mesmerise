@@ -116,17 +116,18 @@ export default function CenterHero({
       <section className="relative w-screen min-h-screen overflow-x-hidden text-center">
         <div className="mx-[var(--global-margin-md)] flex flex-col items-center">
           {/* Top stack: text + badges take most of the viewport */}
-          <div className="w-full flex flex-col items-center justify-between min-h-[85vh] py-24">
-            <div className="wrapper w-full max-w-4xl text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]">
+          <div className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh] py-24">
+            <div className="w-full text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]">
               <StaggeredWords
                 as="h1"
+                className="page-title-large"
                 text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
               />
               <br />
               <PillList items={listItems} />
               <br />
               <div className="flex flex-col gap-6 items-center">
-                <StaggeredWords as="p" className="mt-6" text={pageSubtitle} />
+                <StaggeredWords as="p" className="p2" text={pageSubtitle} />
 
                 {showCta && (
                   <Button
@@ -140,8 +141,14 @@ export default function CenterHero({
                 )}
               </div>
             </div>
+            <br />
+            {/* Media below: 16:9 and 3/4 width on desktop (full on mobile) */}
+            <div className="w-full flex items-center justify-center pb-16">
+              <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
+                <MediaDisplay media={heroMedia} />
+              </div>
+            </div>
 
-            {/* Trust badges (still in the top stack) */}
             {logos?.length ? (
               <div className="w-full">
                 <TrustBadges logos={logos} />
@@ -149,12 +156,7 @@ export default function CenterHero({
             ) : null}
           </div>
 
-          {/* Media below: 16:9 and 3/4 width on desktop (full on mobile) */}
-          <div className="md:w-3/4 w-full flex items-center justify-center pb-16">
-            <div className="relative w-full md:w-3/4 aspect-[16/9] rounded-lg overflow-hidden">
-              <MediaDisplay media={heroMedia} />
-            </div>
-          </div>
+          {/* Trust badges (still in the top stack) */}
         </div>
       </section>
     </InView>
