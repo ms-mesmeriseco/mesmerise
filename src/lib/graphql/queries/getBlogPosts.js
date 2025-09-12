@@ -12,6 +12,11 @@ export const GET_BLOG_POSTS = gql`
         }
         postHeading
         postAuthor
+        authorAvatar {
+          url
+          height
+          width
+        }
         postDate
         heroImage {
           url

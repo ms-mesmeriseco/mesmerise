@@ -60,7 +60,7 @@ function SecondaryStatement({ marker, text, cta }) {
 
 export default function CollabTemplate({ content, currentSlug }) {
   const bubble =
-    "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-150";
+    "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-250";
 
   return (
     <div className="p-[var(--global-margin-lg)]">
@@ -91,12 +91,12 @@ export default function CollabTemplate({ content, currentSlug }) {
               duration={0.15}
               y="0.15em"
               blur={4}
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-8"
               margin="-40% 0px"
             >
               {content.whoItsForItems.map((item, i) => (
                 <div className={bubble} key={i}>
-                  <p className="p2">{item}</p>
+                  <p className="page-title-medium">{item}</p>
                 </div>
               ))}
             </StaggeredChildren>,

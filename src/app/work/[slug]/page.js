@@ -67,13 +67,17 @@ export default async function ProjectPage({ params }) {
       </div>
 
       {page.dataOne?.json && (
-        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-[10rem]">
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-full">
           {" "}
           <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
             {" "}
             <StaggeredChildren baseDelay={0}>
               {" "}
-              {renderRichTextWithBreaks(page.dataOne.json)}{" "}
+              {addClassToParagraphs(
+                renderRichTextWithBreaks(page.dataOne.json),
+                "page-title-xl", // class to add
+                "h2"
+              )}
             </StaggeredChildren>{" "}
           </div>{" "}
           {page.dataTwo?.json && (
@@ -81,7 +85,11 @@ export default async function ProjectPage({ params }) {
               {" "}
               <StaggeredChildren baseDelay={0.2}>
                 {" "}
-                {renderRichTextWithBreaks(page.dataTwo.json)}{" "}
+                {addClassToParagraphs(
+                  renderRichTextWithBreaks(page.dataTwo.json),
+                  "page-title-xl", // class to add
+                  "h2"
+                )}
               </StaggeredChildren>{" "}
             </div>
           )}{" "}
@@ -90,7 +98,11 @@ export default async function ProjectPage({ params }) {
               {" "}
               <StaggeredChildren baseDelay={0.4}>
                 {" "}
-                {renderRichTextWithBreaks(page.dataThree.json)}{" "}
+                {addClassToParagraphs(
+                  renderRichTextWithBreaks(page.dataThree.json),
+                  "page-title-xl", // class to add
+                  "h2"
+                )}
               </StaggeredChildren>{" "}
             </div>
           )}

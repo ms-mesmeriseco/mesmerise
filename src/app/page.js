@@ -81,7 +81,7 @@ function SecondaryStatement() {
   return (
     <section
       data-marker="WHAT WE BRING"
-      className="flex items-start justify-center text-white"
+      className="min-h-[50vh] flex items-start justify-center text-white"
     >
       <div className="">
         <StaggeredWords
@@ -219,7 +219,11 @@ function StatCard({ title, sub, body, index }) {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <h3 className="font-semibold leading-tight page-title-xl">{title}</h3>
+      <StaggeredWords
+        as="h3"
+        className="font-semibold leading-tight page-title-xl"
+        text={title}
+      />
       <p className="text-base md:text-lg opacity-80">{sub}</p>
 
       {/* Tooltip: top-left corner pinned to cursor */}
@@ -231,12 +235,10 @@ function StatCard({ title, sub, body, index }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.15, ease: "easeOut" }}
-          className={`pointer-events-none absolute z-10 w-109 max-w-[85%] rounded-2xl border border-[var(--mesm-grey-dk)] ${
-            colors[index % colors.length]
-          } px-3 py-1 shadow-md backdrop-blur-sm`}
+          className={`pointer-events-none absolute z-10 w-86 max-w-[85%] rounded-2xl border border-[var(--mesm-grey-dk)] bg-[var(--mesm-blue)] px-3 py-1 shadow-md backdrop-blur-sm`}
           style={{ left: pos.x, top: pos.y }}
         >
-          <p className="p2 opacity-90 text-[var(--background)]">{body}</p>
+          <p className="p3 opacity-90 text-[var(--background)]">{body}</p>
         </motion.div>
       )}
     </motion.article>

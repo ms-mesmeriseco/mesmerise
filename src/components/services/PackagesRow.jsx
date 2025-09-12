@@ -76,7 +76,7 @@ export default function PackagesRow() {
       <PageTitleMedium text="Packages" center />
       <ToggleSwitch options={options} value={selected} onChange={setSelected} />
 
-      <div className="wrapper  grid grid-cols-1 md:grid-cols-3 gap-2 w-full mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 w-full mx-auto">
         {PACKAGES[selected].map((pkg) => (
           <div
             key={pkg.title}

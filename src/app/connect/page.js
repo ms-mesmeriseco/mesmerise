@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import StaggeredWords from "@/hooks/StaggeredWords";
+import StaggeredChildren from "@/hooks/StaggeredChildren";
 import CopyEmailButton from "@/components/ui/CopyEmailButton";
 
 const SERVICE_OPTIONS = [
@@ -165,7 +166,8 @@ export default function Connect() {
               <legend className="block text-md tracking-wide">
                 What are you interested in?
               </legend>
-              <div className="flex flex-wrap gap-1">
+
+              <StaggeredChildren once={true} className="flex flex-wrap gap-1">
                 {SERVICE_OPTIONS.map((s) => (
                   <Chip
                     key={s}
@@ -174,7 +176,7 @@ export default function Connect() {
                     onClick={() => toggle(services, s, setServices)}
                   />
                 ))}
-              </div>
+              </StaggeredChildren>
             </fieldset>
 
             {/* Budget Multi-Select */}
@@ -182,7 +184,8 @@ export default function Connect() {
               <legend className="block text-md tracking-wide">
                 Do you have a budget?
               </legend>
-              <div className="flex flex-wrap gap-1">
+
+              <StaggeredChildren once={true} className="flex flex-wrap gap-1">
                 {BUDGET_OPTIONS.map((b) => (
                   <Chip
                     key={b}
@@ -191,7 +194,7 @@ export default function Connect() {
                     onClick={() => toggle(budgets, b, setBudgets)}
                   />
                 ))}
-              </div>
+              </StaggeredChildren>
             </fieldset>
 
             {/* Details */}
@@ -232,8 +235,9 @@ export default function Connect() {
       </div>
 
       {/* Bottom Row (unchanged) */}
-      <div className="flex flex-col md:flex-row md:h-[40vh] h-[60vh] gap-[var(--global-margin-xs)]">
-        <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
+      <h6>Or go direct to source:</h6>
+      <div className="flex flex-col md:flex-row md:h-[40vh] h-[60vh] gap-[var(--global-margin-xs)] border-t-1 pt-[var(--global-margin-sm)] border-[var(--mesm-grey-dk)]">
+        <div className="flex-1 border-1 border-[var(--mesm-grey-dk)] rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] text-[var(--foreground)]">
           <a
             href="tel:+61477210477"
             className="w-full h-full  font-normal text-left flex-start flex"
@@ -245,7 +249,7 @@ export default function Connect() {
             </button>
           </a>
         </div>
-        <div className="flex-1 border-1 rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)]">
+        <div className="flex-1 border-1 border-[var(--mesm-grey-dk)] rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] text-[var(--foreground)] cursor-pointer">
           <CopyEmailButton email="hello@mesmeriseco.com" label="Email" />
         </div>
       </div>

@@ -76,43 +76,42 @@ export default async function BlogPost({ params }) {
     : "";
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-0">
-      {/* Optional Hero
-      <div className="w-full aspect-[16/5] rounded-4xl h-[60vh] overflow-hidden mb-0 p-[var(--global-margin-sm)]">
-        <img
-          src={page.heroImage?.url || ""}
-          alt={page.heroImage?.title || ""}
-          className="w-full h-full object-cover rounded-3xl"
-        />
-      </div> */}
-
-      <main className="flex flex-col md:flex-row md:gap-8 gap-0 rounded-3xl w-full mx-auto px-4 pt-18">
+    <div className="flex flex-col items-center /* remove justify-center */ min-h-screen gap-0">
+      <main className="flex flex-col md:flex-row md:gap-8 w-full mx-auto px-4 pt-18">
         {h3Anchors.length > 0 && (
           <aside
-            className="
-              hidden md:block
-              md:sticky
-              md:top-[calc(var(--header-height)+16px)]
-              md:h-[calc(100vh-var(--header-height)-32px)]
-              md:w-64
-              self-start
-              z-20
-            "
+            className={[
+              "hidden md:block",
+              "md:self-start md:shrink-0 md:w-64",
+              "md:sticky",
+              // Fallback if --header-height is missing; 64px ≈ 4rem header
+              "md:top-[calc(var(--header-height,64px)+32px)]",
+              // don't force a fixed height; instead cap it and let the TOC scroll if long
+              "md:max-h-[calc(100vh-var(--header-height,64px)-32px)] md:overflow-auto",
+              "z-20",
+            ].join(" ")}
           >
             <BlogTOC anchors={h3Anchors} />
           </aside>
         )}
 
-        <article className="max-w-xl w-full flex flex-col gap-2">
+        <article className="max-w-xl w-full flex flex-col gap-6">
           <h1 className="text-sm">{page.postHeading}</h1>
-          <span className="text-sm text-[var(--mesm-l-grey)]">
-            {formattedDate && (
-              <>
-                {formattedDate}
-                <br />
-              </>
-            )}
-            By {page.postAuthor}
+          <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-center">
+            <img
+              src={page.authorAvatar.url}
+              width={64}
+              className="rounded-full"
+            />
+            <span>
+              {formattedDate && (
+                <>
+                  {formattedDate}
+                  <br />
+                </>
+              )}
+              By {page.postAuthor}
+            </span>
           </span>
 
           <br />

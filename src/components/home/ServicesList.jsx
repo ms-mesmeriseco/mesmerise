@@ -17,7 +17,7 @@ export default function ServicesList() {
       className="flex flex-col justify-center"
     >
       <h6>What's on offer</h6>
-      <ul className="border-t border-[var(--mesm-grey-dk)]">
+      <ul className="border-t border-[var(--mesm-grey-dk)] no-m">
         {services.map((s, idx) => (
           <li
             key={idx}

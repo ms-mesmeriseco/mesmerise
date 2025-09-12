@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
+import addClassToParagraphs from "@/lib/utils/addClassToParagraphs";
 
 function hasTag(project, { tagName, tagSlug }) {
   const tags = project?.contentfulMetadata?.tags || [];
@@ -123,7 +124,7 @@ export default function ProjectRail({
         style={{ scrollbarWidth: "none" }}
         aria-label="Project rail"
       >
-        <ul className="flex gap-2 py-4 select-none">
+        <ul className="flex gap-2 py-2 select-none">
           {isLoaded && projects.length === 0 && (
             <li className="text-sm opacity-70">No projects found.</li>
           )}
@@ -183,11 +184,15 @@ export default function ProjectRail({
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-black/45 backdrop-blur-[2px]  text-white p-3 flex flex-col justify-between"
+                            className="absolute inset-0 bg-black/45 backdrop-blur-[2px] text-white p-3 flex flex-col justify-between"
                           >
                             {doc && (
-                              <div className="prose-invert prose-p:my-1 leading-relaxed">
-                                {renderRichTextWithBreaks(doc)}
+                              <div className="prose-invert prose-p:my-1 leading-relaxed lg:w-1/2">
+                                {addClassToParagraphs(
+                                  renderRichTextWithBreaks(doc),
+                                  "page-title-xl", // class to add
+                                  "h2"
+                                )}
                               </div>
                             )}
                             <div>
