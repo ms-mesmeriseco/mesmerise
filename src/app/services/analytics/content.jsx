@@ -1,4 +1,4 @@
-export const heroMedia = "/assets/pro-sculpt.mp4";
+export const heroMedia = "/assets/highlights/analytics_v1.mp4";
 
 export const para1Content =
   "Drowning in data? Get clear, actionable insights that give you stability and direction.";
