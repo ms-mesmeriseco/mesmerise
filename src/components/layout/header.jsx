@@ -96,8 +96,8 @@ export default function Header() {
           aria-label="Go to homepage"
           className="justify-self-start"
         >
-          <video
-            src="/assets/glassBSDF_transparent-320px.mp4"
+          {/* <video
+            src="/assets/logo-transparent2.mov"
             className={[
               "md:h-[3rem] h-[3rem] block transition-opacity duration-100",
               sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
@@ -109,7 +109,16 @@ export default function Header() {
             playsInline
             preload="auto"
             aria-hidden={sceneInView}
-          />
+          /> */}
+          <img
+            src="/assets/270px-transparent_M-logo.gif"
+            preload="auto"
+            aria-hidden={sceneInView}
+            className={[
+              "md:h-[4.23rem] h-[3rem] block transition-opacity duration-100",
+              sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
+            ].join(" ")}
+          ></img>
         </Link>
 
         {/* Middle: spacer */}
