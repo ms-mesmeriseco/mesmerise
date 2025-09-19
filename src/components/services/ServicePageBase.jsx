@@ -100,28 +100,26 @@ export default function ServicePageBase({
     <>
       <div className="p-[var(--global-margin-lg)] flex flex-col gap-8">
         <section className="max-h-full flex items-center justify-center">
-          {isVideo(heroMedia) ? (
-            <video
-              src={heroMedia}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full md:aspect-16/9 object-cover "
-            />
-          ) : (
-            <img
-              src={heroMedia}
-              alt="Hero Media"
-              className="w-full h-full  md:aspect-16/9 object-cover "
-            />
-          )}
+          {heroMedia ? (
+            isVideo(heroMedia) ? (
+              <video
+                src={heroMedia}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full md:aspect-16/9 object-cover "
+              />
+            ) : (
+              <img
+                src={heroMedia}
+                alt="Hero Media"
+                className="w-full h-full  md:aspect-16/9 object-cover "
+              />
+            )
+          ) : null}
         </section>
-        <ServicesHero
-          heroMedia={heroMedia}
-          heroTitle={heroTitle}
-          serviceTags={serviceTags}
-        />
+        <ServicesHero heroTitle={heroTitle} />
         <IntroPara text={para1Content} />
         <h6>What we offer</h6>
 

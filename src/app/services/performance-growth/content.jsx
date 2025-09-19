@@ -1,16 +1,5 @@
-// content/services/website.jsx
-import React from "react";
+export const heroMedia = "/assets/highlights/Performance_v1.mp4";
 
-export const heroMedia = "/assets/pro-sculpt.mp4";
-import SecondaryButton from "@/components/ui/SecondaryButton.jsx";
-
-export const trustBadgeText = "Trusted by...";
-export const trustBadgeLogos = [
-  { url: "/logoMark-SVG_mesm.svg", title: "Client 1" },
-  { url: "/logoMark-SVG_mesm.svg", title: "Client 2" },
-];
-
-// Author rich content as JSX (fast to edit)
 export const para1Content =
   "Attention is fleeting, trust is not. Our omnipresent campaigns capture both, turning passing interest into conviction and conviction into clients.";
 

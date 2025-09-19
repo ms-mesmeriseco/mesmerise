@@ -1,22 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useInView, motion, AnimatePresence } from "framer-motion";
+import { useInView, motion } from "framer-motion";
 
 import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
 import BlogThreeColumn from "@/components/cms-blocks/BlogThreeColumn";
 import CollabModel from "@/components/home/CollabModel";
 import useSectionMarker from "@/hooks/useSectionMarker";
-import SectionMarker from "@/components/home/SectionMarker";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import LoadingSplash from "@/components/home/LoadingSplash";
 import Scene from "@/components/three/Scene";
 import ProjectRail from "@/components/cms-blocks/ProjectRail";
-
-// const Scene = dynamic(() => import("@/components/three/Scene"), {
-//   ssr: false,
-// });
 
 function usePageStageController(splashRef, section2Ref) {
   const splashInView = useInView(splashRef, { amount: 0.2 });
@@ -34,7 +28,6 @@ function usePageStageController(splashRef, section2Ref) {
     }
   }, [hitSection2, splashInView]);
 
-  // 🔥 Do NOT set data-header-visible anymore
   return { dark: activated };
 }
 
