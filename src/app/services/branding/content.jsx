@@ -1,4 +1,4 @@
-export const heroMedia = "/assets/pro-sculpt.mp4";
+export const heroMedia = "/assets/highlights/Branding_v1.mp4";
 
 export const para1Content =
   "A strong brand identity is the bedrock for every part of your business. It informs how you communicate—from the stories you tell, to the content you publish.";

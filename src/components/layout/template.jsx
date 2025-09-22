@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 export default function Template({ children }) {
   const pathname = usePathname();
-  const paddingTop = pathname === "/" ? "pt-0" : "pt-10";
+  const paddingTop = pathname === "/" ? "pt-0" : "pt-16";
   const anim = (variants) => {
     return {
       initial: "initial",

@@ -1,4 +1,4 @@
-export const heroMedia = "/assets/highlights/Website_v2.mp4";
+export const heroMedia = "/assets/highlights/Website_v3.mp4";
 
 export const para1Content =
   "Your website is make-or-break when it comes to success online. Paired with an in-depth marketing strategy, it creates an invaluable growth engine.";

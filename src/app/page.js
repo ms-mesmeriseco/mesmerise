@@ -5,7 +5,6 @@ import { useInView, motion, useMotionValue, useSpring } from "framer-motion";
 
 import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
-import BlogThreeColumn from "@/components/cms-blocks/BlogThreeColumn";
 import CollabModel from "@/components/home/CollabModel";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import StaggeredWords from "@/hooks/StaggeredWords";
@@ -95,16 +94,6 @@ function ProjectsRow() {
       className="relative py-12 md:py-16 text-white"
     >
       <ProjectRail tag="highlight" />
-    </section>
-  );
-}
-function BlogsRow() {
-  return (
-    <section
-      data-marker="WHAT WE KNOW"
-      className="relative py-12 md:py-16 text-white"
-    >
-      <BlogThreeColumn />
     </section>
   );
 }

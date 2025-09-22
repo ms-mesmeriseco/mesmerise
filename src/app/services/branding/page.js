@@ -17,7 +17,7 @@ export default function BrandingPage() {
     <>
       <ServicePageBase
         heroTitle={"Branding"}
-        // heroMedia={heroMedia}
+        heroMedia={heroMedia}
         serviceTags={serviceTags}
         para1Content={para1Content}
         para2Content={para2Content}
