@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useInView, motion } from "framer-motion";
+import { useInView, motion, useMotionValue, useSpring } from "framer-motion";
 
 import InView from "@/hooks/InView";
 import ServicesList from "@/components/home/ServicesList";
@@ -163,39 +163,43 @@ function ImpactStats() {
 
 function StatCard({ title, sub, body, index }) {
   const ref = useRef(null);
-  const rafRef = useRef(null);
   const [visible, setVisible] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const colors = [
-    "bg-[var(--mesm-red)]",
-    "bg-[var(--mesm-blue)]",
-    "bg-[var(--mesm-yellow)]",
-  ];
+
+  // Raw target values (jump to cursor)
+  const targetX = useMotionValue(0);
+  const targetY = useMotionValue(0);
+
+  // Smoothed spring values (follow with latency)
+  const x = useSpring(targetX, { stiffness: 700, damping: 30, mass: 0.1 });
+  const y = useSpring(targetY, { stiffness: 700, damping: 30, mass: 0.1 });
+
+  const OFFSET = 0; // keep tooltip slightly away from the pointer
 
   const handleMove = (e) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-
-    // Cursor position relative to the card
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // rAF throttle for smoother updates
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => setPos({ x, y }));
+    const cx = e.clientX - rect.left + OFFSET;
+    const cy = e.clientY - rect.top + OFFSET;
+    targetX.set(cx);
+    targetY.set(cy);
   };
 
-  const handleEnter = () => setVisible(true);
+  const handleEnter = (e) => {
+    setVisible(true);
+    handleMove(e); // snap target to current cursor so the spring starts close
+  };
+
   const handleLeave = () => setVisible(false);
 
-  // Touch: tap to toggle, place near touch point
+  // Touch: tap to toggle and position near touch point
   const handleTouchStart = (e) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const t = e.touches?.[0];
-    const x = (t?.clientX ?? rect.left + rect.width / 2) - rect.left;
-    const y = (t?.clientY ?? rect.top + rect.height / 2) - rect.top;
-    setPos({ x, y });
+    const cx = (t?.clientX ?? rect.left + rect.width / 2) - rect.left + OFFSET;
+    const cy = (t?.clientY ?? rect.top + rect.height / 2) - rect.top + OFFSET;
+    targetX.set(cx);
+    targetY.set(cy);
     setVisible((v) => !v);
   };
 
@@ -206,7 +210,7 @@ function StatCard({ title, sub, body, index }) {
       onMouseLeave={handleLeave}
       onMouseMove={handleMove}
       onTouchStart={handleTouchStart}
-      className="relative flex flex-col justify-between  border border-[var(--mesm-grey-dk)] rounded-lg p-6 md:p-7 flex flex-col gap-3 bg-black/20 hover:bg-white/5 transition-colors cursor-default"
+      className="relative flex flex-col justify-between border border-[var(--mesm-grey-dk)] rounded-lg p-6 md:p-7 gap-3 bg-black/20 hover:bg-white/5 transition-colors cursor-default shadow-lg"
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -219,8 +223,6 @@ function StatCard({ title, sub, body, index }) {
       />
       <p className="text-base md:text-lg opacity-80">{sub}</p>
 
-      {/* Tooltip: top-left corner pinned to cursor */}
-
       {visible && (
         <motion.div
           role="tooltip"
@@ -228,10 +230,11 @@ function StatCard({ title, sub, body, index }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.98 }}
           transition={{ duration: 0.15, ease: "easeOut" }}
-          className={`pointer-events-none absolute z-10 w-86 max-w-[85%] rounded-2xl border border-[var(--mesm-grey-dk)] bg-[var(--mesm-blue)] px-3 py-1 shadow-md backdrop-blur-sm`}
-          style={{ left: pos.x, top: pos.y }}
+          // Use transform-based positioning with the smoothed springs
+          style={{ x, y }}
+          className="pointer-events-none absolute z-10 max-w-[85%] rounded-xl border border-[var(--mesm-grey-dk)] px-3 py-1 bg-[var(--mesm-blue)] shadow-md backdrop-blur-sm transform-gpu"
         >
-          <p className="p3 opacity-90 text-[var(--background)]">{body}</p>
+          <p className="p2 opacity-90 text-[var(--background)]">{body}</p>
         </motion.div>
       )}
     </motion.article>

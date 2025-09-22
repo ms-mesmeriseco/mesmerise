@@ -2,14 +2,13 @@
 
 import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
 import StaticSingleColumn from "@/components/layout/StaticSingleColumn";
-import SectionMarker from "@/components/home/SectionMarker";
-import useSectionMarker from "@/hooks/useSectionMarker";
 import Button from "@/components/ui/Button";
 import FAQ from "@/components/layout/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
+import ServicesRail from "@/components/services/ServicesRail";
+import SteppedAccordion from "@/components/layout/SteppedAccordion";
 
 export default function Connect() {
-  const marker = useSectionMarker();
   const servicesFAQ = [
     {
       question:
@@ -51,8 +50,7 @@ export default function Connect() {
 
   return (
     <div className="flex flex-col min-h-screen gap-[8rem] p-[var(--global-margin-md)]">
-      <SectionMarker label={marker} />
-      <div className="text-center py-24">
+      <div className="pt-24">
         <StaticSingleColumn
           label={"HUMAN SERVICES"}
           column={[
@@ -62,7 +60,6 @@ export default function Connect() {
             with intent."
               className="page-title-large text-2xl md:text-4xl leading-tight"
               center
-              once={false}
             />,
           ]}
         />
@@ -70,160 +67,22 @@ export default function Connect() {
       {/* <section data-marker="CLICK ME" className="md:min-h-[80vh] min-h-[50vh]">
         <ServicesTab />
       </section> */}
-      <StaticTwoColumn
-        label={"STRATEGY"}
-        column2={[
-          <StaggeredWords
-            key="h2"
-            as="h2"
-            text="Strategy"
-            className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-20% 0px"
-          />,
-          <StaggeredWords
-            as="p"
-            text="A successful business starts with clarity."
-            className="p3  max-w-[80%]"
-            key="p"
-            margin="-20% 0px"
-          />,
 
-          <Button
-            size="large"
-            variant="secondary"
-            key="button"
-            href="/services/strategy"
-          >
-            Learn more
-          </Button>,
-        ]}
-      />
-      <StaticTwoColumn
-        label={"BRANDING"}
-        column1={[
-          <StaggeredWords
-            key="h2"
-            as="h2"
-            text="Branding"
-            className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-20% 0px"
-          />,
-          <StaggeredWords
-            as="p"
-            text="Spark curiosity, ignite emotion, and build trust in the blink of an
-            eye."
-            className="p3  max-w-[80%]"
-            key="p"
-            margin="-20% 0px"
-          />,
-
-          <Button
-            size="large"
-            variant="secondary"
-            key="button"
-            href="/services/branding"
-          >
-            Learn more
-          </Button>,
-        ]}
-      />
-      <StaticTwoColumn
-        label={"WEBSITE"}
-        column2={[
-          <StaggeredWords
-            key="h2"
-            as="h2"
-            text="Website"
-            className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-20% 0px"
-          />,
-          <StaggeredWords
-            as="p"
-            text="We build expressive websites that engage and convert."
-            className="p3  max-w-[80%]"
-            key="p"
-            margin="-20% 0px"
-          />,
-          <Button
-            size="large"
-            variant="secondary"
-            key="button"
-            href="/services/website"
-          >
-            Learn more
-          </Button>,
-        ]}
-      />
-      <StaticTwoColumn
-        label={"PERFORMANCE"}
-        column1={[
-          <StaggeredWords
-            key="h2"
-            as="h2"
-            text="Performance & Growth"
-            className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-20% 0px"
-          />,
-          <StaggeredWords
-            as="p"
-            text="Attention is fleeting, trust is not."
-            className="p3  max-w-[80%]"
-            key="p"
-            margin="-20% 0px"
-          />,
-
-          <Button
-            size="large"
-            variant="secondary"
-            key="button"
-            href="/services/performance-growth"
-          >
-            Learn more
-          </Button>,
-        ]}
-      />
-      <StaticTwoColumn
-        label={"CONSULTING"}
-        column2={[
-          <StaggeredWords
-            key="h2"
-            as="h2"
-            text="Analytics"
-            className="page-title-xl text-2xl md:text-4xl leading-tight"
-            margin="-20% 0px"
-          />,
-          <StaggeredWords
-            as="p"
-            text="When you understand the data, decision-making becomes simple."
-            className="p3  max-w-[80%]"
-            key="p"
-            margin="-20% 0px"
-          />,
-
-          <Button
-            size="large"
-            variant="secondary"
-            key="button"
-            href="/services/analytics"
-          >
-            Learn more
-          </Button>,
-        ]}
-      />
+      <ServicesRail />
       {/* <br />
       <br />
       <br />
       <br />
       <br />
       <br /> */}
-      {/* <FAQ
+      <FAQ
         label="common questions"
         title="Frequently Asked Questions"
-        accordionItems={servicesFAQ.map((item) => ({
-          question: item.question,
-          textContent: item.textContent,
-        }))}
-      /> */}
+        items={servicesFAQ} // your array of { question, textContent }
+        singleOpen={false} // set true to allow only one open at a time
+        defaultOpen={[0]} // which indexes start open
+      />
+
       {/* Bottom Row */}
     </div>
   );

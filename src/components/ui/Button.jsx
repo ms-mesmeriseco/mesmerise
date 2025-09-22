@@ -24,6 +24,13 @@ const SIZE_MAP = {
     py: 7, // py-2
     hoverDeltaX: 8,
   },
+  none: {
+    radius: "",
+    font: "text-3xl font-normal",
+    px: 0,
+    py: 0,
+    hoverDeltaX: 0,
+  },
 };
 
 const VARIANTS = {
@@ -36,6 +43,8 @@ const VARIANTS = {
   accent:
     "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98 " +
     "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
+  nonButton:
+    "hover:text-[var(--mesm-blue)] duration-200 text-[var(--background)]  bg-[var(--mesm-yellow)] hover:bg-[var(--mesm-red)] duration-200 border-0",
 };
 
 export default function Button({

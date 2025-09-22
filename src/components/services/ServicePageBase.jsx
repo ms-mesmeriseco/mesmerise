@@ -64,21 +64,35 @@ function ThirdPara({ text }) {
 
 function FinalCTA({ text }) {
   return (
-    <section className="flex items-center justify-center text-white min-h-[70vh]">
-      <div className="text-center max-w-[1180px]">
+    <section className="flex justify-center text-white border-b-1 border-[var(--mesm-grey-dk)] pb-4">
+      <div className="">
         <InView>
           <StaggeredWords
             as="h2"
             text={text}
-            className="page-title-large md:px-18"
+            className="page-title-large"
             margin="-40% 0px"
           />
           <br />
           <br />
           <br />
-          <Button size="x-large" variant="primary" href="/connect">
-            Say Hi
-          </Button>
+
+          <div className="ml-auto w-full">
+            <a
+              href="/connect"
+              className="hover:text-[var(--accent)] duration-200 text-[var(--background)]  text-center"
+            >
+              <StaggeredWords
+                as="h2"
+                text="Say Hi"
+                className="page-title-large bg-[var(--mesm-red)] hover:bg-[var(--mesm-yellow)] duration-200 w-fit"
+                margin="-40% 0px"
+              />
+            </a>
+            {/* <Button size="x-large" variant="primary" href="/connect">
+              Say Hi
+            </Button> */}
+          </div>
         </InView>
       </div>
     </section>
