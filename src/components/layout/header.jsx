@@ -87,7 +87,8 @@ export default function Header() {
       <header
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
-                   grid grid-cols-[auto_1fr_auto] items-center py-4 px-8
+                   grid grid-cols-[auto_1fr_auto] items-center md:py-4 md:px-8
+                   px-2 py-1
                    pointer-events-auto bg-transparent"
       >
         {/* Left: Logo (video on non-connect pages, static black on connect) */}
@@ -129,7 +130,7 @@ export default function Header() {
           {!isConnect && (
             <span className={headerCtaClass}>
               <Button
-                size="large"
+                size="small"
                 variant="accent"
                 href="/connect"
                 extraClass="shadow-xl"
