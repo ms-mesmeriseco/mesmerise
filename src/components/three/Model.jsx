@@ -44,7 +44,7 @@ export default function Model({
       ? viewport.width / 3
       : isTablet
       ? viewport.width / 6
-      : viewport.width / 6;
+      : viewport.width / 8;
   }, [size.width, viewport.width]);
 
   // --- MOUSE CONTROL (desktop only) ---

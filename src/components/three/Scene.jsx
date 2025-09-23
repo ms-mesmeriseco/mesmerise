@@ -17,10 +17,11 @@ function SceneLoadedNotifier({ onLoaded }) {
 
 export default function Scene({ onLoaded }) {
   const [sceneLoaded, setSceneLoaded] = useState(false);
+
   return (
     <Canvas
       style={{ backgroundColor: "black" }}
-      className="block h-[100dvh] w-[100vdw]"
+      className="block h-[100dvh] w-[100dvw]"
     >
       {/* <OrbitControls enableDamping /> */}
       <Suspense fallback={<SceneLoadedNotifier onLoaded={onLoaded} />}>
