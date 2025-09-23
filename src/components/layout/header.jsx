@@ -88,7 +88,7 @@ export default function Header() {
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
                    grid grid-cols-[auto_1fr_auto] items-center md:py-4 md:px-8
-                   px-2 py-1
+                   px-3 py-2
                    pointer-events-auto bg-transparent"
       >
         {/* Left: Logo (video on non-connect pages, static black on connect) */}
@@ -116,7 +116,7 @@ export default function Header() {
             preload="auto"
             aria-hidden={sceneInView}
             className={[
-              "md:h-[4.23rem] h-[3rem] block transition-opacity duration-100",
+              "md:h-[4.23rem] h-[2.77rem] block transition-opacity duration-100",
               sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
             ].join(" ")}
           ></img>
@@ -130,7 +130,7 @@ export default function Header() {
           {!isConnect && (
             <span className={headerCtaClass}>
               <Button
-                size="small"
+                size="large"
                 variant="accent"
                 href="/connect"
                 extraClass="shadow-xl"

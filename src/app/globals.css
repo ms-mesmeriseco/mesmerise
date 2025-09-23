@@ -45,7 +45,7 @@ body.page-about {
   --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
-  --accent: #81ffc0;
+  --accent: #1ae2bd;
 }
 
 body.page-blog {
@@ -102,7 +102,7 @@ body.page-blog {
   --mesm-grey-xd: rgba(255, 255, 255, 0.05);
   --mesm-l-grey: #d4d4d4;
   --header-height: 48px;
-  --accent: #81ffc0;
+  --accent: #1ae2bd;
 }
 /* Header entrance */
 html[data-header-visible="false"] .site-header {

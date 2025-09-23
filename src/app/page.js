@@ -41,7 +41,7 @@ function Splash({ innerRef }) {
         data-marker="HELLO"
         className="h-screen w-[100%] border-b pb-36 mb-12 border-[var(--mesm-grey-dk)]"
       >
-        <LoadingSplash isSceneLoaded={sceneLoaded} />
+        {/* <LoadingSplash isSceneLoaded={sceneLoaded} /> */}
 
         <Scene onLoaded={setSceneLoaded} />
       </section>

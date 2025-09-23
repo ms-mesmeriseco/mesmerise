@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useGLTF, MeshTransmissionMaterial } from "@react-three/drei";
 import { MathUtils } from "three";
@@ -20,19 +20,21 @@ export async function requestGyroPermission() {
 }
 
 export default function Model({
-  tiltIntensity = 0.6,
-  mouse = true,
-  gyro = true,
-  damp = 0.08,
-  autoSpeed = 0.003, // fallback auto-rotate speed (radians/frame)
-  gyroWaitMs = 1500, // wait this long for gyro before auto-rotating
+  tiltIntensity = 0.6, // how much the cursor/gyro can tilt the model
+  mouse = true, // enable mouse offset
+  gyro = true, // enable gyro offset
+  damp = 0.08, // smoothing for following offsets
+  autoSpeed = 0.003, // constant baseline spin (radians/frame)
 }) {
   const { nodes } = useGLTF("/models/MESM_logo.glb");
   const { viewport, size } = useThree();
   const mesh = useRef();
 
-  const target = useRef({ x: 0, y: 0 });
-  const lastInput = useRef("none"); // "mouse" | "gyro" | "auto" | "none"
+  // Accumulated baseline yaw (always increases)
+  const yaw = useRef(0);
+
+  // Target *offsets* from input (small adjustments layered on base yaw)
+  const offset = useRef({ x: 0, y: 0 });
 
   const isMobile = size.width < 768;
 
@@ -47,33 +49,35 @@ export default function Model({
       : viewport.width / 8;
   }, [size.width, viewport.width]);
 
-  // --- MOUSE CONTROL (desktop only) ---
+  // --- MOUSE OFFSET ---
   useEffect(() => {
     if (!mouse || isMobile) return;
     const onMove = (e) => {
-      const nx = (e.clientX / window.innerWidth) * 2 - 1;
-      const ny = (e.clientY / window.innerHeight) * 2 - 1;
-      target.current.y = nx * tiltIntensity;
-      target.current.x = -ny * (tiltIntensity * 0.6);
-      lastInput.current = "mouse";
+      const nx = (e.clientX / window.innerWidth) * 2 - 1; // -1..1
+      const ny = (e.clientY / window.innerHeight) * 2 - 1; // -1..1
+      // Subtle offset, clamped
+      offset.current.y = MathUtils.clamp(
+        nx * tiltIntensity,
+        -tiltIntensity,
+        tiltIntensity
+      );
+      offset.current.x = MathUtils.clamp(
+        -ny * (tiltIntensity * 0.6),
+        -tiltIntensity,
+        tiltIntensity
+      );
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
   }, [mouse, isMobile, tiltIntensity]);
 
-  // --- GYRO + FALLBACK AUTO-ROTATE (mobile only) ---
+  // --- GYRO OFFSET ---
   useEffect(() => {
-    if (!isMobile || !gyro) return;
-
-    let gotGyro = false;
-    let timeoutId;
+    if (!gyro || !isMobile) return;
 
     const handler = (e) => {
       const beta = e.beta ?? 0; // front/back
       const gamma = e.gamma ?? 0; // left/right
-      // if the event fires once, we consider gyro available
-      gotGyro = true;
-
       const rx =
         MathUtils.degToRad(MathUtils.clamp(beta, -45, 45)) *
         (tiltIntensity / 0.6);
@@ -81,54 +85,40 @@ export default function Model({
         MathUtils.degToRad(MathUtils.clamp(gamma, -45, 45)) *
         (tiltIntensity / 0.6);
 
-      target.current.x = -rx * 0.6;
-      target.current.y = ry;
-      lastInput.current = "gyro";
+      // Keep it subtle
+      offset.current.x = MathUtils.clamp(
+        -rx * 0.6,
+        -tiltIntensity,
+        tiltIntensity
+      );
+      offset.current.y = MathUtils.clamp(ry, -tiltIntensity, tiltIntensity);
     };
 
-    // Start listening right away
     window.addEventListener("deviceorientation", handler, true);
+    requestGyroPermission().catch(() => {});
 
-    // Request permission on iOS if needed (best triggered after a user gesture elsewhere;
-    // here we optimistically request—if denied, the timeout will kick in)
-    requestGyroPermission().catch(() => {
-      /* noop */
-    });
+    return () => window.removeEventListener("deviceorientation", handler, true);
+  }, [gyro, isMobile, tiltIntensity]);
 
-    // If we don't see any gyro events soon, switch to auto
-    timeoutId = setTimeout(() => {
-      if (!gotGyro) {
-        lastInput.current = "auto";
-      }
-    }, gyroWaitMs);
-
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener("deviceorientation", handler, true);
-    };
-  }, [isMobile, gyro, tiltIntensity, gyroWaitMs]);
-
-  // --- FRAME LOOP ---
+  // --- FRAME LOOP: baseline spin + eased offsets ---
   useFrame(() => {
     if (!mesh.current) return;
 
-    // Fallback auto-rotate if mobile gyro didn’t come through
-    if (isMobile && lastInput.current === "auto") {
-      mesh.current.rotation.y += autoSpeed;
-      // optional slow bob:
-      // mesh.current.rotation.x = Math.sin(performance.now() * 0.001) * 0.05;
-      return;
-    }
+    // Constant baseline rotation (same on mobile & desktop)
+    yaw.current += autoSpeed;
 
-    // Otherwise smoothly follow target (mouse or gyro)
     const m = mesh.current.rotation;
-    m.x = MathUtils.lerp(m.x, target.current.x, damp);
-    m.y = MathUtils.lerp(m.y, target.current.y, damp);
 
-    // Tiny idle drift on desktop if no input yet
-    if (!isMobile && lastInput.current === "none") {
-      m.y += 0.0015;
-    }
+    // Desired rotations = baseline yaw + small input offsets
+    const desiredY = yaw.current + offset.current.y;
+    const desiredX = offset.current.x;
+
+    // Ease toward desired
+    m.y = MathUtils.lerp(m.y, desiredY, damp);
+    m.x = MathUtils.lerp(m.x, desiredX, damp);
+
+    // (optional) tiny breathing on X if you want a hint of life:
+    // m.x += Math.sin(performance.now() * 0.001) * 0.0005;
   });
 
   return (

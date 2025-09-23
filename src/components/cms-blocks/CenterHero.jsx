@@ -117,10 +117,10 @@ export default function CenterHero({
         <div className="mx-[var(--global-margin-md)] flex flex-col items-center">
           {/* Top stack: text + badges take most of the viewport */}
           <div className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh] py-24">
-            <div className="w-full text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]">
+            <div className="w-full text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] flex flex-col gap-2">
               <StaggeredWords
                 as="h1"
-                className="page-title-large"
+                className="page-title-medium"
                 text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
               />
               <br />
