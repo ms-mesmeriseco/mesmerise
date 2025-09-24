@@ -39,9 +39,10 @@ const rawQuery = `
         align
         media {
         url
-        contentType
-       
+        contentType 
         }
+        hE {
+        json}
         trustCollection (limit:8) {
           items {
             url
@@ -74,7 +75,7 @@ const rawQuery = `
               ...SingleStudy
             }
             ... on MediaCarouselWithText {
-              ...MediaCarouselWithTextFragment
+              ...MTFrag
             }
             ...on ComparisonTable {
               ...TableFragment

@@ -12,6 +12,7 @@ import {
   processSteps,
   PACKAGES,
   finalCTA,
+  servicesFAQ,
 } from "./content.jsx";
 
 export default function WebsitePage() {
@@ -27,6 +28,7 @@ export default function WebsitePage() {
         processSteps={processSteps}
         customBlock={<PackagesRow packageData={PACKAGES} />}
         finalCTA={finalCTA}
+        servicesFAQ={servicesFAQ}
       />
     </>
   );

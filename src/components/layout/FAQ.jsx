@@ -72,7 +72,7 @@ export default function FAQTwoColumn({
                 onClick={() => toggle(idx)}
                 className="w-full text-left flex items-start justify-between gap-4 py-4 md:py-5 px-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--mesm-yellow)]  opacity-100 hover:opacity-65 transition-opacity  cursor-pointer"
               >
-                <span className="p3 md:text-xl leading-tight">{question}</span>
+                <span className=" md:text-xl leading-tight">{question}</span>
 
                 {/* Plus/Minus icon */}
                 <span
@@ -106,7 +106,7 @@ export default function FAQTwoColumn({
                     <div className="pb-5 md:pb-6 pl-1 pr-10">
                       {/* Your answers include <br />, so render as HTML */}
                       <div
-                        className="p2 opacity-85 leading-relaxed py-12 px-6"
+                        className="opacity-60 leading-relaxed py-4 max-w-[475px]"
                         dangerouslySetInnerHTML={{ __html: textContent }}
                       />
                     </div>

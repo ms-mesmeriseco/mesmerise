@@ -24,7 +24,7 @@ export default async function ProjectPage({ params }) {
   return (
     <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-md)]">
       {/* --- HERO ROW --- */}
-      <div className="col-span-12 md:col-span-8 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[80vh]">
+      <div className="col-span-12 md:col-span-12 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[80vh]">
         <Image
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
@@ -34,7 +34,51 @@ export default async function ProjectPage({ params }) {
         />
       </div>
 
-      <div className="col-span-12 lg:col-span-4 border-1 border-[var(--mesm-grey-dk)] p-[var(--global-margin-sm)] rounded-lg flex flex-col gap-4 lg:min-h-[80vh]  md:min-h-[50vh] sm:min-h-[30vh] h-[80vh]">
+      {page.dataOne?.json && (
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-full">
+          {" "}
+          <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
+            {" "}
+            <StaggeredChildren baseDelay={0} once={true}>
+              {" "}
+              {addClassToParagraphs(
+                renderRichTextWithBreaks(page.dataOne.json),
+                "page-title-large", // class to add
+                "h2"
+              )}
+            </StaggeredChildren>{" "}
+          </div>{" "}
+          {page.dataTwo?.json && (
+            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
+              {" "}
+              <StaggeredChildren baseDelay={0.2} once={true}>
+                {" "}
+                {addClassToParagraphs(
+                  renderRichTextWithBreaks(page.dataTwo.json),
+                  "page-title-large", // class to add
+                  "h2"
+                )}
+              </StaggeredChildren>{" "}
+            </div>
+          )}{" "}
+          {page.dataThree?.json && (
+            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
+              {" "}
+              <StaggeredChildren baseDelay={0.4} once={true}>
+                {" "}
+                {addClassToParagraphs(
+                  renderRichTextWithBreaks(page.dataThree.json),
+                  "page-title-large", // class to add
+                  "h2"
+                )}
+              </StaggeredChildren>{" "}
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]"></div>
+      <div className="col-span-12 lg:col-span-6  rounded-lg flex flex-col gap-2  md:max-w-[475px]">
         <h1 className="font-medium">{page.projectTitle}</h1>
         <h6 className="opacity-40">{formattedDate}</h6>
         <h6 className="opacity-40">{page.collaborationModel || ""}</h6>
@@ -46,72 +90,18 @@ export default async function ProjectPage({ params }) {
               text="Project scope"
               className="opacity-60"
             />
-            {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">
-              {richTextParagraphs(page.projectScope.json).map((p, i) => (
-                <StaggeredWords
-                  key={i}
-                  as="p"
-                  className="mb-4"
-                  text={p}
-                  // you can pass per-paragraph delays if your StaggeredWords supports it
-                />
-              ))}
-            </div> */}
 
-            {/* Optional non-animated fallback (keep or remove): */}
             <div className="text-base leading-relaxed [&>p+p]:mt-4">
-              {renderRichTextWithBreaks(page.projectScope.json)}
+              {addClassToParagraphs(
+                renderRichTextWithBreaks(page.projectScope.json),
+                "p4"
+              )}
             </div>
           </>
         )}
       </div>
 
-      {page.dataOne?.json && (
-        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-full">
-          {" "}
-          <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
-            {" "}
-            <StaggeredChildren baseDelay={0}>
-              {" "}
-              {addClassToParagraphs(
-                renderRichTextWithBreaks(page.dataOne.json),
-                "page-title-xl", // class to add
-                "h2"
-              )}
-            </StaggeredChildren>{" "}
-          </div>{" "}
-          {page.dataTwo?.json && (
-            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
-              {" "}
-              <StaggeredChildren baseDelay={0.2}>
-                {" "}
-                {addClassToParagraphs(
-                  renderRichTextWithBreaks(page.dataTwo.json),
-                  "page-title-xl", // class to add
-                  "h2"
-                )}
-              </StaggeredChildren>{" "}
-            </div>
-          )}{" "}
-          {page.dataThree?.json && (
-            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
-              {" "}
-              <StaggeredChildren baseDelay={0.4}>
-                {" "}
-                {addClassToParagraphs(
-                  renderRichTextWithBreaks(page.dataThree.json),
-                  "page-title-xl", // class to add
-                  "h2"
-                )}
-              </StaggeredChildren>{" "}
-            </div>
-          )}
-        </div>
-      )}
-
-      <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]"></div>
-
-      <div className="inline-flex col-span-12 items-center gap-2">
+      <div className="inline-flex col-span-12 gap-2 pt-6">
         {page.contentfulMetadata?.tags && (
           <ServiceTags
             items={page.contentfulMetadata.tags.map((tag) => tag.name)}
@@ -124,24 +114,26 @@ export default async function ProjectPage({ params }) {
 
       {/* --- EXTENDED DESCRIPTION (right half below) --- */}
       {page.extendedDescription?.json && (
-        <div className="col-span-12 min-h-[50vh]  border-b border-[var(--mesm-grey)] ">
+        <div className="col-span-12 min-h-[50vh] border-b border-[var(--mesm-grey)] py-8">
           {/* <div className="text-base leading-relaxed [&>p+p]:mt-4">
             {richTextParagraphs(page.extendedDescription.json).map((p, i) => (
               <StaggeredWords key={i} as="p" text={p} />
             ))}
           </div> */}
 
-          <div className="text-base md:w-1/2 ml-auto w-full  leading-relaxed [&>p+p]:mt-4 p2">
-            {addClassToParagraphs(
-              renderRichTextWithBreaks(page.extendedDescription.json),
-              "p2"
-            )}
+          <div className="text-base md:w-1/2 ml-auto w-full leading-relaxed [&>p+p]:mt-4  ">
+            <div className="max-w-[475px]">
+              {addClassToParagraphs(
+                renderRichTextWithBreaks(page.extendedDescription.json),
+                "p2"
+              )}
+            </div>
           </div>
         </div>
       )}
 
       {/* --- MEDIA GALLERY --- */}
-      <div className="col-span-12 grid grid-cols-12 gap-[var(--global-margin-sm)]pt-4">
+      <div className="col-span-12 grid grid-cols-12 gap-[var(--global-margin-sm)] pt-4">
         {page.mediaGalleryCollection?.items?.map((media, idx, arr) => {
           const mod = idx % 3; // 0 -> full, 1 & 2 -> halves
           const isLast = idx === arr.length - 1;

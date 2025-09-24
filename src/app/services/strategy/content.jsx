@@ -67,3 +67,37 @@ export const processSteps = [
 ];
 
 export const finalCTA = "A successful business starts with strategy.";
+
+export const servicesFAQ = [
+  {
+    question: "What’s a typical timeline for a strategy deck?",
+    textContent:
+      "We complete most strategy decks within 4 to 6 weeks.<br/><br/>Timelines vary depending on the scale of your business and the depth required.",
+  },
+  {
+    question: "Do I really need a strategy? Can’t you just run ads?",
+    textContent:
+      "You could run ads without a strategy, but it’s the equivalent of stepping into the market with a blindfold on. The outcome always results in wasted budget, disjointed messaging, and lot’s of restless nights waking up in cold sweats. A strategy ensures every dollar is accounted for, with ads, content, and campaigns unified to generate a strong return.",
+  },
+  {
+    question: "What kind of research do you conduct to inform your strategy?",
+    textContent:
+      "We analyse your positioning, customer psychology, competitor landscape, and digital footprint. This includes website analytics, keyword and intent mapping, on-page session recordings, customer reviews, and creative angles. <br/><br/>We break down the fundamentals and build back up from there. It allows us to craft a strategy that lowers acquisition costs (CAC) and increases client lifetime value (LTV).",
+  },
+  {
+    question: "What exactly will I walk away with?",
+    textContent:
+      "You’ll walk away with a clear roadmap showing you where to focus your budget and a priority of next steps aligned to your goal.  <br/><br/>No more confusion or second-guessing. <br/><br/>Everything is laid out in a straightforward, easy-to-read document. Think of it as a decision-making blueprint you can rely on to guide your short-term and long-term goals.",
+  },
+  {
+    question:
+      "Can you tailor the strategy deck towards specific pain points I’m having?",
+    textContent:
+      "Yes. Every strategy deck is tailored to where your business is right now and the challenges you’re facing. For example, if you’re established but struggling with conversions, we’ll focus on funnel performance and conversion optimisation. If you’re just starting, we’ll prioritise the foundations such as brand tone, visual identity, customer avatars, competitor analysis, positioning, and a funnel built for visibility and trust.",
+  },
+  {
+    question: "How involved am I in the strategy process?",
+    textContent:
+      "It’s an open collaboration. Your knowledge and input are essential, and you’ll be involved at every stage. We combine your expertise with our frameworks to ensure the final strategy feels authentic, achievable, and aligned with your ambitions. ",
+  },
+];

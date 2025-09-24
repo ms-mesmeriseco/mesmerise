@@ -46,6 +46,7 @@ body.page-about {
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
   --accent: #1ae2bd;
+  --accent2: #fba2f0;
 }
 
 body.page-blog {
@@ -103,6 +104,7 @@ body.page-blog {
   --mesm-l-grey: #d4d4d4;
   --header-height: 48px;
   --accent: #1ae2bd;
+  --accent2: #fba2f0;
 }
 /* Header entrance */
 html[data-header-visible="false"] .site-header {
@@ -214,9 +216,10 @@ h6 {
   /* text-transform: uppercase; */
 }
 p {
-  font-size: 1rem;
-  line-height: 1.3rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
   font-weight: 400;
+  opacity: 0.9;
 }
 p a {
   color: var(--accent);
@@ -255,12 +258,17 @@ p a:focus::after {
 }
 .p2 {
   font-size: 1.5rem;
-  line-height: 1.8rem;
+  line-height: 2.25rem;
   font-weight: 400;
 }
 .p3 {
   font-size: 1.8rem;
-  line-height: 2.1rem;
+  line-height: 2.4rem;
+  font-weight: 400;
+}
+.p4 {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
   font-weight: 400;
 }
 a:hover {

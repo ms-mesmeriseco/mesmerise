@@ -87,7 +87,7 @@ export default function SingleCaseStudy({
               {projectTitle}
             </h2>
 
-            <span className="bg-[var(--mesm-yellow)] text-[var(--background)] text-sm md:text-base py-1 px-3 rounded-lg whitespace-nowrap">
+            <span className="bg-[var(--mesm-yellow)] text-[var(--background)] text-sm md:text-base py-1 px-3 rounded-xl whitespace-nowrap">
               {formattedYear}
               {formattedYear && " \u2013 "}
               {collaborationModel ? "Defined" : "Ongoing"}
@@ -100,7 +100,7 @@ export default function SingleCaseStudy({
             {summary?.json && (
               <div className="border-b-1 border-b border-[var(--mesm-grey-dk)]">
                 <button
-                  className="w-full text-left px-1 py-2 flex justify-between items-center cursor-pointer"
+                  className="w-full text-left px-1 py-4 flex justify-between items-center cursor-pointer"
                   onClick={() => setShowSummary((s) => !s)}
                   aria-expanded={showSummary}
                   aria-controls="summary-panel"
@@ -126,7 +126,7 @@ export default function SingleCaseStudy({
                       transition={{ duration: 0.28, ease: "easeInOut" }}
                       className="overflow-hidden px-1 md:px-2"
                     >
-                      <div className="py-2">
+                      <div className="py-6 max-w-[475px]">
                         {renderRichTextWithBreaks(summary.json)}
                       </div>
                     </motion.div>
@@ -139,7 +139,7 @@ export default function SingleCaseStudy({
             {results?.json && (
               <div className="border-b-1 border-b border-[var(--mesm-grey-dk)]">
                 <button
-                  className="w-full text-left px-1 py-2 flex justify-between items-center cursor-pointer"
+                  className="w-full text-left px-1 py-4 flex justify-between items-center cursor-pointer"
                   onClick={() => setShowResults((s) => !s)}
                   aria-expanded={showResults}
                   aria-controls="results-panel"
@@ -165,9 +165,9 @@ export default function SingleCaseStudy({
                       transition={{ duration: 0.28, ease: "easeInOut" }}
                       className="overflow-hidden"
                     >
-                      <div className="px-1 md:px-2 py-2">
+                      <div className="px-1 md:px-2 py-6">
                         {timeFrame && (
-                          <p className="text-xs md:text-sm opacity-70 m-0 mb-2">
+                          <p className="text-xs md:text-sm opacity-70 m-0 mb-2 max-w-[475px]">
                             {timeFrame}
                           </p>
                         )}

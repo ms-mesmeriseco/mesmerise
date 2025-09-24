@@ -7,6 +7,8 @@ import CollabModel from "../home/CollabModel";
 import InView from "@/hooks/InView";
 import Button from "@/components/ui/Button";
 import ServiceTags from "./ServiceTags";
+import ServicesRail from "./ServicesRail";
+import FAQ from "@/components/layout/FAQ.jsx";
 
 function isVideo(src) {
   return /\.(mp4|webm|ogg)$/i.test(src);
@@ -64,9 +66,9 @@ function ThirdPara({ text }) {
 
 function FinalCTA({ text }) {
   return (
-    <section className="flex justify-center text-white border-b-1 border-[var(--mesm-grey-dk)] pb-4">
-      <div className="">
-        <InView>
+    <InView>
+      <section className="flex flex-col justify-left text-white pb-4">
+        <div className="">
           <StaggeredWords
             as="h2"
             text={text}
@@ -76,9 +78,10 @@ function FinalCTA({ text }) {
           <br />
           <br />
           <br />
+        </div>
 
-          <div className="ml-auto w-full">
-            <a
+        <div className="text-right pt-6">
+          {/* <a
               href="/connect"
               className="hover:text-[var(--accent)] duration-200 text-[var(--background)]  text-center"
             >
@@ -88,14 +91,13 @@ function FinalCTA({ text }) {
                 className="page-title-large bg-[var(--mesm-red)] hover:bg-[var(--mesm-yellow)] duration-200 w-fit"
                 margin="-40% 0px"
               />
-            </a>
-            {/* <Button size="x-large" variant="primary" href="/connect">
-              Say Hi
-            </Button> */}
-          </div>
-        </InView>
-      </div>
-    </section>
+            </a> */}
+          <Button size="x-large" variant="accent2" href="/connect">
+            Say Hi
+          </Button>
+        </div>
+      </section>
+    </InView>
   );
 }
 
@@ -109,6 +111,7 @@ export default function ServicePageBase({
   para3Content,
   customBlock,
   finalCTA,
+  servicesFAQ,
 }) {
   return (
     <>
@@ -146,6 +149,14 @@ export default function ServicePageBase({
         <ThirdPara text={para3Content} />
         <CollabModel />
         <FinalCTA text={finalCTA} />
+        <FAQ
+          label="common questions"
+          title="Frequently asked questions"
+          items={servicesFAQ} // your array of { question, textContent }
+          singleOpen={false} // set true to allow only one open at a time
+          defaultOpen={[0]} // which indexes start open
+        />
+        <ServicesRail tag="all" />
       </div>
     </>
   );

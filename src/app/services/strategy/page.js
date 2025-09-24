@@ -1,7 +1,6 @@
 "use client";
 
 import ServicePageBase from "@/components/services/ServicePageBase.jsx";
-import PackagesRow from "@/components/services/PackagesRow.jsx";
 
 import {
   heroMedia,
@@ -11,6 +10,7 @@ import {
   serviceTags,
   processSteps,
   finalCTA,
+  servicesFAQ,
 } from "./content.jsx";
 
 export default function StrategyPage() {
@@ -25,6 +25,7 @@ export default function StrategyPage() {
         para3Content={para3Content}
         processSteps={processSteps}
         finalCTA={finalCTA}
+        servicesFAQ={servicesFAQ}
       />
     </>
   );

@@ -7,22 +7,22 @@ const SIZE_MAP = {
     radius: "rounded-lg",
     font: "text-sm leading-none",
     px: 12, // px-2
-    py: 6, // py-1
-    hoverDeltaX: 4,
+    py: 4, // py-1
+    hoverDeltaX: 2,
   },
   large: {
     radius: "md:rounded-xl rounded-2xl",
     font: "md:text-xl text-lg",
     px: 16, // px-3
     py: 4, // py-2
-    hoverDeltaX: 0,
+    hoverDeltaX: 2,
   },
   "x-large": {
-    radius: "rounded-2xl",
-    font: "md:text-2xl text-xl",
-    px: 32, // px-6
-    py: 7, // py-2
-    hoverDeltaX: 8,
+    radius: "rounded-3xl",
+    font: "md:text-5xl text-xl",
+    px: 28, // px-6
+    py: 8, // py-2
+    hoverDeltaX: 2,
   },
   none: {
     radius: "",
@@ -43,8 +43,9 @@ const VARIANTS = {
   accent:
     "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98 " +
     "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
-  nonButton:
-    "hover:text-[var(--mesm-blue)] duration-200 text-[var(--background)]  bg-[var(--mesm-yellow)] hover:bg-[var(--mesm-red)] duration-200 border-0",
+  accent2:
+    "bg-[var(--accent2)]/92 border-[var(--accent2)]/100 text-[var(--background)]/98 " +
+    "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
 };
 
 export default function Button({

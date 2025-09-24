@@ -10,6 +10,7 @@ import {
   serviceTags,
   processSteps,
   finalCTA,
+  servicesFAQ,
 } from "./content.jsx";
 
 export default function AnalyticsPage() {
@@ -24,6 +25,7 @@ export default function AnalyticsPage() {
         para3Content={para3Content}
         processSteps={processSteps}
         finalCTA={finalCTA}
+        servicesFAQ={servicesFAQ}
       />
     </>
   );

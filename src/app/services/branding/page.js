@@ -10,6 +10,7 @@ import {
   serviceTags,
   processSteps,
   finalCTA,
+  servicesFAQ,
 } from "./content.jsx";
 
 export default function BrandingPage() {
@@ -24,6 +25,7 @@ export default function BrandingPage() {
         para3Content={para3Content}
         processSteps={processSteps}
         finalCTA={finalCTA}
+        servicesFAQ={servicesFAQ}
       />
     </>
   );

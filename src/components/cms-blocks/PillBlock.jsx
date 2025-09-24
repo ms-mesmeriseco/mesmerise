@@ -21,7 +21,7 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
         <div className="flex justify-center w-full">
           <motion.div
             key="motion"
-            className="flex flex-row justify-between flex-wrap gap-[var(--global-margin-xs)] border border-[var(--mesm-grey-dk)] rounded-xl p-1 w-6/8"
+            className="flex flex-row justify-between flex-wrap gap-[var(--global-margin-xs)] border border-[var(--mesm-grey-dk)] rounded-2xl p-1 w-6/8"
           >
             <AnimatePresence mode="wait">
               {pills.map((pill, idx) => (
@@ -32,7 +32,7 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
                   transition={{ duration: 2 }}
                   key={idx}
                   onClick={() => setActiveIndex(idx)}
-                  className={`flex-1 whitespace-nowrap px-4 py-1 text-md font-medium rounded-lg transition-colors ${
+                  className={`flex-1 whitespace-nowrap px-4 py-1 text-md font-medium rounded-xl transition-colors ${
                     idx === activeIndex
                       ? "bg-[var(--mesm-red)] text-[var(--background)]"
                       : " hover:text-[var(--foreground)] text-[var(--mesm-grey)] cursor-pointer"

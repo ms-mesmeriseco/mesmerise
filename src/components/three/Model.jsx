@@ -20,7 +20,7 @@ export async function requestGyroPermission() {
 }
 
 export default function Model({
-  tiltIntensity = 0.6, // how much the cursor/gyro can tilt the model
+  tiltIntensity = 0.3, // how much the cursor/gyro can tilt the model
   mouse = true, // enable mouse offset
   gyro = true, // enable gyro offset
   damp = 0.08, // smoothing for following offsets

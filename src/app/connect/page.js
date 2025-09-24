@@ -146,7 +146,7 @@ export default function Connect() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email address"
+                placeholder="Email"
                 className="w-full border-b-1 p-[var(--global-margin-sm)] bg-transparent"
                 aria-label="Email address"
               />
@@ -155,7 +155,7 @@ export default function Connect() {
                 type="text"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
-                placeholder="Company name"
+                placeholder="Company"
                 className="w-full border-b-1 p-[var(--global-margin-sm)] bg-transparent"
                 aria-label="Company name"
               />

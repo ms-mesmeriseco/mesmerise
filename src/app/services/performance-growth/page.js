@@ -10,6 +10,8 @@ import {
   para3Content,
   serviceTags,
   processSteps,
+  finalCTA,
+  servicesFAQ,
 } from "./content.jsx";
 
 export default function PerformancePage() {
@@ -23,6 +25,8 @@ export default function PerformancePage() {
         para2Content={para2Content}
         para3Content={para3Content}
         processSteps={processSteps}
+        finalCTA={finalCTA}
+        servicesFAQ={servicesFAQ}
       />
     </>
   );

@@ -59,7 +59,7 @@ function PillList({ items }) {
         <div
           key={`li-${i}`}
           role="listitem"
-          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-2 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-md leading-tight"
+          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-3 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-xl leading-tight"
         >
           <img
             width={24}
@@ -117,7 +117,7 @@ export default function CenterHero({
         <div className="mx-[var(--global-margin-md)] flex flex-col items-center">
           {/* Top stack: text + badges take most of the viewport */}
           <div className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh] py-24">
-            <div className="w-full text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] flex flex-col gap-2">
+            <div className="w-full text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] flex flex-col gap-2 min-h-[60vh] justify-center items-center">
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"
@@ -133,8 +133,8 @@ export default function CenterHero({
                   <Button
                     href={ctaUrl}
                     extraClass="mt-4"
-                    variant="primary"
-                    size="x-large"
+                    variant="accent2"
+                    size="large"
                   >
                     Learn More
                   </Button>

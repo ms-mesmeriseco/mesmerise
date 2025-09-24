@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_MEDIA_CAROUSEL = gql`
-  fragment MediaCarouselWithTextFragment on MediaCarouselWithText {
+  fragment MTFrag on MediaCarouselWithText {
     entryTitle
     mediaContentCollection(limit: 4) {
       items {

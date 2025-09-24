@@ -77,7 +77,7 @@ export default function Connect() {
       <br /> */}
       <FAQ
         label="common questions"
-        title="Frequently Asked Questions"
+        title="Frequently asked questions"
         items={servicesFAQ} // your array of { question, textContent }
         singleOpen={false} // set true to allow only one open at a time
         defaultOpen={[0]} // which indexes start open

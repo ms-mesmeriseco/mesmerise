@@ -43,4 +43,22 @@ export const processSteps = [
 ];
 
 export const finalCTA =
-  "Have you ever looked at numbers and thoughts: woah this is beautiful? We have.";
+  "When you understand the data, decision-making becomes confident, strategic and simple.";
+
+export const servicesFAQ = [
+  {
+    question: "Why do I need analytics if I already have reporting tools?",
+    textContent:
+      "Most tools show you numbers, but they don’t explain why things happen. Our analytics and reporting unify your platforms, highlight the details behind the data, and give you clear, actionable insights.",
+  },
+  {
+    question: "How is this different from a marketing agency report?",
+    textContent:
+      "Typical reports list clicks and impressions without context. We go deeper. We show you how each stage of your funnel connects, where you are losing revenue, and what to adjust.",
+  },
+  {
+    question: "How do you unify all my data?",
+    textContent:
+      "For enterprise-level clients, we integrate all your platform metrics into a customer data platform, giving you a holistic overview of everything. From there, we create a report that cuts through inefficiencies and highlights exactly how to overcome current pain points.<br/><br/>For smaller businesses, we streamline your data into a clear report with actionable steps. Instead of being buried in numbers, you see what matters most and how to generate more revenue with clear next steps.",
+  },
+];
