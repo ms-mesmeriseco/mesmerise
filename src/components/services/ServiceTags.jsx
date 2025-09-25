@@ -26,7 +26,7 @@ export default function ServiceTags({
 
   const tagSize = [
     large
-      ? "md:rounded-xl md:px-3 md:py-1 md:text-5xl text-[var(--background)]  bg-[var(--mesm-blue)]  hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] rounded-md px-3 py-[0.05rem] text-2xl"
+      ? "md:rounded-xl  rounded-xl md:px-3 md:py-1 md:text-5xl text-[var(--background)]  bg-[var(--mesm-blue)]  hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] px-3 py-[0.05rem] text-2xl"
       : "rounded-lg px-2 py-0 text-md hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] bg-[var(--mesm-red)] text-[var(--background)] duration-200",
   ];
   const gapSize = [large ? "md:gap-2 gap-1" : "gap-1"];
@@ -37,15 +37,13 @@ export default function ServiceTags({
   };
 
   return (
-    <section
-      data-marker={label}
-      className="flex flex-col gap-[var(--global-margin-sm)]"
-    >
+    <section data-marker={label} className="flex flex-col">
+      <h6>What we offer</h6>
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className={`flex flex-wrap ${gapSize}`}
+        className={`flex flex-wrap ${gapSize}  border-y border-[var(--mesm-grey-dk)] py-4`}
       >
         {items.map((tag, idx) => (
           <motion.button

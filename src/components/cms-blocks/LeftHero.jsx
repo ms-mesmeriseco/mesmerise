@@ -98,6 +98,7 @@ export default function LeftHero({
   showCta = true,
   ctaUrl = "/connect",
   logos,
+  heroEmbed,
 }) {
   const listItems = useMemo(
     () => getListItemsFromRichText(heroList?.json || {}),
@@ -138,8 +139,8 @@ export default function LeftHero({
               <Button
                 href={ctaUrl}
                 extraClass="mt-4"
-                variant="primary"
-                size="x-large"
+                variant="accent2"
+                size="large"
               >
                 Learn More
               </Button>

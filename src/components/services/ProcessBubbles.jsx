@@ -109,7 +109,7 @@ function BubbleItem({
         transition={spring}
         className={[
           "justify-center select-none outline-none focus-visible:ring-2 focus-visible:ring-black/10",
-          "whitespace-nowrap cursor-pointer rounded-2xl px-3 py-1 font-normal transition leading-none",
+          "whitespace-nowrap cursor-pointer md:rounded-2xl  rounded-xl px-3 py-1 font-normal transition leading-none",
           bubbleColorClasses, // ← here
         ].join(" ")}
         style={{
@@ -141,7 +141,7 @@ function BubbleItem({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={spring}
-            className="mt-3 rounded-xl p-4 text-left bg-[var(--background)] text-[var(--mesm-l-grey)] border-1 border-[var(--mesm-grey-dk)] "
+            className="mt-1 md:rounded-2xl rounded-xl p-4 text-left bg-[var(--background)] text-[var(--mesm-l-grey)] border-1 border-[var(--mesm-grey-dk)] "
             style={{
               maxWidth: isMobile ? "100%" : maxItemWidth,
               backdropFilter: "saturate(140%) blur(4px)",
@@ -195,10 +195,11 @@ export default function ProcessBubbles({
 
   return (
     <section className="w-full">
+      <h6>Process</h6>
       <motion.div
         layout
         transition={spring}
-        className="flex w-full flex-wrap items-start content-start gap-3"
+        className="flex w-full flex-wrap items-start content-start md:gap-3 gap-1 py-4 border-y border-[var(--mesm-grey-dk)]"
       >
         {items.map((it, idx) => {
           const isOpen = openSet.has(idx);

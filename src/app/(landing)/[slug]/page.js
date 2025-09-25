@@ -54,6 +54,7 @@ export default function LandingPage({ params }) {
         showCta
         ctaUrl="/connect"
         logos={page.trustCollection?.items}
+        heroEmbed={page.hE}
       />
 
       <PageBase blocks={blocks} />

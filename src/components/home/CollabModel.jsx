@@ -17,7 +17,7 @@ const offerings = [
 
 export default function CollabModel() {
   return (
-    <section data-marker="how we work" className="py-24 flex flex-col">
+    <section data-marker="how we work" className="py-24 flex flex-col h-full">
       <h6>Collaboration Models</h6>
       {/* <PageTitleMedium text="Collaboration Models" center /> */}
 
@@ -25,11 +25,11 @@ export default function CollabModel() {
         {offerings.map((pkg) => (
           <div
             key={pkg.title}
-            className="md:h-[50vh] h-[40vh] flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--foreground)] duration-200 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] text-[var(--foreground)]"
+            className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--foreground)] duration-200 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] text-[var(--foreground)]"
           >
             <h3 className="page-title-medium font-bold w-1/2">{pkg.title}</h3>
             <div>
-              <p className="text-base p2 opacity-50 hover:opacity-100 duration-200">
+              <p className="text-base opacity-50 hover:opacity-100 duration-200">
                 {pkg.subheading}
               </p>
               <br />

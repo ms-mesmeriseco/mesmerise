@@ -49,7 +49,7 @@ function SecondPara({ text }) {
 }
 function ThirdPara({ text }) {
   return (
-    <section className="flex items-center justify-center text-white min-h-[70vh] md:w-3/4 px-6">
+    <section className="flex items-center justify-center text-white min-h-[70vh] md:w-3/4">
       <div className="text-left">
         <InView>
           <StaggeredWords
@@ -115,7 +115,7 @@ export default function ServicePageBase({
 }) {
   return (
     <>
-      <div className="p-[var(--global-margin-lg)] flex flex-col gap-8">
+      <div className="md:p-[var(--global-margin-lg)] p-[var(--global-margin-sm)]  flex flex-col gap-8">
         <section className="max-h-full flex items-center justify-center">
           {heroMedia ? (
             isVideo(heroMedia) ? (
@@ -125,25 +125,24 @@ export default function ServicePageBase({
                 loop
                 muted
                 playsInline
-                className="w-full h-full md:aspect-16/9 object-cover "
+                className="w-full h-full md:aspect-16/9 aspect-9/16 object-cover "
               />
             ) : (
               <img
                 src={heroMedia}
                 alt="Hero Media"
-                className="w-full h-full  md:aspect-16/9 object-cover "
+                className="w-full h-full  md:aspect-16/9 aspect-9/16 object-cover "
               />
             )
           ) : null}
         </section>
         <ServicesHero heroTitle={heroTitle} />
         <IntroPara text={para1Content} />
-        <h6>What we offer</h6>
 
         <ServiceTags items={serviceTags} />
 
         <SecondPara text={para2Content} />
-        <h6>Process</h6>
+
         <ProcessBubbles items={processSteps} />
         <div>{customBlock}</div>
         <ThirdPara text={para3Content} />

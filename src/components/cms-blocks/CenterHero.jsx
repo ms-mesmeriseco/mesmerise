@@ -5,6 +5,55 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { BLOCKS } from "@contentful/rich-text-types";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+
+/* --- helpers --- */
+function decodeEntities(str = "") {
+  return str
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+// optional: lightly sanitize to keep only the iframe tag (prevents stray HTML)
+function extractIframe(html = "") {
+  const match = html.match(/<iframe[^>]*>[\s\S]*?<\/iframe>/i);
+  return match ? match[0] : "";
+}
+
+const richRenderOptions = {
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node, children) => {
+      const raw = (node.content || [])
+        .map((c) => (c.nodeType === "text" ? c.value || "" : ""))
+        .join("");
+
+      const looksLikeIframe =
+        raw.includes("<iframe") || raw.includes("&lt;iframe");
+
+      if (!looksLikeIframe) return <p>{children}</p>;
+
+      // 1) decode & 2) extract the iframe only
+      const decoded = decodeEntities(raw);
+      const iframe = extractIframe(decoded);
+      if (!iframe) return <p>{children}</p>;
+
+      // Make it responsive inside your aspect-[16/9] wrapper
+      return (
+        <div
+          className="absolute inset-0 w-full h-full"
+          // We assume this input is trusted (YouTube embed).
+          // If you ever allow arbitrary user input, add stricter sanitization.
+          dangerouslySetInnerHTML={{ __html: iframe }}
+        />
+      );
+    },
+  },
+};
 
 /* ---------- tiny helpers ---------- */
 function textFromNode(node) {
@@ -98,6 +147,7 @@ function MediaDisplay({ media }) {
 /* ---------- CenterHero ---------- */
 export default function CenterHero({
   heroMedia,
+  heroEmbed,
   pageHeader,
   pageHeaderLine2,
   pageSubtitle,
@@ -142,10 +192,18 @@ export default function CenterHero({
               </div>
             </div>
             <br />
-            {/* Media below: 16:9 and 3/4 width on desktop (full on mobile) */}
             <div className="w-full flex items-center justify-center pb-16">
               <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
-                <MediaDisplay media={heroMedia} />
+                {heroEmbed?.json ? (
+                  <div className="absolute inset-0">
+                    {documentToReactComponents(
+                      heroEmbed.json,
+                      richRenderOptions
+                    )}
+                  </div>
+                ) : (
+                  <MediaDisplay media={heroMedia} />
+                )}
               </div>
             </div>
 
