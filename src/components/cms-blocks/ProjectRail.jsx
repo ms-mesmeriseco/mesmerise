@@ -31,6 +31,10 @@ export default function ProjectRail({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [centerIndex, setCenterIndex] = useState(0);
 
+  // NEW: disable state for the two circle buttons
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
   const scrollerRef = useRef(null);
   const cardsRef = useRef([]);
 
@@ -54,19 +58,19 @@ export default function ProjectRail({
     return byTag.slice(0, max);
   }, [projects, tagName, tagSlug, max]);
 
-  // Ensure we always render 6 slots to preserve layout
+  // Ensure we always render 6 slots to preserve layout (if you still want this)
   const slots = useMemo(() => {
     const arr = filtered.slice(0, 6);
     while (arr.length < 6) arr.push(null);
     return arr;
   }, [filtered]);
 
-  // Keep refs in sync
+  // Keep refs in sync with filtered length
   useEffect(() => {
-    cardsRef.current = cardsRef.current.slice(0, projects.length);
-  }, [projects.length]);
+    cardsRef.current = cardsRef.current.slice(0, filtered.length);
+  }, [filtered.length]);
 
-  // Update which card is closest to center
+  // Update which card is closest to center + start/end detection
   const updateCenter = useCallback(() => {
     const scroller = scrollerRef.current;
     if (!scroller || cardsRef.current.length === 0) return;
@@ -86,8 +90,13 @@ export default function ProjectRail({
         bestIdx = idx;
       }
     });
-
     setCenterIndex(bestIdx);
+
+    // NEW: track bounds for button disabled state
+    const maxLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    const left = scroller.scrollLeft;
+    setAtStart(left <= 2);
+    setAtEnd(left >= maxLeft - 2);
   }, []);
 
   useEffect(() => {
@@ -95,7 +104,6 @@ export default function ProjectRail({
     if (!scroller) return;
     const onScroll = () => updateCenter();
     const onResize = () => updateCenter();
-
     scroller.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
     updateCenter(); // initial
@@ -114,9 +122,23 @@ export default function ProjectRail({
     },
   };
 
+  // NEW: fixed-portion scroll helpers (60% of visible width)
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const scrollByAmount = (dir = 1) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const amount = Math.round(scroller.clientWidth * 0.6); // adjust 0.6 to taste
+    const maxLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    const target = clamp(scroller.scrollLeft + dir * amount, 0, maxLeft);
+    scroller.scrollTo({ left: target, behavior: "smooth" });
+  };
+  const goPrev = () => scrollByAmount(-1);
+  const goNext = () => scrollByAmount(1);
+
   return (
-    <section className="w-full">
+    <section className="w-full relative">
       <h6>Some of our best work</h6>
+
       <div
         ref={scrollerRef}
         className="relative w-full overflow-x-auto overflow-y-visible snap-x snap-mandatory scroll-smooth
@@ -125,7 +147,7 @@ export default function ProjectRail({
         aria-label="Project rail"
       >
         <ul className="flex gap-2 py-2 select-none">
-          {isLoaded && projects.length === 0 && (
+          {isLoaded && filtered.length === 0 && (
             <li className="text-sm opacity-70">No projects found.</li>
           )}
 
@@ -157,7 +179,7 @@ export default function ProjectRail({
                   animate={showDetails ? "focus" : "idle"}
                   className="relative w-[70vw] sm:w-[46vw] md:w-[36vw] lg:w-[24vw]"
                 >
-                  {/* Media with 2:3 aspect (4/6) */}
+                  {/* Media with 2:3 aspect */}
                   <div className="relative aspect-[2/3] overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)] bg-black/20">
                     {src ? (
                       <Image
@@ -190,7 +212,7 @@ export default function ProjectRail({
                               <div className="prose-invert prose-p:my-1 leading-relaxed lg:w-1/2">
                                 {addClassToParagraphs(
                                   renderRichTextWithBreaks(doc),
-                                  "page-title-xl", // class to add
+                                  "page-title-xl",
                                   "h2"
                                 )}
                               </div>
@@ -210,6 +232,34 @@ export default function ProjectRail({
             );
           })}
         </ul>
+      </div>
+
+      {/* Two circles (bottom-right, below the rail) */}
+      <div className="mt-2 w-full flex justify-end">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Scroll left"
+            onClick={goPrev}
+            disabled={atStart}
+            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+              atStart
+                ? "opacity-40 cursor-default"
+                : "hover:bg-black/40 cursor-pointer "
+            }`}
+          />
+          <button
+            type="button"
+            aria-label="Scroll right"
+            onClick={goNext}
+            disabled={atEnd}
+            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+              atEnd
+                ? "opacity-40 cursor-default bg-transparent"
+                : "hover:bg-black/40  cursor-pointer"
+            }`}
+          />
+        </div>
       </div>
     </section>
   );

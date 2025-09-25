@@ -5,15 +5,15 @@ import { motion } from "framer-motion";
 const SIZE_MAP = {
   small: {
     radius: "rounded-lg",
-    font: "text-sm leading-none",
+    font: "md:text-sm text-xs leading-none",
     px: 12, // px-2
     py: 4, // py-1
     hoverDeltaX: 2,
   },
   large: {
-    radius: "md:rounded-xl rounded-2xl",
-    font: "md:text-xl text-lg",
-    px: 16, // px-3
+    radius: " rounded-xl",
+    font: "md:text-xl text-md",
+    px: 14, // px-3
     py: 4, // py-2
     hoverDeltaX: 2,
   },

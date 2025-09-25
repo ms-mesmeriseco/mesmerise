@@ -4,16 +4,6 @@ import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
-/**
- * ServicesRail
- * - Horizontal, snap-scrolling rail for five offerings
- * - Focus/hover the centered card like ProjectRail
- * - No media; uses subtle backgrounds + accent ring
- *
- * Props:
- * - services: [{ title, blurb, href, accent? (css var or hex), tag? (small label) }]
- * - heading?: string
- */
 export default function ServicesRail({
   heading = "What we do",
   services = [
@@ -59,6 +49,10 @@ export default function ServicesRail({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [centerIndex, setCenterIndex] = useState(0);
 
+  // NEW: disable state for circle buttons
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
   const items = useMemo(() => services.slice(0, 5), [services]);
 
   useEffect(() => {
@@ -68,6 +62,8 @@ export default function ServicesRail({
   const updateCenter = useCallback(() => {
     const scroller = scrollerRef.current;
     if (!scroller || cardsRef.current.length === 0) return;
+
+    // closest-to-center card
     const rect = scroller.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
 
@@ -84,6 +80,12 @@ export default function ServicesRail({
       }
     });
     setCenterIndex(bestIdx);
+
+    // NEW: start/end detection for disabling buttons
+    const maxLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    const left = scroller.scrollLeft;
+    setAtStart(left <= 2);
+    setAtEnd(left >= maxLeft - 2);
   }, []);
 
   useEffect(() => {
@@ -109,9 +111,23 @@ export default function ServicesRail({
     },
   };
 
+  // NEW: fixed-portion scroll helpers (60% of visible width)
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const scrollByAmount = (dir = 1) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const amount = Math.round(scroller.clientWidth * 0.6); // tweak 0.6 as desired
+    const maxLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    const target = clamp(scroller.scrollLeft + dir * amount, 0, maxLeft);
+    scroller.scrollTo({ left: target, behavior: "smooth" });
+  };
+  const goPrev = () => scrollByAmount(-1);
+  const goNext = () => scrollByAmount(1);
+
   return (
-    <section className="w-full">
+    <section className="w-full relative">
       {heading && <h6 className="mb-2 opacity-80">{heading}</h6>}
+
       <div
         ref={scrollerRef}
         className="relative w-full overflow-x-auto overflow-y-visible snap-x snap-mandatory scroll-smooth
@@ -146,9 +162,6 @@ export default function ServicesRail({
                   <div
                     className="relative aspect-[2/3] overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)] bg-black/20"
                     style={{
-                      // subtle angled sheen + accent ring on focus
-                      //   backgroundImage:
-                      //     "linear-gradient(120deg, rgba(255,255,255,0.06) 0%, transparent 35%), radial-gradient(120% 120% at 0% 0%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 60%)",
                       boxShadow: showDetails
                         ? `0 0 0 1px var(--mesm-grey-dk), 0 0 0 2px ${accent}33 inset`
                         : "none",
@@ -156,17 +169,7 @@ export default function ServicesRail({
                   >
                     {/* Always-visible top content */}
                     <div className="absolute inset-0 p-3 flex flex-col justify-between h-[60px] ">
-                      <div className="flex items-center gap-2">
-                        {/* {svc.tag && (
-                          <span
-                            className="text-[10px] px-2 py-0.5 rounded-full border border-[var(--mesm-grey-dk)] opacity-80"
-                            style={{ background: "#00000040" }}
-                          >
-                            {svc.tag}
-                          </span>
-                        )} */}
-                      </div>
-
+                      <div className="flex items-center gap-2" />
                       <div className="mb-auto mt-[10px]">
                         <h3 className="text-lg md:text-xl font-semibold leading-tight">
                           {svc.title}
@@ -214,6 +217,34 @@ export default function ServicesRail({
             );
           })}
         </ul>
+      </div>
+
+      {/* Two circles (bottom-right, below the rail) */}
+      <div className="mt-2 w-full flex justify-end">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Scroll left"
+            onClick={goPrev}
+            disabled={atStart}
+            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+              atStart
+                ? "opacity-40 cursor-default"
+                : "hover:bg-black/40 cursor-pointer "
+            }`}
+          />
+          <button
+            type="button"
+            aria-label="Scroll right"
+            onClick={goNext}
+            disabled={atEnd}
+            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+              atEnd
+                ? "opacity-40 cursor-default bg-transparent"
+                : "hover:bg-black/40  cursor-pointer"
+            }`}
+          />
+        </div>
       </div>
     </section>
   );

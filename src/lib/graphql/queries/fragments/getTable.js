@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_TABLE = gql`
-  fragment TableFragment on ComparisonTable {
+  fragment Table on ComparisonTable {
     richTxt {
       json
     }

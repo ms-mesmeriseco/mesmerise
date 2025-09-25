@@ -1,25 +1,22 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
-
 import InView from "@/hooks/InView";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import dynamic from "next/dynamic";
+import useLowEndDevice from "@/hooks/useLowEndDevice";
+import SceneFallback from "@/components/home/SceneFallback";
+import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 
-const Scene = dynamic(() => import("@/components/three/Scene"), {
-  ssr: false,
-});
+const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
   () => import("@/components/cms-blocks/ProjectRail"),
-  {
-    suspense: true,
-  }
+  { suspense: true }
 );
 const ServicesList = dynamic(() => import("@/components/home/ServicesList"), {
   suspense: true,
 });
-
 const ImpactStats = dynamic(() => import("@/components/home/ImpactStats"), {
   suspense: true,
 });
@@ -47,18 +44,49 @@ function usePageStageController(splashRef, section2Ref) {
 }
 
 function Splash({ innerRef }) {
+  const lowEnd = useLowEndDevice();
   const [sceneLoaded, setSceneLoaded] = useState(false);
+  const [showFallback, setShowFallback] = useState(lowEnd);
+  const [allow3D, setAllow3D] = useState(!lowEnd);
+
+  // give the scene a brief window to load before falling back (non–low-end)
+  useEffect(() => {
+    if (lowEnd) return;
+    const t = setTimeout(() => {
+      if (!sceneLoaded) setShowFallback(true);
+    }, 2000);
+    return () => clearTimeout(t);
+  }, [sceneLoaded, lowEnd]);
+
+  const handleEnable3D = () => {
+    setAllow3D(true);
+    setShowFallback(true);
+  };
+
+  const handleSceneLoaded = () => {
+    setSceneLoaded(true);
+    setShowFallback(false);
+  };
+
   return (
     <InView once={true} margin="-60% 0px -60% 0px">
       <section
         ref={innerRef}
         id="home-scene"
         data-marker="HELLO"
-        className="h-screen w-[100%] border-b pb-36 mb-12 border-[var(--mesm-grey-dk)]"
+        className="relative h-[100vh] w-[100%] border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
       >
-        {/* <LoadingSplash isSceneLoaded={sceneLoaded} /> */}
+        {/* {showFallback && (
+          <div className="absolute inset-0 z-10">
+            <SceneFallback
+              showEnableButton={lowEnd && !sceneLoaded && !allow3D}
+              onEnable3D={lowEnd ? handleEnable3D : undefined}
+            />
+          </div>
+        )}
 
-        <Scene onLoaded={setSceneLoaded} />
+        {allow3D && <Scene onLoaded={handleSceneLoaded} />} */}
+        <Scene onLoaded={handleSceneLoaded} />
       </section>
     </InView>
   );
@@ -71,7 +99,7 @@ function Statement({ innerRef }) {
       data-marker="WHAT WE DO"
       className="min-h-[50vh] flex items-start justify-center text-white"
     >
-      <div className="">
+      <div>
         <InView>
           <StaggeredWords
             as="h1"
@@ -91,7 +119,7 @@ function SecondaryStatement() {
       data-marker="WHAT WE BRING"
       className="min-h-[50vh] flex items-start justify-center text-white"
     >
-      <div className="">
+      <div>
         <StaggeredWords
           as="p"
           text="Bridging the gap between aesthetic solutions and undeniable data."
@@ -130,7 +158,6 @@ export default function HomePage() {
   const splashRef = useRef(null);
   const section2Ref = useRef(null);
   const { dark } = usePageStageController(splashRef, section2Ref);
-  // const marker = useSectionMarker();
 
   return (
     <main
@@ -139,11 +166,17 @@ export default function HomePage() {
         dark ? "bg-black" : "bg-black",
       ].join(" ")}
     >
-      <Splash innerRef={splashRef} label="Mmm" />
-      <Statement innerRef={section2Ref} label="what we're about" />
+      <Splash innerRef={splashRef} />
+      <Statement innerRef={section2Ref} />
       <ProjectsRow />
       <SecondaryStatement />
-      <ImpactStats />
+      <div className="md:hidden">
+        <ImpactStatsMobile />
+      </div>
+      <div className="md:block  hidden">
+        <ImpactStats />
+      </div>
+
       <CollabModel />
       <ServicesSection />
     </main>

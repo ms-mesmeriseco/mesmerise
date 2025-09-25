@@ -78,7 +78,7 @@ const rawQuery = `
               ...MTFrag
             }
             ...on ComparisonTable {
-              ...TableFragment
+              ...Table
             }
           }
         }
