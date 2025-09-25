@@ -7,7 +7,6 @@ import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 /* --- helpers --- */
 function decodeEntities(str = "") {

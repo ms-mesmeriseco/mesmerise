@@ -1,4 +1,5 @@
 import Button from "../ui/Button";
+import InView from "@/hooks/InView";
 
 const offerings = [
   {
@@ -18,30 +19,32 @@ const offerings = [
 export default function CollabModel() {
   return (
     <section data-marker="how we work" className="py-24 flex flex-col h-full">
-      <h6>Collaboration Models</h6>
-      {/* <PageTitleMedium text="Collaboration Models" center /> */}
+      <InView>
+        <h6>Collaboration Models</h6>
+        {/* <PageTitleMedium text="Collaboration Models" center /> */}
 
-      <div className="grid md:grid-cols-2 justify-center items-stretch gap-[var(--global-margin-xs)]  border-t m-0 border-b border-[var(--mesm-grey-dk)] py-4">
-        {offerings.map((pkg) => (
-          <div
-            key={pkg.title}
-            className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--foreground)] duration-200 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] text-[var(--foreground)]"
-          >
-            <h3 className="page-title-medium font-bold w-1/2">{pkg.title}</h3>
-            <div>
-              <p className="text-base opacity-50 hover:opacity-100 duration-200">
-                {pkg.subheading}
-              </p>
-              <br />
-              <div className="w-full flex justify-end">
-                <Button href={pkg.cta.href} size="large" variant="secondary">
-                  {pkg.cta.label}
-                </Button>
+        <div className="grid md:grid-cols-2 justify-center items-stretch gap-[var(--global-margin-xs)]  border-t m-0 border-b border-[var(--mesm-grey-dk)] py-4">
+          {offerings.map((pkg) => (
+            <div
+              key={pkg.title}
+              className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--foreground)] duration-200 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] text-[var(--foreground)]"
+            >
+              <h3 className="page-title-medium font-bold w-1/2">{pkg.title}</h3>
+              <div>
+                <p className="text-base opacity-50 hover:opacity-100 duration-200">
+                  {pkg.subheading}
+                </p>
+                <br />
+                <div className="w-full flex justify-end">
+                  <Button href={pkg.cta.href} size="large" variant="secondary">
+                    {pkg.cta.label}
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </InView>
     </section>
   );
 }

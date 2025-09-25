@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
-import PageTitleMedium from "../layout/PageTitleMedium";
 
 function splitToChars(str = "") {
   return [...str].map((ch) => (ch === " " ? "\u00A0" : ch));

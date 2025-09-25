@@ -5,6 +5,54 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
+import { BLOCKS } from "@contentful/rich-text-types";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+
+/* --- helpers --- */
+function decodeEntities(str = "") {
+  return str
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+// optional: lightly sanitize to keep only the iframe tag (prevents stray HTML)
+function extractIframe(html = "") {
+  const match = html.match(/<iframe[^>]*>[\s\S]*?<\/iframe>/i);
+  return match ? match[0] : "";
+}
+
+const richRenderOptions = {
+  renderNode: {
+    [BLOCKS.PARAGRAPH]: (node, children) => {
+      const raw = (node.content || [])
+        .map((c) => (c.nodeType === "text" ? c.value || "" : ""))
+        .join("");
+
+      const looksLikeIframe =
+        raw.includes("<iframe") || raw.includes("&lt;iframe");
+
+      if (!looksLikeIframe) return <p>{children}</p>;
+
+      // 1) decode & 2) extract the iframe only
+      const decoded = decodeEntities(raw);
+      const iframe = extractIframe(decoded);
+      if (!iframe) return <p>{children}</p>;
+
+      // Make it responsive inside your aspect-[16/9] wrapper
+      return (
+        <div
+          className="absolute inset-0 w-full h-full"
+          // We assume this input is trusted (YouTube embed).
+          // If you ever allow arbitrary user input, add stricter sanitization.
+          dangerouslySetInnerHTML={{ __html: iframe }}
+        />
+      );
+    },
+  },
+};
 
 /* ---------- tiny helpers (shared) ---------- */
 function textFromNode(node) {
@@ -121,9 +169,9 @@ export default function LeftHero({
         {/* TEXT — mobile order 1; desktop row 1 col 1 */}
         <div
           className={[
-            "order-1 md:order-none",
-            "md:row-start-1 md:col-start-1 md:col-span-",
-            "flex flex-col justify-center text-left",
+            "md:order-none",
+            "md:row-start-1 md:col-start-1",
+            "flex flex-col justify-center text-left gap-4",
             "text-[var(--foreground)]",
             "sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
           ].join(" ")}
@@ -132,9 +180,10 @@ export default function LeftHero({
             as="h1"
             text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
           />
+          <StaggeredWords as="p" className="mt-6" text={pageSubtitle} />
+
           <PillList items={listItems} align="left" />
-          <div className="flex flex-col gap-4">
-            <StaggeredWords as="p" className="mt-6" text={pageSubtitle} />
+          <div className="flex flex-col ">
             {showCta && (
               <Button
                 href={ctaUrl}
@@ -149,27 +198,33 @@ export default function LeftHero({
         </div>
 
         {/* TRUST BADGES — mobile order 2; desktop bottom row spanning both cols */}
-        <div
-          className={[
-            "order-2 md:order-none",
-            "md:row-start-2 md:col-span-2 md:self-end w-full",
-          ].join(" ")}
-          key="trust-badges"
-        >
-          <TrustBadges logos={logos} />
-        </div>
 
         {/* MEDIA — mobile order 3; desktop row 1 col 2 */}
         <div
           className={[
-            "order-3 md:order-none",
+            "md:order-none",
             "md:row-start-1 md:col-start-2",
             "flex items-center justify-center md:max-h-[70vh]",
           ].join(" ")}
         >
-          <div className="w-full">
-            <MediaDisplay media={heroMedia} fill />
+          <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mx-6">
+            {heroEmbed?.json ? (
+              <div className="absolute inset-0">
+                {documentToReactComponents(heroEmbed.json, richRenderOptions)}
+              </div>
+            ) : (
+              <MediaDisplay media={heroMedia} fill />
+            )}
           </div>
+        </div>
+        <div
+          className={[
+            "md:order-none",
+            "md:row-start-2 md:col-span-2 md:self-end w-full py-2",
+          ].join(" ")}
+          key="trust-badges"
+        >
+          <TrustBadges logos={logos} />
         </div>
       </section>
     </InView>
