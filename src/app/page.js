@@ -45,31 +45,20 @@ function usePageStageController(splashRef, section2Ref) {
 
   return { dark: activated };
 }
-
 function Splash({ innerRef }) {
-  const lowEnd = useLowEndDevice();
-  const [sceneLoaded, setSceneLoaded] = useState(false);
-  const [showFallback, setShowFallback] = useState(lowEnd);
-  const [allow3D, setAllow3D] = useState(!lowEnd);
+  const videoRef = useRef(null);
+  const inView = useInView(innerRef, { amount: 0.35 });
 
-  // give the scene a brief window to load before falling back (non–low-end)
   useEffect(() => {
-    if (lowEnd) return;
-    const t = setTimeout(() => {
-      if (!sceneLoaded) setShowFallback(true);
-    }, 2000);
-    return () => clearTimeout(t);
-  }, [sceneLoaded, lowEnd]);
-
-  const handleEnable3D = () => {
-    setAllow3D(true);
-    setShowFallback(true);
-  };
-
-  const handleSceneLoaded = () => {
-    setSceneLoaded(true);
-    setShowFallback(false);
-  };
+    const v = videoRef.current;
+    if (!v) return;
+    if (inView) {
+      // try to play; ignore promise errors (iOS may block until user gesture)
+      v.play?.().catch(() => {});
+    } else {
+      v.pause?.();
+    }
+  }, [inView]);
 
   return (
     <InView once={true} margin="-60% 0px -60% 0px">
@@ -77,19 +66,35 @@ function Splash({ innerRef }) {
         ref={innerRef}
         id="home-scene"
         data-marker="HELLO"
-        className="relative h-[100vh] w-[100%] border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
+        className="relative h-[100vh] w-full border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
       >
-        {/* {showFallback && (
-          <div className="absolute inset-0 z-10">
-            <SceneFallback
-              showEnableButton={lowEnd && !sceneLoaded && !allow3D}
-              onEnable3D={lowEnd ? handleEnable3D : undefined}
-            />
-          </div>
-        )}
+        {/* Mobile: video */}
+        <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
+          <video
+            ref={videoRef}
+            className="h-auto w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+          >
+            {/* Provide both for best compatibility (webm first if you have it) */}
 
-        {allow3D && <Scene onLoaded={handleSceneLoaded} />} */}
-        <Scene onLoaded={handleSceneLoaded} />
+            <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
+          </video>
+          {/* Optional subtle overlay to match your scene look */}
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+        </div>
+
+        {/* Tablet/Desktop: 3D scene */}
+        <div className="hidden md:block absolute inset-0">
+          <Scene
+            onLoaded={() => {
+              /* keep if you still use the notifier */
+            }}
+          />
+        </div>
       </section>
     </InView>
   );
