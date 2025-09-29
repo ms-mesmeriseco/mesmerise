@@ -5,8 +5,6 @@ import { useInView } from "framer-motion";
 import InView from "@/hooks/InView";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import dynamic from "next/dynamic";
-import useLowEndDevice from "@/hooks/useLowEndDevice";
-import SceneFallback from "@/components/home/SceneFallback";
 import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 import ServicesRail from "@/components/services/ServicesRail";
 

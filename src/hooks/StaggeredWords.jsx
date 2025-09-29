@@ -42,8 +42,8 @@ export default function StaggeredWords({
             initial={{ y: "0.1em", opacity: 0 }}
             animate={inView ? { y: 0, opacity: 1 } : { y: "0.1em", opacity: 0 }}
             transition={{
-              duration: 0.3,
-              delay: delay + i * 0.06,
+              duration: 0.1,
+              delay: delay + i * 0.01,
               ease: [0.2, 0.65, 0.3, 0.9],
             }}
             style={{ display: "inline-block", whiteSpace: "nowrap" }}

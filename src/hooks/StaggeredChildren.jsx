@@ -8,7 +8,7 @@ export default function StaggeredChildren({
   as: As = "div",
   className = "",
   itemClassName = "",
-  baseDelay = 0.5,
+  baseDelay = 0.1,
   perItem = 0.02,
   duration = 0.15,
   once = false,
