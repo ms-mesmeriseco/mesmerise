@@ -101,6 +101,7 @@ export default async function BlogPost({ params }) {
           <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-center">
             <Image
               src={page.authorAvatar.url}
+              alt={page.authorAvatar.title || "Author avatar"}
               width={64}
               className="rounded-full"
             />
