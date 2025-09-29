@@ -25,6 +25,8 @@ const CollabModel = dynamic(() => import("@/components/home/CollabModel"), {
   suspense: true,
 });
 
+// Page stage controller: tracks which section we're in, for background color changes
+
 function usePageStageController(splashRef, section2Ref) {
   const splashInView = useInView(splashRef, { amount: 0.2 });
   const hitSection2 = useInView(section2Ref, { amount: 0.2 });
