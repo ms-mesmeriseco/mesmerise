@@ -15,7 +15,6 @@ export default function StaggeredChildren({
   margin = "-10% 0px",
   inline = false,
   y = "0.1em",
-  blur = 4,
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once, margin });
@@ -37,12 +36,8 @@ export default function StaggeredChildren({
               display: isLi ? undefined : inline ? "inline-block" : "block",
               whiteSpace: inline ? "nowrap" : undefined,
             }}
-            initial={{ y, opacity: 0, filter: `blur(${blur}px)` }}
-            animate={
-              inView
-                ? { y: 0, opacity: 1, filter: "blur(0px)" }
-                : { y, opacity: 0, filter: `blur(${blur}px)` }
-            }
+            initial={{ y, opacity: 0 }}
+            animate={inView ? { y: 0, opacity: 1 } : { y, opacity: 0 }}
             transition={{
               duration,
               delay: baseDelay + i * perItem,

@@ -38,7 +38,6 @@ export default function ServiceTags({
 
   return (
     <section data-marker={label} className="flex flex-col">
-      <h6>What we offer</h6>
       <motion.div
         variants={container}
         initial="hidden"

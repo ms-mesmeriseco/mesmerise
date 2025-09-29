@@ -138,7 +138,11 @@ export default function ServicePageBase({
         </section>
         <ServicesHero heroTitle={heroTitle} />
         <IntroPara text={para1Content} />
-
+        <div>
+          <div className="border-b-1 border-[var(--mesm-grey-dk)] py-2 w-full ">
+            <h6>What we offer</h6>
+          </div>
+        </div>
         <ServiceTags items={serviceTags} />
 
         <SecondPara text={para2Content} />
