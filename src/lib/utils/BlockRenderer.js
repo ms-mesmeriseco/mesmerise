@@ -1,6 +1,7 @@
 import ListIcons from "@/components/cms-blocks/ListIcons";
 import IconRow from "@/components/cms-blocks/IconRow";
 import AccordionWidget from "@/components/cms-blocks/Accordion";
+import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import renderRichTextWithBreaks from "./renderRichTextWithBreaks";
 
@@ -13,16 +14,18 @@ export default function BlockRenderer({ block, center }) {
   switch (block.__typename) {
     case "ContentTypeRichText":
       return (
-        <div className={`[&>p+p]:mt-4 ${textAlign}`}>
+        <div className={`[&>p+p]:mt-4 [&>*]:mb-4 ${textAlign}`}>
           {renderRichTextWithBreaks(block.content?.json)}
         </div>
       );
     case "Image":
       return (
-        <img
+        <Image
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          className={`w-full h-auto shadow rounded-md aspect-[6/4]`}
+          width={block.imageContent?.width || 600}
+          height={block.imageContent?.height || 400}
+          className={`w-full h-auto shadow rounded-md aspect-[6/4] object-cover`}
         />
       );
     case "Video":

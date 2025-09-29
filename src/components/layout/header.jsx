@@ -8,6 +8,7 @@ import Button from "../ui/Button";
 export default function Header() {
   const pathname = usePathname();
   const headerRef = useRef(null);
+  const [hydrated, setHydrated] = useState(false);
   const [sceneInView, setSceneInView] = useState(false);
 
   // Route checks
@@ -26,25 +27,45 @@ export default function Header() {
     isServices ||
     isCollab ||
     isWork
-  ); // 👈 show on all other pages
+  );
   const headerCtaClass = !showMobileStickyCTA
     ? "inline-flex"
     : "hidden md:inline-flex";
 
-  // Logo colour: black on /connect, white elsewhere (your existing rule)
   const isContact = isConnect;
   const logo = isContact
     ? "/WordMark_Spaced-BLACK.png"
     : "/WordMark_Spaced-WHITE.png";
 
-  // Expose header height as a CSS var so the page can offset content if needed
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const el = document.querySelector("#home-scene");
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(
+      "--header-height"
+    );
+    const headerH = parseInt(raw) || 0;
+
+    let inView = false;
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const vpH = window.innerHeight || document.documentElement.clientHeight;
+
+      // account for the negative top rootMargin you use in the IO
+      const top = rect.top - headerH;
+      const bottom = rect.bottom;
+      inView = bottom > 0 && top < vpH;
+    }
+    setSceneInView(inView);
+    setHydrated(true);
+  }, [pathname]);
+
   useLayoutEffect(() => {
     if (headerRef.current) {
       const h = headerRef.current.offsetHeight;
       document.documentElement.style.setProperty("--header-height", `${h}px`);
     }
   }, []);
-
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -61,28 +82,14 @@ export default function Header() {
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        // Any overlap hides the video (use threshold: [1] to hide only when fully visible)
         setSceneInView(entry.isIntersecting && entry.intersectionRatio > 0);
       },
-      {
-        root: null,
-        rootMargin: `-${headerH}px 0px 0px 0px`,
-        threshold: [0],
-      }
+      { root: null, rootMargin: `-${headerH}px 0px 0px 0px`, threshold: [0] }
     );
 
     io.observe(el);
     return () => io.disconnect();
   }, [pathname]);
-  // Optional: apply top padding globally if you don't handle it elsewhere
-  // useEffect(() => {
-  //   const root = document.documentElement;
-  //   const prev = root.style.paddingTop;
-  //   if (!prev) root.style.paddingTop = "var(--header-height)";
-  //   return () => {
-  //     root.style.paddingTop = prev;
-  //   };
-  // }, []);
 
   return (
     <>
@@ -118,8 +125,10 @@ export default function Header() {
             preload="auto"
             aria-hidden={sceneInView}
             className={[
-              "md:h-[4.23rem] h-[2.77rem] block transition-opacity duration-100",
-              sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
+              "md:h-[4.23rem] h-[2.77rem] block transition-opacity duration-100 opacity-0",
+              sceneInView
+                ? "opacity-0 pointer-events-none hidden"
+                : "opacity-100",
             ].join(" ")}
           ></img>
         </Link>

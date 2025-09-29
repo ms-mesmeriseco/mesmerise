@@ -64,7 +64,7 @@ function Splash({ innerRef }) {
       ref={innerRef}
       id="home-scene"
       data-marker="HELLO"
-      className="relative h-[90vh] w-full border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
+      className="fade-in relative h-[90vh] w-full border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
     >
       {/* Mobile: video */}
       <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">

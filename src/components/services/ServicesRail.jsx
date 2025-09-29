@@ -227,10 +227,10 @@ export default function ServicesRail({
             aria-label="Scroll left"
             onClick={goPrev}
             disabled={atStart}
-            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+            className={`h-6 w-6 rounded-full border border-[var(--accent2)] bg-[var(--accent2)] ${
               atStart
-                ? "opacity-40 cursor-default"
-                : "hover:bg-black/40 cursor-pointer "
+                ? "opacity-40 cursor-default bg-transparent"
+                : "bg-[var(--accent2)] hover:bg-transparent duration-200 cursor-pointer"
             }`}
           />
           <button
@@ -238,10 +238,10 @@ export default function ServicesRail({
             aria-label="Scroll right"
             onClick={goNext}
             disabled={atEnd}
-            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+            className={`h-6 w-6 rounded-full border border-[var(--accent2)] bg-[var(--accent2)] ${
               atEnd
                 ? "opacity-40 cursor-default bg-transparent"
-                : "hover:bg-black/40  cursor-pointer"
+                : "bg-[var(--accent2)] hover:bg-transparent duration-200 cursor-pointer"
             }`}
           />
         </div>

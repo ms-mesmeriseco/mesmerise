@@ -203,7 +203,11 @@ h4 {
   color: var(--foreground);
   margin-bottom: var(--global-margin-xs);
 }
-
+h4 b {
+  font-weight: 300;
+  color: var(--mesm-blue);
+  opacity: 0.9;
+}
 h5 {
   font-size: 1rem;
   font-weight: 600;
@@ -222,7 +226,7 @@ p {
   opacity: 0.9;
 }
 p a {
-  color: var(--accent);
+  color: var(--mesm-blue);
   position: relative;
   text-decoration: none;
 }
@@ -234,7 +238,7 @@ p a::after {
   bottom: 0px;
   width: 100%;
   height: 1px;
-  background: var(--accent);
+  background: var(--mesm-blue);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -400,12 +404,23 @@ figcaption {
   width: 100vw;
   height: fit-content;
 }
+.fade-in {
+  animation: fade-in 1.5s ease-in forwards;
+}
 @keyframes scroll-horizontal {
   0% {
     transform: translateX(0%);
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -473,4 +488,20 @@ figcaption {
     font-size: 2.17rem;
     line-height: 2.56rem;
   }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  } /* exactly half, because track is duplicated */
+}
+
+/* Utilities */
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 24s) linear infinite;
+}
+.marquee-will-change {
+  will-change: transform;
 }

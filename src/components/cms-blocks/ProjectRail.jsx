@@ -236,16 +236,16 @@ export default function ProjectRail({
 
       {/* Two circles (bottom-right, below the rail) */}
       <div className="mt-2 w-full flex justify-end">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 py-2">
           <button
             type="button"
             aria-label="Scroll left"
             onClick={goPrev}
             disabled={atStart}
-            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+            className={`h-6 w-6 rounded-full border border-[var(--mesm-yellow)] bg-[var(--mesm-yellow)] ${
               atStart
-                ? "opacity-40 cursor-default"
-                : "hover:bg-black/40 cursor-pointer "
+                ? "opacity-40 cursor-default bg-transparent"
+                : "bg-[var(--mesm-yellow)] hover:bg-transparent duration-200  cursor-pointer "
             }`}
           />
           <button
@@ -253,10 +253,10 @@ export default function ProjectRail({
             aria-label="Scroll right"
             onClick={goNext}
             disabled={atEnd}
-            className={`h-6 w-6 rounded-full border border-[var(--mesm-grey-dk)] bg-[var(--mesm-grey-dk)]/20 ${
+            className={`h-6 w-6 rounded-full border border-[var(--mesm-yellow)] bg-[var(--mesm-yellow)] ${
               atEnd
                 ? "opacity-40 cursor-default bg-transparent"
-                : "hover:bg-black/40  cursor-pointer"
+                : "bg-[var(--mesm-yellow)] hover:bg-transparent duration-200 cursor-pointer"
             }`}
           />
         </div>

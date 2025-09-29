@@ -8,7 +8,7 @@ import { GET_LIST_SWITCH } from "./getListSwitch";
 export const GET_SINGLE_COLUMN = gql`
   fragment SingleColumn on SingleColumnBlockBlank {
     blockAlignment
-    contentCollection(limit: 3) {
+    contentCollection(limit: 4) {
       items {
         ... on ContentTypeRichText {
           content {

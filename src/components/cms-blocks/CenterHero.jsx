@@ -9,7 +9,6 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { BLOCKS } from "@contentful/rich-text-types";
 import Image from "next/image";
 
-/* --- helpers --- */
 function decodeEntities(str = "") {
   return str
     .replace(/&lt;/g, "<")
@@ -19,7 +18,6 @@ function decodeEntities(str = "") {
     .replace(/&#39;/g, "'");
 }
 
-// optional: lightly sanitize to keep only the iframe tag (prevents stray HTML)
 function extractIframe(html = "") {
   const match = html.match(/<iframe[^>]*>[\s\S]*?<\/iframe>/i);
   return match ? match[0] : "";
@@ -133,13 +131,13 @@ function MediaDisplay({ media }) {
       muted
       playsInline
       controls
-      className="absolute inset-0 w-full h-full object-cover  border-1 border-[var(--mesm-grey)]"
+      className="aspect-[16/9] absolute inset-0 w-full h-full object-cover  border-1 border-[var(--mesm-grey)]"
     />
   ) : (
     <img
       src={media.url}
       alt={media.title || ""}
-      className="absolute inset-0 w-full h-full object-cover border-1 border-[var(--mesm-grey)]"
+      className="aspect-[16/9] absolute inset-0 w-full h-full object-cover border-1 border-[var(--mesm-grey)]"
     />
   );
 }
@@ -193,9 +191,9 @@ export default function CenterHero({
             </div>
             <br />
             <div className="w-full flex items-center justify-center pb-16">
-              <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
+              <div className="w-full rounded-lg overflow-hidden">
                 {heroEmbed?.json ? (
-                  <div className="absolute inset-0">
+                  <div className="absolute inset-0 relative w-full aspect-[16/9]">
                     {documentToReactComponents(
                       heroEmbed.json,
                       richRenderOptions

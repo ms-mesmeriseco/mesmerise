@@ -173,7 +173,7 @@ export default function LeftHero({
             "md:row-start-1 md:col-start-1",
             "flex flex-col justify-center text-left gap-4",
             "text-[var(--foreground)]",
-            "sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
+            "p-[var(--global-margin-sm)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
           ].join(" ")}
         >
           <StaggeredWords
