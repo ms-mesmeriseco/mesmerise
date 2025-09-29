@@ -14,7 +14,6 @@ export default function SingleColumn({
       : "w-full m-auto flex flex-col gap-6 min-h-[50vh]",
   ];
 
-  console.log("ALGINMENT: ", blockAlignment, align);
   return (
     <InView>
       <section

@@ -20,13 +20,15 @@ export default function Header() {
   const isCollab =
     pathname === "/collaboration" || pathname.startsWith("/collaboration/");
   const isWork = pathname === "/work" || pathname.startsWith("/work/");
+  const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
   const showMobileStickyCTA = !(
     isHome ||
     isAbout ||
     isConnect ||
     isServices ||
     isCollab ||
-    isWork
+    isWork ||
+    isBlog
   );
   const headerCtaClass = !showMobileStickyCTA
     ? "inline-flex"
@@ -97,7 +99,7 @@ export default function Header() {
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
                    grid grid-cols-[auto_1fr_auto] items-center md:py-4 md:px-8
-                   px-5 py-2
+                   px-5 py-4
                    pointer-events-auto bg-transparent"
       >
         {/* Left: Logo (video on non-connect pages, static black on connect) */}
@@ -106,20 +108,6 @@ export default function Header() {
           aria-label="Go to homepage"
           className="justify-self-start"
         >
-          {/* <video
-            src="/assets/logo-transparent2.mov"
-            className={[
-              "md:h-[3rem] h-[3rem] block transition-opacity duration-100",
-              sceneInView ? "opacity-0 pointer-events-none" : "opacity-100",
-            ].join(" ")}
-            autoPlay
-            muted
-            loop
-            reversed
-            playsInline
-            preload="auto"
-            aria-hidden={sceneInView}
-          /> */}
           <img
             src="/assets/270px-transparent_M-logo.gif"
             preload="auto"

@@ -1,63 +1,49 @@
-"use client";
-
-import { useEffect, useState, use } from "react";
+// app/landing/[slug]/page.js
+import LandingPageClient from "./LandingPageClient";
 import { getClient } from "@/lib/apollo-client";
 import { GET_LANDING_PAGE_BY_SLUG } from "@/lib/graphql/queries/getLandingPages";
-import PageBase from "@/components/layout/PageBase";
-import LeftHero from "@/components/cms-blocks/LeftHero";
-import CenterHero from "@/components/cms-blocks/CenterHero";
-import TrustBadges from "@/components/cms-blocks/TrustBadges";
 
-export default function LandingPage({ params }) {
-  const { slug } = use(params);
-  const [page, setPage] = useState(null);
-  useEffect(() => {
-    if (!slug) return;
-    (async () => {
-      try {
-        const { data } = await getClient().query({
-          query: GET_LANDING_PAGE_BY_SLUG,
-          variables: { slug },
-        });
-        setPage(data?.landingPageCollection?.items?.[0] || null);
-      } catch (error) {
-        console.error("Failed to fetch landing page:", error);
-      }
-    })();
-  }, [slug]);
+export const revalidate = 60; // optional: ISR
 
-  if (!page) return <p>Loading...</p>;
+async function fetchLanding(slug) {
+  const { data } = await getClient().query({
+    query: GET_LANDING_PAGE_BY_SLUG,
+    variables: { slug },
+  });
+  return data?.landingPageCollection?.items?.[0] || null;
+}
 
-  const blocks = page.pageBlocksCollection?.items || [];
+export async function generateMetadata({ params }) {
+  const page = await fetchLanding(params.slug);
 
-  // Normalise align to a simple token
-  const align = String(page.align || "").toLowerCase(); // e.g. "left" | "center" | "right"
-  const isLeft =
-    align === "left" || align === "start" || align === "l" || align === "true"; // supports old boolean-y values
-  const isCenter =
-    align === "center" ||
-    align === "middle" ||
-    align === "c" ||
-    align === "" ||
-    align === "false";
+  const title = page?.mT || "MESMERISE | Digital Marketing & Brand Strategy";
+  const description =
+    page?.metaDesc ||
+    "Strategy, brand, web, and content that look great and convert.";
 
-  const Hero = isLeft ? LeftHero : CenterHero;
+  return {
+    title,
+    description,
+    // optional nice-to-haves:
+    openGraph: {
+      title,
+      description,
+      url: `https://your-domain.com/landing/${params.slug}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `/landing/${params.slug}`,
+    },
+  };
+}
 
-  return (
-    <>
-      <Hero
-        heroMedia={page.media}
-        pageHeader={page.line1}
-        pageHeaderLine2={page.line2}
-        pageSubtitle={page.sub}
-        heroList={page.heroList}
-        showCta
-        ctaUrl="/connect"
-        logos={page.trustCollection?.items}
-        heroEmbed={page.hE}
-      />
-
-      <PageBase blocks={blocks} />
-    </>
-  );
+export default async function Page({ params }) {
+  const page = await fetchLanding(params.slug);
+  if (!page) return <p>Not found.</p>;
+  return <LandingPageClient page={page} />;
 }

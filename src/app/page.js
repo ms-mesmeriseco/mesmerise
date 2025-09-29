@@ -13,9 +13,6 @@ const ProjectRail = dynamic(
   () => import("@/components/cms-blocks/ProjectRail"),
   { suspense: true }
 );
-const ServicesList = dynamic(() => import("@/components/home/ServicesList"), {
-  suspense: true,
-});
 const ImpactStats = dynamic(() => import("@/components/home/ImpactStats"), {
   suspense: true,
 });

@@ -4,6 +4,75 @@ import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import BlogTOC from "@/components/blog/BlogTOC";
 import Image from "next/image";
 
+function abs(url) {
+  if (!url) return undefined;
+  try {
+    // prefer env, fallback to request-less relative (Next will handle)
+    const base = process.env.NEXT_PUBLIC_SITE_URL || "";
+    return url.startsWith("http") ? url : `${base}${url}`;
+  } catch {
+    return url;
+  }
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = params || {};
+  if (!slug) return {};
+
+  const { data } = await getClient().query({
+    query: GET_BLOG_POSTS,
+    variables: { slug },
+  });
+
+  const page = data?.blogPostPageCollection?.items?.[0];
+  if (!page) {
+    return {
+      title: "Post not found",
+      description: "This post could not be located.",
+      robots: { index: false },
+    };
+  }
+
+  const metaTitle = page.metaTitle || page.postHeading || "Blog Post";
+
+  const metaDescription =
+    page.metaDescription ||
+    page.excerpt ||
+    // quick fallback from first paragraph if needed
+    (page.blogContent?.json?.content || [])
+      .map((n) =>
+        n.nodeType === "paragraph"
+          ? (n.content || []).map((c) => c.value || "").join("")
+          : ""
+      )
+      .join(" ")
+      .slice(0, 160);
+
+  const ogImage =
+    page.ogImage?.url || page.heroImage?.url || page.coverImage?.url || null;
+
+  const canonical = abs(`/blog/${slug}`);
+
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    alternates: { canonical },
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      url: canonical,
+      type: "article",
+      images: ogImage ? [{ url: abs(ogImage) }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metaTitle,
+      description: metaDescription,
+      images: ogImage ? [abs(ogImage)] : undefined,
+    },
+  };
+}
+
 export default async function BlogPost({ params }) {
   const { slug } = params;
 
@@ -70,9 +139,6 @@ export default async function BlogPost({ params }) {
         day: "numeric",
         month: "long",
         year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
       })
     : "";
 
@@ -98,11 +164,12 @@ export default async function BlogPost({ params }) {
 
         <article className="max-w-xl w-full flex flex-col gap-6">
           <h1 className="text-sm">{page.postHeading}</h1>
-          <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-center">
+          <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start ">
             <Image
               src={page.authorAvatar.url}
               alt={page.authorAvatar.title || "Author avatar"}
-              width={64}
+              width={48}
+              height={48}
               className="rounded-full"
             />
             <span>
@@ -115,8 +182,6 @@ export default async function BlogPost({ params }) {
               By {page.postAuthor}
             </span>
           </span>
-
-          <br />
 
           {page.blogContent?.json && (
             <div className="[&>p+p]:mt-4 flex flex-col gap-4">

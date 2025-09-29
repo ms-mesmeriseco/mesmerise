@@ -29,6 +29,7 @@ const rawQuery = `
         }
         pageTitle
         pageSlug
+        mT
         metaDesc
         line1
         line2
@@ -111,6 +112,8 @@ export const GET_ALL_LANDING_PAGES = gql`
       items {
         pageTitle
         pageSlug
+        mT
+        metaDesc
       }
     }
   }
