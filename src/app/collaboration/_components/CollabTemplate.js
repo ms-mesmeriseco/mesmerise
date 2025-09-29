@@ -15,9 +15,9 @@ function Statement({ marker, text, className }) {
   return (
     <section
       data-marker={marker}
-      className="flex items-center justify-center  md:px-36 text-white min-h-screen"
+      className="flex items-center justify-center text-white min-h-screen max-w-[1200px]"
     >
-      <div className="text-center">
+      <div className="text-left">
         <InView>
           <StaggeredWords
             as="h2"
@@ -78,7 +78,6 @@ export default function CollabTemplate({ content, currentSlug }) {
             />,
           ]}
         />
-
         {/* Who it's for */}
         <StaticTwoColumn
           column1={[<h6 key="h6">{content.whoItsForTitle}</h6>]}
@@ -91,26 +90,24 @@ export default function CollabTemplate({ content, currentSlug }) {
               duration={0.15}
               y="0.15em"
               blur={4}
-              className="flex flex-col gap-8"
+              className="flex flex-col gap-2"
               margin="-40% 0px"
             >
               {content.whoItsForItems.map((item, i) => (
                 <div className={bubble} key={i}>
-                  <p className="page-title-medium">{item}</p>
+                  <p className="p3">{item}</p>
                 </div>
               ))}
             </StaggeredChildren>,
           ]}
         />
-
         {/* Big statement */}
         <Statement
           marker={content.markers.what}
           text={content.statement.text}
           className={content.statement.className}
         />
-
-        {/* Carousel */}
+        {/* Carousel
         <HorizontalScrollCarousel
           title={content.carousel.title}
           center={content.carousel.center}
@@ -126,11 +123,9 @@ export default function CollabTemplate({ content, currentSlug }) {
           height={content.carousel.height}
           rounded={content.carousel.rounded}
         />
-
         <br />
         <br />
-        <br />
-
+        <br /> */}
         {/* Steps */}
         <SteppedAccordion
           title={content.stepsTitle}
@@ -144,14 +139,12 @@ export default function CollabTemplate({ content, currentSlug }) {
           indent="clamp(8px, 2.6vw, 56px)"
           width="20vw"
         />
-
         {/* Secondary */}
         <SecondaryStatement
           marker={content.markers.who}
           text={content.secondary.text}
           cta={content.secondary.cta}
         />
-
         {/* Toggle that navigates between routes */}
         <CollabToggle current={currentSlug} />
       </div>

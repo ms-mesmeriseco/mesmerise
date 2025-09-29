@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
+import Image from "next/image";
 
 /* --- helpers --- */
 function decodeEntities(str = "") {
@@ -109,7 +110,7 @@ function PillList({ items }) {
           role="listitem"
           className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-3 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-xl leading-tight"
         >
-          <img
+          <Image
             width={24}
             height={24}
             src="/icons/check_32dp_FFFFFF_FILL0_wght300_GRAD0_opsz40.png"

@@ -47,7 +47,7 @@ export default function SteppedAccordion({
     <div>
       {/* <PageTitleMedium text={title} center={center} /> */}
       <h6>{title}</h6>
-      <br />
+      <div className="border-b border-[var(--mesm-grey-dk)]"></div>
       <div
         className={`relative ${className}`}
         style={{ "--step-indent": "10vw" }}
@@ -74,12 +74,14 @@ export default function SteppedAccordion({
                     aria-expanded={isOpen}
                     className="w-full text-left px-4 py-3 md:px-5 md:py-4 flex items-center justify-between gap-4 transition-colors cursor-pointer"
                   >
-                    <h3 className="font-medium leading-tight">{step.title}</h3>
+                    <span className="font-medium leading-tight text-xl md:text-3xl">
+                      {step.title}
+                    </span>
                     <motion.span
                       initial={false}
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ type: "tween", duration: 0.2 }}
-                      className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-full border border-current"
+                      className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-full "
                       aria-hidden
                     >
                       {/* plus icon (rotates to x when open) */}

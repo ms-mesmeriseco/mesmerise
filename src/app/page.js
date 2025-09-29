@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import useLowEndDevice from "@/hooks/useLowEndDevice";
 import SceneFallback from "@/components/home/SceneFallback";
 import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
+import ServicesRail from "@/components/services/ServicesRail";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -144,16 +145,6 @@ function ProjectsRow() {
   );
 }
 
-function ServicesSection() {
-  return (
-    <section data-marker="Services" className="text-white">
-      <InView>
-        <ServicesList />
-      </InView>
-    </section>
-  );
-}
-
 export default function HomePage() {
   const splashRef = useRef(null);
   const section2Ref = useRef(null);
@@ -178,7 +169,7 @@ export default function HomePage() {
       </div>
 
       <CollabModel />
-      <ServicesSection />
+      <ServicesRail />
     </main>
   );
 }

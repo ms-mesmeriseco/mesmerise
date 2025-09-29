@@ -19,14 +19,13 @@ export default function StaggeredWords({
   const ref = useRef(null);
   const inView = useInView(ref, { once, margin });
 
-  // Per-word class (for gradient)
   const wordClass = gradient
     ? "bg-linear-40 from-[var(--mesm-red)] to-[var(--dark-grey)] bg-clip-text text-transparent"
     : "";
 
   // Wrapper class (for glass effect)
   const wrapperClass = glass
-    ? "px-4 py-1 rounded-4xl border border-white/20 bg-white/10 backdrop-blur-md shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] text-stroke"
+    ? "px-4 py-1 rounded-4xl border border-white/20 bg-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] text-stroke"
     : "";
 
   return (
@@ -40,12 +39,8 @@ export default function StaggeredWords({
           <motion.span
             key={i}
             className={`inline-block will-change-transform ${wordClass}`}
-            initial={{ y: "0.1em", opacity: 0, filter: "blur(4px)" }}
-            animate={
-              inView
-                ? { y: 0, opacity: 1, filter: "blur(0px)" }
-                : { y: "0.1em", opacity: 0, filter: "blur(4px)" }
-            }
+            initial={{ y: "0.1em", opacity: 0 }}
+            animate={inView ? { y: 0, opacity: 1 } : { y: "0.1em", opacity: 0 }}
             transition={{
               duration: 0.3,
               delay: delay + i * 0.06,

@@ -43,7 +43,7 @@ export default function ServiceTags({
         variants={container}
         initial="hidden"
         animate="show"
-        className={`flex flex-wrap ${gapSize}  border-y border-[var(--mesm-grey-dk)] py-4`}
+        className={`flex flex-wrap ${gapSize} `}
       >
         {items.map((tag, idx) => (
           <motion.button

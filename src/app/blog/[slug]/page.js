@@ -2,6 +2,7 @@ import { getClient } from "@/lib/apollo-client";
 import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import BlogTOC from "@/components/blog/BlogTOC";
+import Image from "next/image";
 
 export default async function BlogPost({ params }) {
   const { slug } = params;
@@ -98,7 +99,7 @@ export default async function BlogPost({ params }) {
         <article className="max-w-xl w-full flex flex-col gap-6">
           <h1 className="text-sm">{page.postHeading}</h1>
           <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-center">
-            <img
+            <Image
               src={page.authorAvatar.url}
               width={64}
               className="rounded-full"
