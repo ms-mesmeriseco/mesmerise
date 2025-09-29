@@ -27,7 +27,7 @@ export default function ServiceTags({
   const tagSize = [
     large
       ? "md:rounded-xl  rounded-xl md:px-3 md:py-1 md:text-5xl text-[var(--background)]  bg-[var(--mesm-blue)]  hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] px-3 py-[0.05rem] text-2xl"
-      : "rounded-lg px-2 py-0 text-md hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-grey-dk)] bg-[var(--mesm-red)] text-[var(--background)] duration-200",
+      : "rounded-lg px-2 py-0 text-md hover:text-[var(--mesm-grey)] hover:bg-[var(--background)] border-1 border-[var(--mesm-red)] hover:border-[var(--mesm-grey-dk)] bg-[var(--mesm-red)] text-[var(--background)] duration-200",
   ];
   const gapSize = [large ? "md:gap-2 gap-1" : "gap-1"];
 

@@ -21,7 +21,7 @@ export default function Scene({ onLoaded }) {
   return (
     <Canvas
       style={{ backgroundColor: "black" }}
-      className="block h-[100dvh] w-[100dvw]"
+      className="block h-[90dvh] w-[100dvw]"
     >
       {/* <OrbitControls enableDamping /> */}
       <Suspense fallback={<SceneLoadedNotifier onLoaded={onLoaded} />}>

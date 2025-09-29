@@ -2,15 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { getClient } from "@/lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import ServiceTags from "../services/ServiceTags";
 import { motion, AnimatePresence } from "framer-motion";
 
-/** ---------------- Quick-filter allowlist ----------------
- * UI label -> one or more underlying Contentful tag names (aliases)
- */
 const FILTER_MAP = {
   Strategy: [
     "Business Consulting",
@@ -42,6 +39,7 @@ const normalize = (s) => (s || "").toString().trim().toLowerCase();
 export default function ProjectNavigationList({ activeTag = null }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const [projects, setProjects] = useState([]);
   // If selection matches a quick-filter label, we store it here:
@@ -258,24 +256,25 @@ export default function ProjectNavigationList({ activeTag = null }) {
               initial="hidden"
               animate="show"
               exit="hidden"
+              whileHover={{ x: 2 }}
             >
               <Link href={`/work/${project.slug}`}>
                 <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
                   {/* Row 1: Title + Year */}
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2">
-                    <h2>{project.projectTitle}</h2>
-                    <h2>
+                  <div className="flex flex-row md:flex-row justify-between items-center my-2">
+                    <span className="md:text-5xl">{project.projectTitle}</span>
+                    <span className="md:text-5xl">
                       {new Date(project.projectDate).toLocaleDateString(
                         "en-GB",
                         {
                           year: "numeric",
                         }
                       )}
-                    </h2>
+                    </span>
                   </div>
 
                   {/* Row 2: Tags — ONLY show quick-filter labels present on this project (up to 8) */}
-                  <div className="mt-0 md:mt-0 pointer-events-none">
+                  {/* <div className="mt-0 md:mt-0 pointer-events-none">
                     {(() => {
                       const projectNames = new Set(
                         (project.contentfulMetadata?.tags || [])
@@ -308,7 +307,7 @@ export default function ProjectNavigationList({ activeTag = null }) {
                         </div>
                       );
                     })()}
-                  </div>
+                  </div> */}
                 </div>
               </Link>
             </motion.div>

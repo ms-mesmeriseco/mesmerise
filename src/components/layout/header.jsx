@@ -18,12 +18,14 @@ export default function Header() {
     pathname === "/services" || pathname.startsWith("/services/");
   const isCollab =
     pathname === "/collaboration" || pathname.startsWith("/collaboration/");
+  const isWork = pathname === "/work" || pathname.startsWith("/work/");
   const showMobileStickyCTA = !(
     isHome ||
     isAbout ||
     isConnect ||
     isServices ||
-    isCollab
+    isCollab ||
+    isWork
   ); // 👈 show on all other pages
   const headerCtaClass = !showMobileStickyCTA
     ? "inline-flex"
@@ -88,7 +90,7 @@ export default function Header() {
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
                    grid grid-cols-[auto_1fr_auto] items-center md:py-4 md:px-8
-                   px-3 py-2
+                   px-5 py-2
                    pointer-events-auto bg-transparent"
       >
         {/* Left: Logo (video on non-connect pages, static black on connect) */}

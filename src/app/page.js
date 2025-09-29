@@ -59,42 +59,42 @@ function Splash({ innerRef }) {
   }, [inView]);
 
   return (
-    <InView once={true} margin="-60% 0px -60% 0px">
-      <section
-        ref={innerRef}
-        id="home-scene"
-        data-marker="HELLO"
-        className="relative h-[100vh] w-full border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
-      >
-        {/* Mobile: video */}
-        <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
-          <video
-            ref={videoRef}
-            className="h-auto w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-          >
-            {/* Provide both for best compatibility (webm first if you have it) */}
+    // <InView once={true} margin="-60% 0px -60% 0px">
+    <section
+      ref={innerRef}
+      id="home-scene"
+      data-marker="HELLO"
+      className="relative h-[90vh] w-full border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
+    >
+      {/* Mobile: video */}
+      <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
+        <video
+          ref={videoRef}
+          className="h-auto w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+        >
+          {/* Provide both for best compatibility (webm first if you have it) */}
 
-            <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
-          </video>
-          {/* Optional subtle overlay to match your scene look */}
-          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-        </div>
+          <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
+        </video>
+        {/* Optional subtle overlay to match your scene look */}
+        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+      </div>
 
-        {/* Tablet/Desktop: 3D scene */}
-        <div className="hidden md:block absolute inset-0">
-          <Scene
-            onLoaded={() => {
-              /* keep if you still use the notifier */
-            }}
-          />
-        </div>
-      </section>
-    </InView>
+      {/* Tablet/Desktop: 3D scene */}
+      <div className="hidden md:block absolute inset-0">
+        <Scene
+          onLoaded={() => {
+            /* keep if you still use the notifier */
+          }}
+        />
+      </div>
+    </section>
+    // </InView>
   );
 }
 
