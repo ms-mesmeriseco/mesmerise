@@ -200,7 +200,9 @@ export default function CenterHero({
                     )}
                   </div>
                 ) : (
-                  <MediaDisplay media={heroMedia} />
+                  <div className="absolute inset-0 relative w-full aspect-[16/9]">
+                    <MediaDisplay media={heroMedia} />
+                  </div>
                 )}
               </div>
             </div>

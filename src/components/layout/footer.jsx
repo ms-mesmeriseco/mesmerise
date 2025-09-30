@@ -51,7 +51,7 @@ export default function Footer() {
       >
         {/* Spacer */}
         <div className="col-span-1">
-          <h5 className="text-lg font-normal mb-2">Site Map</h5>
+          <h5 className="text-lg font-normal mb-2">Quick Links</h5>
           <ul className="space-y-1 text-sm">
             <li>
               <a
@@ -86,9 +86,50 @@ export default function Footer() {
               </a>
             </li>
             <br />
+
+            <h5 className="text-lg font-normal mb-2">Offerings</h5>
             <li>
-              <h5 className="text-lg font-normal mb-2">Collaboration Models</h5>
+              <a
+                href="/services/strategy/"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Strategy
+              </a>
             </li>
+            <li>
+              <a
+                href="/services/branding/"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Branding
+              </a>
+            </li>
+            <li>
+              <a
+                href="/services/website/"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Website
+              </a>
+            </li>
+            <li>
+              <a
+                href="/services/performance-growth/"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Performance & Growth
+              </a>
+            </li>
+            <li>
+              <a
+                href="/services/analytics/"
+                className="text-[var(--font-size)] font-[var(--font-family)]"
+              >
+                Analytics
+              </a>
+            </li>
+            <br />
+            <h5 className="text-lg font-normal mb-2">Collaboration Models</h5>
             <li>
               <a
                 href="/collaboration/defined"
@@ -146,7 +187,7 @@ export default function Footer() {
           </ul>
         </div>
         {/* Logo */}
-        <div className="col-span-1 flex items-start"></div>
+        <div className="col-span-2 flex items-start"></div>
       </section>
     </footer>
   );

@@ -262,7 +262,7 @@ p a:focus::after {
 }
 .p2 {
   font-size: 1.5rem;
-  line-height: 2.25rem;
+  line-height: 2rem;
   font-weight: 400;
 }
 .p3 {
