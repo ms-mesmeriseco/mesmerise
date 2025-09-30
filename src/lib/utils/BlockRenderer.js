@@ -25,7 +25,7 @@ export default function BlockRenderer({ block, center }) {
           alt={block.imageContent?.title || ""}
           width={block.imageContent?.width || 600}
           height={block.imageContent?.height || 400}
-          className={`w-full h-auto shadow rounded-md aspect-[6/4] object-cover`}
+          className={`w-full h-auto shadow rounded-xs aspect-[6/4] object-cover`}
         />
       );
     case "Video":

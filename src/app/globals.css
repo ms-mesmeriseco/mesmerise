@@ -407,6 +407,7 @@ figcaption {
 .fade-in {
   animation: fade-in 1.5s ease-in forwards;
 }
+
 @keyframes scroll-horizontal {
   0% {
     transform: translateX(0%);

@@ -8,34 +8,36 @@ import { AnimatePresence, motion } from "framer-motion";
 import InView from "@/hooks/InView";
 
 const TRANSITION_DURATION = 4200; // in ms
+const DOT_COLORS = [
+  "bg-[var(--mesm-red)]",
+  "bg-[var(--mesm-yellow)]",
+  "bg-[var(--accent2)]",
+  "bg-[var(--accent)]",
+];
 
 export default function MediaCarouselWithText({ mediaContentCollection }) {
   const items = mediaContentCollection?.items || [];
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasRendered, setHasRendered] = useState(false);
-  const [progressKey, setProgressKey] = useState(0); // force restart animation
+  const [progressKey, setProgressKey] = useState(0);
 
   const timeoutRef = useRef();
 
-  // Clear and restart on user toggle or new render
   useEffect(() => {
     if (!hasRendered) return;
-
     timeoutRef.current = setTimeout(() => {
-      setHasRendered(false); // Wait for new media render
+      setHasRendered(false);
       setActiveIndex((prev) => (prev + 1) % items.length);
     }, TRANSITION_DURATION);
-
     return () => clearTimeout(timeoutRef.current);
   }, [hasRendered, activeIndex, items.length]);
 
   if (items.length === 0) return null;
-
   const activeItem = items[activeIndex];
 
   const handleMediaLoad = () => {
     setHasRendered(true);
-    setProgressKey(Date.now()); // Restart progress animation
+    setProgressKey(Date.now());
   };
 
   return (
@@ -99,9 +101,34 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
             )}
           </motion.div>
         </AnimatePresence>
-        {/* Labels grid */}
+
+        {/* --- Mobile dots (replace labels on mobile) --- */}
+        <div className="mt-4 flex items-center justify-center gap-3 md:hidden">
+          {items.map((item, idx) => {
+            const color = DOT_COLORS[idx % DOT_COLORS.length];
+            const isActive = idx === activeIndex;
+            return (
+              <button
+                key={`dot-${idx}`}
+                aria-label={item.labelText || `Slide ${idx + 1}`}
+                onClick={() => {
+                  setActiveIndex(idx);
+                  setHasRendered(false);
+                }}
+                className={[
+                  "relative inline-flex shrink-0 rounded-full transition-transform",
+                  "w-5 h-5", // base dot size
+                  "bg-[var(--mesm-yellow)]",
+                  isActive ? "" : "opacity-20 hover:opacity-100",
+                ].join(" ")}
+              />
+            );
+          })}
+        </div>
+
+        {/* --- Desktop labels (hidden on mobile) --- */}
         <div
-          className="grid mt-4 gap-2 font-medium"
+          className="hidden md:grid mt-4 gap-2 font-medium"
           style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
         >
           <AnimatePresence mode="wait">
@@ -128,7 +155,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                   {item.labelText || `Slide ${idx + 1}`}
                 </button>
 
-                {/* Progress bar under active button */}
+                {/* Progress bar under active button (desktop only) */}
                 {idx === activeIndex && hasRendered && (
                   <div className="absolute bottom-0 left-0 h-[0.1rem] bg-black w-full overflow-hidden">
                     <div

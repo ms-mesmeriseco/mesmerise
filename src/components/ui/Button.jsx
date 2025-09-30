@@ -46,6 +46,9 @@ const VARIANTS = {
   accent2:
     "bg-[var(--accent2)]/92 border-[var(--accent2)]/100 text-[var(--background)]/98 " +
     "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
+  CTA:
+    "justify-center rounded-[1.1rem] text-center shadow-md shadow-black/20 w-full bg-[var(--accent)] border-[var(--mesm-grey-dk)]/100 text-[var(--background)]/98 " +
+    "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
 };
 
 export default function Button({

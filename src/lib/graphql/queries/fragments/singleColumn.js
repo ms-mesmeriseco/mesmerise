@@ -4,6 +4,7 @@ import { GET_IMAGE } from "./getImage";
 import { GET_ACCORDION } from "./getAccordion";
 import { GET_LIST_ICONS } from "./getListIcons";
 import { GET_LIST_SWITCH } from "./getListSwitch";
+import { GET_BUTTON } from "./getButton";
 
 export const GET_SINGLE_COLUMN = gql`
   fragment SingleColumn on SingleColumnBlockBlank {

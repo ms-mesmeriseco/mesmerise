@@ -143,18 +143,13 @@ export default function Header() {
 
       {/* Mobile sticky CTA (full-width, bottom). Hidden on /, /about, /connect */}
       {showMobileStickyCTA && (
-        <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden pb-2 px-10">
+        <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden pb-6 px-10">
           <div
-            className="px-4 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
+            className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
                           "
           >
-            <Button
-              size="x-large"
-              variant="accent"
-              href="/connect"
-              extraClass="w-full rounded-xl justify-center text-center text-lg shadow-md shadow-black/30"
-            >
-              <span className="text-2xl">(+61)477 210 477</span>
+            <Button size="x-large" variant="CTA" href="tel:+61477210477">
+              <span className="text-2xl">Call us</span>
             </Button>
           </div>
         </div>

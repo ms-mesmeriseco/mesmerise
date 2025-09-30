@@ -190,22 +190,27 @@ export default function CenterHero({
               </div>
             </div>
             <br />
-            <div className="w-full flex items-center justify-center pb-16">
-              <div className="w-full rounded-lg overflow-hidden">
-                {heroEmbed?.json ? (
+
+            {heroEmbed?.json ? (
+              <div className="w-full flex items-center justify-center pb-16">
+                <div className="w-full rounded-lg overflow-hidden">
                   <div className="absolute inset-0 relative w-full aspect-[16/9]">
                     {documentToReactComponents(
                       heroEmbed.json,
                       richRenderOptions
                     )}
                   </div>
-                ) : (
+                </div>
+              </div>
+            ) : heroMedia?.url ? (
+              <div className="w-full flex items-center justify-center pb-16">
+                <div className="w-full rounded-lg overflow-hidden">
                   <div className="absolute inset-0 relative w-full aspect-[16/9]">
                     <MediaDisplay media={heroMedia} />
-                  </div>
-                )}
+                  </div>{" "}
+                </div>
               </div>
-            </div>
+            ) : null}
 
             {logos?.length ? (
               <div className="w-full">

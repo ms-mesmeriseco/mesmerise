@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function TrustBadges({
   logos = [],
   scroll = true,
-  duration = 18,
+  duration = 12,
 }) {
   // Two identical reels -> seamless loop
   const reel = [...logos, ...logos];
