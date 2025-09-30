@@ -72,7 +72,6 @@ function Splash({ innerRef }) {
           muted
           loop
           playsInline
-          preload="none"
         >
           {/* Provide both for best compatibility (webm first if you have it) */}
 

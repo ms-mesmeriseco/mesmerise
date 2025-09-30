@@ -93,7 +93,7 @@ function FinalCTA({ text }) {
               />
             </a> */}
           <Button size="x-large" variant="accent2" href="/connect">
-            Say Hi
+            Let's Talk
           </Button>
         </div>
       </section>
