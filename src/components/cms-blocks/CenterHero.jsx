@@ -108,9 +108,9 @@ function PillList({ items }) {
           role="listitem"
           className={[
             "inline-flex items-center gap-2",
-            "px-3 py-1.5 md:px-3.5 md:py-1.5",
+            "px-3 py-0.5 md:px-3.5 md:py-1",
             "rounded-xl border border-[var(--mesm-grey-dk)]",
-            "text-sm md:text-base font-medium",
+            "text-md md:text-lg md:text-base font-medium",
             "bg-[var(--mesm-grey-dk)]/20",
             "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-y-[-1px] ",
             "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
@@ -157,7 +157,6 @@ export default function CenterHero({
   heroMedia,
   heroEmbed,
   pageHeader,
-  pageHeaderLine2,
   pageSubtitle,
   heroList, // { json }
   showCta = true,
@@ -179,7 +178,7 @@ export default function CenterHero({
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"
-                text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
+                text={`${pageHeader || ""}`}
               />
               <br />
               <PillList items={listItems} />

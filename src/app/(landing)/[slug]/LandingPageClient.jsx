@@ -25,7 +25,6 @@ export default function LandingPageClient({ page }) {
       <Hero
         heroMedia={page.media}
         pageHeader={page.line1}
-        pageHeaderLine2={page.line2}
         pageSubtitle={page.sub}
         heroList={page.heroList}
         showCta

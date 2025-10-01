@@ -77,7 +77,7 @@ export const PACKAGES = {
       title: "Level Up & Polish",
       price: "$2,500",
       features: [
-        "Refine and enhance your current site’s design, usability, and messaging to keep it effective and engaging — without starting from scratch.",
+        "Refine and enhance your current site's design, usability, and messaging to keep it effective and engaging — without starting from scratch.",
       ],
       outcome:
         "A refreshed digital presence that feels new and performs better.",
@@ -124,26 +124,26 @@ export const PACKAGES = {
   ],
 };
 
-export const finalCTA = "Build trust & boost conversions.";
+export const finalCTA = "Build trust & boost conversions.";
 export const servicesFAQ = [
   {
     question: "Why is a website so important for my online success?",
     textContent:
-      "Your website is the only piece of digital real estate that you truly own.<br/><br/>Social media platforms can change algorithms overnight or shut down accounts by accident, but your website remains the one resource where you control the full experience.<br/><br/>It’s also the first place prospects go to validate whether you’re credible. Research by Stanford University shows that 75% of users judge a company’s credibility based on its website design. Without a strong site, you’re effectively handing business to competitors who do.<br/><br/>Credibility is just the starting point. A well-built website acts as a growth engine, it’s a hub where relationships are built, ads and campaigns are optimised for conversion, and every interaction compounds into long-term trust and loyalty. ",
+      "Your website is the only piece of digital real estate that you truly own.<br/><br/>Social media platforms can change algorithms overnight or shut down accounts by accident, but your website remains the one resource where you control the full experience.<br/><br/>It's also the first place prospects go to validate whether you're credible. Research by Stanford University shows that 75% of users judge a company's credibility based on its website design. Without a strong site, you're effectively handing business to competitors who do.<br/><br/>Credibility is just the starting point. A well-built website acts as a growth engine, it's a hub where relationships are built, ads and campaigns are optimised for conversion, and every interaction compounds into long-term trust and loyalty. ",
   },
   {
-    question: "What’s the rough timeline for a website project?",
+    question: "What's the rough timeline for a website project?",
     textContent:
-      "Most websites take between 8–12 weeks from discovery to handover. <br/><br/>The timeline depends on the scale of the project and how responsive you can be with feedback. <br/><br/>A straightforward website for a small business can be ready in 6 weeks. A larger, custom-built solution with complex integrations or e-commerce can take closer to 12 months. <br/><br/>We provide a clear schedule at the proposal stage so you know exactly what to expect. ",
+      "Most websites take between 8-12 weeks from discovery to handover. <br/><br/>The timeline depends on the scale of the project and how responsive you can be with feedback. <br/><br/>A straightforward website for a small business can be ready in 6 weeks. A larger, custom-built solution with complex integrations or e-commerce can take closer to 12 months. <br/><br/>We provide a clear schedule at the proposal stage so you know exactly what to expect. ",
   },
   {
     question: "What do you need from me to get started?",
     textContent:
-      "During the onboarding, we’ll get clear on your goals, audience, and any existing brand assets (logos, images, copy, etc.). If you don’t have everything yet, that’s fine; we guide you through the process and can create what’s missing. We’ll also ask for access to hosting, domains, and relevant platforms to ensure smooth integration.",
+      "During the onboarding, we'll get clear on your goals, audience, and any existing brand assets (logos, images, copy, etc.). If you don't have everything yet, that's fine; we guide you through the process and can create what's missing. We'll also ask for access to hosting, domains, and relevant platforms to ensure smooth integration.",
   },
   {
     question:
-      "What’s the difference between a custom website and a template-based one?",
+      "What's the difference between a custom website and a template-based one?",
     textContent:
       "Templates are quicker and cheaper. Although we use template builders, all of our websites are custom-designed. The difference between a custom-built website from scratch and a web builder is the capabilities. <br/><br/>Custom websites are built around your brand, your goals, and your audience. For example, a healthcare provider might need patient intake forms integrated directly into their CMS, something a template would struggle to handle properly. A custom build ensures scalability, performance, and a long-term asset instead of a short-term fix.",
   },
@@ -151,7 +151,7 @@ export const servicesFAQ = [
     question:
       "How do you make sure the website aligns with my brand and audience?",
     textContent:
-      "We start with research, audits, and competitor analysis to understand not only how your brand should look but how it should feel to your audience. From typography and colour psychology to tone of voice and content hierarchy, every element is crafted to build trust and authority. <br/><br/>If you already have brand guidelines, we’ll work within them to ensure consistency. If you’re looking to reimagine the look and feel of your brand, or you’d like us to conduct a full rebrand with a refreshed strategy, we can do that too. ",
+      "We start with research, audits, and competitor analysis to understand not only how your brand should look but how it should feel to your audience. From typography and colour psychology to tone of voice and content hierarchy, every element is crafted to build trust and authority. <br/><br/>If you already have brand guidelines, we'll work within them to ensure consistency. If you're looking to reimagine the look and feel of your brand, or you'd like us to conduct a full rebrand with a refreshed strategy, we can do that too. ",
   },
   {
     question: "Will my website be optimised for mobile, SEO, and conversions?",
@@ -162,7 +162,7 @@ export const servicesFAQ = [
     question:
       "Do you provide support and training after the website is launched?",
     textContent:
-      "Yes, you’ll receive documentation and tutorials so you can manage your site confidently. We also offer ongoing support in our continuous collaboration model. We’ll continue to refine your website, optimise the SEO & split test landing pages so that you sit elevated at the top of your industry. ",
+      "Yes, you'll receive documentation and tutorials so you can manage your site confidently. We also offer ongoing support in our continuous collaboration model. We'll continue to refine your website, optimise the SEO & split test landing pages so that you sit elevated at the top of your industry. ",
   },
   {
     question: "Am I involved in the design process?",
@@ -172,6 +172,6 @@ export const servicesFAQ = [
   {
     question: "Will the project take up too much of my time?",
     textContent:
-      "Not really. We know you’re busy running your business. Our process is intentional; we ask for input at key milestones and handle everything else. Think of it as milestones rather than a constant back-and-forth. ",
+      "Not really. We know you're busy running your business. Our process is intentional; we ask for input at key milestones and handle everything else. Think of it as milestones rather than a constant back-and-forth. ",
   },
 ];

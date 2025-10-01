@@ -112,9 +112,9 @@ function PillList({ items = [], className = "" }) {
           role="listitem"
           className={[
             "inline-flex items-center gap-2",
-            "px-3 py-1.5 md:px-3.5 md:py-1.5",
+            "px-3 py-0.5 md:px-3.5 md:py-1",
             "rounded-xl border border-[var(--mesm-grey-dk)]",
-            "text-sm md:text-base font-medium",
+            "text-md md:text-lg md:text-base font-medium",
             "bg-[var(--mesm-grey-dk)]/20",
             "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-x-[1px] ",
             "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
@@ -160,7 +160,6 @@ function MediaDisplay({ media, fill = false }) {
 export default function LeftHero({
   heroMedia,
   pageHeader,
-  pageHeaderLine2,
   pageSubtitle,
   heroList, // { json }
   showCta = true,
@@ -191,7 +190,7 @@ export default function LeftHero({
           className={[
             "md:order-none",
             "md:row-start-1 md:col-start-1",
-            "flex flex-col justify-center text-left gap-4",
+            "flex flex-col justify-center text-left gap-5",
             "text-[var(--foreground)]",
             "p-[var(--global-margin-md)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
           ].join(" ")}
@@ -199,19 +198,14 @@ export default function LeftHero({
           <StaggeredWords
             as="h1"
             className="page-title-medium"
-            text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
+            text={`${pageHeader || ""}`}
           />
-          <StaggeredWords as="p" className="" text={pageSubtitle} />
+          <StaggeredWords as="p" className="w-[90%]" text={pageSubtitle} />
 
           <PillList items={listItems} className="justify-start" />
           <div className="flex flex-col ">
             {showCta && (
-              <Button
-                href={ctaUrl}
-                extraClass="mt-4"
-                variant="accent"
-                size="large"
-              >
+              <Button href={ctaUrl} extraClass="" variant="accent" size="large">
                 Learn More
               </Button>
             )}

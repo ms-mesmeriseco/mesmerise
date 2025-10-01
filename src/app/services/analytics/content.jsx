@@ -28,7 +28,7 @@ export const processSteps = [
   {
     title: "2. Discovery",
     content:
-      "We dig into valuable metrics and find what’s holding your business back. We cover all your touch points. User behaviour, landing page experience, paid media campaigns, search engine optimisation, email flows and creative assets. ",
+      "We dig into valuable metrics and find what's holding your business back. We cover all your touch points. User behaviour, landing page experience, paid media campaigns, search engine optimisation, email flows and creative assets. ",
   },
   {
     title: "3. Unification",
@@ -38,7 +38,7 @@ export const processSteps = [
   {
     title: "4. Reporting",
     content:
-      "We cut through the noise and deliver a clear report you can actually use. You’ll know what’s working, what isn’t, and where to focus your resources next.",
+      "We cut through the noise and deliver a clear report you can actually use. You'll know what's working, what isn't, and where to focus your resources next.",
   },
 ];
 
@@ -49,7 +49,7 @@ export const servicesFAQ = [
   {
     question: "Why do I need analytics if I already have reporting tools?",
     textContent:
-      "Most tools show you numbers, but they don’t explain why things happen. Our analytics and reporting unify your platforms, highlight the details behind the data, and give you clear, actionable insights.",
+      "Most tools show you numbers, but they don't explain why things happen. Our analytics and reporting unify your platforms, highlight the details behind the data, and give you clear, actionable insights.",
   },
   {
     question: "How is this different from a marketing agency report?",

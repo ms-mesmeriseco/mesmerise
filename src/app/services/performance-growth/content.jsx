@@ -4,7 +4,7 @@ export const para1Content =
   "Attention is fleeting, trust is not. Our omnipresent campaigns capture both, turning passing interest into conviction and conviction into clients.";
 
 export const para2Content =
-  "Marketing is like oxygen to your business. Without a strategy for growth, your business is suffocating–you’re invisible and have no predictable way of generating revenue.";
+  "Marketing is like oxygen to your business. Without a strategy for growth, your business is suffocating–you're invisible and have no predictable way of generating revenue.";
 
 export const para3Content =
   "Our state-of-the-art campaigns build trust with prospects and lower your cost per acquisition.";
@@ -60,7 +60,7 @@ export const servicesFAQ = [
   {
     question: "How is Mesmerise different to other agencies?",
     textContent:
-      "Our state-of-the-art approach is validated by data and centred around your customers’ current state of awareness. Every person is at a different stage of their buyer’s journey; some are just realising they have a problem, others are actively comparing solutions.  <br /><br />Our job is to meet them where they are and guide them forward. We build campaigns that educate when they are curious, reassure when they are uncertain, and inspire action when they are ready to buy. Over time, that consistency turns strangers into customers and customers into loyal brand advocates.",
+      "Our state-of-the-art approach is validated by data and centred around your customers' current state of awareness. Every person is at a different stage of their buyer's journey; some are just realising they have a problem, others are actively comparing solutions.  <br /><br />Our job is to meet them where they are and guide them forward. We build campaigns that educate when they are curious, reassure when they are uncertain, and inspire action when they are ready to buy. Over time, that consistency turns strangers into customers and customers into loyal brand advocates.",
   },
   {
     question: "How much budget do I need to allocate?",
@@ -78,9 +78,9 @@ export const servicesFAQ = [
       "Yes, but not in the way it was ten years ago. <br/><br/>SEO on its own is no longer a reliable lead generation or sales strategy because Google and YouTube have become ad platforms. Competitors are paying for clicks on the keywords that drive business for you, which means even if you rank number one, you are not guaranteed the right eyeballs.<br/><br/>Where SEO does play a vital role is in validation and nurturing. It helps you create content that speaks to intent at different stages of awareness, reinforces trust, and supports paid campaigns. Strong SEO foundations also improve ad deliverability and performance. But as a standalone strategy, whether for a small business or enterprise, SEO is no longer the right play. It works best as part of a larger, integrated growth system.",
   },
   {
-    question: "I’m running ads on one platform. Is that enough?",
+    question: "I'm running ads on one platform. Is that enough?",
     textContent:
-      "Not in today’s environment. Consumers move around, and the internet has become hyper-connected. <br/><br/>People move seamlessly between Google, Instagram, LinkedIn, YouTube, and the websites they trust. Their buying decisions are shaped by dozens of small interactions across multiple touchpoints, not a single ad on a single platform.<br/><br/>Relying on one channel is like trying to run on one leg with your eyes closed. You wouldn’t do it because it’s asinine and won’t get you very far. To build momentum, you need campaigns that follow your prospects’ natural behaviour. Remember we’re dealing with people, not “running ads”.<br/><br/>That means mapping the stages of awareness and creating assets that educate and reassure at each point of the journey. By showing prospects how your process is unique, you shorten sales cycles, reduce resistance, and fast-track that “aha - I need this” moment.",
+      "Not in today's environment. Consumers move around, and the internet has become hyper-connected. <br/><br/>People move seamlessly between Google, Instagram, LinkedIn, YouTube, and the websites they trust. Their buying decisions are shaped by dozens of small interactions across multiple touchpoints, not a single ad on a single platform.<br/><br/>Relying on one channel is like trying to run on one leg with your eyes closed. You wouldn't do it because it's asinine and won't get you very far. To build momentum, you need campaigns that follow your prospects' natural behaviour. Remember we're dealing with people, not “running ads”.<br/><br/>That means mapping the stages of awareness and creating assets that educate and reassure at each point of the journey. By showing prospects how your process is unique, you shorten sales cycles, reduce resistance, and fast-track that “aha - I need this” moment.",
   },
   {
     question: "How long before I see results?",

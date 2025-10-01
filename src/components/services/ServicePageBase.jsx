@@ -70,7 +70,7 @@ function FinalCTA({ text }) {
       <section className="flex flex-col justify-left text-white pb-4">
         <div className="">
           <StaggeredWords
-            as="h2"
+            as="h3"
             text={text}
             className="page-title-large"
             margin="-40% 0px"
@@ -81,17 +81,6 @@ function FinalCTA({ text }) {
         </div>
 
         <div className="text-right pt-6">
-          {/* <a
-              href="/connect"
-              className="hover:text-[var(--accent)] duration-200 text-[var(--background)]  text-center"
-            >
-              <StaggeredWords
-                as="h2"
-                text="Say Hi"
-                className="page-title-large bg-[var(--mesm-red)] hover:bg-[var(--mesm-yellow)] duration-200 w-fit"
-                margin="-40% 0px"
-              />
-            </a> */}
           <Button size="x-large" variant="accent2" href="/connect">
             Let's Talk
           </Button>

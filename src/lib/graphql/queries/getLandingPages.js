@@ -32,7 +32,6 @@ const rawQuery = `
         mT
         metaDesc
         line1
-        line2
         sub
         heroList {
         json
