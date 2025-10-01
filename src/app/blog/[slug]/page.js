@@ -165,13 +165,16 @@ export default async function BlogPost({ params }) {
         <article className="max-w-xl w-full flex flex-col gap-6">
           <h1 className="text-sm">{page.postHeading}</h1>
           <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start ">
-            <Image
-              src={page.authorAvatar.url}
-              alt={page.authorAvatar.title || "Author avatar"}
-              width={48}
-              height={48}
-              className="rounded-full"
-            />
+            {page.authorAvatar && (
+              <Image
+                src={page.authorAvatar.url}
+                alt={page.authorAvatar.title || "Author avatar"}
+                width={48}
+                height={48}
+                className="rounded-full"
+              />
+            )}
+
             <span>
               {formattedDate && (
                 <>

@@ -104,21 +104,10 @@ export default function Footer() {
               </a>
             </li>
           </ul>
-        </div>
-
-        {/* <div className="col-span-1">
-          <h5 className="text-lg font-normal mb-2">Landing Pages</h5>
+          <br />
+          <h5 className="text-lg font-normal mb-2">Insights</h5>
           <ul className="space-y-1 text-sm">
-            {landingPages.map((page) => (
-              <li key={page.pageSlug}>
-                <Link href={`/${page.pageSlug}`} className="hover:underline">
-                  {page.pageTitle}
-                </Link>
-              </li>
-            ))}
-            <br />
-            <h5 className="text-lg font-normal mb-2">Blog Pages</h5>
-            {blogPosts.map((post) => (
+            {blogPosts.slice(0, 4).map((post) => (
               <li key={post.slug}>
                 <Link href={`/blog/${post.slug}`} className="hover:underline">
                   {post.postTitle}
@@ -126,7 +115,7 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-        </div> */}
+        </div>
 
         {/* Connect */}
         <div className="col-span-1">
