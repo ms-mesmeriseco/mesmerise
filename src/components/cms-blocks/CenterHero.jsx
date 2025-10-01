@@ -106,7 +106,17 @@ function PillList({ items }) {
         <div
           key={`li-${i}`}
           role="listitem"
-          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-3 hover:border-[var(--mesm-blue)] duration-200 backdrop-blur-[1px] text-xl leading-tight"
+          className={[
+            "inline-flex items-center gap-2",
+            "px-3 py-1.5 md:px-3.5 md:py-1.5",
+            "rounded-xl border border-[var(--mesm-grey-dk)]",
+            "text-sm md:text-base font-medium",
+            "bg-[var(--mesm-grey-dk)]/20",
+            "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-y-[-1px] ",
+            "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
+            "duration-200",
+            "backdrop-blur-[1px]",
+          ].join(" ")}
         >
           <Image
             width={24}
@@ -181,7 +191,7 @@ export default function CenterHero({
                   <Button
                     href={ctaUrl}
                     extraClass="mt-4"
-                    variant="primary"
+                    variant="accent"
                     size="large"
                   >
                     Learn More

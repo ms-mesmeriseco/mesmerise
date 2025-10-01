@@ -102,11 +102,9 @@ function PillList({ items = [], className = "" }) {
   return (
     <div
       role="list"
-      className={[
-        // wrapping row — parent controls alignment with justify-*
-        "flex flex-wrap gap-1 md:gap-2 items-start",
-        className,
-      ].join(" ")}
+      className={["flex flex-col gap-1 md:gap-2 items-start", className].join(
+        " "
+      )}
     >
       {items.map((item, i) => (
         <span
@@ -115,12 +113,12 @@ function PillList({ items = [], className = "" }) {
           className={[
             "inline-flex items-center gap-2",
             "px-3 py-1.5 md:px-3.5 md:py-1.5",
-            "rounded-xl border border-[var(--mesm-grey-dk)]/80",
+            "rounded-xl border border-[var(--mesm-grey-dk)]",
             "text-sm md:text-base font-medium",
-            "bg-[color-mix(in_oklab,var(--background)_95%,transparent)]",
-            "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90",
+            "bg-[var(--mesm-grey-dk)]/20",
+            "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-x-[1px] ",
             "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
-            "transition-colors duration-150",
+            "duration-200",
             "backdrop-blur-[1px]",
           ].join(" ")}
         >
@@ -211,7 +209,7 @@ export default function LeftHero({
               <Button
                 href={ctaUrl}
                 extraClass="mt-4"
-                variant="primary"
+                variant="accent"
                 size="large"
               >
                 Learn More
