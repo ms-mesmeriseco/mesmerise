@@ -11,7 +11,7 @@ export const CONTINUOUS_CONTENT = {
   },
   secondary: {
     text: "For businesses who think exponentially.",
-    cta: null,
+    cta: "Let's talk",
   },
   whoItsForTitle: "Who it’s for",
   whoItsForItems: [

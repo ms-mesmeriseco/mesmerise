@@ -10,8 +10,8 @@ export const DEFINED_CONTENT = {
     className: "page-title-large",
   },
   secondary: {
-    text: "There’s only one way to find out if we have what it takes (pssst it involves getting in touch...)",
-    cta: "Say hi",
+    text: "Successful businesses don’t wait. They act.",
+    cta: "Let's talk",
   },
   whoItsForTitle: "Who it’s for",
   whoItsForItems: [
