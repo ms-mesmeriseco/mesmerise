@@ -4,7 +4,7 @@ export const para1Content =
   "Your website is make-or-break when it comes to success online. Paired with an in-depth marketing strategy, it creates an invaluable growth engine.";
 
 export const para2Content =
-  "Our unique experience in interaction design and digital marketing results in effortless sales cycles and increased conversions—that also look good.";
+  "Our unique experience in interaction design and digital marketing results in effortless sales cycles and increased conversions.";
 
 export const para3Content =
   "We offer web design and development services. These start from basic sites utilising powerful web builders, to completely custom builds for more complex requirements. ";
@@ -124,7 +124,7 @@ export const PACKAGES = {
   ],
 };
 
-export const finalCTA = "Build trust, deliver results.";
+export const finalCTA = "Build trust & boost conversions.";
 export const servicesFAQ = [
   {
     question: "Why is a website so important for my online success?",

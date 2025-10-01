@@ -23,9 +23,9 @@ export default function BlockRenderer({ block, center }) {
         <Image
           src={block.imageContent?.url}
           alt={block.imageContent?.title || ""}
-          width={block.imageContent?.width || 600}
-          height={block.imageContent?.height || 400}
-          className={`w-full h-auto shadow rounded-xs aspect-[6/4] object-cover`}
+          width={block.imageContent?.width}
+          height={block.imageContent?.height}
+          className={`w-full h-auto shadow rounded-xs`}
         />
       );
     case "Video":

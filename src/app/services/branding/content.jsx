@@ -58,7 +58,7 @@ export const processSteps = [
 ];
 
 export const finalCTA =
-  "Reach out to discover how we can elevate your positioning and drive growth";
+  "Discover how we can elevate your positioning and drive growth.";
 
 export const servicesFAQ = [
   {
