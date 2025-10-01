@@ -1,7 +1,7 @@
 "use client";
 
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
-import SecondaryButton from "@/components/ui/SecondaryButton";
+import Button from "@/components/ui/Button";
 import CollabToggle from "@/components/ui/CollabToggle";
 import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
 import StaggeredWords from "@/hooks/StaggeredWords";
@@ -50,7 +50,9 @@ function SecondaryStatement({ marker, text, cta }) {
             <br />
             <br />
             <br />
-            <SecondaryButton size="x-large">{cta}</SecondaryButton>
+            <Button size="x-large" variant="accent" href="/connect/">
+              {cta}
+            </Button>
           </>
         ) : null}
       </div>
@@ -63,7 +65,7 @@ export default function CollabTemplate({ content, currentSlug }) {
     "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-250";
 
   return (
-    <div className="p-[var(--global-margin-lg)]">
+    <div className="md:p-[var(--global-margin-lg)] p-[var(--global-margin-sm)]">
       <PageTitleLarge text={content.pageTitle} />
 
       <div className="flex flex-col gap-8">
@@ -107,26 +109,6 @@ export default function CollabTemplate({ content, currentSlug }) {
           text={content.statement.text}
           className={content.statement.className}
         />
-        {/* Carousel
-        <HorizontalScrollCarousel
-          title={content.carousel.title}
-          center={content.carousel.center}
-          images={content.carousel.images}
-          overlayText={
-            <>
-              <strong>{content.carousel.overlayHeading}</strong>
-              <br />
-              {content.carousel.overlayRange}
-            </>
-          }
-          link={content.carousel.link}
-          height={content.carousel.height}
-          rounded={content.carousel.rounded}
-        />
-        <br />
-        <br />
-        <br /> */}
-        {/* Steps */}
         <SteppedAccordion
           title={content.stepsTitle}
           center

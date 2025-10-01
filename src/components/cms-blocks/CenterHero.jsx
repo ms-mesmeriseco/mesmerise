@@ -106,7 +106,7 @@ function PillList({ items }) {
         <div
           key={`li-${i}`}
           role="listitem"
-          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-3 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-xl leading-tight"
+          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-3 hover:border-[var(--mesm-blue)] duration-200 backdrop-blur-[1px] text-xl leading-tight"
         >
           <Image
             width={24}

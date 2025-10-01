@@ -8,7 +8,8 @@ import { GET_BUTTON } from "./getButton";
 
 export const GET_SINGLE_COLUMN = gql`
   fragment SingleColumn on SingleColumnBlockBlank {
-    blockAlignment
+    align
+    ctaLab
     contentCollection(limit: 4) {
       items {
         ... on ContentTypeRichText {

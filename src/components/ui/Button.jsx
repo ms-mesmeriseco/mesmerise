@@ -1,88 +1,70 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 const SIZE_MAP = {
   small: {
     radius: "rounded-lg",
     font: "md:text-sm text-xs leading-none",
-    px: 12, // px-2
-    py: 4, // py-1
-    hoverDeltaX: 2,
+    px: "px-2",
+    py: "py-1",
   },
-  large: {
-    radius: "rounded-xl",
-    font: "text-lg",
-    px: 12, // px-3
-    py: 2, // py-2
-    hoverDeltaX: 2,
-  },
+  large: { radius: "rounded-xl", font: "text-lg", px: "px-3", py: "py-1" },
   "x-large": {
-    radius: "rounded-3xl",
-    font: "md:text-5xl text-xl",
-    px: 28, // px-6
-    py: 8, // py-2
-    hoverDeltaX: 2,
+    radius: "md:rounded-3xl rounded-2xl",
+    font: "md:text-5xl text-3xl",
+    px: "md:px-7 px-4",
+    py: "md:py-2 py-1",
   },
-  none: {
-    radius: "",
-    font: "text-3xl font-normal",
-    px: 0,
-    py: 0,
-    hoverDeltaX: 0,
-  },
+  none: { radius: "", font: "text-3xl font-normal", px: "px-0", py: "py-0" },
 };
 
 const VARIANTS = {
   primary:
-    "bg-[var(--foreground)] border-[var(--foreground)] text-[var(--background)] " +
-    "hover:bg-transparent hover:border-[var(--mesm-blue)] hover:text-[var(--mesm-blue)]",
+    "bg-[var(--mesm-blue)] border-[var(--mesm-blue)] text-[var(--background)] ",
+  // "hover:bg-transparent hover:border-[var(--mesm-blue)] hover:text-[var(--mesm-blue)]",
   secondary:
-    "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)] " +
-    "hover:bg-[var(--foreground)] hover:text-[var(--background)]",
+    "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)] ",
+  // "hover:bg-[var(--foreground)] hover:text-[var(--background)]",
   accent:
-    "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98 " +
-    "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
+    "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98 ",
+  // "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
   accent2:
-    "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98 " +
-    "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
-  CTA:
-    "justify-center rounded-[1.1rem] text-center shadow-md shadow-black/20 w-full bg-[var(--accent)] border-[var(--mesm-grey-dk)]/100 text-[var(--background)]/98 " +
-    "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
+    "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98 ",
+  // "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
+  CTA: "justify-center rounded-[1.1rem] text-center shadow-md shadow-black/20 w-full bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)]",
+
+  // "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)]",
 };
 
 export default function Button({
   href = "#",
   children,
   extraClass = "",
-  size = "small", // "small" | "large" | "x-large"
-  variant = "primary", // "primary" | "secondary"
+  size = "small",
+  variant = "primary",
   ...props
 }) {
   const cfg = SIZE_MAP[size] ?? SIZE_MAP.small;
   const variantClasses = VARIANTS[variant] ?? VARIANTS.primary;
 
-  // inline base padding for Framer hover animation
-  const baseStyle = {
-    paddingLeft: cfg.px,
-    paddingRight: cfg.px,
-    paddingTop: cfg.py,
-    paddingBottom: cfg.py,
-  };
-
   return (
-    <motion.a
+    <a
       href={href}
-      style={baseStyle}
-      whileHover={{
-        paddingLeft: cfg.px + cfg.hoverDeltaX,
-        paddingRight: cfg.px + cfg.hoverDeltaX,
-      }}
-      transition={{ type: "tween", ease: "easeInOut", duration: 0.25 }}
-      className={`inline-block border w-fit select-none ${cfg.radius} ${cfg.font} ${variantClasses} ${extraClass}`}
+      className={[
+        "inline-block select-none border w-fit",
+        "hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]",
+        cfg.radius,
+        cfg.font,
+        cfg.px,
+        cfg.py,
+        variantClasses,
+        extraClass,
+        // buttery-smooth hover with GPU acceleration
+        "duration-150 ease-out",
+        "", // or scale-x-[1.03] for horizontal-only
+      ].join(" ")}
       {...props}
     >
       {children}
-    </motion.a>
+    </a>
   );
 }

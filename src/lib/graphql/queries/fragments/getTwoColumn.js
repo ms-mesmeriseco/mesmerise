@@ -7,7 +7,8 @@ import { GET_LIST_SWITCH } from "./getListSwitch";
 
 export const GET_TWO_COLUMN = gql`
   fragment TwoColumn on TwoColumnBlockBlank {
-    blockAlignment
+    ctaCol
+    ctaLab
     column1Collection(limit: 3) {
       items {
         ... on ContentTypeRichText {

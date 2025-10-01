@@ -13,7 +13,7 @@ import ComparisonTable from "@/components/cms-blocks/ComparisonTable";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
-export default function PageBase({ blocks }) {
+export default function PageBase({ blocks, metadata }) {
   const marker = useSectionMarker();
   const anim = (variants) => {
     return {
@@ -56,7 +56,8 @@ export default function PageBase({ blocks }) {
                 >
                   <SingleColumn
                     content={block.contentCollection?.items || []}
-                    align={block.blockAlignment}
+                    align={block.align}
+                    ctaLab={block.ctaLab}
                   />
                 </div>
               );
@@ -68,6 +69,8 @@ export default function PageBase({ blocks }) {
                     column1={block.column1Collection?.items || []}
                     column2={block.column2Collection?.items || []}
                     align={block.blockAlignment}
+                    ctaLab={block.ctaLab}
+                    ctaCol={block.ctaCol}
                   />
                 </div>
               );

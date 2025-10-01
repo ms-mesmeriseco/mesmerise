@@ -2,7 +2,7 @@ export default function ToggleSwitch({
   options = [],
   value,
   onChange,
-  selectedBg = "var(--mesm-red)", // CSS color for the ACTIVE button
+  selectedBg = "var(--accent2)", // CSS color for the ACTIVE button
   selectedTextClass = "text-black", // Tailwind text class for ACTIVE state
   textSize = "sm", // "xs" | "sm" | "base" | "lg" | "xl"
   className = "",
@@ -20,11 +20,11 @@ export default function ToggleSwitch({
     <div
       className={[
         "flex items-center gap-2",
-        "bg-[var(--mesm-grey-xd)]",
+        "bg-[var(--mesm-grey-dk)]/5",
         "rounded-2xl p-1",
         "border border-[var(--mesm-grey-dk)]",
         "w-fit mx-auto mb-8",
-        "shadow-xl",
+        "shadow-xl backdrop-blur-xs",
         sizeClass,
         className,
       ].join(" ")}

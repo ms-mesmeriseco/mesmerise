@@ -113,7 +113,7 @@ export default function Header() {
             preload="auto"
             aria-hidden={sceneInView}
             className={[
-              "md:h-[4.23rem] h-[2.77rem] block transition-opacity duration-100 opacity-0",
+              "md:h-[3.23rem] h-[2.77rem] block transition-opacity duration-100 opacity-0",
               sceneInView
                 ? "opacity-0 pointer-events-none hidden"
                 : "opacity-100",
