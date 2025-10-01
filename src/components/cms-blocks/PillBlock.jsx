@@ -45,7 +45,7 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
           </motion.div>
         </div>
 
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 min-h-[70vh] md:px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] gap-18 text-base leading-relaxed">
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 md:px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] gap-18 text-base leading-relaxed">
           <AnimatePresence mode="wait" initial={false}>
             {/* TEXT */}
             <motion.div
