@@ -118,7 +118,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
 
               return (
                 <Card key={key} icon={icon}>
-                  <div className="min-h-[220px] flex flex-col justify-start">
+                  <div className="min-h-[220px] flex flex-col justify-start ">
                     {textContent?.json && (
                       <div className="text-sm flex flex-col gap-6">
                         {documentToReactComponents(textContent.json)}
