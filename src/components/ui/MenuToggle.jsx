@@ -68,6 +68,7 @@ export default function MenuToggle({ base = "/" }) {
     "/about",
     "/connect",
     "/services",
+    "/work",
     "/collaboration/defined",
     "/collaboration/continuous",
   ];

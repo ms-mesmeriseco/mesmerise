@@ -24,6 +24,7 @@ export default function ServiceTags({
   large = true,
 }) {
   const router = useRouter();
+  const EXCLUDED_TAGS = ["Layout: Highlight Grid"];
 
   const container = {
     hidden: {},
@@ -58,22 +59,24 @@ export default function ServiceTags({
         animate="show"
         className={`flex flex-wrap ${gapSize}`}
       >
-        {items.map((tag, idx) => {
-          const hoverColor =
-            HOVER_COLORS[hashToIndex(tag, HOVER_COLORS.length)];
-          return (
-            <motion.button
-              key={idx}
-              variants={item}
-              onClick={(e) => handleClick(tag, e)}
-              className={`${BASE_COLOR_CLASSES} ${SIZE_CLASSES}`}
-              type="button"
-              style={{ "--hover-color": hoverColor }}
-            >
-              {tag}
-            </motion.button>
-          );
-        })}
+        {items
+          .filter((tag) => !EXCLUDED_TAGS.includes(tag))
+          .map((tag, idx) => {
+            const hoverColor =
+              HOVER_COLORS[hashToIndex(tag, HOVER_COLORS.length)];
+            return (
+              <motion.button
+                key={idx}
+                variants={item}
+                onClick={(e) => handleClick(tag, e)}
+                className={`${BASE_COLOR_CLASSES} ${SIZE_CLASSES}`}
+                type="button"
+                style={{ "--hover-color": hoverColor }}
+              >
+                {tag}
+              </motion.button>
+            );
+          })}
       </motion.div>
     </section>
   );

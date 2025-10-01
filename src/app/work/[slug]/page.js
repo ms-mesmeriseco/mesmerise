@@ -80,16 +80,12 @@ export default async function ProjectPage({ params }) {
       <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]"></div>
       <div className="col-span-12 lg:col-span-6  rounded-lg flex flex-col gap-2  md:max-w-[475px]">
         <h1 className="font-medium">{page.projectTitle}</h1>
-        <h6 className="opacity-40">{formattedDate}</h6>
-        <h6 className="opacity-40">{page.collaborationModel || ""}</h6>
+        <h6 className="">{formattedDate}</h6>
+        <h6 className="">{page.collaborationModel || ""}</h6>
 
         {page.projectScope?.json && (
           <>
-            <StaggeredWords
-              as="h6"
-              text="Project scope"
-              className="opacity-60"
-            />
+            <StaggeredWords as="h6" text="Project scope" className="" />
 
             <div className="text-base leading-relaxed [&>p+p]:mt-4">
               {addClassToParagraphs(
@@ -121,11 +117,11 @@ export default async function ProjectPage({ params }) {
             ))}
           </div> */}
 
-          <div className="text-base md:w-1/2 ml-auto w-full leading-relaxed [&>p+p]:mt-4  ">
+          <div className="text-base md:w-1/2 ml-auto w-full leading-relaxed ">
             <div className="max-w-[475px]">
               {addClassToParagraphs(
                 renderRichTextWithBreaks(page.extendedDescription.json),
-                "p2"
+                "p2 mb-6"
               )}
             </div>
           </div>
@@ -157,6 +153,9 @@ export default async function ProjectPage({ params }) {
                 <video
                   src={media.url}
                   controls
+                  autoPlay
+                  loop
+                  muted
                   className="w-full h-[50vh] object-cover"
                 />
               ) : (
