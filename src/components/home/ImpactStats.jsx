@@ -14,10 +14,10 @@ const CARD_BG_CLASSES = [
   "bg-[var(--accent2)]",
 ];
 const CARD_TEXT_CLASSES = [
-  "text-white",
+  "text-black",
   "text-black", // better contrast for yellow
-  "text-white",
-  "text-white",
+  "text-black",
+  "text-black",
 ];
 
 function StatCard({

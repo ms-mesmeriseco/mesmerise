@@ -96,28 +96,50 @@ function getListItemsFromRichText(doc) {
   return items;
 }
 
-function PillList({ items, align = "left" }) {
-  if (!items?.length) return null;
-  const wrap =
-    align === "left"
-      ? "flex flex-col items-start gap-2 list-none opacity-80 text-left"
-      : "flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-2 list-none opacity-80 text-center";
+function PillList({ items = [], className = "" }) {
+  if (!items.length) return null;
+
   return (
-    <div className={wrap} role="list">
+    <div
+      role="list"
+      className={[
+        // wrapping row — parent controls alignment with justify-*
+        "flex flex-wrap gap-1 md:gap-2 items-start",
+        className,
+      ].join(" ")}
+    >
       {items.map((item, i) => (
-        <div
-          key={`li-${i}`}
+        <span
+          key={`pill-${i}`}
           role="listitem"
-          className="px-4 py-1 rounded-xl border border-[var(--mesm-grey-dk)] flex flex-row items-center gap-2 hover:border-[var(--foreground)] duration-200 backdrop-blur-[1px] text-md leading-tight"
+          className={[
+            "inline-flex items-center gap-2",
+            "px-3 py-1.5 md:px-3.5 md:py-1.5",
+            "rounded-xl border border-[var(--mesm-grey-dk)]/80",
+            "text-sm md:text-base font-medium",
+            "bg-[color-mix(in_oklab,var(--background)_95%,transparent)]",
+            "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90",
+            "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
+            "transition-colors duration-150",
+            "backdrop-blur-[1px]",
+          ].join(" ")}
         >
-          <img
-            width={24}
-            height={24}
-            src="/icons/check_32dp_FFFFFF_FILL0_wght300_GRAD0_opsz40.png"
-            alt=""
-          />
-          {item}
-        </div>
+          {/* swap to inline SVG for smoother rendering & no layout shift */}
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            className="shrink-0"
+          >
+            <path
+              d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
+              fill="currentColor"
+              opacity="0.9"
+            />
+          </svg>
+          <span className="whitespace-nowrap">{item}</span>
+        </span>
       ))}
     </div>
   );
@@ -173,22 +195,23 @@ export default function LeftHero({
             "md:row-start-1 md:col-start-1",
             "flex flex-col justify-center text-left gap-4",
             "text-[var(--foreground)]",
-            "p-[var(--global-margin-sm)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
+            "p-[var(--global-margin-md)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
           ].join(" ")}
         >
           <StaggeredWords
             as="h1"
+            className="page-title-medium"
             text={`${pageHeader || ""} ${pageHeaderLine2 || ""}`}
           />
-          <StaggeredWords as="p" className="mt-6" text={pageSubtitle} />
+          <StaggeredWords as="p" className="" text={pageSubtitle} />
 
-          <PillList items={listItems} align="left" />
+          <PillList items={listItems} className="justify-start" />
           <div className="flex flex-col ">
             {showCta && (
               <Button
                 href={ctaUrl}
                 extraClass="mt-4"
-                variant="accent2"
+                variant="primary"
                 size="large"
               >
                 Learn More

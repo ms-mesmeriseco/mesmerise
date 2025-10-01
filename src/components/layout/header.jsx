@@ -149,7 +149,7 @@ export default function Header() {
                           "
           >
             <Button size="x-large" variant="CTA" href="tel:+61477210477">
-              <span className="text-2xl">Call us</span>
+              <span className="text-2xl">Speak to Simba</span>
             </Button>
           </div>
         </div>

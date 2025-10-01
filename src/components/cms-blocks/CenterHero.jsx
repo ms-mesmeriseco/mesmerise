@@ -181,7 +181,7 @@ export default function CenterHero({
                   <Button
                     href={ctaUrl}
                     extraClass="mt-4"
-                    variant="accent2"
+                    variant="primary"
                     size="large"
                   >
                     Learn More

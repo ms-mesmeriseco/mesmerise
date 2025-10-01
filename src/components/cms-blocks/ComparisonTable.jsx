@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react";
 import InView from "@/hooks/InView";
+import Image from "next/image";
 
 /* ---------------- Rich Text helpers ---------------- */
 function textFromNode(node) {
@@ -84,20 +85,25 @@ export default function ComparisonTable({
                 <li
                   key={`c1-${i}`}
                   className="
-                  flex items-start gap-4
-                  rounded-md bg-black/20 border border-white/10
-                  px-3 py-2  no-list
+                  flex items-center gap-4
+                  rounded-2xl bg-black/20 border border-white/10
+                  px-4 py-2 no-list w-fit opacity-70 hover:opacity-100 transition-opacity
                 "
                 >
                   <span
                     aria-hidden="true"
                     className="
-                    mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center
-                    rounded-full bg-emerald-500/20 ring-1 ring-emerald-400/50
-                    text-emerald-300 text-sm font-bold
+                     inline-flex h-7 w-7 shrink-0 items-center justify-center
+                    rounded-full bg-[var(--accent)] ring-1 ring-[var(--accent)]/50
+                    text-[var(--background)] text-sm font-bold
                   "
                   >
-                    ✓
+                    <Image
+                      src="/icons/check-black.png"
+                      alt=""
+                      width={32}
+                      height={32}
+                    />
                   </span>
                   <span className="text-md leading-snug ">{item}</span>
                   <span className="sr-only">(included)</span>
@@ -114,20 +120,25 @@ export default function ComparisonTable({
                 <li
                   key={`c2-${i}`}
                   className="
-                  flex items-start gap-4
-                  rounded-md bg-black/20 border border-white/10
-                  px-3 py-2 no-list
+                  flex items-center gap-4
+                  rounded-2xl bg-black/20 border border-white/10
+                  px-4 py-2 no-list w-fit  opacity-70 hover:opacity-100 transition-opacity
                 "
                 >
                   <span
                     aria-hidden="true"
                     className="
-                    mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center
-                    rounded-full bg-rose-500/20 ring-1 ring-rose-400/50
-                    text-rose-300 text-sm font-bold
+                      inline-flex h-7 w-7 shrink-0 items-center justify-center
+                    rounded-full bg-[var(--mesm-red)] ring-1 ring-[var(--mesm-red)]/50
+                    text-[var(--background)] text-sm font-bold
                   "
                   >
-                    ✕
+                    <Image
+                      src="/icons/close-black.png"
+                      alt=""
+                      width={32}
+                      height={32}
+                    />
                   </span>
                   <span className="text-md leading-snug">{item}</span>
                   <span className="sr-only"> (not included)</span>
