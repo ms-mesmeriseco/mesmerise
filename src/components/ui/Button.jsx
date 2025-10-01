@@ -2,17 +2,22 @@
 
 const SIZE_MAP = {
   small: {
-    radius: "rounded-lg",
+    radius: "rounded-lg hover:rounded-md",
     font: "md:text-sm text-xs leading-none",
     px: "px-2",
     py: "py-1",
   },
-  large: { radius: "rounded-xl", font: "text-lg", px: "px-3", py: "py-1" },
+  large: {
+    radius: "rounded-xl hover:rounded-lg",
+    font: "text-lg",
+    px: "px-4",
+    py: "py-[3.8]",
+  },
   "x-large": {
-    radius: "md:rounded-3xl rounded-2xl",
+    radius: "hover:rounded-2xl rounded-3xl",
     font: "md:text-5xl text-3xl",
     px: "md:px-7 px-4",
-    py: "md:py-2 py-1",
+    py: "md:py-3 py-2",
   },
   none: { radius: "", font: "text-3xl font-normal", px: "px-0", py: "py-0" },
 };

@@ -163,6 +163,7 @@ export default function LeftHero({
   pageSubtitle,
   heroList, // { json }
   showCta = true,
+  ctaLabel,
   ctaUrl = "/connect",
   logos,
   heroEmbed,
@@ -182,7 +183,7 @@ export default function LeftHero({
           // Mobile: single column; Desktop: 2 columns + bottom row for badges
           "grid grid-cols-1 md:grid-cols-2 md:grid-rows-[1fr_auto]",
           "gap-[var(--global-margin-xs)]",
-          "md:min-h-screen", // full screen height on md+
+          "md:min-h-[90vh]", // full screen height on md+
         ].join(" ")}
       >
         {/* TEXT — mobile order 1; desktop row 1 col 1 */}
@@ -205,8 +206,13 @@ export default function LeftHero({
           <PillList items={listItems} className="justify-start" />
           <div className="flex flex-col ">
             {showCta && (
-              <Button href={ctaUrl} extraClass="" variant="accent" size="large">
-                Learn More
+              <Button
+                href={ctaUrl}
+                extraClass="mt-4"
+                variant="accent"
+                size="large"
+              >
+                {ctaLabel || "Learn more"}
               </Button>
             )}
           </div>

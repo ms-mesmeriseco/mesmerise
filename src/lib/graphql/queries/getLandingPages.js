@@ -43,6 +43,7 @@ const rawQuery = `
         }
         hE {
         json}
+        ctaLab
         trustCollection (limit:8) {
           items {
             url

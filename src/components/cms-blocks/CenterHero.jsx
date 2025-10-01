@@ -160,6 +160,7 @@ export default function CenterHero({
   pageSubtitle,
   heroList, // { json }
   showCta = true,
+  ctaLabel,
   ctaUrl = "/connect",
   logos,
 }) {
@@ -193,7 +194,7 @@ export default function CenterHero({
                     variant="accent"
                     size="large"
                   >
-                    Learn More
+                    {ctaLabel || "Learn more"}
                   </Button>
                 )}
               </div>

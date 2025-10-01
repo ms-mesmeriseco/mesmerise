@@ -31,6 +31,7 @@ export default function LandingPageClient({ page }) {
         ctaUrl="/connect"
         logos={page.trustCollection?.items}
         heroEmbed={page.hE}
+        ctaLabel={page.ctaLab}
       />
       <PageBase blocks={blocks} />
     </>

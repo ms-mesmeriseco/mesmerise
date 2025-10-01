@@ -103,23 +103,25 @@ export default function Header() {
                    pointer-events-auto bg-transparent"
       >
         {/* Left: Logo (video on non-connect pages, static black on connect) */}
-        <Link
-          href="/"
-          aria-label="Go to homepage"
-          className="justify-self-start"
-        >
-          <img
-            src="/assets/270px-transparent_M-logo.gif"
-            preload="auto"
-            aria-hidden={sceneInView}
-            className={[
-              "md:h-[3.23rem] h-[2.77rem] block transition-opacity duration-100 opacity-0",
-              sceneInView
-                ? "opacity-0 pointer-events-none hidden"
-                : "opacity-100",
-            ].join(" ")}
-          ></img>
-        </Link>
+        <div className=" min-h-[3.23rem]">
+          <Link
+            href="/"
+            aria-label="Go to homepage"
+            className="justify-self-start"
+          >
+            <img
+              src="/assets/270px-transparent_M-logo.gif"
+              preload="auto"
+              aria-hidden={sceneInView}
+              className={[
+                "md:h-[3.23rem] h-[2.77rem] block transition-opacity duration-100 opacity-0",
+                sceneInView
+                  ? "opacity-0 pointer-events-none hidden"
+                  : "opacity-100",
+              ].join(" ")}
+            ></img>
+          </Link>
+        </div>
 
         {/* Middle: spacer */}
         <span />
