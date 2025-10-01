@@ -42,7 +42,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
 
   return (
     <InView>
-      <section className="w-full min-h-[80vh] justify-center">
+      <section className="w-full justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}

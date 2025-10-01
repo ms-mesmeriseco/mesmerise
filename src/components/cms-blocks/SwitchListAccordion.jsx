@@ -14,7 +14,7 @@ export default function SwitchListAccordion({ items }) {
         <video
           src={media.url}
           controls
-          className="w-full h-full object-cover rounded-xl md:aspect-[9/16] aspect-[6/4]"
+          className="w-full h-full object-cover rounded-xl"
           autoPlay
           muted
           loop
@@ -33,7 +33,7 @@ export default function SwitchListAccordion({ items }) {
         src={media.url}
         alt={media.title || ""}
         style={{ width: "auto", maxHeight: "80vh" }}
-        className="w-full h-full object-cover rounded-xl md:aspect-[9/16] aspect-[6/4]"
+        className="w-full h-full object-cover rounded-xl"
         loading="lazy"
       />
     );
@@ -42,7 +42,7 @@ export default function SwitchListAccordion({ items }) {
   return (
     <InView>
       {/* Desktop/tablet layout */}
-      <section className="hidden md:grid grid-cols-[1fr_auto] md:gap-8 gap-0 min-h-[80vh] items-center justify-center">
+      <section className="hidden md:grid grid-cols-[1fr_auto] md:gap-8 gap-0 items-center justify-center">
         {/* Left column: Accordion */}
         <div className="flex flex-col h-[80vh] justify-center gap-6">
           {items.map((item, idx) => (
@@ -108,7 +108,7 @@ export default function SwitchListAccordion({ items }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.1 }}
-                className=" md:aspect-[9/16] aspect-[6/4] h-[80vh] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] transition duration-200 ease-in-out flex items-center justify-center"
+                className="h-[80vh] rounded-xl shadow overflow-hidden border-1 border-[var(--mesm-grey-dk)] transition duration-200 ease-in-out flex items-center justify-center"
               >
                 {renderMedia(items[activeIndex].listMedia)}
               </motion.div>

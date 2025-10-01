@@ -10,14 +10,14 @@ export default function Connect() {
   const servicesFAQ = [
     {
       question:
-        "What’s the difference between Defined and Continuous Collaboration?",
+        "What's the difference between Defined and Continuous Collaboration?",
       textContent:
         "Defined Collaboration is perfect for projects with a clear scope, timeline, and deliverables. Ideal for businesses looking for a fixed-price, time-bound engagement.<br/><br/>Continuous Collaboration is designed for long-term partnerships with flexibility and scalability, providing ongoing strategic, creative, and performance support to keep you at the forefront of your industry.",
     },
     {
-      question: "What is Mesmerise’s unique strength as an agency?",
+      question: "What is Mesmerise's unique strength as an agency?",
       textContent:
-        "Our strength lies in our holistic, integrated approach across Strategy, Design, Omnipresent Marketing, and Business Consulting.<br/><br/>We don’t just “run ads”, we carefully construct ecosystems that elevate your market position. This allows you to charge more, lower your cost per acquisition and extend the lifetime value of your clients. ",
+        "Our strength lies in our holistic, integrated approach across Strategy, Design, Omnipresent Marketing, and Business Consulting.<br/><br/>We don't just “run ads”, we carefully construct ecosystems that elevate your market position. This allows you to charge more, lower your cost per acquisition and extend the lifetime value of your clients. ",
     },
     {
       question: "What type of clients do you typically work with?",
@@ -37,12 +37,12 @@ export default function Connect() {
     {
       question: "What kind of project management setup do you offer?",
       textContent:
-        "We’re a small tight knit team which means you deal directly with the people responsible for the execution.<br/><br/>That means fewer delays, no miscommunication, and lighting fast momentum.<br/><br/><ul><li>Petar & Nicole shape the strategy with you and make sure every decision drives revenue forward.</li><li>Matilda takes the lead on design and development, turning ideas into assets that perform.</li><li>Simba handles the business development and consulting, aligning projects with your long-term goals.</li></ul><br/><br/>We set clear milestones, give you regular updates, and adapt touchpoints around your preferences. The level of communication is tailored to your project and level of need.<br/><br/>This way you get the best of both worlds: the responsiveness and personal attention of a intimate team, with the professionalism and accountability of a boutique agency.",
+        "We're a small tight knit team which means you deal directly with the people responsible for the execution.<br/><br/>That means fewer delays, no miscommunication, and lighting fast momentum.<br/><br/><ul><li>Petar & Nicole shape the strategy with you and make sure every decision drives revenue forward.</li><li>Matilda takes the lead on design and development, turning ideas into assets that perform.</li><li>Simba handles the business development and consulting, aligning projects with your long-term goals.</li></ul><br/><br/>We set clear milestones, give you regular updates, and adapt touchpoints around your preferences. The level of communication is tailored to your project and level of need.<br/><br/>This way you get the best of both worlds: the responsiveness and personal attention of a intimate team, with the professionalism and accountability of a boutique agency.",
     },
     {
       question: "What results can I expect from working with Mesmerise?",
       textContent:
-        "It depends on your industry and niche. Organise a strategy session and we’ll tell you exactly what you can expect.<br/><br/>For instance, REIGNER had to open another business to meet fulfillment, Tony Caulk hired 4+ new staff and a full time admin person, the list goes on.<br/><br/>90% of businesses we work with can’t handle the lead volume we are able to generate.",
+        "It depends on your industry and niche. Organise a strategy session and we'll tell you exactly what you can expect.<br/><br/>For instance, REIGNER had to open another business to meet fulfillment, Tony Caulk hired 4+ new staff and a full time admin person, the list goes on.<br/><br/>90% of businesses we work with can't handle the lead volume we are able to generate.",
     },
   ];
 
@@ -62,26 +62,16 @@ export default function Connect() {
           ]}
         />
       </div>
-      {/* <section data-marker="CLICK ME" className="md:min-h-[80vh] min-h-[50vh]">
-        <ServicesTab />
-      </section> */}
 
       <ServicesRail />
-      {/* <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br /> */}
+
       <FAQ
         label="common questions"
         title="Frequently asked questions"
-        items={servicesFAQ} // your array of { question, textContent }
-        singleOpen={false} // set true to allow only one open at a time
-        defaultOpen={[0]} // which indexes start open
+        items={servicesFAQ}
+        singleOpen={false}
+        defaultOpen={[0]}
       />
-
-      {/* Bottom Row */}
     </div>
   );
 }
