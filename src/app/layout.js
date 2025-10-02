@@ -13,7 +13,7 @@ export const metadata = {
   icons: {
     // Browser tab favicons
     icon: [
-      { url: "favicon-32x32.png", sizes: "any" }, // multi-size .ico (16/32)
+      { url: "favicon.ico", sizes: "any" }, // multi-size .ico (16/32)
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
     ],
