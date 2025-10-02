@@ -6,6 +6,7 @@ import Inner from "@/components/layout/Inner";
 import Template from "@/components/layout/template";
 import BodyThemeWrapper from "@/components/layout/BodyThemeWrapper";
 import "./globals.css";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata = {
   title: "Mesmerise Digital",
@@ -62,6 +63,33 @@ export default function RootLayout({ children }) {
           />
         </noscript>
         {/* End Meta Pixel Code */}
+        {/* Google Tag Manager */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-TCGXS36');
+            `,
+          }}
+        />
+        {/* End Google Tag Manager
+Google Tag Manager (noscript) */}
+        {/* Clarity */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "tjlyzh45or");
+            `,
+          }}
+        />
+        {/* End Clarity */}
       </head>
       <body className={"bg-[var(--background)] text-[var(--foreground)]"}>
         <BodyThemeWrapper />
@@ -72,6 +100,7 @@ export default function RootLayout({ children }) {
         <MenuToggle />
         <Footer />
       </body>
+      <GoogleAnalytics gaId="G-S8FYLFZ1PN" />
     </html>
   );
 }
