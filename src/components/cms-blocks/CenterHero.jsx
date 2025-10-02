@@ -172,10 +172,10 @@ export default function CenterHero({
   return (
     <InView>
       <section className="relative w-screen min-h-screen overflow-x-hidden text-center">
-        <div className="mx-[var(--global-margin-md)] flex flex-col items-center">
+        <div className="flex flex-col items-center">
           {/* Top stack: text + badges take most of the viewport */}
-          <div className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh] py-24">
-            <div className="w-full text-[var(--foreground)] sm:p-[var(--global-margin-lg)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)] flex flex-col gap-2 min-h-[60vh] justify-center items-center">
+          <div className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh] md:py-14 py-10">
+            <div className="w-full text-[var(--foreground)] flex flex-col gap-2 min-h-[60vh] justify-center items-center px-4">
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"

@@ -35,7 +35,7 @@ const VARIANTS = {
   accent2:
     "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98 ",
   // "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
-  CTA: "justify-center rounded-[1.1rem] text-center shadow-md shadow-black/20 w-full bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)]",
+  CTA: "justify-center rounded-[1.1rem] text-center shadow-lg shadow-[#686767]/30  w-full bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)]",
 
   // "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)]",
 };
