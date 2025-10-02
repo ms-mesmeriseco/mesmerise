@@ -47,7 +47,7 @@ export default function Footer() {
     <footer className="relative z-200 bg-[var(--footer-bg)] text-[color:var(--footer-txt)] p-[var(--global-margin-md)] min-h-[70vh]">
       <section
         data-marker=" "
-        className="max-w-7xl grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 gap-[var(--global-margin-sm)]"
+        className="max-w-7xl grid grid-cols-1 md:grid-cols-4 gap-[var(--global-margin-sm)]"
       >
         {/* Spacer */}
         <div className="col-span-1">
@@ -85,8 +85,9 @@ export default function Footer() {
                 Contact
               </a>
             </li>
-            <br />
-            <h5 className="text-lg font-normal mb-2">Collaboration Models</h5>
+          </ul>
+          <h5 className="text-lg font-normal mb-2">Collaboration Models</h5>
+          <ul className="space-y-1 text-sm">
             <li>
               <a
                 href="/collaboration/defined"
@@ -104,7 +105,7 @@ export default function Footer() {
               </a>
             </li>
           </ul>
-          <br />
+
           <h5 className="text-lg font-normal mb-2">Insights</h5>
           <ul className="space-y-1 text-sm">
             {blogPosts.slice(0, 4).map((post) => (
