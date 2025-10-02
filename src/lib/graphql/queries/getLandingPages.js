@@ -114,6 +114,9 @@ export const GET_ALL_LANDING_PAGES = gql`
         pageSlug
         mT
         metaDesc
+        media {
+          url
+        }
       }
     }
   }

@@ -114,13 +114,13 @@ export default function ServicePageBase({
                 loop
                 muted
                 playsInline
-                className="w-full h-full md:aspect-16/9 aspect-9/16 object-cover "
+                className="w-full h-full md:aspect-16/9 pt-4 md:pt-0 aspect-5/6 object-cover "
               />
             ) : (
               <img
                 src={heroMedia}
                 alt="Hero Media"
-                className="w-full h-full  md:aspect-16/9 aspect-9/16 object-cover "
+                className="w-full h-full md:aspect-16/9 pt-4 md:pt-0 aspect-5/6 object-cover "
               />
             )
           ) : null}

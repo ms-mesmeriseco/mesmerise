@@ -106,7 +106,7 @@ export default function FAQTwoColumn({
                     <div className="pb-5 md:pb-6 pl-1 pr-10">
                       {/* Your answers include <br />, so render as HTML */}
                       <div
-                        className="opacity-60 leading-relaxed py-4 max-w-[475px]"
+                        className="leading-relaxed py-4 max-w-[475px]"
                         dangerouslySetInnerHTML={{ __html: textContent }}
                       />
                     </div>

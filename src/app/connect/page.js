@@ -245,7 +245,7 @@ export default function Connect() {
             <button className="w-full h-full md:text-4xl text-2xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
               Call
               <br />
-              +614 77 210 477
+              +61 477 210 477
             </button>
           </a>
         </div>

@@ -33,11 +33,10 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const metaTitle = page.metaTitle || page.postHeading || "Blog Post";
+  const metaTitle = page.metaTitle || page.postTitle || "Mesmerise Digital";
 
   const metaDescription =
     page.metaDescription ||
-    page.excerpt ||
     // quick fallback from first paragraph if needed
     (page.blogContent?.json?.content || [])
       .map((n) =>
@@ -49,7 +48,7 @@ export async function generateMetadata({ params }) {
       .slice(0, 160);
 
   const ogImage =
-    page.ogImage?.url || page.heroImage?.url || page.coverImage?.url || null;
+    page.heroImage?.url || "https://mesmeriseco.com/assets/social-default.png";
 
   const canonical = abs(`/blog/${slug}`);
 
