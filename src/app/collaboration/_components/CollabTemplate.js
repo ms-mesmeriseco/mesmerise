@@ -7,7 +7,6 @@ import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
-import HorizontalScrollCarousel from "@/components/layout/HorizontalScrollCarousel";
 import SteppedAccordion from "@/components/layout/SteppedAccordion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 

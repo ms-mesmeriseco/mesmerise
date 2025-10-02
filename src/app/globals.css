@@ -372,17 +372,7 @@ b {
 a:hover .inline-arrow {
   transform: translateX(2px);
 }
-.button-bg {
-  position: relative;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("/assets/imac.png");
-  background-size: cover;
-  filter: blur(2px);
-}
+
 figcaption {
   font-size: 0.75rem;
   line-height: 0.75rem;

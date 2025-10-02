@@ -11,9 +11,19 @@ export const metadata = {
   title: "Mesmerise Digital",
   description: "We don't just run ads.",
   icons: {
-    icon: "/LogoFavicon.png", // standard 32x32
-    shortcut: "/LogoFavicon.png", // legacy rel="shortcut icon"
-    apple: "/LogoFavicon.png", // iOS homescreen
+    // Browser tab favicons
+    icon: [
+      { url: "favicon-32x32.png", sizes: "any" }, // multi-size .ico (16/32)
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    // (Optional) Safari pinned tab (monochrome SVG) — looks great in macOS
+    other: [
+      { rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#111111" },
+    ],
   },
 };
 export const viewport = {

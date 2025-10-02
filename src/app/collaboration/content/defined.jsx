@@ -23,35 +23,6 @@ export const DEFINED_CONTENT = {
     "Time-bound seasonal campaigns that need precise execution",
     "You’re launching and need a team of specialists to support your goals",
   ],
-  carousel: {
-    title: "How it might look",
-    center: true,
-    images: [
-      {
-        src: "/assets/imac.png",
-        alt: "Project A",
-        href: "",
-        caption: "Style Guide for YUTORI JAPANESE GARDENS",
-      },
-      {
-        src: "/assets/imac.png",
-        alt: "Project B",
-        href: "",
-        caption: "LOGO CONCEPT FOR TPPT",
-      },
-      {
-        src: "/assets/imac.png",
-        alt: "Project C",
-        href: "",
-        caption: "Colour Palette refinement for ProSculpt",
-      },
-    ],
-    overlayHeading: "Selected Work",
-    overlayRange: "2022-2025",
-    link: "/work",
-    height: 460,
-    rounded: "rounded-xl",
-  },
   stepsTitle: "Next steps",
   steps: [
     {
