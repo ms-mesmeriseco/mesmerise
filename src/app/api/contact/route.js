@@ -1,4 +1,3 @@
-// app/api/contact/route.js
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -9,6 +8,8 @@ const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 const CONTACT_TO = process.env.CONTACT_TO || "hello@mesmeriseco.com";
+const CONTACT_FROM =
+  process.env.CONTACT_FROM || "Mesm Website <no-reply@mesmeriseco.com>";
 
 export async function POST(req) {
   try {

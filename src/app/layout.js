@@ -6,9 +6,22 @@ import Inner from "@/components/layout/Inner";
 import Template from "@/components/layout/template";
 import BodyThemeWrapper from "@/components/layout/BodyThemeWrapper";
 import "./globals.css";
-import dynamic from "next/dynamic";
 
-const PixelTracker = dynamic(() => import("@/lib/utils/PixelTracker"), { ssr: false });
+export const metadata = {
+  title: "Mesmerise Digital",
+  description: "We don't just run ads.",
+  icons: {
+    icon: "/LogoFavicon.png", // standard 32x32
+    shortcut: "/LogoFavicon.png", // legacy rel="shortcut icon"
+    apple: "/LogoFavicon.png", // iOS homescreen
+  },
+};
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -31,36 +44,15 @@ export default function RootLayout({ children }) {
           }}
         />
         <noscript>
-          <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=712977556466722&amp;ev=PageView&amp;noscript=1"/>
+          <img
+            height="1"
+            width="1"
+            className="hidden"
+            src="https://www.facebook.com/tr?id=712977556466722&amp;ev=PageView&amp;noscript=1"
+          />
         </noscript>
         {/* End Meta Pixel Code */}
       </head>
-      <body>
-        <PixelTracker />
-        {children}
-      </body>
-    </html>
-  );
-}
-
-export const metadata = {
-  title: "Mesmerise Digital",
-  description: "We don't just run ads.",
-  icons: {
-    icon: "/LogoFavicon.png", // standard 32x32
-    shortcut: "/LogoFavicon.png", // legacy rel="shortcut icon"
-    apple: "/LogoFavicon.png", // iOS homescreen
-  },
-};
-export const viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-};
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
       <body className={"bg-[var(--background)] text-[var(--foreground)]"}>
         <BodyThemeWrapper />
         <Header />

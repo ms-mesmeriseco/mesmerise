@@ -24,5 +24,5 @@ export default function Inner({ children }) {
   };
   // Adjust padding as needed
 
-  return <div {...anim(opacity)}>{children}</div>;
+  return <div {...anim(opacity)}> {children}</div>;
 }
