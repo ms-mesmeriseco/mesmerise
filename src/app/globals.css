@@ -287,8 +287,8 @@ a button:hover {
   line-height: 6.77rem;
 }
 .page-title-xl {
-  font-size: 8.23rem;
-  line-height: 9.23rem;
+  font-size: 8vw;
+  line-height: 8vw;
   font-weight: 400;
 }
 .page-title-large {
@@ -454,7 +454,7 @@ figcaption {
     line-height: 4.77rem;
   }
   .page-title-xl {
-    font-size: 4.77rem;
+    font-size: 16svw;
     line-height: 5rem;
     font-weight: 400;
   }
