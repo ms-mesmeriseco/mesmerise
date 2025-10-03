@@ -5,7 +5,7 @@ export default function Success() {
     <div>
       <PageTitleLarge text={"Thank you"} />
       <div className="p3 md:w-1/2">
-        {"Somebody be in touch with you shortly."}
+        {"Somebody will be in touch with you shortly."}
       </div>
     </div>
   );
