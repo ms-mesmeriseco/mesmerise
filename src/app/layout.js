@@ -7,6 +7,7 @@ import Template from "@/components/layout/template";
 import BodyThemeWrapper from "@/components/layout/BodyThemeWrapper";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Mesmerise Digital",
@@ -101,6 +102,7 @@ Google Tag Manager (noscript) */}
         <Footer />
       </body>
       <GoogleAnalytics gaId="G-S8FYLFZ1PN" />
+      <Analytics />
     </html>
   );
 }

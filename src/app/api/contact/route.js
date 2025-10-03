@@ -7,9 +7,8 @@ import { Resend } from "resend";
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
-const CONTACT_TO = process.env.CONTACT_TO || "hello@mesmeriseco.com";
-const CONTACT_FROM =
-  process.env.CONTACT_FROM || "Mesm Website <no-reply@mesmeriseco.com>";
+const CONTACT_TO = process.env.CONTACT_TO;
+const CONTACT_FROM = process.env.CONTACT_FROM;
 
 export async function POST(req) {
   try {
@@ -70,8 +69,8 @@ export async function POST(req) {
     // Attempt send
     const result = await resend.emails.send({
       to: CONTACT_TO,
-      from: email,
-      reply_to: email,
+      from: CONTACT_FROM,
+      reply_to: CONTACT_TO,
       subject,
       html,
     });
