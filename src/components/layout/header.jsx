@@ -120,7 +120,7 @@ export default function Header() {
                    pointer-events-auto bg-transparent"
       >
         {/* Left: Logo */}
-        <div className="min-h-[3.23rem]">
+        <div className="min-h-[3.23rem] flex items-center">
           <Link
             href="/"
             aria-label="Go to homepage"

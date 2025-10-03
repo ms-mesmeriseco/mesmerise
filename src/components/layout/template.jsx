@@ -36,7 +36,10 @@ export default function Template({ children }) {
   };
 
   return (
-    <motion.div {...anim(opacity)} className={`${paddingTop} min-h-screen`}>
+    <motion.div
+      {...anim(opacity)}
+      className={`${paddingTop} min-h-screen p-[var(--global-margin-md)]`}
+    >
       <PixelTracker />
       {children}
     </motion.div>

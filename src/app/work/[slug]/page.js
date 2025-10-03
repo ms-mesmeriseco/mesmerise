@@ -22,7 +22,7 @@ export default async function ProjectPage({ params }) {
   });
 
   return (
-    <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)] p-[var(--global-margin-md)]">
+    <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)]">
       {/* --- HERO ROW --- */}
       <div className="col-span-12 md:col-span-12 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[80vh]">
         <Image

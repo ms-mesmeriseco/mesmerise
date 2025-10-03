@@ -110,7 +110,7 @@ export default function Connect() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen gap-[var(--global-margin-lg)] p-[var(--global-margin-md)]">
+    <div className="flex flex-col min-h-screen gap-[var(--global-margin-lg)]">
       <PageTitleLarge text="Connect" />
 
       {/* Middle Row */}

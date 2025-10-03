@@ -1,12 +1,10 @@
 "use client";
 
-import StaticSingleColumn from "@/components/layout/StaticSingleColumn";
-
 import FAQ from "@/components/layout/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import ServicesRail from "@/components/services/ServicesRail";
 
-export default function Connect() {
+export default function Services() {
   const servicesFAQ = [
     {
       question:
@@ -47,19 +45,14 @@ export default function Connect() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen gap-[8rem] p-[var(--global-margin-md)]">
+    <div className="flex flex-col min-h-screen gap-[8rem]">
       <div className="pt-24">
-        <StaticSingleColumn
-          label={"HUMAN SERVICES"}
-          column={[
-            <StaggeredWords
-              key="h1"
-              text="Premium full service solutions, engineered with insight. Delivered
+        <StaggeredWords
+          key="h1"
+          text="Premium full service solutions, engineered with insight. Delivered
             with intent."
-              className="page-title-large text-2xl md:text-4xl leading-tight"
-              center
-            />,
-          ]}
+          className="page-title-large text-2xl md:text-4xl leading-tight"
+          center
         />
       </div>
 

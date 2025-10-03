@@ -79,7 +79,7 @@ export function Philosophy() {
 
 export default function AboutPage() {
   return (
-    <div className="about  p-[var(--global-margin-md)] pt-[var(--header-height)]">
+    <div className="about pt-[var(--header-height)]">
       <OurWhy />
       <Philosophy />
     </div>
