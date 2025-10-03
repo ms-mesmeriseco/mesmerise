@@ -109,10 +109,10 @@ function PillList({ items }) {
           className={[
             "inline-flex items-center gap-2",
             "px-3 py-0.5 md:px-3.5 md:py-1",
-            "rounded-xl border border-[var(--mesm-grey-dk)]",
+            "rounded-xl border-1 border-[var(--mesm-grey-dk)]",
             "text-md md:text-lg md:text-base font-medium",
             "bg-[var(--mesm-grey-dk)]/20",
-            "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-y-[-1px] ",
+            "hover:border-[var(--mesm-blue)] hover:bg-[var(--mesm-blue)]/20 hover:bg-[var(--background)]/90 hover:translate-y-[-1px] ",
             "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
             "duration-200",
             "backdrop-blur-[1px]",
@@ -174,17 +174,20 @@ export default function CenterHero({
       <section className="relative w-screen min-h-screen overflow-x-hidden text-center">
         <div className="flex flex-col items-center">
           {/* Top stack: text + badges take most of the viewport */}
-          <div className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh] md:py-14 py-10">
-            <div className="w-full text-[var(--foreground)] flex flex-col gap-2 min-h-[60vh] justify-center items-center px-4">
+          <div
+            className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh]
+           md:py-14 py-10"
+          >
+            <div className="w-full text-[var(--foreground)] flex flex-col gap-8 min-h-[60vh] justify-center items-center md:max-w-[725px]">
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"
                 text={`${pageHeader || ""}`}
               />
-              <br />
+
               <PillList items={listItems} />
-              <br />
-              <div className="flex flex-col gap-6 items-center">
+
+              <div className="flex flex-col gap-2 items-center">
                 <StaggeredWords as="p" className="p2" text={pageSubtitle} />
 
                 {showCta && (

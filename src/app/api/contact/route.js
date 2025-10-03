@@ -33,7 +33,8 @@ export async function POST(req) {
       return NextResponse.json({ ok: true });
     }
 
-    const { fullName, email, company, services, budgets, details } = body;
+    const { fullName, email, phone, company, services, budgets, details } =
+      body;
     if (!fullName || !email) {
       return NextResponse.json(
         { error: "Name and email are required." },
@@ -41,12 +42,13 @@ export async function POST(req) {
       );
     }
 
-    const subject = `New contact form submission from ${fullName}`;
+    const subject = `Mesmerise Connect Submission from ${fullName}`;
     const html = `
       <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6;">
         <h2 style="margin:0 0 16px">New enquiry</h2>
         <p><strong>Full name:</strong> ${escapeHtml(fullName)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Phone number:</strong> ${escapeHtml(phone)}</p>
         <p><strong>Company:</strong> ${escapeHtml(company || "-")}</p>
         <p><strong>Services:</strong> ${
           Array.isArray(services) && services.length

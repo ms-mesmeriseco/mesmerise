@@ -46,6 +46,7 @@ function Chip({ label, selected, onClick }) {
 export default function Connect() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [company, setCompany] = useState("");
   const [services, setServices] = useState([]);
   const [budgets, setBudgets] = useState([]);
@@ -80,6 +81,7 @@ export default function Connect() {
         body: JSON.stringify({
           fullName,
           email,
+          phone,
           company,
           services,
           budgets,
@@ -95,6 +97,7 @@ export default function Connect() {
       setStatus({ ok: true, msg: "Thank you! We'll be in touch shortly." });
       setFullName("");
       setEmail("");
+      setPhone("");
       setCompany("");
       setServices([]);
       setBudgets([]);
@@ -149,6 +152,15 @@ export default function Connect() {
                 placeholder="Email"
                 className="w-full border-b-1 p-[var(--global-margin-sm)] bg-transparent"
                 aria-label="Email address"
+              />
+              <input
+                type="phone"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Phone"
+                className="w-full border-b-1 p-[var(--global-margin-sm)] bg-transparent"
+                aria-label="Phone number"
               />
 
               <input
