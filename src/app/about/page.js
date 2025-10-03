@@ -5,7 +5,7 @@ export function OurWhy() {
   return (
     <>
       <PageTitleLarge text="Our Why" />
-      <div className="md:max-w-1/2 py-6 flex flex-col gap-6 min-h-[70vh] items-center">
+      <div className="md:max-w-1/2 flex flex-col gap-6 min-h-[70vh] items-center">
         <StaggeredWords
           as="p"
           className="p3"
@@ -38,7 +38,7 @@ export function Philosophy() {
   return (
     <>
       <PageTitleLarge text="Our Philosophy" />
-      <div className="md:max-w-1/2 py-6 flex flex-col gap-6 min-h-[70vh] items-center">
+      <div className="md:max-w-1/2 flex flex-col gap-6 min-h-[70vh] items-center">
         <StaggeredWords
           as="p"
           className="p3"

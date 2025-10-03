@@ -94,7 +94,7 @@ Google Tag Manager (noscript) */}
       </head>
       <body
         className={
-          "bg-[var(--background)] text-[var(--foreground)]  p-[var(--global-margin-xs)]"
+          "bg-[var(--background)] text-[var(--foreground)]  p-[var(--global-margin-sm)]"
         }
       >
         <BodyThemeWrapper />

@@ -115,12 +115,11 @@ export default function Header() {
       <header
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
-                   grid grid-cols-[auto_1fr_auto] items-center md:py-4 md:px-8
-                   px-5 py-4
+                   grid grid-cols-[auto_1fr_auto] items-center pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)] 
                    pointer-events-auto bg-transparent"
       >
         {/* Left: Logo */}
-        <div className="min-h-[3.23rem] flex items-center">
+        <div className="min-h-[3.23rem]">
           <Link
             href="/"
             aria-label="Go to homepage"

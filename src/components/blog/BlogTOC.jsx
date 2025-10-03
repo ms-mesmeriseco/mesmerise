@@ -49,7 +49,7 @@ export default function BlogTOC({ anchors }) {
           {anchors.map((anchor) => (
             <div
               key={anchor.id}
-              className="border-[var(--mesm-grey-dk)] border-1 rounded-xl px-1 py-1 text-left text-sm text-[var(--foreground)] hover:text-[var(--background)] hover:bg-[var(--mesm-yellow)] duration-200 flex flex-row items-start gap-2"
+              className="border-[var(--mesm-grey-dk)] border-1 rounded-lg px-1 py-1 text-left text-sm text-[var(--foreground)] hover:text-[var(--background)] hover:bg-[var(--mesm-yellow)] duration-200 flex flex-row items-start gap-2"
             >
               <div className="w-[8px] h-[8px] text-[var(--foreground)] border-[var(--mesm-grey-dk)] border-1 p-[2px] m-[5px] rounded-full bg-black"></div>
               <a

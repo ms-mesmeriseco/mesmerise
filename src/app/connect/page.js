@@ -5,6 +5,7 @@ import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
 import CopyEmailButton from "@/components/ui/CopyEmailButton";
+import { useRouter } from "next/navigation";
 
 const SERVICE_OPTIONS = [
   "Branding",
@@ -44,6 +45,7 @@ function Chip({ label, selected, onClick }) {
 }
 
 export default function Connect() {
+  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -102,6 +104,7 @@ export default function Connect() {
       setServices([]);
       setBudgets([]);
       setDetails("");
+      router.push("/connect/success");
     } catch (err) {
       setStatus({ ok: false, msg: err.message || "Something went wrong." });
     } finally {
@@ -110,13 +113,13 @@ export default function Connect() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen gap-[var(--global-margin-lg)]">
+    <div className="flex flex-col min-h-screen">
       <PageTitleLarge text="Connect" />
 
       {/* Middle Row */}
       <div className="flex w-full justify-between gap-[var(--global-margin-sm)]">
         {/* Form */}
-        <div className="w-full md:w-1/2 p-[var(--global-margin-xs)]">
+        <div className="w-full md:w-1/2 pb-6">
           <StaggeredWords as="h3" text="Send us a love letter" />
 
           <form className="space-y-6 w-full" onSubmit={onSubmit} noValidate>
@@ -261,7 +264,7 @@ export default function Connect() {
             </button>
           </a>
         </div>
-        <div className="flex-1 border-1 border-[var(--mesm-grey-dk)] rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] text-[var(--foreground)] cursor-pointer">
+        <div className="flex-1 border-1 border-[var(--mesm-grey-dk)] rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] text-[var(--foreground)]">
           <CopyEmailButton email="hello@mesmeriseco.com" label="Email" />
         </div>
       </div>
