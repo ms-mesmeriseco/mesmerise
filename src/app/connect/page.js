@@ -96,7 +96,7 @@ export default function Connect() {
         throw new Error(data.error || "Failed to send. Please try again.");
       }
 
-      setStatus({ ok: true, msg: "Thank you! We'll be in touch shortly." });
+      setStatus({ ok: true });
       setFullName("");
       setEmail("");
       setPhone("");

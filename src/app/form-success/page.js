@@ -5,7 +5,7 @@ export default function Success() {
     <div>
       <PageTitleLarge text={"Thank you!"} />
       <div className="page-title-medium md:w-1/2">
-        We have recieved your email. Someone will be in touch with you shortly.
+        We've recieved your email. Someone will be in touch with you shortly.
       </div>
     </div>
   );
