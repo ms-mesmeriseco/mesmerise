@@ -3,9 +3,9 @@ import PageTitleLarge from "@/components/layout/PageTitleLarge";
 export default function Success() {
   return (
     <div>
-      <PageTitleLarge text={"Thank you!"} />
+      <PageTitleLarge text={"Thank you"} />
       <div className="page-title-medium md:w-1/2">
-        We've recieved your email. Someone will be in touch with you shortly.
+        Email sent. Someone will be in touch with you shortly!
       </div>
     </div>
   );

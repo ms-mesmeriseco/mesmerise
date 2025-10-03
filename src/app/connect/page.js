@@ -104,7 +104,7 @@ export default function Connect() {
       setServices([]);
       setBudgets([]);
       setDetails("");
-      router.push("/connect/success");
+      router.push("/form-success");
     } catch (err) {
       setStatus({ ok: false, msg: err.message || "Something went wrong." });
     } finally {
