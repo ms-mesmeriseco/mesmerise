@@ -69,8 +69,8 @@ export async function POST(req) {
     // Attempt send
     const result = await resend.emails.send({
       to: [CONTACT_TO, "matilda@mesmeriseco.com"],
-      from: email,
-      replyTo: CONTACT_FROM,
+      from: CONTACT_FROM,
+      replyTo: email,
       subject,
       html,
     });
