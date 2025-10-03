@@ -10,7 +10,7 @@ const PixelTracker = dynamic(() => import("@/lib/utils/PixelTracker"), {
 
 export default function Template({ children }) {
   const pathname = usePathname();
-  const paddingTop = pathname === "/" ? "pt-0" : "pt-16";
+  const paddingTop = pathname === "/" ? "pt-0" : "pt-24";
   const anim = (variants) => {
     return {
       initial: "initial",
@@ -36,10 +36,7 @@ export default function Template({ children }) {
   };
 
   return (
-    <motion.div
-      {...anim(opacity)}
-      className={`${paddingTop} min-h-screen p-[var(--global-margin-md)]`}
-    >
+    <motion.div {...anim(opacity)} className={`${paddingTop} min-h-screen`}>
       <PixelTracker />
       {children}
     </motion.div>

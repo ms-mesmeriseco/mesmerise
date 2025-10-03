@@ -3,6 +3,7 @@ import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import BlogTOC from "@/components/blog/BlogTOC";
 import Image from "next/image";
+import StaggeredWords from "@/hooks/StaggeredWords";
 
 function abs(url) {
   if (!url) return undefined;
@@ -143,7 +144,7 @@ export default async function BlogPost({ params }) {
 
   return (
     <div className="flex flex-col items-center /* remove justify-center */ min-h-screen gap-0">
-      <main className="flex flex-col md:flex-row md:gap-8 w-full mx-auto px-4 pt-18">
+      <main className="flex flex-col md:flex-row md:gap-6 w-full mx-auto">
         {h3Anchors.length > 0 && (
           <aside
             className={[
@@ -161,8 +162,12 @@ export default async function BlogPost({ params }) {
           </aside>
         )}
 
-        <article className="max-w-xl w-full flex flex-col gap-6">
-          <h1 className="text-sm">{page.postHeading}</h1>
+        <article className="max-w-xl w-full flex flex-col gap-6 md:pt-7">
+          <StaggeredWords
+            as="h1"
+            className="page-title-medium"
+            text={page.postHeading}
+          />
           <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start ">
             {page.authorAvatar && (
               <Image

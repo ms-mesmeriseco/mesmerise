@@ -46,7 +46,7 @@ export default function Services() {
 
   return (
     <div className="flex flex-col min-h-screen gap-[8rem]">
-      <div className="pt-24">
+      <div>
         <StaggeredWords
           key="h1"
           text="Premium full service solutions, engineered with insight. Delivered
