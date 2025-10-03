@@ -8,6 +8,7 @@ const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 const contactTo = process.env.CONTACT_TO;
+const secondContact = process.env.SECOND_CONTACT;
 const contactFrom = process.env.CONTACT_FROM;
 
 export async function POST(req) {
@@ -68,7 +69,7 @@ export async function POST(req) {
 
     // Attempt send
     const result = await resend.emails.send({
-      to: [contactTo, "matilda@mesmeriseco.com"],
+      to: [contactTo, secondContact],
       from: contactFrom,
       replyTo: email,
       subject,
