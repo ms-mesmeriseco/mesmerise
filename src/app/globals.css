@@ -50,11 +50,6 @@ body.page-about {
 }
 
 body.page-blog {
-  h1 {
-    font-size: 2.39rem;
-    line-height: 3rem;
-    font-weight: 600;
-  }
   h3 {
     font-size: 1.2rem;
     line-height: 1.8rem;
@@ -441,6 +436,7 @@ figcaption {
   h1 {
     font-size: 2.77rem;
     line-height: 3.23rem;
+    font-weight: 400;
   }
   h2 {
     font-size: 2.17rem;

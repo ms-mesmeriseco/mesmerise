@@ -10,7 +10,7 @@ const SIZE_MAP = {
   large: {
     radius: "rounded-xl hover:rounded-lg",
     font: "text-lg",
-    px: "px-4",
+    px: "px-3",
     py: "py-[3.8]",
   },
   "x-large": {

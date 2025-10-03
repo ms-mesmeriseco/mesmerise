@@ -92,7 +92,11 @@ Google Tag Manager (noscript) */}
         />
         {/* End Clarity */}
       </head>
-      <body className={"bg-[var(--background)] text-[var(--foreground)]"}>
+      <body
+        className={
+          "bg-[var(--background)] text-[var(--foreground)]  p-[var(--global-margin-sm)]"
+        }
+      >
         <BodyThemeWrapper />
         <Header />
         <Template>

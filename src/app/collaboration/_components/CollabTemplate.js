@@ -64,7 +64,7 @@ export default function CollabTemplate({ content, currentSlug }) {
     "border border-[var(--mesm-grey-dk)] text-[var(--foreground)] hover:text-[var(--background)] bg-[var(--background)] rounded-xl py-2 px-3 hover:bg-[var(--mesm-yellow)] duration-250";
 
   return (
-    <div className="md:p-[var(--global-margin-lg)] p-[var(--global-margin-sm)]">
+    <div className="">
       <PageTitleLarge text={content.pageTitle} />
 
       <div className="flex flex-col gap-8">

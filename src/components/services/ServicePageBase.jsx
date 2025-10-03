@@ -1,6 +1,6 @@
 "use client";
 
-import ServicesHero from "@/components/services/ServicesHero.jsx";
+import PageTitleLarge from "../layout/PageTitleLarge";
 import ProcessBubbles from "@/components/services/ProcessBubbles";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import CollabModel from "../home/CollabModel";
@@ -104,7 +104,7 @@ export default function ServicePageBase({
 }) {
   return (
     <>
-      <div className="p-[var(--global-margin-sm)] flex flex-col gap-8">
+      <div className="md:p-[var(--global-margin-lg)] p-[var(--global-margin-sm)]  flex flex-col gap-8">
         <section className="max-h-full flex items-center justify-center">
           {heroMedia ? (
             isVideo(heroMedia) ? (
@@ -125,7 +125,8 @@ export default function ServicePageBase({
             )
           ) : null}
         </section>
-        <ServicesHero heroTitle={heroTitle} />
+
+        <PageTitleLarge text={heroTitle} />
         <IntroPara text={para1Content} />
         <div>
           <div className="border-b-1 border-[var(--mesm-grey-dk)] py-2 w-full ">

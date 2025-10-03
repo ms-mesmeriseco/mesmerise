@@ -154,7 +154,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-white transition-colors duration-700 p-[var(--global-margin-md)]",
+        "relative min-h-screen text-white transition-colors duration-700",
         dark ? "bg-black" : "bg-black",
       ].join(" ")}
     >
