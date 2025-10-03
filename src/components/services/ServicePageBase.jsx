@@ -104,7 +104,7 @@ export default function ServicePageBase({
 }) {
   return (
     <>
-      <div className="md:p-[var(--global-margin-lg)] p-[var(--global-margin-sm)]  flex flex-col gap-8">
+      <div className="p-[var(--global-margin-sm)] flex flex-col gap-8">
         <section className="max-h-full flex items-center justify-center">
           {heroMedia ? (
             isVideo(heroMedia) ? (
