@@ -4,9 +4,7 @@ export default function Success() {
   return (
     <div>
       <PageTitleLarge text="Thank you" />
-      <div className="page-title-medium md:w-1/2">
-        {"Email sent. Someone will be in touch with you shortly!"}
-      </div>
+      <p className="p3 md:w-1/2">{"We'll be in touch with you shortly."}</p>
     </div>
   );
 }
