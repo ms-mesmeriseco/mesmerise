@@ -6,38 +6,29 @@ import Link from "next/link";
 import Button from "../ui/Button";
 
 export default function Header() {
-  const pathname = usePathname();
+  const pathname = usePathname() || "/";
   const headerRef = useRef(null);
   const [hydrated, setHydrated] = useState(false);
   const [sceneInView, setSceneInView] = useState(false);
   const [scrolledEnough, setScrolledEnough] = useState(false);
 
-  // Route checks
-  const isHome = pathname === "/";
-  const isAbout = pathname === "/about" || pathname.startsWith("/about/");
-  const isConnect = pathname === "/connect" || pathname.startsWith("/connect/");
-  const isServices =
-    pathname === "/services" || pathname.startsWith("/services/");
-  const isCollab =
-    pathname === "/collaboration" || pathname.startsWith("/collaboration/");
-  const isWork = pathname === "/work" || pathname.startsWith("/work/");
-  const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
+  const starts = (p) => pathname === p || pathname.startsWith(`${p}/`);
 
-  // Treat these as “landing” pages
-  const isLanding =
-    isHome ||
-    isAbout ||
-    isConnect ||
-    isServices ||
-    isCollab ||
-    isWork ||
-    isBlog;
+  // known (non-landing) sections
+  const KNOWN_PREFIXES = [
+    "/", // home
+    "/about",
+    "/connect",
+    "/services",
+    "/collaboration",
+    "/work",
+    "/blog",
+  ];
 
-  const showMobileStickyCTA = !isLanding;
+  const isKnownRoute = KNOWN_PREFIXES.some((p) => starts(p));
+  const isLanding = !isKnownRoute;
 
-  const logo = isConnect
-    ? "/WordMark_Spaced-BLACK.png"
-    : "/WordMark_Spaced-WHITE.png";
+  const showMobileStickyCTA = isLanding;
 
   // ---- Measure header height and scene ----
   useLayoutEffect(() => {
@@ -151,18 +142,6 @@ export default function Header() {
             >
               Connect
             </Button>
-
-            {/* Speak to Simba: shown alongside on landing pages */}
-            {isLanding && (
-              <Button
-                size="large"
-                variant="CTA"
-                href="tel:+61477210477"
-                extraClass="shadow-xl"
-              >
-                Speak to Simba
-              </Button>
-            )}
           </span>
         </span>
       </header>
