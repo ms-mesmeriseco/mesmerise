@@ -1,3 +1,4 @@
+// components/cms-blocks/ProjectRail.jsx
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
@@ -5,25 +6,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { getClient } from "@/lib/apollo-client";
-import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
+import { GET_PROJECT_RAIL_BY_TAG } from "@/lib/graphql/queries/getProjectRail";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import addClassToParagraphs from "@/lib/utils/addClassToParagraphs";
 
-function hasTag(project, { tagName, tagSlug }) {
-  const tags = project?.contentfulMetadata?.tags || [];
-  return tags.some((t) => {
-    const name = (t?.name || "").toLowerCase().trim();
-    const id = (t?.id || t?.sys?.id || "").toLowerCase().trim();
-    return (
-      (tagName && name === tagName.toLowerCase().trim()) ||
-      (tagSlug && id.includes(tagSlug.toLowerCase().trim()))
-    );
-  });
-}
-
 export default function ProjectRail({
-  tagName = "layout: highlight grid",
-  tagSlug = "layout-highlight-grid", // fallback if your space uses slugged tag ids
+  // we’re filtering by ID, so leave name empty
+  tagSlug = "layoutHighlightGrid",
   max = 6,
 }) {
   const [projects, setProjects] = useState([]);
@@ -31,46 +20,39 @@ export default function ProjectRail({
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [centerIndex, setCenterIndex] = useState(0);
 
-  // NEW: disable state for the two circle buttons
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
 
   const scrollerRef = useRef(null);
   const cardsRef = useRef([]);
 
-  // Fetch projects
+  // Fetch projects already filtered by tag (server-side)
   useEffect(() => {
-    async function fetchProjects() {
+    (async () => {
       try {
-        const { data } = await getClient().query({ query: GET_PROJECT_PAGES });
-        setProjects(data?.projectPageCollection?.items || []);
+        const { data } = await getClient().query({
+          query: GET_PROJECT_RAIL_BY_TAG,
+          variables: {
+            limit: Math.max(12, max), // grab a few extra, we’ll slice below
+            tagIds: [tagSlug], // your actual tag ID(s)
+          },
+          fetchPolicy: "cache-first",
+        });
+        const items = data?.projectPageCollection?.items || [];
+        setProjects(items.slice(0, max)); // final client cap
       } catch (err) {
-        console.error("Error loading projects:", err);
+        console.error("Error loading rail projects:", err);
       } finally {
         setIsLoaded(true);
       }
-    }
-    fetchProjects();
-  }, []);
+    })();
+  }, [tagSlug, max]);
 
-  const filtered = useMemo(() => {
-    const byTag = projects.filter((p) => hasTag(p, { tagName, tagSlug }));
-    return byTag.slice(0, max);
-  }, [projects, tagName, tagSlug, max]);
-
-  // Ensure we always render 6 slots to preserve layout (if you still want this)
-  const slots = useMemo(() => {
-    const arr = filtered.slice(0, 6);
-    while (arr.length < 6) arr.push(null);
-    return arr;
-  }, [filtered]);
-
-  // Keep refs in sync with filtered length
+  // Keep refs in sync
   useEffect(() => {
-    cardsRef.current = cardsRef.current.slice(0, filtered.length);
-  }, [filtered.length]);
+    cardsRef.current = cardsRef.current.slice(0, projects.length);
+  }, [projects.length]);
 
-  // Update which card is closest to center + start/end detection
   const updateCenter = useCallback(() => {
     const scroller = scrollerRef.current;
     if (!scroller || cardsRef.current.length === 0) return;
@@ -92,26 +74,33 @@ export default function ProjectRail({
     });
     setCenterIndex(bestIdx);
 
-    // NEW: track bounds for button disabled state
     const maxLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
     const left = scroller.scrollLeft;
     setAtStart(left <= 2);
     setAtEnd(left >= maxLeft - 2);
   }, []);
 
+  // rAF throttle to avoid overwork
+  const rafRef = useRef(null);
+  const updateCenterSafe = useCallback(() => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(updateCenter);
+  }, [updateCenter]);
+
   useEffect(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
-    const onScroll = () => updateCenter();
-    const onResize = () => updateCenter();
+    const onScroll = () => updateCenterSafe();
+    const onResize = () => updateCenterSafe();
     scroller.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    updateCenter(); // initial
+    updateCenterSafe();
     return () => {
       scroller.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [updateCenter]);
+  }, [updateCenterSafe]);
 
   const cardVariants = {
     idle: { scale: 1, opacity: 0.9 },
@@ -122,12 +111,11 @@ export default function ProjectRail({
     },
   };
 
-  // NEW: fixed-portion scroll helpers (60% of visible width)
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
   const scrollByAmount = (dir = 1) => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
-    const amount = Math.round(scroller.clientWidth * 0.6); // adjust 0.6 to taste
+    const amount = Math.round(scroller.clientWidth * 0.6);
     const maxLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
     const target = clamp(scroller.scrollLeft + dir * amount, 0, maxLeft);
     scroller.scrollTo({ left: target, behavior: "smooth" });
@@ -147,17 +135,16 @@ export default function ProjectRail({
         aria-label="Project rail"
       >
         <ul className="flex gap-2 py-2 select-none">
-          {isLoaded && filtered.length === 0 && (
+          {isLoaded && projects.length === 0 && (
             <li className="text-sm opacity-70">No projects found.</li>
           )}
 
-          {filtered.map((p, i) => {
-            const media =
-              p.heroMedia || p.featuredMedia || p.coverImage || null;
+          {projects.map((p, i) => {
+            const media = p?.heroMedia || null;
             const src = media?.url;
-            const title = p.projectTitle || p.pageTitle || "Untitled";
-            const slug = p.slug;
-            const doc = p.dataOne?.json || null;
+            const title = p?.projectTitle || "Untitled";
+            const slug = p?.slug;
+            const doc = p?.dataOne?.json || null;
 
             const showDetails =
               hoveredIndex === i || (hoveredIndex == null && centerIndex === i);
@@ -177,9 +164,8 @@ export default function ProjectRail({
                 <motion.div
                   variants={cardVariants}
                   animate={showDetails ? "focus" : "idle"}
-                  className="relative w-[70vw] sm:w-[46vw] md:w-[36vw] lg:w-[24vw]"
+                  className="relative w-[70vw] sm:w-[46vw] md:w-[36vw] lg:w-[24vw] will-change-transform"
                 >
-                  {/* Media with 2:3 aspect */}
                   <div className="relative aspect-[2/3] overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)] bg-black/20">
                     {src ? (
                       <Image
@@ -187,7 +173,8 @@ export default function ProjectRail({
                         alt={media?.title || title}
                         fill
                         className="object-cover"
-                        priority={i < 3}
+                        priority={i === 0}
+                        sizes="(max-width: 640px) 70vw, (max-width: 1024px) 46vw, (max-width: 1280px) 36vw, 24vw"
                       />
                     ) : (
                       <div className="absolute inset-0 grid place-items-center text-xs opacity-70">
@@ -195,7 +182,6 @@ export default function ProjectRail({
                       </div>
                     )}
 
-                    {/* Overlay details (hovered or centered) */}
                     <AnimatePresence>
                       {showDetails && (
                         <Link
@@ -234,7 +220,6 @@ export default function ProjectRail({
         </ul>
       </div>
 
-      {/* Two circles (bottom-right, below the rail) */}
       <div className="mt-2 w-full flex justify-end">
         <div className="flex items-center gap-2 py-2">
           <button

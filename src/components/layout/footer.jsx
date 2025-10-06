@@ -2,36 +2,27 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import Script from "next/script";
 import { useEffect, useState } from "react";
 import { getClient } from "@/lib/apollo-client";
-import { GET_ALL_LANDING_PAGES } from "@/lib/graphql/queries/getLandingPages";
-import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
+import { GET_FOOTER_BLOG_POSTS } from "@/lib/graphql/queries/getFooterPosts";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import FooterSignup from "./FooterSignup";
 
 export default function Footer() {
   useSectionMarker("footer");
-  const [landingPages, setLandingPages] = useState([]);
   const [blogPosts, setBlogPosts] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         const { data } = await getClient().query({
-          query: GET_ALL_LANDING_PAGES,
+          query: GET_FOOTER_BLOG_POSTS,
+          variables: {
+            limit: 10,
+            tagIds: ["showBlogInFooter"], // your tag ID
+          },
+          fetchPolicy: "cache-first",
         });
-        setLandingPages(data?.landingPageCollection?.items || []);
-      } catch (err) {
-        console.error("Failed to fetch landing pages:", err);
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await getClient().query({ query: GET_ALL_BLOG_POSTS });
         setBlogPosts(data?.blogPostPageCollection?.items || []);
       } catch (err) {
         console.error("Failed to fetch blog posts:", err);
@@ -192,7 +183,7 @@ export default function Footer() {
               Insights
             </h5>
             <ul className="grid grid-cols-1 text-sm">
-              {blogPosts.slice(0, 4).map((post) => (
+              {blogPosts.map((post) => (
                 <li key={post.slug}>
                   <Link
                     className="footer-link line-clamp-1 w-fit"
