@@ -8,6 +8,7 @@ import { getClient } from "@/lib/apollo-client";
 import { GET_ALL_LANDING_PAGES } from "@/lib/graphql/queries/getLandingPages";
 import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 import useSectionMarker from "@/hooks/useSectionMarker";
+import FooterSignup from "./FooterSignup";
 
 export default function Footer() {
   useSectionMarker("footer");
@@ -52,12 +53,12 @@ export default function Footer() {
               <Image
                 src="/wordmark.svg"
                 alt="Mesmerise Digital"
-                width={180}
-                height={40}
+                width={240}
+                height={60}
                 priority
               />
               {/* optional small accent dot */}
-              <span className="inline-block h-2 w-2 rounded-full bg-[var(--accent)]" />
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--mesm-blue)]" />
             </div>
             <p className="text-sm/6 opacity-80 max-w-[52ch]">
               We don't just run ads. Subscribe for monthly insights across
@@ -67,7 +68,7 @@ export default function Footer() {
 
           {/* Newsletter / Beehiiv card */}
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
-            <h3 className="page-title-medium mb-3">Subscribe</h3>
+            {/* <h3 className="page-title-medium mb-3">Subscribe</h3>
             <Script
               src="https://subscribe-forms.beehiiv.com/embed.js"
               strategy="lazyOnload"
@@ -86,7 +87,8 @@ export default function Footer() {
                 backgroundColor: "transparent",
                 boxShadow: "0 0 #0000",
               }}
-            />
+            /> */}
+            <FooterSignup />
           </div>
         </div>
       </section>
