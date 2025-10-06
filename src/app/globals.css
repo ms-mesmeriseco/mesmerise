@@ -166,8 +166,8 @@ a {
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--global-margin-sm);
-  padding-right: var(--global-margin-sm);
+  /* padding-left: var(--global-margin-sm);
+  padding-right: var(--global-margin-sm); */
 }
 input:focus,
 select:focus,
