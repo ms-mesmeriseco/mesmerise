@@ -11,11 +11,19 @@ export const GET_BLOG_POSTS = gql`
           json
         }
         postHeading
-        postAuthor
-        authorAvatar {
-          url
-          height
-          width
+        blogAuthor {
+          __typename
+          ... on TeamMember {
+            name
+            authorAvatar {
+              url
+              height
+              width
+            }
+            authorBio {
+              json
+            }
+          }
         }
         postDate
         heroImage {
