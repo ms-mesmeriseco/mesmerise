@@ -5,19 +5,20 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const resendApiKey = process.env.RESEND_API_KEY;
+const audienceId = process.env.RESEND_AUDIENCE_ID;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-
-// You can reuse your existing envs,
-// or add a dedicated NEWSLETTER_TO if you like.
-const contactTo = process.env.CONTACT_TO;
-const secondContact = process.env.SECOND_CONTACT;
-const contactFrom = process.env.CONTACT_FROM; // must be a verified domain/sender in Resend
 
 export async function POST(req) {
   try {
     if (!resendApiKey) {
       return NextResponse.json(
         { error: "Server misconfig: RESEND_API_KEY is not set." },
+        { status: 500 }
+      );
+    }
+    if (!audienceId) {
+      return NextResponse.json(
+        { error: "Server misconfig: RESEND_AUDIENCE_ID is not set." },
         { status: 500 }
       );
     }
@@ -43,39 +44,31 @@ export async function POST(req) {
       );
     }
 
-    const subject = `New newsletter signup: ${name}`;
-    const html = `
-      <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height:1.6;">
-        <h2 style="margin:0 0 12px;">New newsletter signup</h2>
-        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <hr style="margin:16px 0;"/>
-        <p style="font-size:12px;color:#666;">Captured via footer signup.</p>
-      </div>
-    `;
+    // Split "name" into first/last (best-effort)
+    const parts = String(name).trim().split(/\s+/);
+    const firstName = parts[0] || "";
+    const lastName = parts.slice(1).join(" ") || "";
 
-    const to = [contactTo, secondContact].filter(Boolean);
-    if (!to.length) {
-      return NextResponse.json(
-        { error: "No recipients configured (CONTACT_TO/SECOND_CONTACT)." },
-        { status: 500 }
-      );
-    }
-
-    const result = await resend.emails.send({
-      to,
-      from: contactFrom, // e.g. "Mesmerise <noreply@yourdomain.com>"
-      replyTo: email, // lets you reply directly to the subscriber
-      subject,
-      html,
-    });
-
-    if (!result || result.error) {
-      console.error("Resend error payload:", result?.error || result);
-      return NextResponse.json(
-        { error: "Email provider error. Check server logs for details." },
-        { status: 502 }
-      );
+    // Create (or upsert) contact in Resend Audience
+    // If you want true upsert behavior, Resend supports `updateIfExists: true`
+    // on some SDK versions. If not available, catching 409 works fine.
+    try {
+      await resend.contacts.create({
+        email,
+        firstName,
+        lastName,
+        unsubscribed: false,
+        audienceId,
+      });
+    } catch (err) {
+      // If already exists, treat as success so the UI can thank the user
+      const status = err?.statusCode || err?.response?.status;
+      const code = err?.code || err?.response?.data?.name;
+      if (status === 409 || code === "duplicate_contact") {
+        return NextResponse.json({ ok: true, duplicate: true });
+      }
+      // Otherwise bubble up
+      throw err;
     }
 
     return NextResponse.json({ ok: true });
@@ -83,20 +76,13 @@ export async function POST(req) {
     console.error("Newsletter route error:", {
       message: err?.message,
       name: err?.name,
-      stack: err?.stack?.split("\n").slice(0, 3).join("\n"),
+      status: err?.statusCode || err?.response?.status,
       data: err?.response?.data,
+      stack: err?.stack?.split("\n").slice(0, 3).join("\n"),
     });
     return NextResponse.json(
       { error: err?.message || "Failed to subscribe." },
       { status: 500 }
     );
   }
-}
-
-function escapeHtml(str) {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
 }

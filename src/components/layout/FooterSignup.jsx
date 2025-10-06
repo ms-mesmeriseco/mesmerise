@@ -101,11 +101,11 @@ export default function FooterSignup({
         id="signup-status"
         role="status"
         aria-live="polite"
-        className="min-h-[1.5rem] md:ml-2 text-sm"
+        className="min-h-[1.5rem] text-md"
       >
         {status &&
           (status.ok ? (
-            <span className="text-[var(--accent)]">{successMsg}</span>
+            <span className="text-[var(--mesm-blue)]">{successMsg}</span>
           ) : (
             <span className="text-[var(--mesm-red)]">{status.msg}</span>
           ))}

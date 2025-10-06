@@ -60,14 +60,14 @@ export default function Footer() {
               {/* optional small accent dot */}
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--mesm-blue)]" />
             </div>
-            <p className="text-sm/6 opacity-80 max-w-[52ch]">
+            <p className="text-sm/6 opacity-80 max-w-[425px]">
               We don't just run ads. Subscribe for monthly insights across
               brand, web, and performance.
             </p>
           </div>
 
           {/* Newsletter / Beehiiv card */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+          <div className="rounded-2xl md:p-5">
             {/* <h3 className="page-title-medium mb-3">Subscribe</h3>
             <Script
               src="https://subscribe-forms.beehiiv.com/embed.js"
@@ -96,7 +96,7 @@ export default function Footer() {
       {/* Link grid */}
       <nav
         aria-label="Footer"
-        className="mx-auto w-full px-[var(--global-margin-md)] pb-12 md:pb-16"
+        className="mx-auto w-full md:px-[var(--global-margin-md)] pb-12 md:pb-16"
       >
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
           {/* Column: Quick Links */}
@@ -189,11 +189,11 @@ export default function Footer() {
             <h5 className="mb-3 text-sm font-medium tracking-wide opacity-80">
               Insights
             </h5>
-            <ul className="grid grid-cols-1 gap-2 text-sm">
+            <ul className="grid grid-cols-1 text-sm">
               {blogPosts.slice(0, 4).map((post) => (
                 <li key={post.slug}>
                   <Link
-                    className="footer-link line-clamp-1 hover:underline w-fit"
+                    className="footer-link line-clamp-1 w-fit"
                     href={`/blog/${post.slug}`}
                   >
                     {post.postTitle}
@@ -207,7 +207,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="mx-auto flex w-full flex-col items-start justify-between gap-4 px-[var(--global-margin-md)] py-5 text-sm opacity-80 md:flex-row md:items-center">
+        <div className="mx-auto flex w-full flex-col items-start justify-between gap-4 md:px-[var(--global-margin-md)] py-5 text-sm opacity-80 md:flex-row md:items-center">
           <h6>© {year} Mesmerise Digital. All rights reserved.</h6>
           <ul className="flex items-center gap-5">
             <li>
