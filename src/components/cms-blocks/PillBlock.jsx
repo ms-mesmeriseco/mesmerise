@@ -45,7 +45,7 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
           </motion.div>
         </div>
 
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 md:px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] gap-18 text-base leading-relaxed">
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 md:px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] gap-18 text-base leading-relaxed min-h-[50vh]">
           <AnimatePresence mode="wait" initial={false}>
             {/* TEXT */}
             <motion.div
@@ -63,7 +63,7 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
             {pills[activeIndex]?.media && (
               <motion.div
                 key={`img-${activeIndex}`}
-                className="relative overflow-hidden"
+                className="relative w-full h-auto md:h-[420px] overflow-hidden"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
@@ -73,8 +73,8 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
                   src={pills[activeIndex].media.url}
                   alt={pills[activeIndex].media.url}
                   fill
-                  className="object-cover object-center"
-                  sizes="(min-width:1024px) 600px, (min-width:768px) 50vw, 100vw"
+                  className="object-contain" // <— this keeps aspect ratio intact
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   priority={activeIndex === 0}
                 />
               </motion.div>
