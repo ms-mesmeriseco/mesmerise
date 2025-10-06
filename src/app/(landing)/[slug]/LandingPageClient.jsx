@@ -1,4 +1,3 @@
-// app/landing/[slug]/LandingPageClient.jsx
 "use client";
 
 import PageBase from "@/components/layout/PageBase";

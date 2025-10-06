@@ -121,7 +121,7 @@ export default function Header() {
         {/* Left: Logo */}
         <div className="min-h-[3.23rem]">
           <Link
-            href="/"
+            href="https://www.mesmeriseco.com/"
             aria-label="Go to homepage"
             className="justify-self-start"
           >
