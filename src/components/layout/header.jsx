@@ -23,22 +23,19 @@ export default function Header() {
   const isWork = pathname === "/work" || pathname.startsWith("/work/");
   const isBlog = pathname === "/blog" || pathname.startsWith("/blog/");
 
-  const showMobileStickyCTA = !(
+  // Treat these as “landing” pages
+  const isLanding =
     isHome ||
     isAbout ||
     isConnect ||
     isServices ||
     isCollab ||
     isWork ||
-    isBlog
-  );
+    isBlog;
 
-  const headerCtaClass = !showMobileStickyCTA
-    ? "inline-flex"
-    : "hidden md:inline-flex";
+  const showMobileStickyCTA = !isLanding;
 
-  const isContact = isConnect;
-  const logo = isContact
+  const logo = isConnect
     ? "/WordMark_Spaced-BLACK.png"
     : "/WordMark_Spaced-WHITE.png";
 
@@ -142,27 +139,38 @@ export default function Header() {
         {/* Middle: spacer */}
         <span />
 
-        {/* Right: Connect button (desktop only) */}
+        {/* Right: Header CTAs */}
         <span className="justify-self-end">
-          {!isConnect && (
-            <span className={headerCtaClass}>
+          <span className={"inline-flex gap-3"}>
+            {/* Connect: now ALWAYS rendered */}
+            <Button
+              size="large"
+              variant="accent"
+              href="/connect"
+              extraClass="shadow-xl"
+            >
+              Connect
+            </Button>
+
+            {/* Speak to Simba: shown alongside on landing pages */}
+            {isLanding && (
               <Button
                 size="large"
-                variant="accent"
-                href="/connect"
+                variant="CTA"
+                href="tel:+61477210477"
                 extraClass="shadow-xl"
               >
-                Connect
+                Speak to Simba
               </Button>
-            </span>
-          )}
+            )}
+          </span>
         </span>
       </header>
 
-      {/* Mobile sticky CTA */}
+      {/* Mobile sticky CTA (non-landing pages only, after 100vh) */}
       {showMobileStickyCTA && scrolledEnough && (
         <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden pb-6 px-10">
-          <div className=" px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
+          <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
             <Button size="x-large" variant="CTA" href="tel:+61477210477">
               <span className="text-2xl">Speak to Simba</span>
             </Button>

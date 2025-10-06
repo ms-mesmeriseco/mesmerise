@@ -178,11 +178,11 @@ export default function LeftHero({
       {/* Grid lets us reorder on mobile and pin badges to base on desktop */}
       <section
         className={[
-          "wrapper relative overflow-hidden py-12",
+          "wrapper relative overflow-hidden pt-4",
           "",
           // Mobile: single column; Desktop: 2 columns + bottom row for badges
           "grid grid-cols-1 md:grid-cols-5 md:grid-rows-[1fr_auto]",
-          "gap-6",
+          "md:gap-6 gap-12",
           "md:min-h-[90vh]", // full screen height on md+
         ].join(" ")}
       >
