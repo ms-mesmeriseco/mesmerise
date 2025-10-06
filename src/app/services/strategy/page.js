@@ -4,6 +4,7 @@ import ServicePageBase from "@/components/services/ServicePageBase.jsx";
 
 import {
   heroMedia,
+  heroMobile,
   para1Content,
   para2Content,
   para3Content,
@@ -19,6 +20,7 @@ export default function StrategyPage() {
       <ServicePageBase
         heroTitle={"Strategy"}
         heroMedia={heroMedia}
+        heroMobile={heroMobile}
         serviceTags={serviceTags}
         para1Content={para1Content[0]}
         para2Content={para2Content}

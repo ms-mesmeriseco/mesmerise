@@ -1,4 +1,5 @@
 export const heroMedia = "/assets/highlights/Strategy_v2.mp4";
+export const heroMobile = "/assets/highlights/mobile/Strategy_mobile.mp4";
 
 export const para1Content = [
   "Here, we define what your audience desires and how your brand communicates. A strategy opens up hidden opportunities within your niche, helping you cut through market saturation, and create a blueprint to connect with your audience.",

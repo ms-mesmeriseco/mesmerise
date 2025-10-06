@@ -1,10 +1,11 @@
 export const heroMedia = "/assets/highlights/Performance_v2.mp4";
+export const heroMobile = "/assets/highlights/mobile/Performance_mobile.mp4";
 
 export const para1Content =
   "Attention is fleeting, trust is not. Our omnipresent campaigns capture both, turning passing interest into conviction and conviction into clients.";
 
 export const para2Content =
-  "Marketing is like oxygen to your business. Without a strategy for growth, your business is suffocating–you're invisible and have no predictable way of generating revenue.";
+  "Marketing is like oxygen to your business. Without a strategy for growth, your business is suffocating-you're invisible and have no predictable way of generating revenue.";
 
 export const para3Content =
   "Our state-of-the-art campaigns build trust with prospects and lower your cost per acquisition.";

@@ -5,6 +5,7 @@ import PackagesRow from "@/components/services/PackagesRow.jsx";
 
 import {
   heroMedia,
+  heroMobile,
   para1Content,
   para2Content,
   para3Content,
@@ -21,6 +22,7 @@ export default function WebsitePage() {
       <ServicePageBase
         heroTitle={"Website"}
         heroMedia={heroMedia}
+        heroMobile={heroMobile}
         serviceTags={serviceTags}
         para1Content={para1Content}
         para2Content={para2Content}

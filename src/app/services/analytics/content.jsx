@@ -1,4 +1,5 @@
 export const heroMedia = "/assets/highlights/analytics_v1-comp.mp4";
+export const heroMobile = "/assets/highlights/mobile/Analytics_mobile.mp4";
 
 export const para1Content =
   "Drowning in data? Get clear, actionable insights that give you stability and direction.";
