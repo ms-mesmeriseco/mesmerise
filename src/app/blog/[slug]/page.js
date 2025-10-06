@@ -73,6 +73,46 @@ export async function generateMetadata({ params }) {
   };
 }
 
+function AuthorCard({ author }) {
+  if (!author) return null;
+  const avatar = author.authorAvatar;
+
+  return (
+    <section
+      className="mt-12 border-1 border-[var(--mesm-grey-dk)] p-6 rounded-md flex gap-4"
+      itemScope
+      itemType="https://schema.org/Person"
+    >
+      {avatar?.url && (
+        <Image
+          src={avatar.url}
+          alt={`Avatar of ${author.name ?? "author"}`}
+          width={Math.min(avatar.width ?? 96, 128)}
+          height={Math.min(avatar.height ?? 96, 128)}
+          className="rounded-full shrink-0"
+        />
+      )}
+
+      <div className="flex-1">
+        {author?.name && (
+          <h3 className="" itemProp="name">
+            {author.name}
+          </h3>
+        )}
+
+        {/* Optional: compact role/title line if you add it later */}
+        {/* {author?.role && <p className="text-sm text-[var(--mesm-grey)]">{author.role}</p>} */}
+
+        {author?.authorBio?.json && (
+          <div className="prose max-w-none text-[var(--foreground)]">
+            {renderRichTextWithBreaks(author.authorBio.json)}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default async function BlogPost({ params }) {
   const { slug } = params;
 
@@ -83,6 +123,9 @@ export default async function BlogPost({ params }) {
 
   const page = data?.blogPostPageCollection?.items?.[0];
   if (!page) return <p>Blog post not found.</p>;
+
+  const author = page.blogAuthor; // TeamMember or null
+  const avatar = author?.authorAvatar;
 
   // ---- maps ----
   const assetBlocks = page.blogContent?.links?.assets?.block ?? [];
@@ -168,14 +211,14 @@ export default async function BlogPost({ params }) {
             className="page-title-medium"
             text={page.postHeading}
           />
-          <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start ">
-            {page.authorAvatar && (
+          <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start md:py-8 py-2">
+            {avatar?.url && (
               <Image
-                src={page.authorAvatar.url}
-                alt={page.authorAvatar.title || "Author avatar"}
-                width={48}
-                height={48}
-                className="rounded-full"
+                src={avatar.url}
+                alt={`Avatar of ${author?.name ?? "author"}`}
+                width={Math.min(avatar.width ?? 48, 96)}
+                height={Math.min(avatar.height ?? 48, 96)}
+                className="rounded-full shrink-0"
               />
             )}
 
@@ -186,10 +229,9 @@ export default async function BlogPost({ params }) {
                   <br />
                 </>
               )}
-              By {page.postAuthor}
+              {author?.name ? <>By {author.name}</> : null}
             </span>
           </span>
-
           {page.blogContent?.json && (
             <div className="[&>p+p]:mt-4 flex flex-col gap-4">
               {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
@@ -207,6 +249,7 @@ export default async function BlogPost({ params }) {
               })}
             </div>
           )}
+          {author?.authorBio && <AuthorCard author={author} />}
         </article>
       </main>
     </div>
