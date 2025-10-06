@@ -27,7 +27,7 @@ const rawQuery = `
         sys {
           id
         }
-        pageTitle
+
         pageSlug
         mT
         metaDesc
