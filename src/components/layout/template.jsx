@@ -10,7 +10,7 @@ const PixelTracker = dynamic(() => import("@/lib/utils/PixelTracker"), {
 
 export default function Template({ children }) {
   const pathname = usePathname();
-  const paddingTop = pathname === "/" ? "pt-0" : "pt-24";
+  const paddingTop = pathname === "/" ? "pt-0" : "md:pt-24 pt-18";
   const anim = (variants) => {
     return {
       initial: "initial",
