@@ -230,7 +230,7 @@ export default function LeftHero({
         >
           <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
             {heroEmbed?.json ? (
-              <div className="absolute inset-0 min-h-[50vh] md:min-h-0">
+              <div className="absolute inset-0 min-h-full ">
                 {documentToReactComponents(heroEmbed.json, richRenderOptions)}
               </div>
             ) : (
