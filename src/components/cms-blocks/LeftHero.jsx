@@ -178,11 +178,11 @@ export default function LeftHero({
       {/* Grid lets us reorder on mobile and pin badges to base on desktop */}
       <section
         className={[
-          "relative w-screen overflow-hidden py-12 max-w-[1120px] mx-auto",
-          "mx-[var(--global-margin-md)]",
+          "wrapper relative overflow-hidden py-12",
+          "",
           // Mobile: single column; Desktop: 2 columns + bottom row for badges
-          "grid grid-cols-1 md:grid-cols-2 md:grid-rows-[1fr_auto]",
-          "gap-[var(--global-margin-xs)]",
+          "grid grid-cols-1 md:grid-cols-5 md:grid-rows-[1fr_auto]",
+          "gap-6",
           "md:min-h-[90vh]", // full screen height on md+
         ].join(" ")}
       >
@@ -190,10 +190,10 @@ export default function LeftHero({
         <div
           className={[
             "md:order-none",
-            "md:row-start-1 md:col-start-1",
+            "md:row-start-1 md:col-start-1 md:col-span-3 col-span-1",
             "flex flex-col justify-center text-left gap-5",
             "text-[var(--foreground)]",
-            "p-[var(--global-margin-md)] md:p-[var(--global-margin-sm)] lg:p-[var(--global-margin-lg)]",
+            "",
           ].join(" ")}
         >
           <StaggeredWords
@@ -224,13 +224,13 @@ export default function LeftHero({
         <div
           className={[
             "md:order-none",
-            "md:row-start-1 md:col-start-2",
+            "md:row-start-1 md:col-start-4 md:col-span-2 col-span-1",
             "flex items-center justify-center md:max-h-[70vh]",
           ].join(" ")}
         >
-          <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mx-6">
+          <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
             {heroEmbed?.json ? (
-              <div className="absolute inset-0">
+              <div className="absolute inset-0 min-h-[50vh] md:min-h-0">
                 {documentToReactComponents(heroEmbed.json, richRenderOptions)}
               </div>
             ) : (
@@ -241,7 +241,7 @@ export default function LeftHero({
         <div
           className={[
             "md:order-none",
-            "md:row-start-2 md:col-span-2 md:self-end w-full py-2",
+            "md:row-start-2 md:col-span-5 md:self-end w-full py-2 col-span-1",
           ].join(" ")}
           key="trust-badges"
         >

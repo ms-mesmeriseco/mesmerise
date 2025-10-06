@@ -178,7 +178,7 @@ export default function CenterHero({
             className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh]
            md:py-14 py-10"
           >
-            <div className="w-full text-[var(--foreground)] flex flex-col gap-8 min-h-[60vh] justify-center items-center md:max-w-[725px]">
+            <div className="w-full text-[var(--foreground)] flex flex-col gap-8 min-h-[60vh] justify-center items-center">
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"
