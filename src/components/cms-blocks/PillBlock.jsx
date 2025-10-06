@@ -63,7 +63,7 @@ export default function PillBlock({ pills = [], blockTitle, assetMap = {} }) {
             {pills[activeIndex]?.media && (
               <motion.div
                 key={`img-${activeIndex}`}
-                className="relative overflow-hidden aspect-[6/4]"
+                className="relative overflow-hidden"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}

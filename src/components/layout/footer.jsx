@@ -50,24 +50,26 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <div className="flex items-end gap-3">
               {/* Update the src to your actual wordmark path */}
-              <Image
-                src="/wordmark.svg"
-                alt="Mesmerise Digital"
-                width={240}
-                height={60}
-                priority
-              />
+              <Link href="">
+                <Image
+                  src="/wordmark.svg"
+                  alt="Mesmerise Digital"
+                  width={240}
+                  height={60}
+                  priority
+                />
+              </Link>
               {/* optional small accent dot */}
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--mesm-blue)]" />
             </div>
             <p className="text-sm/6 opacity-80 max-w-[425px]">
-              We don't just run ads. Subscribe for monthly insights across
-              brand, web, and performance.
+              We don't just run ads. We turn strangers into loyal customers.
+              Join to receive insights across brand, web, and performance you
+              won't find anywhere else.
             </p>
           </div>
 
-          {/* Newsletter / Beehiiv card */}
-          <div className="rounded-2xl md:p-5">
+          <div className="rounded-2xl">
             {/* <h3 className="page-title-medium mb-3">Subscribe</h3>
             <Script
               src="https://subscribe-forms.beehiiv.com/embed.js"

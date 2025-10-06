@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function FooterSignup({
   className = "",
   submitPath = "/api/newsletter",
-  cta = "Sign up",
+  cta = "Join the community",
   successMsg = "You're in!",
 }) {
   const [name, setName] = useState("");

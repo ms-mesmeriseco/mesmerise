@@ -105,7 +105,7 @@ function Statement({ innerRef }) {
         <InView>
           <StaggeredWords
             as="h1"
-            text="We craft brand, web, and content experiences that look sexy, and convert."
+            text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert."
             className="page-title-large"
             margin="-40% 0px"
           />
