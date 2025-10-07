@@ -1,5 +1,3 @@
-"use client";
-
 import ServicePageBase from "@/components/services/ServicePageBase.jsx";
 import PackagesRow from "@/components/services/PackagesRow.jsx";
 

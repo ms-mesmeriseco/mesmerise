@@ -2,6 +2,8 @@
 import LandingPageClient from "./LandingPageClient";
 import { getClient } from "@/lib/apollo-client";
 import { GET_LANDING_PAGE_BY_SLUG } from "@/lib/graphql/queries/getLandingPages";
+import ContactForm from "@/app/connect/ContactForm";
+import StaggeredWords from "@/hooks/StaggeredWords";
 
 export const revalidate = 60; // optional: ISR
 
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }) {
   const title = page?.mT || "Mesmerise Digital";
   const description =
     page?.metaDesc ||
-    "Strategy, brand, web, and content that look great and convert.";
+    "We build omnipresent marketing ecosystems that unify design, data and psychology to drive predictable growth for ambitious brands.";
 
   // Safely resolve an OG image (object or array), normalize to absolute URL, then fallback
   const rawOg = page?.media?.url || page?.media?.[0]?.url || null;
@@ -67,5 +69,18 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const page = await fetchLanding(params.slug);
   if (!page) return <p>Not found.</p>;
-  return <LandingPageClient page={page} />;
+  return (
+    <>
+      <LandingPageClient page={page} />
+      <div className="flex w-full flex-col md:flex-row justify-between gap-[var(--global-margin-sm)]">
+        <div className="w-full md:w-1/2 pb-6">
+          {" "}
+          <StaggeredWords as="h3" text="Book in for a strategy session." />
+        </div>
+        <div className="w-full md:w-1/2 pb-6">
+          <ContactForm />
+        </div>
+      </div>
+    </>
+  );
 }

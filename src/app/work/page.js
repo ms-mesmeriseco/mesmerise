@@ -1,4 +1,3 @@
-// app/work/page.js
 import ProjectNavigationList from "@/components/cms-blocks/ProjectNavigationList";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 

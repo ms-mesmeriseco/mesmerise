@@ -1,5 +1,3 @@
-// "use client";
-
 import { getClient } from "../../../lib/apollo-client";
 import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
