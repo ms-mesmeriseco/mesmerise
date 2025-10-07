@@ -25,6 +25,20 @@ const BUDGET_OPTIONS = [
   "$50,000 +",
 ];
 
+export async function generateMetadata() {
+  const title = "Contact us | Mesmerise Digital";
+  const description =
+    "Ready to scale like Hormozi? Chat directly with our strategy team. We'll map out a data driven plan built for premium results.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/connect`,
+    },
+  };
+}
+
 function Chip({ label, selected, onClick }) {
   return (
     <button

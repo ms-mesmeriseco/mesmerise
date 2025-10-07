@@ -14,6 +14,21 @@ import {
   servicesFAQ,
 } from "./content.jsx";
 
+export async function generateMetadata() {
+  const title =
+    "Analytics and Insights for Smarter Decisions | Mesmerise Digital";
+  const description =
+    "When your data speaks with one voice, decisions become clear. We turn analytics into strategy that drives undeniable results.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/services/analytics`,
+    },
+  };
+}
+
 export default function AnalyticsPage() {
   return (
     <>

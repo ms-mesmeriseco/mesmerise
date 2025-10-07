@@ -4,6 +4,20 @@ import FAQ from "@/components/layout/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import ServicesRail from "@/components/services/ServicesRail";
 
+export async function generateMetadata() {
+  const title = "Full Funnel Digital Marketing Services | Mesmerise";
+  const description =
+    "From brand to web to performance, Mesmerise builds complete ecosystems that attract, convert and compound results over time.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/services`,
+    },
+  };
+}
+
 export default function Services() {
   const servicesFAQ = [
     {

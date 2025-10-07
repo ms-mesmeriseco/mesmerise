@@ -14,6 +14,20 @@ import {
   servicesFAQ,
 } from "./content.jsx";
 
+export async function generateMetadata() {
+  const title = "Branding | Mesmerise Digital";
+  const description =
+    "We craft identity systems that fuse psychology, storytelling and design to turn first impressions into lifelong brand loyalty.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/services/branding`,
+    },
+  };
+}
+
 export default function BrandingPage() {
   return (
     <>

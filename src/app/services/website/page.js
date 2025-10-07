@@ -16,6 +16,20 @@ import {
   servicesFAQ,
 } from "./content.jsx";
 
+export async function generateMetadata() {
+  const title = "Conversion Driven Web Design | Mesmerise Digital";
+  const description =
+    "Websites engineered for emotion and results. We design experiences that look exceptional and sell effortlessly.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/services/website`,
+    },
+  };
+}
+
 export default function WebsitePage() {
   return (
     <>

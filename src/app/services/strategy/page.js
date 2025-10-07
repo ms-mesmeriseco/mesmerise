@@ -14,6 +14,21 @@ import {
   servicesFAQ,
 } from "./content.jsx";
 
+export async function generateMetadata() {
+  const title =
+    "Growth Strategy That Turns Data Into Direction | Mesmerise Digital";
+  const description =
+    "We craft strategic systems that unify psychology, positioning and analytics to create clarity, precision and measurable growth.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/services/strategy`,
+    },
+  };
+}
+
 export default function StrategyPage() {
   return (
     <>

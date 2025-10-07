@@ -1,6 +1,20 @@
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import StaggeredWords from "@/hooks/StaggeredWords";
 
+export async function generateMetadata() {
+  const title = "About us | Mesmerise Digital Marketing";
+  const description =
+    "Led by strategy, fuelled by design, validated by data. Discover the philosophy behind our state-of-the-art approach, redefining how brands grow online.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/about`,
+    },
+  };
+}
+
 export function OurWhy() {
   return (
     <>

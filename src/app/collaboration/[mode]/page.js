@@ -24,11 +24,16 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const title =
     params.mode === "defined"
-      ? "Defined Collaboration"
-      : "Continuous Collaboration";
+      ? "Defined Collaboration Model | Mesmerise Digital"
+      : "Continuous Collaboration Model | Mesmerise Digital";
+  const description =
+    params.mode === "defined"
+      ? "A structured, strategy-led model for brands needing clarity, speed and results. Defined Collaboration delivers end-to-end service from concept to launch."
+      : "Our ongoing partnership model built for ambitious brands. Continuous Collaboration keeps strategy, performance and design evolving in perfect sync for sustained growth.";
   const canonical = `/collaboration/${params.mode}`;
   return {
     title,
+    description,
     alternates: { canonical },
     openGraph: { title },
   };

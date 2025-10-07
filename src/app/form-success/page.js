@@ -1,5 +1,19 @@
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 
+export async function generateMetadata() {
+  const title = "Email sent | Mesmerise Digital";
+  const description =
+    "Thank you for getting touch, somebody will be in touch with you shortly.";
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/form-success`,
+    },
+  };
+}
+
 export default function Success() {
   return (
     <div>
