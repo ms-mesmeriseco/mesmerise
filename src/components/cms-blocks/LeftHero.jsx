@@ -183,7 +183,7 @@ export default function LeftHero({
           // Mobile: single column; Desktop: 2 columns + bottom row for badges
           "grid grid-cols-1 md:grid-cols-5 md:grid-rows-[1fr_auto]",
           "md:gap-6 gap-12",
-          "md:min-h-[90vh]", // full screen height on md+
+          "md:min-h-[80vh]", // full screen height on md+
         ].join(" ")}
       >
         {/* TEXT — mobile order 1; desktop row 1 col 1 */}
@@ -230,7 +230,7 @@ export default function LeftHero({
         >
           <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
             {heroEmbed?.json ? (
-              <div className="absolute inset-0 min-h-full ">
+              <div className="absolute inset-0 min-h-full">
                 {documentToReactComponents(heroEmbed.json, richRenderOptions)}
               </div>
             ) : (
