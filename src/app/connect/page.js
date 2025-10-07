@@ -28,6 +28,13 @@ export async function generateMetadata() {
 export default function ConnectPage() {
   return (
     <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `rdt('track', '{{Connect Page Submission}}', {
+    conversionId: '{{connectPageSubmission}}'
+});`,
+        }}
+      />
       <div className="flex flex-col min-h-screen">
         <PageTitleLarge text="Connect" />
         <div className="flex w-full justify-between gap-[var(--global-margin-sm)]">
