@@ -64,7 +64,7 @@ s.parentNode.insertBefore(b, s);})(window.lintrk);
         <img
           height="1"
           width="1"
-          style="display:none;"
+          className="hidden"
           alt=""
           src="https://px.ads.linkedin.com/collect/?pid=8129948&fmt=gif"
         />
