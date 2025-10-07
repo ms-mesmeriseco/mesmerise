@@ -72,7 +72,7 @@ export default async function Page({ params }) {
   return (
     <>
       <LandingPageClient page={page} />
-      <div className="flex w-full flex-col md:flex-row justify-between gap-[var(--global-margin-sm)]">
+      <div className="narrow-wrapper flex w-full flex-col md:flex-row justify-between gap-[var(--global-margin-sm)]">
         <div className="w-full md:w-1/2 pb-6">
           {" "}
           <StaggeredWords as="h3" text="Book in for a strategy session." />
