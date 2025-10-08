@@ -5,11 +5,6 @@ import { motion } from "framer-motion";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 
-/**
- * Mobile-only Impact Stats
- * - As you scroll, whichever stat is most in view auto-expands its body inline.
- * - Hidden on md+ screens.
- */
 export default function ImpactStatsMobile() {
   const stats = useMemo(
     () => [
@@ -37,27 +32,51 @@ export default function ImpactStatsMobile() {
     []
   );
 
-  // Track which stat is most in view
   const itemRefs = useRef([]);
   const [activeIdx, setActiveIdx] = useState(0);
+
+  // ————— anti-flicker controls —————
+  const activeRef = useRef(activeIdx);
+  useEffect(() => {
+    activeRef.current = activeIdx;
+  }, [activeIdx]);
+
+  const lastSwitchRef = useRef(0);
+  const SWITCH_GATE_MS = 300; // at most one switch each 0.5s
+  const RATIO_MARGIN = 0.06; // new card must beat current by 6%
 
   useEffect(() => {
     const els = itemRefs.current.filter(Boolean);
     if (!els.length) return;
 
-    // Use a single observer; pick the element with the highest intersection ratio
-    let latestRatios = new Map();
-    const pickActive = () => {
+    const latestRatios = new Map();
+
+    const trySwitch = () => {
       if (!latestRatios.size) return;
-      let best = 0;
-      let bestIdx = 0;
+
+      // find best candidate
+      let bestIdx = activeRef.current;
+      let best = latestRatios.get(bestIdx) ?? 0;
+
       latestRatios.forEach((ratio, idx) => {
         if (ratio > best) {
           best = ratio;
           bestIdx = idx;
         }
       });
-      setActiveIdx(bestIdx);
+
+      // hysteresis: require a clear win over current
+      const currentIdx = activeRef.current;
+      const current = latestRatios.get(currentIdx) ?? 0;
+      const now = performance.now();
+
+      const clearWin = best > current + RATIO_MARGIN;
+      const gateOpen = now - lastSwitchRef.current >= SWITCH_GATE_MS;
+
+      if (bestIdx !== currentIdx && clearWin && gateOpen) {
+        lastSwitchRef.current = now;
+        setActiveIdx(bestIdx);
+      }
     };
 
     const observer = new IntersectionObserver(
@@ -66,18 +85,30 @@ export default function ImpactStatsMobile() {
           const idx = Number(e.target.getAttribute("data-index"));
           latestRatios.set(idx, e.intersectionRatio);
         }
-        pickActive();
+        // throttle to one RAF to avoid bursty setState
+        if (!queuedRaf.current) {
+          queuedRaf.current = requestAnimationFrame(() => {
+            queuedRaf.current = null;
+            trySwitch();
+          });
+        }
       },
       {
-        // Favor the middle of the viewport
         root: null,
-        threshold: Array.from({ length: 11 }, (_, i) => i / 10), // 0..1
-        rootMargin: "-20% 0px -20% 0px", // encourage middle-lock
+        // encourage “center lock” but with slightly larger margins to reduce ping-pong
+        rootMargin: "-30% 0px -30% 0px",
+        // coarser thresholds reduce jitter
+        threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
       }
     );
 
+    const queuedRaf = { current: null };
     els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+      if (queuedRaf.current) cancelAnimationFrame(queuedRaf.current);
+    };
   }, [stats.length]);
 
   const container = {
@@ -99,7 +130,8 @@ export default function ImpactStatsMobile() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 gap-[var(--global-margin-xs)]"
+          // ↑ more space: reduce accidental tie scores between neighbors
+          className="grid grid-cols-1 gap-6 sm:gap-7"
         >
           {stats.map((s, idx) => {
             const expanded = idx === activeIdx;
@@ -110,7 +142,6 @@ export default function ImpactStatsMobile() {
                 data-index={idx}
                 className="border border-[var(--mesm-grey-dk)] rounded-lg bg-black/20"
               >
-                {/* Header row */}
                 <div className="p-5">
                   <StaggeredWords
                     as="h3"
@@ -120,7 +151,6 @@ export default function ImpactStatsMobile() {
                   <p className="text-base opacity-80 mt-1">{s.sub}</p>
                 </div>
 
-                {/* Expanding body that appears automatically for the active item */}
                 <motion.div
                   initial={false}
                   animate={{
