@@ -194,29 +194,27 @@ export default function CenterHero({
 
   return (
     <InView>
-      <section className="relative w-screen min-h-screen overflow-x-hidden text-center">
+      <section className="relative min-h-screen overflow-x-hidden text-center">
         <div className="flex flex-col items-center">
           {/* Top stack: text + badges take most of the viewport */}
           <div
-            className="wrapper w-full flex flex-col items-center justify-between min-h-[85vh]
+            className="wrapper flex flex-col items-center justify-between min-h-[85vh]
            md:py-14 py-10"
           >
-            <div className="w-full text-[var(--foreground)] flex flex-col gap-8 min-h-[60vh] justify-center items-center">
+            <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] justify-center items-center">
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"
                 text={`${pageHeader || ""}`}
               />
-
-              <PillList items={listItems} />
+              <StaggeredWords as="p" className="p2" text={pageSubtitle} />
 
               <div className="flex flex-col gap-2 items-center">
-                <StaggeredWords as="p" className="p2" text={pageSubtitle} />
-
+                <PillList items={listItems} />
                 {showCta && (
                   <Button
                     href={ctaUrl}
-                    extraClass="mt-8"
+                    extraClass="md:mt-8 mt-4"
                     variant="accent"
                     size="large"
                   >
