@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import AvatarRow from "../ui/AvatarRow";
 
 /* --- helpers --- */
 function decodeEntities(str = "") {
@@ -173,6 +174,29 @@ export default function LeftHero({
     [heroList]
   );
 
+  const customers = [
+    {
+      id: 1,
+      src: "/assets/customers/Tony.png",
+    },
+    {
+      id: 2,
+      src: "/assets/customers/Mitch.png",
+    },
+    { id: 3, src: "/assets/customers/Misty.png" },
+    {
+      id: 4,
+      src: "/assets/customers/Lani_love.png",
+    },
+    { id: 5, src: "/assets/customers/Kirpy.png" },
+    { id: 6, src: "/assets/customers/Kez.png" },
+    // {
+    //   id: 7,
+    //   src: "/assets/customers/Jay.png",
+    // },
+    // { id: 8, src: "/assets/customers/Bobsicins.png" },
+  ];
+
   return (
     <InView>
       {/* Grid lets us reorder on mobile and pin badges to base on desktop */}
@@ -204,18 +228,15 @@ export default function LeftHero({
           <StaggeredWords as="p" className="w-[90%]" text={pageSubtitle} />
 
           <PillList items={listItems} className="justify-start" />
+
           <div className="flex flex-col ">
             {showCta && (
-              <Button
-                href={ctaUrl}
-                extraClass="mt-4"
-                variant="accent"
-                size="large"
-              >
+              <Button href={ctaUrl} extraClass="" variant="accent" size="large">
                 {ctaLabel || "Learn more"}
               </Button>
             )}
           </div>
+          <AvatarRow people={customers} />
         </div>
 
         {/* TRUST BADGES — mobile order 2; desktop bottom row spanning both cols */}
