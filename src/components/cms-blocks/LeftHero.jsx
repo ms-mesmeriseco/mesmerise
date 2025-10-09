@@ -239,8 +239,6 @@ export default function LeftHero({
           <AvatarRow people={customers} />
         </div>
 
-        {/* TRUST BADGES — mobile order 2; desktop bottom row spanning both cols */}
-
         {/* MEDIA — mobile order 3; desktop row 1 col 2 */}
         <div
           className={[
@@ -259,15 +257,11 @@ export default function LeftHero({
             )}
           </div>
         </div>
-        <div
-          className={[
-            "md:order-none",
-            "md:row-start-2 md:col-span-5 md:self-end w-full py-2 col-span-1",
-          ].join(" ")}
-          key="trust-badges"
-        >
-          <TrustBadges logos={logos} />
-        </div>
+        {logos?.length ? (
+          <div className="w-full md:col-span-5 col-span-1">
+            <TrustBadges logos={logos} />
+          </div>
+        ) : null}
       </section>
     </InView>
   );

@@ -482,19 +482,17 @@ figcaption {
     line-height: 2.56rem;
   }
 }
-@keyframes marquee {
+@keyframes marquee-x {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
-  } /* exactly half, because track is duplicated */
+    transform: translateX(calc(var(--marquee-distance) * -1));
+  }
 }
 
-/* Utilities */
-.animate-marquee {
-  animation: marquee var(--marquee-duration, 24s) linear infinite;
-}
-.marquee-will-change {
+/* Uses the two CSS vars you set inline */
+.marquee-animate {
   will-change: transform;
+  animation: marquee-x var(--marquee-duration) linear infinite;
 }
