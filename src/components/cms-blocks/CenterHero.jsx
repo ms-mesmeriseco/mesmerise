@@ -8,6 +8,7 @@ import TrustBadges from "./TrustBadges";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
 import Image from "next/image";
+import AvatarRow from "../ui/AvatarRow";
 
 function decodeEntities(str = "") {
   return str
@@ -168,6 +169,28 @@ export default function CenterHero({
     () => getListItemsFromRichText(heroList?.json || {}),
     [heroList]
   );
+  const customers = [
+    {
+      id: 1,
+      src: "/assets/customers/Tony.png",
+    },
+    {
+      id: 2,
+      src: "/assets/customers/Mitch.png",
+    },
+    { id: 3, src: "/assets/customers/Misty.png" },
+    {
+      id: 4,
+      src: "/assets/customers/Lani_love.png",
+    },
+    { id: 5, src: "/assets/customers/Kirpy.png" },
+    { id: 6, src: "/assets/customers/Kez.png" },
+    // {
+    //   id: 7,
+    //   src: "/assets/customers/Jay.png",
+    // },
+    // { id: 8, src: "/assets/customers/Bobsicins.png" },
+  ];
 
   return (
     <InView>
@@ -193,7 +216,7 @@ export default function CenterHero({
                 {showCta && (
                   <Button
                     href={ctaUrl}
-                    extraClass="mt-4"
+                    extraClass="mt-8"
                     variant="accent"
                     size="large"
                   >
@@ -201,6 +224,7 @@ export default function CenterHero({
                   </Button>
                 )}
               </div>
+              <AvatarRow people={customers} />
             </div>
             <br />
 
