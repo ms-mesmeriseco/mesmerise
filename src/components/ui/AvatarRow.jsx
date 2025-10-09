@@ -9,7 +9,7 @@ export default function AvatarRow({
   scrollOnMobile = true,
   overlap = 0.28,
   reverse = false,
-  tagline = "trusted by ambitious business owners",
+  tagline = "Trusted by ambitious business owners",
 }) {
   const sizesAttr = useMemo(
     () => "(max-width: 768px) 48px, (max-width: 1024px) 56px, 64px",
@@ -19,7 +19,7 @@ export default function AvatarRow({
   const marginShift = Math.max(0, Math.min(1, overlap)) * size;
 
   return (
-    <div className="w-fit flex items-center gap-4 flex-wrap">
+    <div className="w-fit flex items-center gap-2 flex-wrap">
       {/* AVATAR STACK */}
       <ul
         className={[
@@ -45,7 +45,6 @@ export default function AvatarRow({
             : { marginLeft: `-${marginShift}px` };
 
           const commonProps = {
-            key: p.id ?? i,
             className:
               "group relative inline-flex rounded-full outline-none " +
               "focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-black " +
