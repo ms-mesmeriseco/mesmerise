@@ -35,7 +35,7 @@ const nextConfig = {
       {
         source: "/blog/digital-marketing-benefits",
         destination:
-          "/digital-marketing-101-a-beginners-everything-you-need-to-know-guide",
+          "/blog/digital-marketing-101-a-beginners-everything-you-need-to-know-guide",
         permanent: true,
       },
       {
