@@ -144,7 +144,7 @@ export default function SwitchListAccordion({ items, title }) {
                         transition={{ duration: 0.25, ease: "easeInOut" }}
                         // avoid flash: load the visible image eagerly
                         loading="eager"
-                        fetchpriority="high"
+                        fetchPriority="high"
                         decoding="async"
                       />
                     );
