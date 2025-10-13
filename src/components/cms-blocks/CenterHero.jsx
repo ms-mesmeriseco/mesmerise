@@ -100,7 +100,7 @@ function PillList({ items }) {
   if (!items?.length) return null;
   return (
     <div
-      className="flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-2 list-none opacity-80 text-center"
+      className="flex flex-col md:flex-row md:flex-wrap md:items-center items-start justify-start md:justify-center gap-2 list-none opacity-80 text-center"
       role="list"
     >
       {items.map((item, i) => (
@@ -229,7 +229,7 @@ export default function CenterHero({
             {heroEmbed?.json ? (
               <div className="w-full flex items-center justify-center pb-16">
                 <div className="md:w-3/4 w-full rounded-xl overflow-hidden m-auto aspect-[16/9]">
-                  <div className="absolute inset-0 relative w-full aspect-[16/9] ">
+                  <div className="absolute inset-0 relative w-full aspect-[16/9]">
                     {documentToReactComponents(
                       heroEmbed.json,
                       richRenderOptions
