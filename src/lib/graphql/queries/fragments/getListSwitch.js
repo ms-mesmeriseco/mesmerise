@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const GET_LIST_SWITCH = gql`
   fragment Switch on ListWithImageSwitch {
-    entryTitle
+    title
     listItemsCollection(limit: 3) {
       items {
         ... on ListSwitchItem {

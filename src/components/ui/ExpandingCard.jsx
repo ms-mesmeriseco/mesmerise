@@ -18,12 +18,12 @@ export default function ExpandingCard({
 
   return (
     <div
-      className="flex flex-col  bg-[var(--mesm-grey-xd)] py-4 px-8 rounded-xs shadowtransition duration-100  hover:translate-x-[2px] hover:bg-[var(--mesm-grey-dk)]"
+      className="flex flex-col  bg-[var(--mesm-grey-dk)]/40 border-[var(--mesm-grey-dk)] border-1 py-4 px-8 rounded-xs shadowtransition duration-100 hover:translate-x-[2px] hover:border-[var(--mesm-blue)]"
       {...props}
     >
       <button
         onClick={() => setExpanded((prev) => !prev)}
-        className="w-full flex justify-between items-center h-auto py-2 text-left transition text-md hover:opacity-70  cursor-pointer "
+        className="w-full flex justify-between items-center h-auto py-2 text-left transition text-md cursor-pointer "
         aria-expanded={expanded}
         type="button"
       >
@@ -43,8 +43,8 @@ export default function ExpandingCard({
           <Image
             src={expansionIcon.url}
             alt={expansionIcon.title || "Expand"}
-            width={16}
-            height={16}
+            width={24}
+            height={24}
             className={`transition-transform duration-300 ${
               expanded ? `rotate-[${rotation}deg]` : ""
             }`}

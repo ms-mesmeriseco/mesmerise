@@ -199,9 +199,9 @@ export default function CenterHero({
           {/* Top stack: text + badges take most of the viewport */}
           <div
             className="wrapper flex flex-col items-center justify-between min-h-[85vh]
-           md:py-14 py-10"
+           md:py-14 py-10 "
           >
-            <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] justify-center items-center">
+            <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] justify-center items-center md:w-4/5">
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"

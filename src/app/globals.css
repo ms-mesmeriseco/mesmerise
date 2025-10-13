@@ -181,6 +181,9 @@ textarea:focus,
 button:focus {
   outline: none;
 }
+button {
+  cursor: pointer;
+}
 h1 {
   font-size: 4.22rem;
   line-height: 5.23rem;

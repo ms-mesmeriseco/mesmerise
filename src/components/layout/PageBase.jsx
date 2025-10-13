@@ -92,6 +92,7 @@ export default function PageBase({ blocks, metadata }) {
                 <div className="col-span-12" key={`block-${index}`}>
                   <SwitchListAccordion
                     items={block.listItemsCollection?.items || []}
+                    title={block.title}
                   />
                 </div>
               );
