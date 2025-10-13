@@ -18,7 +18,7 @@ export default function ExpandingCard({
 
   return (
     <div
-      className="flex flex-col  bg-[var(--mesm-grey-dk)]/40 border-[var(--mesm-grey-dk)] border-1 py-4 px-8 rounded-xs shadowtransition duration-100 hover:translate-x-[2px] hover:border-[var(--mesm-blue)]"
+      className="flex flex-col  bg-[var(--mesm-grey-dk)]/10 border-[var(--mesm-grey-dk)] border-1 py-4 px-8 rounded-sm shadowtransition duration-200 hover:border-[var(--mesm-blue)]"
       {...props}
     >
       <button

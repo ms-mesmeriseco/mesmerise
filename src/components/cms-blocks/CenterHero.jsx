@@ -201,7 +201,7 @@ export default function CenterHero({
             className="wrapper flex flex-col items-center justify-between min-h-[85vh]
            md:py-14 py-10 "
           >
-            <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] justify-center items-center md:w-4/5">
+            <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] md:justify-center justify-start items-start md:items-center text-left md:text-center md:w-4/5">
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"
@@ -209,7 +209,7 @@ export default function CenterHero({
               />
               <StaggeredWords as="p" className="p2" text={pageSubtitle} />
 
-              <div className="flex flex-col gap-2 items-center">
+              <div className="flex flex-col gap-2 md:items-center md:justify-center justify-start items-start">
                 <PillList items={listItems} />
                 {showCta && (
                   <Button
@@ -228,8 +228,8 @@ export default function CenterHero({
 
             {heroEmbed?.json ? (
               <div className="w-full flex items-center justify-center pb-16">
-                <div className="w-full rounded-lg overflow-hidden">
-                  <div className="absolute inset-0 relative w-full aspect-[16/9]">
+                <div className="md:w-3/4 w-full rounded-xl overflow-hidden m-auto aspect-[16/9]">
+                  <div className="absolute inset-0 relative w-full aspect-[16/9] ">
                     {documentToReactComponents(
                       heroEmbed.json,
                       richRenderOptions
