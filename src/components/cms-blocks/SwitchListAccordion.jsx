@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InView from "@/hooks/InView";
 
 export default function SwitchListAccordion({ items, title }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const mobileRowRefs = useRef([]); // for snap-to-top on mobile
 
   if (!items || items.length === 0) return null;
 
   function renderMedia(media) {
     if (!media?.url) return null;
 
-    const commonClass = "w-full h-auto max-w-full object-cover rounded-xl"; // fill 1/2 column nicely
+    const commonClass = "w-full h-auto max-w-full object-cover rounded-xl";
     const commonStyle = { maxHeight: "80vh" };
 
     if (media.contentType?.startsWith("video")) {
@@ -40,9 +41,35 @@ export default function SwitchListAccordion({ items, title }) {
     );
   }
 
+  // --- MOBILE HELPERS ONLY ---
+  function handleMobileClick(idx) {
+    // toggle open/close
+    setActiveIndex((prev) => (prev === idx ? null : idx));
+
+    // snap only on mobile sizes
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches
+    ) {
+      const el = mobileRowRefs.current[idx];
+      if (!el) return;
+
+      // offset for any sticky header; tweak as needed
+      const HEADER_OFFSET = 88;
+      requestAnimationFrame(() => {
+        const rect = el.getBoundingClientRect();
+        const y =
+          rect.top +
+          (window.pageYOffset || document.documentElement.scrollTop) -
+          HEADER_OFFSET;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      });
+    }
+  }
+
   return (
     <InView>
-      {/* Desktop / tablet: strict 1/2 + 1/2 */}
+      {/* ===== Desktop / tablet (UNCHANGED) ===== */}
       <div>
         {title && <h2 className="text-center">{title}</h2>}
         <section className="hidden md:grid md:grid-cols-2 md:gap-8 items-center justify-center">
@@ -116,13 +143,11 @@ export default function SwitchListAccordion({ items, title }) {
                       <motion.video
                         key={m.url}
                         src={m.url}
-                        // important bits ↓
                         className="absolute inset-0 w-full h-full object-contain"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.25, ease: "easeInOut" }}
-                        // avoid flash: eager-ish load & no layout jank
                         preload="metadata"
                         autoPlay
                         muted
@@ -137,12 +162,10 @@ export default function SwitchListAccordion({ items, title }) {
                         src={m.url}
                         alt={m.title || ""}
                         className="absolute inset-0 w-full h-full object-contain"
-                        // cross-fade only (no scale)
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.25, ease: "easeInOut" }}
-                        // avoid flash: load the visible image eagerly
                         loading="eager"
                         fetchPriority="high"
                         decoding="async"
@@ -154,63 +177,77 @@ export default function SwitchListAccordion({ items, title }) {
           </div>
         </section>
       </div>
-      {/* Mobile: unchanged (stacked) */}
-      <section className="md:hidden flex flex-col min-h-[80vh] gap-8 items-center justify-center mt-4">
-        {items.map((item, idx) => (
-          <div key={item.entryTitle || idx} className="w-full">
-            <div className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto ease-in-out ">
-              <button
-                className={`w-full text-left py-4 cursor-pointer  ${
-                  activeIndex === idx ? "font-bold" : "font-normal"
-                }`}
-                onClick={() => setActiveIndex(idx)}
-              >
-                {item.entryTitle}
-              </button>
 
-              <AnimatePresence>
-                {activeIndex === idx && (
-                  <motion.div
-                    key={`${item.entryTitle}-mobile-content`}
-                    initial={{ opacity: 0, height: "0px" }}
-                    animate={{
-                      opacity: 1,
-                      height: "64px",
-                      transition: { duration: 0.4 },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      height: "0px",
-                      transition: { duration: 0.005 },
-                    }}
-                    className="py-2 ease-in-out text-[var(--mesm-l-grey)] text-sm"
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: item.textContent || "",
+      {/* ===== Mobile: UPDATED ONLY ===== */}
+      <section className="md:hidden flex flex-col gap-6 items-stretch justify-center mt-4">
+        {items.map((item, idx) => {
+          const open = activeIndex === idx;
+          return (
+            <div
+              key={item.entryTitle || idx}
+              ref={(el) => (mobileRowRefs.current[idx] = el)}
+              className="w-full"
+            >
+              <div className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto ease-in-out">
+                <button
+                  className={`w-full text-left py-4 cursor-pointer ${
+                    open ? "font-bold" : "font-normal"
+                  }`}
+                  onClick={() => handleMobileClick(idx)}
+                  aria-expanded={open}
+                  aria-controls={`mobile-panel-${idx}`}
+                >
+                  {item.entryTitle}
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {open && (
+                    <motion.div
+                      id={`mobile-panel-${idx}`}
+                      key={`${item.entryTitle}-mobile-content`}
+                      // Make the text box grow to its natural height
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{
+                        opacity: 1,
+                        height: "auto",
+                        transition: { duration: 0.35 },
                       }}
-                    />
+                      exit={{
+                        opacity: 0,
+                        height: 0,
+                        transition: { duration: 0.15 },
+                      }}
+                      className="py-2 pr-2 text-[var(--mesm-l-grey)] text-sm overflow-hidden
+                                 max-h-[50vh] overflow-y-auto" // taller box, scrolls if very long
+                    >
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: item.textContent || "",
+                        }}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Media: in normal flow, with spacing; no overlap */}
+              <AnimatePresence initial={false}>
+                {open && item.listMedia?.url && (
+                  <motion.div
+                    key={item.listMedia.url}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.25 }}
+                    className="mt-3 h-[48vh] w-full overflow-hidden rounded-xl shadow flex items-center justify-center"
+                  >
+                    {renderMedia(item.listMedia)}
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-
-            <AnimatePresence>
-              {activeIndex === idx && (
-                <motion.div
-                  key={item.listMedia?.url}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.2 }}
-                  className="h-[60vh] w-full shadow overflow-hidden flex items-center justify-center"
-                >
-                  {renderMedia(item.listMedia)}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        ))}
+          );
+        })}
       </section>
     </InView>
   );
