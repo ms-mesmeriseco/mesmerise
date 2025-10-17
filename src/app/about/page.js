@@ -115,7 +115,7 @@ export default function AboutPage() {
           {
             id: "3",
             name: "Simba Dhaliwal",
-            title: "Client Services",
+            title: "Business Development",
             photo: {
               url: "/assets/team/Simba.jpg",
             },
