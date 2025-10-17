@@ -14,7 +14,7 @@ export default function TeamBlock({ team = [], heading = "The Team" }) {
   return (
     <section className="py-10 md:py-14">
       {/* Optional heading */}
-      {heading ? <h2 className="page-title-medium ">{heading}</h2> : null}
+      {heading ? <h2 className="">{heading}</h2> : null}
 
       <ul
         className="

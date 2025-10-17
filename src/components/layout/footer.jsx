@@ -55,8 +55,8 @@ export default function Footer() {
             </div>
             <p className="text-sm/6 opacity-80 max-w-[425px]">
               We don't just run ads. We turn strangers into loyal customers.
-              Join to receive insights across brand, web, and performance you
-              won't find anywhere else.
+              Join to gain insight across brand, web, and performance you won't
+              find anywhere else.
             </p>
           </div>
 
