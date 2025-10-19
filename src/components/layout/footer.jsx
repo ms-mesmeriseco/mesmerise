@@ -41,10 +41,7 @@ export default function Footer() {
           <div className="flex flex-col gap-4">
             <div className="flex items-end gap-3">
               {/* Update the src to your actual wordmark path */}
-              <Link
-                href="www.mesmeriseco.com"
-                aria-label="Mesmerise Digital Home"
-              >
+              <Link href="/" aria-label="Mesmerise Digital Home">
                 <Image
                   src="/wordmark.svg"
                   alt="Mesmerise Digital"
