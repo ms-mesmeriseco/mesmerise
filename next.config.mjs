@@ -138,6 +138,11 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/facebook-ads-agency",
+        destination: "/facebook-ads-agency-melbourne",
+        permanent: true,
+      },
     ];
   },
 };
