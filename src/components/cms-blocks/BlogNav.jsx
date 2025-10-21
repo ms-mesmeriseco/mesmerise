@@ -23,7 +23,7 @@ export default function BlogNav() {
 
   return (
     <section className="w-full">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[var(--global-margin-sm)]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-[var(--global-margin-xs)]">
         {posts.slice(0, 4).map((post, index) => (
           <Link
             key={`blog-${post.slug}-${index}`}
@@ -37,7 +37,7 @@ export default function BlogNav() {
                 alt={post.heroImage.title || "Blog image"}
                 width={post.heroImage.width || 800}
                 height={post.heroImage.height || 600}
-                className="object-cover w-full rounded-md aspect-6/4"
+                className="object-cover w-full aspect-6/4"
                 style={{ display: "block" }}
               />
             )}
@@ -61,7 +61,7 @@ export default function BlogNav() {
                 alt={post.heroImage.title || "Blog image"}
                 width={post.heroImage.width || 800}
                 height={post.heroImage.height || 600}
-                className="object-cover w-full rounded-md aspect-6/4"
+                className="object-cover w-full aspect-6/4"
                 style={{ display: "block" }}
               />
             )}
