@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
   const metaTitle = page.metaTitle || page.postTitle || "Mesmerise Digital";
 
   const metaDescription =
-    page.metaDescription ||
+    page.metaDescription.json ||
     // quick fallback from first paragraph if needed
     (page.blogContent?.json?.content || [])
       .map((n) =>
