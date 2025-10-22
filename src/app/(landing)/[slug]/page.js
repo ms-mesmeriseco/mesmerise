@@ -61,7 +61,7 @@ export async function generateMetadata({ params }) {
       images: [ogImage], // keep Twitter in sync with OG
     },
     alternates: {
-      canonical: `/${params.slug}`,
+      canonical: `https://mesmeriseco.com/${params.slug}`,
     },
   };
 }
