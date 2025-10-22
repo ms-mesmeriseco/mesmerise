@@ -52,7 +52,7 @@ export async function generateMetadata({ params }) {
     page.heroImage?.url ||
     "https://www.mesmeriseco.com/assets/social-default.png";
 
-  const canonical = abs(`https://mesmeriseco.com/blog/${slug}`);
+  const canonical = abs(`https://www.mesmeriseco.com/blog/${slug}`);
 
   return {
     title: metaTitle,
