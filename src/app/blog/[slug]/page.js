@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
   const ogImage =
     page.heroImage?.url || "https://mesmeriseco.com/assets/social-default.png";
 
-  const canonical = abs(`/blog/${slug}`);
+  const canonical = abs(`https://mesmeriseco.com/blog/${slug}`);
 
   return {
     title: metaTitle,
