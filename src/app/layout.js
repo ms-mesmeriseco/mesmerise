@@ -14,7 +14,7 @@ export const metadata = {
   title: "Mesmerise Digital",
   description: "We don't just run ads.",
   alternates: {
-    canonical: `https://mesmeriseco.com`,
+    canonical: `https://www.mesmeriseco.com`,
   },
   icons: {
     // Browser tab favicons

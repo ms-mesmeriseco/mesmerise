@@ -7,12 +7,13 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 
 export const revalidate = 60; // optional: ISR
 
-const DEFAULT_OG_IMAGE = "https://mesmeriseco.com/assets/social-default.png";
+const DEFAULT_OG_IMAGE =
+  "https://www.mesmeriseco.com/assets/social-default.png";
 
 function normalizeUrl(u) {
   if (!u) return u;
   if (u.startsWith("//")) return "https:" + u; // protocol-relative (e.g. Contentful)
-  if (u.startsWith("/")) return "https://mesmeriseco.com" + u; // site-relative
+  if (u.startsWith("/")) return "https://www.mesmeriseco.com" + u; // site-relative
   return u; // already absolute
 }
 
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title,
       description,
-      url: `https://mesmeriseco.com/${params.slug}`,
+      url: `https://www.mesmeriseco.com/${params.slug}`,
       type: "website",
       images: [
         {
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }) {
       images: [ogImage], // keep Twitter in sync with OG
     },
     alternates: {
-      canonical: `https://mesmeriseco.com/${params.slug}`,
+      canonical: `https://www.mesmeriseco.com/${params.slug}`,
     },
   };
 }

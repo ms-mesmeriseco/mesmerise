@@ -49,7 +49,8 @@ export async function generateMetadata({ params }) {
       .slice(0, 160);
 
   const ogImage =
-    page.heroImage?.url || "https://mesmeriseco.com/assets/social-default.png";
+    page.heroImage?.url ||
+    "https://www.mesmeriseco.com/assets/social-default.png";
 
   const canonical = abs(`/blog/${slug}`);
 

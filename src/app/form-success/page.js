@@ -19,7 +19,7 @@ export default function Success() {
     <div>
       <PageTitleLarge text={"Thank you"} />
       <div className="p3 md:w-1/2">
-        {"Somebody will be in touch with you shortly."}
+        {"Simba will be in touch with you shortly."}
       </div>
     </div>
   );
