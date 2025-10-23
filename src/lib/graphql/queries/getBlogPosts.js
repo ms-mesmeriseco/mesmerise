@@ -140,18 +140,23 @@ export const GET_BLOG_POSTS = gql`
 
 export const GET_ALL_BLOG_POSTS = gql`
   query GetAllBlogPosts {
-    blogPostPageCollection(limit: 15) {
+    blogPostPageCollection(limit: 50, order: postDate_DESC) {
       items {
         postTitle
         slug
         heroImage {
           url
           title
-          description
           width
           height
           contentType
           fileName
+        }
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
         }
       }
     }
