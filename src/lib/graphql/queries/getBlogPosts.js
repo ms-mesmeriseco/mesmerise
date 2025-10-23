@@ -144,6 +144,7 @@ export const GET_ALL_BLOG_POSTS = gql`
       items {
         postTitle
         slug
+        postDate
         heroImage {
           url
           title

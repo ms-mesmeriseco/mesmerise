@@ -34,7 +34,13 @@ export default function BlogScroll() {
           return { ...p, _tags: tags };
         });
 
-        setPosts(normalized);
+        const normalizedSorted = normalized.sort((a, b) => {
+          const da = a.postDate ? new Date(a.postDate).getTime() : 0;
+          const db = b.postDate ? new Date(b.postDate).getTime() : 0;
+          return db - da; // DESC
+        });
+
+        setPosts(normalizedSorted);
       } catch (error) {
         console.error("Failed to fetch blog posts:", error);
       }
