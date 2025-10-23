@@ -99,7 +99,7 @@ export default function BlogScroll() {
             {/* Make the card flex vertically: image then text */}
             <div className="flex flex-col h-full">
               {/* Image */}
-              <div className="relative w-full aspect-[6/4] rounded-md overflow-hidden border border-[var(--mesm-grey-dk)]">
+              <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden border border-[var(--mesm-grey-dk)]">
                 {post.heroImage?.url && (
                   <Image
                     src={post.heroImage.url}
@@ -120,7 +120,7 @@ export default function BlogScroll() {
                     // always visible, bright text on mobile
                     "text-[var(--foreground)]",
                     // only desktop hover states
-                    "md:text-[var(--mesm-grey-dk)] md:group-hover:text-[var(--foreground)]",
+                    "md:text-[var(--mesm-grey)] md:group-hover:text-[var(--foreground)]",
                   ].join(" ")}
                 >
                   {post.postTitle}
@@ -138,13 +138,13 @@ export default function BlogScroll() {
                           onTagClick(tag.id);
                         }}
                         className={[
-                          "rounded-full px-3 py-1 text-sm font-normal whitespace-nowrap cursor-pointer transition duration-200",
+                          "rounded-lg px-3 py-1 text-sm font-normal whitespace-nowrap cursor-pointer transition duration-200",
                           "bg-[var(--mesm-grey)]/10 border border-[var(--mesm-grey-dk)]",
                           // text stays foreground on mobile
                           "text-[var(--foreground)]",
                           // only desktop hover states
                           "md:text-[var(--mesm-grey-dk)] md:group-hover:text-[var(--foreground)]",
-                          "hover:bg-[var(--accent2)] hover:text-[var(--background)]",
+                          "hover:bg-[var(--mesm-red)] hover:border-[var(--mesm-red)] hover:text-[var(--background)]",
                           selectedTagId === tag.id
                             ? "bg-[var(--mesm-yellow)]/20"
                             : "",
