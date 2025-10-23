@@ -53,10 +53,10 @@ export default function Footer() {
               {/* optional small accent dot */}
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--mesm-blue)]" />
             </div>
-            <p className="text-sm/6 opacity-80 max-w-[425px]">
+            <p className="text-sm/6 opacity-80 max-w-[350px]">
               We don't just run ads. We turn strangers into loyal customers.
-              Join to gain insight across brand, web, and performance you won't
-              find anywhere else.
+              <br />
+              <br />
             </p>
           </div>
 
@@ -81,6 +81,11 @@ export default function Footer() {
                 boxShadow: "0 0 #0000",
               }}
             /> */}
+            <h6 className="opacity-80">
+              {" "}
+              Join to gain insight across brand, web, and performance you won't
+              find anywhere else.
+            </h6>
             <FooterSignup />
           </div>
         </div>
