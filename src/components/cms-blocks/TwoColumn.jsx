@@ -32,15 +32,14 @@ export default function TwoColumn({
   );
   return (
     <InView>
-      <div className="flex flex-col gap-12">
+      <div className="w-full flex flex-col gap-12">
         {h2 && (
-          <div className="w-full text-left md:text-center">
+          <div className="w-full text-center">
             <h2>{h2}</h2>
           </div>
         )}
         <section className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6 items-start">
           {/* Column 1 */}
-
           <div className="blockAlignment flex flex-col gap-6">
             {column1.map((block, index) => (
               <BlockRenderer
