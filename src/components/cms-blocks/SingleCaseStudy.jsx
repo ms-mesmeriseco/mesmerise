@@ -157,8 +157,8 @@ export default function SingleCaseStudy({
                 <AnimatePresence initial={false}>
                   {showResults && (
                     <motion.div
-                      id="summary-panel"
-                      key="summary"
+                      id="results-panel"
+                      key="results"
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

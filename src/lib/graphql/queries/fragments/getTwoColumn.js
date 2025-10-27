@@ -9,6 +9,7 @@ export const GET_TWO_COLUMN = gql`
   fragment TwoColumn on TwoColumnBlockBlank {
     ctaCol
     ctaLab
+    h2
     column1Collection(limit: 3) {
       items {
         ... on ContentTypeRichText {
