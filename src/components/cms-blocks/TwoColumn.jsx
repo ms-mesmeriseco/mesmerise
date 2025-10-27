@@ -32,7 +32,7 @@ export default function TwoColumn({
   );
   return (
     <InView>
-      <div className="w-full flex flex-col gap-8">
+      <div className="flex flex-col gap-12">
         {h2 && (
           <div className="w-full text-center">
             <h2>{h2}</h2>

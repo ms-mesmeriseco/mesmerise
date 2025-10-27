@@ -6,6 +6,7 @@ import Image from "next/image";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import addClassToParagraphs from "@/lib/utils/addClassToParagraphs";
+import ClickableImage from "@/components/ui/ClickableImage";
 
 export async function generateMetadata({ params }) {
   const { slug } = params;
@@ -83,8 +84,8 @@ export default async function ProjectPage({ params }) {
   return (
     <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)]">
       {/* --- HERO ROW --- */}
-      <div className="col-span-12 md:col-span-12 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[80vh]">
-        <Image
+      <div className="col-span-12 md:col-span-12 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[60vh]">
+        <ClickableImage
           src={page.heroMedia.url}
           alt={page.heroMedia.title}
           width={page.heroMedia.width}
@@ -218,7 +219,7 @@ export default async function ProjectPage({ params }) {
                   className="w-full h-[50vh] object-cover"
                 />
               ) : (
-                <Image
+                <ClickableImage
                   src={media.url}
                   width={media.width}
                   height={media.height}
