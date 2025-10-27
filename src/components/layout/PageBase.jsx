@@ -71,6 +71,7 @@ export default function PageBase({ blocks, metadata }) {
                     align={block.blockAlignment}
                     ctaLab={block.ctaLab}
                     ctaCol={block.ctaCol}
+                    h2={block.h2}
                   />
                 </div>
               );

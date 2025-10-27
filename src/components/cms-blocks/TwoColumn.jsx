@@ -18,6 +18,7 @@ export default function TwoColumn({
   align,
   ctaCol,
   ctaLab,
+  h2,
 }) {
   const place = boolOrNull(ctaCol); // true | false | null
   const showCTA = place !== null;
@@ -31,34 +32,42 @@ export default function TwoColumn({
   );
   return (
     <InView>
-      <section className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6 items-start">
-        {/* Column 1 */}
-        <div className="blockAlignment flex flex-col gap-6">
-          {column1.map((block, index) => (
-            <BlockRenderer
-              key={`col1-${index}`}
-              block={block}
-              index={index}
-              center={align}
-            />
-          ))}
+      <div className="flex flex-col gap-12">
+        {h2 && (
+          <div className="w-full text-left md:text-center">
+            <h2>{h2}</h2>
+          </div>
+        )}
+        <section className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6 items-start">
+          {/* Column 1 */}
 
-          {showCTA && place === true && CTA}
-        </div>
+          <div className="blockAlignment flex flex-col gap-6">
+            {column1.map((block, index) => (
+              <BlockRenderer
+                key={`col1-${index}`}
+                block={block}
+                index={index}
+                center={align}
+              />
+            ))}
 
-        {/* Column 2 */}
-        <div className="blockAlignment flex flex-col gap-6">
-          {column2.map((block, index) => (
-            <BlockRenderer
-              key={`col2-${index}`}
-              block={block}
-              index={index}
-              center={align}
-            />
-          ))}
-          {showCTA && place === false && CTA}
-        </div>
-      </section>
+            {showCTA && place === true && CTA}
+          </div>
+
+          {/* Column 2 */}
+          <div className="blockAlignment flex flex-col gap-6">
+            {column2.map((block, index) => (
+              <BlockRenderer
+                key={`col2-${index}`}
+                block={block}
+                index={index}
+                center={align}
+              />
+            ))}
+            {showCTA && place === false && CTA}
+          </div>
+        </section>
+      </div>
     </InView>
   );
 }
