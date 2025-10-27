@@ -157,20 +157,15 @@ export default function SingleCaseStudy({
                 <AnimatePresence initial={false}>
                   {showResults && (
                     <motion.div
-                      id="results-panel"
-                      key="results"
+                      id="summary-panel"
+                      key="summary"
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.28, ease: "easeInOut" }}
-                      className="overflow-hidden"
+                      className="overflow-hidden px-1 md:px-2"
                     >
-                      <div className="px-1 md:px-2 py-6">
-                        {timeFrame && (
-                          <p className="text-xs md:text-sm opacity-70 m-0 mb-2 max-w-[475px]">
-                            {timeFrame}
-                          </p>
-                        )}
+                      <div className="py-6 max-w-[475px]">
                         {renderRichTextWithBreaks(results.json)}
                       </div>
                     </motion.div>
