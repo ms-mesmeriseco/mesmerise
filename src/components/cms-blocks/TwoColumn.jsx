@@ -32,20 +32,17 @@ export default function TwoColumn({
   );
   return (
     <InView>
-      <div className="flex flex-col gap-12 text-left md:text-center">
-        {h2 && <h2>{h2}</h2>}
-        <section className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6 items-start">
-          {/* Column 1 */}
-
-          <div className="blockAlignment flex flex-col gap-6">
-            {column1.map((block, index) => (
-              <BlockRenderer
-                key={`col1-${index}`}
-                block={block}
-                index={index}
-                center={align}
-              />
-            ))}
+      <section className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6 items-start">
+        {/* Column 1 */}
+        <div className="blockAlignment flex flex-col gap-6">
+          {column1.map((block, index) => (
+            <BlockRenderer
+              key={`col1-${index}`}
+              block={block}
+              index={index}
+              center={align}
+            />
+          ))}
 
             {showCTA && place === true && CTA}
           </div>
