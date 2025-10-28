@@ -107,7 +107,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
 `;
 
 export const GET_ALL_LANDING_PAGES = gql`
-  query GetAllLandingPages($preview: Boolean!) {
+  query GetAllLandingPages {
     landingPageCollection(limit: 20) {
       items {
         pageTitle
