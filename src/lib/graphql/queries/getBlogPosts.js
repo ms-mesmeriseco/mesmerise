@@ -139,7 +139,7 @@ export const GET_BLOG_POSTS = gql`
 `;
 
 export const GET_ALL_BLOG_POSTS = gql`
-  query GetAllBlogPosts {
+  query GetAllBlogPosts($preview: Boolean!) {
     blogPostPageCollection(limit: 50, order: postDate_DESC) {
       items {
         postTitle
