@@ -21,7 +21,7 @@ function minifyGraphQL(query) {
 }
 const rawQuery = `
   query GetLandingPageBySlug($slug: String!) {
-    landingPageCollection(limit: 1, where: { pageSlug: $slug }) {
+    landingPageCollection(limit: 1, where: { pageSlug: $slug, $preview: Boolean! }) {
       items {
         __typename
         sys {
@@ -107,7 +107,7 @@ export const GET_LANDING_PAGE_BY_SLUG = gql`
 `;
 
 export const GET_ALL_LANDING_PAGES = gql`
-  query GetAllLandingPages {
+  query GetAllLandingPages($preview: Boolean!) {
     landingPageCollection(limit: 20) {
       items {
         pageTitle
