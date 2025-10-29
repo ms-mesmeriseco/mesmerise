@@ -21,7 +21,7 @@ function minifyGraphQL(query) {
 }
 const rawQuery = `
   query GetLandingPageBySlug($slug: String!) {
-    landingPageCollection(limit: 1, where: { pageSlug: $slug, $preview: Boolean! }) {
+    landingPageCollection(limit: 1, where: { pageSlug: $slug}) {
       items {
         __typename
         sys {
