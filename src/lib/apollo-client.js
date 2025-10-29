@@ -6,14 +6,12 @@ export function getClient({ preview = false } = {}) {
   const space =
     process.env.CONTENTFUL_SPACE_ID ||
     process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
-  const environment = process.env.CONTENTFUL_ENVIRONMENT || "master";
+  const environment = process.env.CONTENTFUL_ENVIRONMENT_ID || "master";
 
   const deliveryToken =
     process.env.CONTENTFUL_DELIVERY_TOKEN ||
     process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN; // your current token name
-  const previewToken =
-    process.env.CONTENTFUL_PREVIEW_TOKEN ||
-    process.env.NEXT_PUBLIC_CONTENTFUL_PREVIEW_TOKEN;
+  const previewToken = process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN;
 
   const token = preview ? previewToken : deliveryToken;
 
