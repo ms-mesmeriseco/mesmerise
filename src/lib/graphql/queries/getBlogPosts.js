@@ -1,8 +1,12 @@
 import { gql } from "@apollo/client";
 
 export const GET_BLOG_POSTS = gql`
-  query GetBlogPageBySlug($slug: String!) {
-    blogPostPageCollection(limit: 1, where: { slug: $slug }) {
+  query GetBlogPageBySlug($slug: String!, $preview: Boolean) {
+    blogPostPageCollection(
+      limit: 1
+      where: { slug: $slug }
+      preview: $preview
+    ) {
       items {
         postTitle
         slug
@@ -84,7 +88,6 @@ export const GET_BLOG_POSTS = gql`
                 }
               }
             }
-
             assets {
               block {
                 sys {
@@ -139,8 +142,8 @@ export const GET_BLOG_POSTS = gql`
 `;
 
 export const GET_ALL_BLOG_POSTS = gql`
-  query GetAllBlogPosts {
-    blogPostPageCollection(limit: 50, order: postDate_DESC) {
+  query GetAllBlogPosts($preview: Boolean) {
+    blogPostPageCollection(limit: 50, order: postDate_DESC, preview: $preview) {
       items {
         postTitle
         slug

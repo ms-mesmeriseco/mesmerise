@@ -1,3 +1,4 @@
+import { draftMode } from "next/headers";
 import { getClient } from "@/lib/apollo-client";
 import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
@@ -8,7 +9,6 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 function abs(url) {
   if (!url) return undefined;
   try {
-    // prefer env, fallback to request-less relative (Next will handle)
     const base = process.env.NEXT_PUBLIC_SITE_URL || "";
     return url.startsWith("http") ? url : `${base}${url}`;
   } catch {
@@ -20,9 +20,12 @@ export async function generateMetadata({ params }) {
   const { slug } = params || {};
   if (!slug) return {};
 
-  const { data } = await getClient().query({
+  const { isEnabled } = await draftMode();
+  const client = getClient({ preview: isEnabled });
+
+  const { data } = await client.query({
     query: GET_BLOG_POSTS,
-    variables: { slug },
+    variables: { slug, preview: isEnabled }, // 👈 pass preview
   });
 
   const page = data?.blogPostPageCollection?.items?.[0];
@@ -37,8 +40,7 @@ export async function generateMetadata({ params }) {
   const metaTitle = page.metaTitle || page.postTitle || "Mesmerise Digital";
 
   const metaDescription =
-    page.metaDescription.json ||
-    // quick fallback from first paragraph if needed
+    page.metaDescription?.json ||
     (page.blogContent?.json?.content || [])
       .map((n) =>
         n.nodeType === "paragraph"
@@ -64,12 +66,6 @@ export async function generateMetadata({ params }) {
       url: canonical,
       type: "article",
       images: ogImage ? [{ url: abs(ogImage) }] : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: metaTitle,
-      description: metaDescription,
-      images: ogImage ? [abs(ogImage)] : undefined,
     },
   };
 }
@@ -100,10 +96,6 @@ function AuthorCard({ author }) {
             {author.name}
           </h3>
         )}
-
-        {/* Optional: compact role/title line if you add it later */}
-        {/* {author?.role && <p className="text-sm text-[var(--mesm-grey)]">{author.role}</p>} */}
-
         {author?.authorBio?.json && (
           <div className="prose max-w-none text-[var(--foreground)]">
             {renderRichTextWithBreaks(author.authorBio.json)}
@@ -116,19 +108,20 @@ function AuthorCard({ author }) {
 
 export default async function BlogPost({ params }) {
   const { slug } = params;
+  const { isEnabled } = await draftMode(); // 👈 detect Draft Mode
+  const client = getClient({ preview: isEnabled }); // 👈 preview-aware client
 
-  const { data } = await getClient().query({
+  const { data } = await client.query({
     query: GET_BLOG_POSTS,
-    variables: { slug },
+    variables: { slug, preview: isEnabled }, // 👈 pass preview through
   });
 
   const page = data?.blogPostPageCollection?.items?.[0];
   if (!page) return <p>Blog post not found.</p>;
 
-  const author = page.blogAuthor; // TeamMember or null
+  const author = page.blogAuthor;
   const avatar = author?.authorAvatar;
 
-  // ---- maps ----
   const assetBlocks = page.blogContent?.links?.assets?.block ?? [];
   const assetHyperlinks = page.blogContent?.links?.assets?.hyperlink ?? [];
   const assetMap = Object.fromEntries(
@@ -155,7 +148,6 @@ export default async function BlogPost({ params }) {
     ].map((e) => [e.sys.id, e])
   );
 
-  // ---- TOC anchors from H3 ----
   const getH3Anchors = (json) => {
     const anchors = [];
     if (!json?.content) return anchors;
@@ -187,7 +179,7 @@ export default async function BlogPost({ params }) {
     : "";
 
   return (
-    <div className="flex flex-col items-center /* remove justify-center */ min-h-screen gap-0">
+    <div className="flex flex-col items-center min-h-screen gap-0">
       <main className="flex flex-col md:flex-row md:gap-6 w-full mx-auto">
         {h3Anchors.length > 0 && (
           <aside
@@ -195,9 +187,7 @@ export default async function BlogPost({ params }) {
               "hidden md:block",
               "md:self-start md:shrink-0 md:w-64",
               "md:sticky",
-              // Fallback if --header-height is missing; 64px ≈ 4rem header
               "md:top-[calc(var(--header-height,64px)+32px)]",
-              // don't force a fixed height; instead cap it and let the TOC scroll if long
               "md:max-h-[calc(100vh-var(--header-height,64px)-32px)] md:overflow-auto",
               "z-20",
             ].join(" ")}
@@ -222,7 +212,6 @@ export default async function BlogPost({ params }) {
                 className="rounded-full shrink-0"
               />
             )}
-
             <span>
               {formattedDate && (
                 <>
@@ -233,6 +222,7 @@ export default async function BlogPost({ params }) {
               {author?.name ? <>By {author.name}</> : null}
             </span>
           </span>
+
           {page.blogContent?.json && (
             <div className="[&>p+p]:mt-4 flex flex-col gap-4">
               {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
@@ -250,6 +240,7 @@ export default async function BlogPost({ params }) {
               })}
             </div>
           )}
+
           {author?.authorBio && <AuthorCard author={author} />}
         </article>
       </main>
