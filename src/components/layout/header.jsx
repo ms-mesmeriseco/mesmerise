@@ -150,7 +150,7 @@ export default function Header() {
       {showMobileStickyCTA && scrolledEnough && (
         <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden pb-6 px-10">
           <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
-            <Button size="x-large" variant="CTA" href="tel:+61411259334">
+            <Button size="x-large" variant="CTA" href="tel:+61477210477">
               <span className="text-2xl">Speak to Simba</span>
             </Button>
           </div>
