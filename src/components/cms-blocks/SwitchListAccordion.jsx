@@ -107,7 +107,7 @@ export default function SwitchListAccordion({ items, title }) {
                         initial={{ opacity: 0, height: "0px" }}
                         animate={{
                           opacity: 1,
-                          height: "64px",
+                          height: "auto",
                           transition: { duration: 0.4 },
                         }}
                         exit={{
@@ -115,7 +115,7 @@ export default function SwitchListAccordion({ items, title }) {
                           height: "0px",
                           transition: { duration: 0.02 },
                         }}
-                        className="ease-in-out text-[var(--mesm-l-grey)] text-sm"
+                        className="ease-in-out text-[var(--mesm-l-grey)]"
                       >
                         <div
                           dangerouslySetInnerHTML={{
@@ -217,7 +217,7 @@ export default function SwitchListAccordion({ items, title }) {
                         height: 0,
                         transition: { duration: 0.15 },
                       }}
-                      className="py-2 pr-2 text-[var(--mesm-l-grey)] text-sm overflow-hidden
+                      className="py-2 pr-2 text-[var(--mesm-l-grey)] overflow-hidden
                                  max-h-[50vh] overflow-y-auto" // taller box, scrolls if very long
                     >
                       <div
