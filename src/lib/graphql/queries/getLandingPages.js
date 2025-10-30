@@ -52,7 +52,7 @@ const rawQuery = `
             width
           }
         }
-        pageBlocksCollection(limit: 15) {
+        pageBlocksCollection(limit: 23) {
           items {
             ... on IconRow {
               ...IconRowFragment
