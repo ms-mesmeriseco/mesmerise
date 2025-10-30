@@ -49,13 +49,13 @@ export default function ConnectPage() {
       <div className="flex flex-col md:flex-row md:h-[40vh] h-[60vh] gap-[var(--global-margin-xs)] border-t-1 pt-[var(--global-margin-sm)] border-[var(--mesm-grey-dk)]">
         <div className="flex-1 border-1 border-[var(--mesm-grey-dk)] rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] text-[var(--foreground)]">
           <a
-            href="tel:+61411259334"
+            href="tel:+61477210477"
             className="w-full h-full font-normal text-left flex-start flex"
           >
             <button className="w-full h-full md:text-4xl text-2xl font-normal text-left p-[var(--global-margin-sm)] flex-start flex">
               Call
               <br />
-              +61 411 259 334
+              +61 477 210 477
             </button>
           </a>
         </div>
