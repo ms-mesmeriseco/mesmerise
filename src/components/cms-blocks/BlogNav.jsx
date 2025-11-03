@@ -9,9 +9,11 @@ import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 export default function BlogScroll() {
   const [posts, setPosts] = useState([]);
   const [selectedTagId, setSelectedTagId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
   const pageSize = 6;
 
+  // Fetch posts
   useEffect(() => {
     (async () => {
       try {
@@ -34,10 +36,11 @@ export default function BlogScroll() {
           return { ...p, _tags: tags };
         });
 
+        // Sort by date desc
         const normalizedSorted = normalized.sort((a, b) => {
           const da = a.postDate ? new Date(a.postDate).getTime() : 0;
           const db = b.postDate ? new Date(b.postDate).getTime() : 0;
-          return db - da; // DESC
+          return db - da;
         });
 
         setPosts(normalizedSorted);
@@ -47,15 +50,41 @@ export default function BlogScroll() {
     })();
   }, []);
 
-  // Filtered list based on selected tag
+  // Build global tag list
+  const allTags = useMemo(() => {
+    const map = new Map();
+    posts.forEach((p) => {
+      (p._tags || []).forEach((t) => {
+        if (t?.id && !map.has(t.id)) map.set(t.id, t.name || t.id);
+      });
+    });
+    return Array.from(map.entries())
+      .map(([id, name]) => ({ id, name }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [posts]);
+
+  // Combined filters (tag + title search)
   const filtered = useMemo(() => {
-    if (!selectedTagId) return posts;
-    return posts.filter((p) => p._tags?.some((t) => t.id === selectedTagId));
-  }, [posts, selectedTagId]);
+    const q = searchQuery.trim().toLowerCase();
+    return posts.filter((p) => {
+      const tagMatch = !selectedTagId
+        ? true
+        : p._tags?.some((t) => t.id === selectedTagId);
+      const titleMatch = q
+        ? (p.postTitle || "").toLowerCase().includes(q)
+        : true;
+      return tagMatch && titleMatch;
+    });
+  }, [posts, selectedTagId, searchQuery]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const atStart = page === 0;
   const atEnd = page >= totalPages - 1;
+
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(0);
+  }, [selectedTagId, searchQuery]);
 
   useEffect(() => {
     if (page > totalPages - 1) setPage(0);
@@ -70,29 +99,88 @@ export default function BlogScroll() {
     if (!atEnd) setPage((p) => p + 1);
   }
   function onTagClick(tagId) {
-    setSelectedTagId((curr) => (curr === tagId ? null : tagId)); // toggle
-    setPage(0);
+    setSelectedTagId((curr) => (curr === tagId ? null : tagId));
   }
+
+  // --- Shared tag styles to match Project Navigation ---
+  const tagBase =
+    "px-3 py-0 rounded-md h-6 text-sm transition whitespace-nowrap";
+  const tagActive = "bg-[var(--mesm-yellow)] text-[var(--mesm-grey)]";
+  const tagInactive =
+    "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)]";
 
   return (
     <section className="w-full">
-      {/* Active filter label */}
-      {selectedTagId && (
-        <div className="mb-2 flex items-center gap-2 text-xs">
-          <span className="opacity-70">Filtering by:</span>
+      {/* Controls: search + global tags */}
+      <div className="mb-3 flex flex-col gap-4 md:flex-col md:items-center md:justify-between">
+        {/* Search box */}
+        <div className="w-full md:max-w-sm">
+          <label htmlFor="blog-search" className="sr-only">
+            Search blog titles
+          </label>
+          <input
+            id="blog-search"
+            type="search"
+            placeholder="Search blog titles…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full rounded-md border border-[var(--mesm-grey-dk)] bg-transparent px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--mesm-yellow)]"
+          />
+        </div>
+
+        {/* Tag filter bar (Project Nav styling) */}
+        {!!allTags.length && (
+          <div className="flex flex-wrap items-center gap-1">
+            <button
+              type="button"
+              onClick={() => onTagClick(null)}
+              className={[
+                tagBase,
+                selectedTagId === null ? tagActive : tagInactive,
+              ].join(" ")}
+              aria-pressed={selectedTagId === null}
+            >
+              All
+            </button>
+            {allTags.map((tag) => (
+              <button
+                key={`global-tag-${tag.id}`}
+                type="button"
+                onClick={() => onTagClick(tag.id)}
+                className={[
+                  tagBase,
+                  selectedTagId === tag.id ? tagActive : tagInactive,
+                ].join(" ")}
+                aria-pressed={selectedTagId === tag.id}
+              >
+                {tag.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Active filter + results count */}
+      <div className="mb-2 flex items-center justify-between text-xs">
+        <div className="opacity-70">
+          {filtered.length} result{filtered.length === 1 ? "" : "s"}
+          {searchQuery ? ` for “${searchQuery}”` : ""}
+          {selectedTagId
+            ? ` in ${allTags.find((t) => t.id === selectedTagId)?.name || ""}`
+            : ""}
+        </div>
+        {selectedTagId && (
           <button
-            className="px-2 py-1 rounded-full hover:bg-[var(--mesm-yellow)] bg-[var(--mesm-grey)] rounded-md text-[var(--background)]"
+            className={[
+              tagBase,
+              "bg-[var(--mesm-grey)] text-[var(--background)] hover:bg-[var(--mesm-yellow)]",
+            ].join(" ")}
             onClick={() => onTagClick(selectedTagId)}
           >
-            {(() => {
-              const first = posts
-                .flatMap((p) => p._tags || [])
-                .find((t) => t.id === selectedTagId);
-              return (first?.name || selectedTagId) + " ✕";
-            })()}
+            Clear tag ✕
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Grid of posts */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 transition-all duration-300">
@@ -102,7 +190,6 @@ export default function BlogScroll() {
             href={`/blog/${post.slug}`}
             className="relative group w-full rounded-md overflow-hidden hover:text-[var(--background)] duration-200"
           >
-            {/* Make the card flex vertically: image then text */}
             <div className="flex flex-col h-full">
               {/* Image */}
               <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden border border-[var(--mesm-grey-dk)]">
@@ -118,14 +205,12 @@ export default function BlogScroll() {
                 )}
               </div>
 
-              {/* Content (always visible; hover effects only on md+) */}
+              {/* Content */}
               <div className="py-2">
                 <h5
                   className={[
                     "text-sm font-bold duration-200",
-                    // always visible, bright text on mobile
                     "text-[var(--foreground)]",
-                    // only desktop hover states
                     "md:text-[var(--mesm-grey)] md:group-hover:text-[var(--foreground)]",
                   ].join(" ")}
                 >
@@ -144,16 +229,8 @@ export default function BlogScroll() {
                           onTagClick(tag.id);
                         }}
                         className={[
-                          "rounded-lg px-3 py-1 text-sm font-normal whitespace-nowrap cursor-pointer transition duration-200",
-                          "bg-[var(--mesm-grey)]/10 border border-[var(--mesm-grey-dk)]",
-                          // text stays foreground on mobile
-                          "text-[var(--foreground)]",
-                          // only desktop hover states
-                          "md:text-[var(--mesm-grey-dk)] md:group-hover:text-[var(--foreground)]",
-                          "hover:bg-[var(--mesm-red)] hover:border-[var(--mesm-red)] hover:text-[var(--background)]",
-                          selectedTagId === tag.id
-                            ? "bg-[var(--mesm-yellow)]/20"
-                            : "",
+                          tagBase,
+                          selectedTagId === tag.id ? tagActive : tagInactive,
                         ].join(" ")}
                         aria-pressed={selectedTagId === tag.id}
                       >
@@ -168,7 +245,7 @@ export default function BlogScroll() {
         ))}
       </div>
 
-      {/* Navigation dots */}
+      {/* Pagination dots */}
       {filtered.length > pageSize && (
         <div className="mt-2 w-full flex justify-end">
           <div className="flex items-center gap-2 py-2">
