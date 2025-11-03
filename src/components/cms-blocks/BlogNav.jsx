@@ -113,21 +113,27 @@ export default function BlogScroll() {
     <section className="w-full">
       {/* Controls: search + global tags */}
       <div className="mb-3 flex flex-col gap-4 md:flex-col md:items-center md:justify-between">
-        {/* Search box */}
-        <div className="w-full md:max-w-sm">
-          <label htmlFor="blog-search" className="sr-only">
-            Search blog titles
-          </label>
+        <div className="relative w-full md:max-w-sm">
           <input
             id="blog-search"
             type="search"
             placeholder="Search blog titles…"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-md border border-[var(--mesm-grey-dk)] bg-transparent px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[var(--mesm-yellow)]"
+            className="w-full rounded-md border border-[var(--mesm-grey-dk)] bg-transparent px-3 py-2 pr-8 text-sm outline-none focus:ring-1 focus:ring-[var(--mesm-l-grey)]"
           />
-        </div>
 
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery("")}
+              aria-label="Clear search"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)] duration-100 text-lg leading-none text-sm px-1"
+            >
+              ✕
+            </button>
+          )}
+        </div>
         {/* Tag filter bar (Project Nav styling) */}
         {!!allTags.length && (
           <div className="flex flex-wrap items-center gap-1">
