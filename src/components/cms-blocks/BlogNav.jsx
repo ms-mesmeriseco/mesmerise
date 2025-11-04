@@ -113,7 +113,7 @@ export default function BlogScroll() {
     <section className="w-full">
       {/* Controls: search + global tags */}
       <div className="mb-3 flex flex-col gap-4 md:flex-col md:items-center md:justify-between">
-        <div className="relative w-full md:max-w-sm">
+        <div className="relative w-full md:max-w-md">
           <input
             id="blog-search"
             type="search"
@@ -128,7 +128,7 @@ export default function BlogScroll() {
               type="button"
               onClick={() => setSearchQuery("")}
               aria-label="Clear search"
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)] duration-100 text-lg leading-none text-sm px-1"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--foreground)] hover:text-[var(--mesm-l-grey)] duration-100 text-lg leading-none text-sm px-1"
             >
               ✕
             </button>
