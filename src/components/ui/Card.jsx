@@ -14,15 +14,16 @@ export default function Card({ icon, children }) {
         backgroundColor: "var(--mesm-grey-dk)",
       }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="flex flex-col items-left text-left gap-8 min-h-full rounded-sm p-[2rem] justify-between border-1 border-[var(--mesm-grey-dk)] [&>p+p]:mt-4"
+      className="flex flex-col items-start text-left gap-8 min-h-full rounded-sm p-[2rem] justify-between border border-[var(--mesm-grey-dk)] [&>p+p]:mt-4"
     >
       {icon?.url && (
         <Image
           src={icon.url}
           alt={icon.title || ""}
-          width={48}
-          height={48}
-          className="object-contain"
+          width={0}
+          height={0}
+          className="h-12 w-auto object-contain self-start"
+          style={{ height: "48px", width: "auto", maxWidth: "96px" }}
         />
       )}
       {children}
