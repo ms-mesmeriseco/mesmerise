@@ -184,9 +184,11 @@ export default function Footer() {
 
           {/* Column: Insights (latest 4) */}
           <div className="col-span-1">
-            <h5 className="mb-3 text-sm font-medium tracking-wide opacity-80">
-              Insights
-            </h5>
+            <Link href="/blog">
+              <h5 className="mb-3 text-sm font-medium tracking-wide opacity-80 hover:underline">
+                Blog
+              </h5>
+            </Link>
             <ul className="grid grid-cols-1 text-sm">
               {blogPosts.map((post) => (
                 <li key={post.slug}>
