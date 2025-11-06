@@ -143,6 +143,11 @@ const nextConfig = {
         destination: "/facebook-ads-agency-melbourne",
         permanent: true,
       },
+      {
+        source: "/free-marketing-audit",
+        destination: "/marketing-strategy-session",
+        permanent: true,
+      },
     ];
   },
 };
