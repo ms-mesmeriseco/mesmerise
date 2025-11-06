@@ -40,6 +40,14 @@ export const GET_BLOG_POSTS = gql`
           fileName
         }
 
+        # ⬇️ Needed so we can build $tagIds for related posts
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
+        }
+
         blogContent {
           json
           links {
@@ -155,6 +163,63 @@ export const GET_ALL_BLOG_POSTS = gql`
           height
           contentType
           fileName
+        }
+        contentfulMetadata {
+          tags {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_ADJACENT_AND_RELATED_BLOGS = gql`
+  query AdjacentAndRelatedBlogs(
+    $date: DateTime!
+    $slug: String!
+    $tagIds: [String!]
+    $preview: Boolean!
+  ) {
+    prev: blogPostPageCollection(
+      limit: 1
+      order: postDate_DESC
+      where: { postDate_lt: $date }
+      preview: $preview
+    ) {
+      items {
+        slug
+        postTitle
+      }
+    }
+    next: blogPostPageCollection(
+      limit: 1
+      order: postDate_ASC
+      where: { postDate_gt: $date }
+      preview: $preview
+    ) {
+      items {
+        slug
+        postTitle
+      }
+    }
+    related: blogPostPageCollection(
+      limit: 6
+      order: postDate_DESC
+      where: {
+        slug_not: $slug
+        # ⬇️ Contentful metadata tags filter uses id_contains_some / id_contains_all
+        contentfulMetadata: { tags: { id_contains_some: $tagIds } }
+      }
+      preview: $preview
+    ) {
+      items {
+        slug
+        postTitle
+        heroImage {
+          url
+          title
         }
         contentfulMetadata {
           tags {

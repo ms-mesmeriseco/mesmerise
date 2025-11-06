@@ -1,4 +1,3 @@
-// components/cms-blocks/ProjectRail.jsx
 "use client";
 
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
@@ -11,7 +10,6 @@ import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
 import addClassToParagraphs from "@/lib/utils/addClassToParagraphs";
 
 export default function ProjectRail({
-  // we’re filtering by ID, so leave name empty
   tagSlug = "layoutHighlightGrid",
   max = 6,
 }) {

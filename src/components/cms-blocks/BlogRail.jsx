@@ -6,7 +6,7 @@ import Image from "next/image";
 import { getClient } from "@/lib/apollo-client";
 import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 
-export default function BlogScroll() {
+export default function BlogRail() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -22,13 +22,13 @@ export default function BlogScroll() {
   }, []);
 
   return (
-    <section className="w-full py-[var(--global-margin-lg)] px-[var(--global-margin-sm)]">
-      <div className="flex overflow-x-auto gap-[var(--global-margin-sm)] pb-[var(--global-margin-sm)]">
+    <section className="w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {posts.slice(0, 3).map((post, index) => (
           <Link
             key={`blog-${post.slug}-${index}`}
             href={`/blog/${post.slug}`}
-            className="relative group w-[32vw] h-[24vw] min-w-[16rem] rounded-md overflow-hidden border-[var(--foreground)] hover:bg-[var(--foreground)] hover:text-[var(--background)] duration-200 flex-shrink-0"
+            className="group relative w-full aspect-[16/9] rounded-md overflow-hidden border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] transition-colors duration-200"
           >
             {/* Image */}
             {post.heroImage?.url && (
@@ -37,17 +37,18 @@ export default function BlogScroll() {
                 alt={post.heroImage.title || "Blog image"}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               />
             )}
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/30 to-black/60 opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
 
             {/* Text */}
-            <div className="absolute bottom-[var(--global-margin-sm)] left-[var(--global-margin-sm)] text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-              <div className="text-sm font-bold">
-                <h5>{post.postTitle}</h5>
-              </div>
+            <div className="absolute bottom-[var(--global-margin-sm)] left-[var(--global-margin-sm)] right-[var(--global-margin-sm)] text-left opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+              <h5 className="text-sm font-bold leading-tight">
+                {post.postTitle}
+              </h5>
             </div>
           </Link>
         ))}
