@@ -306,7 +306,7 @@ export default async function BlogPost({ params }) {
           </article>
         </main>
       </div>
-      <h6 className="pt-24">Recent articles</h6>
+      <h6 className="pt-24">Learn more</h6>
       <div className="py-4 border-y border-[var(--mesm-grey-dk)]">
         <BlogRail />
       </div>
