@@ -7,6 +7,7 @@ import BlogTOC from "@/components/blog/BlogTOC";
 import Image from "next/image";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import Link from "next/link";
+import BlogRail from "@/components/cms-blocks/BlogRail";
 
 function abs(url) {
   if (!url) return undefined;
@@ -200,109 +201,115 @@ export default async function BlogPost({ params }) {
     : "";
 
   return (
-    <div className="flex flex-col items-center min-h-screen gap-0">
-      <main className="flex flex-col md:flex-row md:gap-6 w-full mx-auto">
-        {h3Anchors.length > 0 && (
-          <aside
-            className={[
-              "hidden md:block",
-              "md:self-start md:shrink-0 md:w-64",
-              "md:sticky",
-              "md:top-[calc(var(--header-height,64px)+32px)]",
-              "md:max-h-[calc(100vh-var(--header-height,64px)-32px)] md:overflow-auto",
-              "z-20",
-            ].join(" ")}
-          >
-            <BlogTOC anchors={h3Anchors} />
-          </aside>
-        )}
-
-        <article className="max-w-xl w-full flex flex-col gap-6 md:pt-7">
-          <StaggeredWords
-            as="h1"
-            className="page-title-medium"
-            text={page.postHeading}
-          />
-          <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start md:py-8 py-2">
-            {avatar?.url && (
-              <Image
-                src={avatar.url}
-                alt={`Avatar of ${author?.name ?? "author"}`}
-                width={Math.min(avatar.width ?? 48, 96)}
-                height={Math.min(avatar.height ?? 48, 96)}
-                className="rounded-full shrink-0"
-              />
-            )}
-            <span>
-              {formattedDate && (
-                <>
-                  {formattedDate}
-                  <br />
-                </>
-              )}
-              {author?.name ? <>By {author.name}</> : null}
-            </span>
-          </span>
-
-          {page.blogContent?.json && (
-            <div className="[&>p+p]:mt-4 flex flex-col gap-4">
-              {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
-                blog: true,
-                entryMap,
-              })}
-            </div>
-          )}
-
-          {page.faqContent?.json && (
-            <div className="[&>p+p]:mt-4 flex flex-col gap-4">
-              {renderRichTextWithBreaks(page.faqContent.json, assetMap, {
-                blog: true,
-                entryMap,
-              })}
-            </div>
-          )}
-
-          {author?.authorBio && <AuthorCard author={author} />}
-          {/* Prev / Next */}
-          {(prev || next) && (
-            <nav
-              className="mt-8 pt-6 border-t border-[var(--mesm-grey-dk)] flex items-center justify-between gap-3"
-              aria-label="Blog pagination"
+    <>
+      <div className="flex flex-col items-center min-h-screen gap-0">
+        <main className="flex flex-col md:flex-row md:gap-6 w-full mx-auto">
+          {h3Anchors.length > 0 && (
+            <aside
+              className={[
+                "hidden md:block",
+                "md:self-start md:shrink-0 md:w-64",
+                "md:sticky",
+                "md:top-[calc(var(--header-height,64px)+32px)]",
+                "md:max-h-[calc(100vh-var(--header-height,64px)-32px)] md:overflow-auto",
+                "z-20",
+              ].join(" ")}
             >
-              <div className="min-w-0">
-                {prev ? (
-                  <Link
-                    href={`/blog/${prev.slug}`}
-                    className="group inline-flex items-center gap-2 text-sm"
-                  >
-                    <span className="opacity-70">Previous article</span>
-                    {/* <span className="truncate group-hover:underline">
+              <BlogTOC anchors={h3Anchors} />
+            </aside>
+          )}
+
+          <article className="max-w-xl w-full flex flex-col gap-6 md:pt-7">
+            <StaggeredWords
+              as="h1"
+              className="page-title-medium"
+              text={page.postHeading}
+            />
+            <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start md:py-8 py-2">
+              {avatar?.url && (
+                <Image
+                  src={avatar.url}
+                  alt={`Avatar of ${author?.name ?? "author"}`}
+                  width={Math.min(avatar.width ?? 48, 96)}
+                  height={Math.min(avatar.height ?? 48, 96)}
+                  className="rounded-full shrink-0"
+                />
+              )}
+              <span>
+                {formattedDate && (
+                  <>
+                    {formattedDate}
+                    <br />
+                  </>
+                )}
+                {author?.name ? <>By {author.name}</> : null}
+              </span>
+            </span>
+
+            {page.blogContent?.json && (
+              <div className="[&>p+p]:mt-4 flex flex-col gap-4">
+                {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
+                  blog: true,
+                  entryMap,
+                })}
+              </div>
+            )}
+
+            {page.faqContent?.json && (
+              <div className="[&>p+p]:mt-4 flex flex-col gap-4">
+                {renderRichTextWithBreaks(page.faqContent.json, assetMap, {
+                  blog: true,
+                  entryMap,
+                })}
+              </div>
+            )}
+
+            {author?.authorBio && <AuthorCard author={author} />}
+            {/* Prev / Next */}
+            {(prev || next) && (
+              <nav
+                className="mt-8 pt-6 border-t border-[var(--mesm-grey-dk)] flex items-center justify-between gap-3"
+                aria-label="Blog pagination"
+              >
+                <div className="min-w-0">
+                  {prev ? (
+                    <Link
+                      href={`/blog/${prev.slug}`}
+                      className="group inline-flex items-center gap-2 text-sm"
+                    >
+                      <span className="opacity-70">Previous article</span>
+                      {/* <span className="truncate group-hover:underline">
                       {prev.postTitle}
                     </span> */}
-                  </Link>
-                ) : (
-                  <span className="opacity-40 text-sm">No previous post</span>
-                )}
-              </div>
-              <div className="min-w-0 text-right">
-                {next ? (
-                  <Link
-                    href={`/blog/${next.slug}`}
-                    className="group inline-flex items-center gap-2 text-sm"
-                  >
-                    {/* <span className="truncate group-hover:underline">
+                    </Link>
+                  ) : (
+                    <span className="opacity-40 text-sm">No previous post</span>
+                  )}
+                </div>
+                <div className="min-w-0 text-right">
+                  {next ? (
+                    <Link
+                      href={`/blog/${next.slug}`}
+                      className="group inline-flex items-center gap-2 text-sm"
+                    >
+                      {/* <span className="truncate group-hover:underline">
                       {next.postTitle}
                     </span> */}
-                    <span className="opacity-70">Next article</span>
-                  </Link>
-                ) : (
-                  <span className="opacity-40 text-sm">No next post</span>
-                )}
-              </div>
-            </nav>
-          )}
-        </article>
-      </main>
-    </div>
+                      <span className="opacity-70">Next article</span>
+                    </Link>
+                  ) : (
+                    <span className="opacity-40 text-sm">No next post</span>
+                  )}
+                </div>
+              </nav>
+            )}
+          </article>
+        </main>
+      </div>
+      <h6 className="pt-24">Read more</h6>
+      <div className="py-4 border-y border-[var(--mesm-grey-dk)]">
+        <BlogRail />
+      </div>
+    </>
   );
 }
