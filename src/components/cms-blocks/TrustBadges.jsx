@@ -108,7 +108,7 @@ const Reel = React.forwardRef(function Reel(
                 alt={logo.title || ""}
                 width={128}
                 height={64}
-                className="object-contain w-[109px] h-[64px]"
+                className="object-contain w-[96px] h-[64px]"
                 priority={false}
               />
             </Link>

@@ -159,15 +159,15 @@ export default function CenterHero({
   heroEmbed,
   pageHeader,
   pageSubtitle,
-  heroList, // { json }
+  heroL, // { json }
   showCta = true,
   ctaLabel,
   ctaUrl = "/connect",
   logos,
 }) {
   const listItems = useMemo(
-    () => getListItemsFromRichText(heroList?.json || {}),
-    [heroList]
+    () => getListItemsFromRichText(heroL?.json || {}),
+    [heroL]
   );
   const customers = [
     {
