@@ -162,7 +162,7 @@ export default function LeftHero({
   heroMedia,
   pageHeader,
   pageSubtitle,
-  heroList, // { json }
+  heroL, // { json }
   showCta = true,
   ctaLabel,
   ctaUrl = "/connect",
@@ -170,8 +170,8 @@ export default function LeftHero({
   heroEmbed,
 }) {
   const listItems = useMemo(
-    () => getListItemsFromRichText(heroList?.json || {}),
-    [heroList]
+    () => getListItemsFromRichText(heroL?.json || {}),
+    [heroL]
   );
 
   const customers = [

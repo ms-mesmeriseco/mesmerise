@@ -33,7 +33,7 @@ const rawQuery = `
         metaDesc
         line1
         sub
-        heroList {
+        heroL {
         json
         }
         align
@@ -44,7 +44,7 @@ const rawQuery = `
         hE {
         json}
         ctaLab
-        trustCollection (limit:8) {
+        trustCollection (limit:12) {
           items {
             url
             description
