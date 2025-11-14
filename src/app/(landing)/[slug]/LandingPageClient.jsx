@@ -25,7 +25,7 @@ export default function LandingPageClient({ page }) {
         heroMedia={page.media}
         pageHeader={page.line1}
         pageSubtitle={page.sub}
-        heroList={page.heroL}
+        heroL={page.heroL}
         showCta
         ctaUrl="/connect"
         logos={page.trustCollection?.items}
