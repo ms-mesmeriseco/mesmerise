@@ -3,16 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { getClient } from "@/lib/apollo-client";
 import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 
 export default function BlogRail() {
   const [posts, setPosts] = useState([]);
 
-  // --- Shared tag styles to match Project Navigation ---
-  const tagBase =
-    "px-3 py-0 rounded-md h-6 text-sm transition whitespace-nowrap";
-  const tagInactive = "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)]";
+  const pathname = usePathname();
+  const currentSlug = pathname?.split("/").pop(); // /blog/hello-world → "hello-world"
 
   useEffect(() => {
     async function fetchBlogPosts() {
@@ -20,8 +19,11 @@ export default function BlogRail() {
         const { data } = await getClient().query({ query: GET_ALL_BLOG_POSTS });
         const items = data?.blogPostPageCollection?.items || [];
 
-        // Normalize + filter out "showBlogInFooter" tag; also sort by date desc
-        const normalized = items
+        // --- REMOVE the current page from the blog rail ---
+        const filtered = items.filter((post) => post.slug !== currentSlug);
+
+        // Normalize + filter tags + sort by date
+        const normalized = filtered
           .map((p) => {
             const tags =
               p?.contentfulMetadata?.tags
@@ -34,6 +36,7 @@ export default function BlogRail() {
                   id: t?.id,
                   name: t?.name || t?.id,
                 })) || [];
+
             return { ...p, _tags: tags };
           })
           .sort((a, b) => {
@@ -47,8 +50,9 @@ export default function BlogRail() {
         console.error("Failed to fetch blog posts:", error);
       }
     }
-    fetchBlogPosts();
-  }, []);
+
+    if (currentSlug) fetchBlogPosts();
+  }, [currentSlug]);
 
   return (
     <section className="w-full">
