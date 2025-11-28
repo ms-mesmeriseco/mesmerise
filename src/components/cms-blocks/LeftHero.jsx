@@ -168,6 +168,7 @@ export default function LeftHero({
   ctaUrl = "/connect",
   logos,
   heroEmbed,
+  customContent,
 }) {
   const listItems = useMemo(
     () => getListItemsFromRichText(heroL?.json || {}),
@@ -228,13 +229,19 @@ export default function LeftHero({
           <StaggeredWords as="p" className="w-[90%]" text={pageSubtitle} />
 
           <PillList items={listItems} className="justify-start" />
-
           <div className="flex flex-col ">
-            {showCta && (
-              <Button href={ctaUrl} extraClass="" variant="accent" size="large">
-                {ctaLabel || "Learn more"}
-              </Button>
-            )}
+            {customContent
+              ? customContent
+              : showCta && (
+                  <Button
+                    href={ctaUrl}
+                    extraClass=""
+                    variant="accent"
+                    size="large"
+                  >
+                    {ctaLabel || "Learn more"}
+                  </Button>
+                )}
           </div>
           <AvatarRow people={customers} />
         </div>

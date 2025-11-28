@@ -8,7 +8,7 @@ const SIZE_MAP = {
     py: "py-1",
   },
   large: {
-    radius: "rounded-xl hover:rounded-lg",
+    radius: "rounded-2xl hover:rounded-lg",
     font: "text-lg",
     px: "px-3",
     py: "py-[3.8]",
@@ -33,7 +33,7 @@ const VARIANTS = {
     "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98 ",
   // "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
   accent2:
-    "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98 ",
+    "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98",
   // "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
   CTA: "justify-center rounded-[1.1rem] text-center shadow-lg shadow-[#686767]/30  w-full bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)]",
 

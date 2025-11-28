@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/Button";
+import MenuToggle from "../ui/MenuToggle";
 
 export default function Header() {
   const pathname = usePathname() || "/";
@@ -134,6 +135,7 @@ export default function Header() {
         <span className="justify-self-end">
           <span className={"inline-flex gap-3"}>
             {/* Connect: now ALWAYS rendered */}
+            <MenuToggle />
             <Button
               size="large"
               variant="accent"

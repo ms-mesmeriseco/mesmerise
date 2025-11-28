@@ -131,7 +131,7 @@ Google Tag Manager (noscript) */}
         <Template>
           <Inner>{children}</Inner>
         </Template>
-        <MenuToggle />
+        {/* <MenuToggle /> */}
         <Footer />
         {/* LinkedIn */}
 

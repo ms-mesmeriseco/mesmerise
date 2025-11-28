@@ -78,7 +78,7 @@ export default function MenuToggle({ base = "/" }) {
   return (
     <div
       className={[
-        "menu-toggle flex justify-center",
+        "flex justify-center",
         shouldShowOnMobile ? "flex" : "hidden md:flex",
       ].join(" ")}
     >
@@ -89,7 +89,7 @@ export default function MenuToggle({ base = "/" }) {
           y: 0,
           transition: { duration: 0.3, delay: 0.8 },
         }}
-        className="w-full h-200px"
+        className="w-full"
       >
         <ToggleSwitch
           options={OPTIONS}
@@ -97,7 +97,7 @@ export default function MenuToggle({ base = "/" }) {
           onChange={handleChange}
           aria-label="Navigate primary sections"
           selectedBg="var(--foreground)"
-          textSize="xl"
+          textSize="md"
         />
       </motion.div>
     </div>
