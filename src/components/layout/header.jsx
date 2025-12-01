@@ -4,7 +4,140 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Button from "../ui/Button";
-import MenuToggle from "../ui/MenuToggle";
+import MobileMenu from "../ui/MobileMenu";
+
+// --- NAV ITEMS (with children for Services + Collaborate) ---
+export const NAV_ITEMS = [
+  { label: "About", href: "/about" },
+
+  {
+    label: "Services",
+    href: "/services",
+    children: [
+      { label: "Strategy", href: "/services/strategy" },
+      { label: "Branding", href: "/services/branding" },
+      { label: "Website", href: "/services/website" },
+      { label: "Performance & Growth", href: "/services/performance-growth" },
+      { label: "Analytics", href: "/services/analytics" },
+    ],
+  },
+
+  { label: "Work", href: "/work" },
+
+  {
+    label: "Collaborate",
+    href: "/collaboration",
+    children: [
+      { label: "Defined", href: "/collaboration/defined" },
+      { label: "Continuous", href: "/collaboration/continuous" },
+    ],
+  },
+
+  // match your ToggleSwitch options
+  { label: "Connect", href: "/connect" },
+];
+
+function isItemActive(item, pathname) {
+  const direct = pathname === item.href || pathname.startsWith(`${item.href}/`);
+
+  const childHit = item.children?.some(
+    (child) => pathname === child.href || pathname.startsWith(`${child.href}/`)
+  );
+
+  return direct || childHit;
+}
+
+// --- Desktop nav that mimics ToggleSwitch styling ---
+function DesktopNav({ pathname }) {
+  const [openLabel, setOpenLabel] = useState(null);
+
+  const selectedBg = "var(--foreground)"; // same as you used in MenuToggle
+  const selectedTextClass = "text-black";
+  const textSizeClass = "text-lg"; // matches textSize="lg"
+
+  return (
+    <div className="hidden md:flex">
+      <div
+        className={[
+          "flex items-center gap-2",
+          "bg-[var(--mesm-grey-dk)]/5",
+          "rounded-2xl p-1",
+          "border border-[var(--mesm-grey-dk)]",
+          "w-fit mx-auto",
+          "shadow-xl backdrop-blur-xs",
+          textSizeClass,
+        ].join(" ")}
+      >
+        {NAV_ITEMS.map((item) => {
+          const active = isItemActive(item, pathname);
+          const hasChildren =
+            Array.isArray(item.children) && item.children.length > 0;
+          const isOpen = openLabel === item.label;
+
+          return (
+            <div
+              key={item.label}
+              className="relative flex-1"
+              onMouseEnter={() => hasChildren && setOpenLabel(item.label)}
+              onMouseLeave={() =>
+                hasChildren &&
+                setOpenLabel((prev) => (prev === item.label ? null : prev))
+              }
+            >
+              {/* Top-level button styled like ToggleSwitch */}
+              <Link
+                href={item.href}
+                className={[
+                  "flex-1 px-3 py-1 rounded-xl transition-colors cursor-pointer",
+                  "focus:outline-none border-1 border-transparent hover:border-[var(--mesm-grey)]",
+                  "inline-flex items-center justify-center w-full",
+                  active ? selectedTextClass : "text-[var(--foreground)]",
+                ].join(" ")}
+                style={active ? { backgroundColor: selectedBg } : undefined}
+              >
+                {item.label}
+              </Link>
+
+              {/* Dropdown children (only for Services / Collaborate) */}
+              {hasChildren && isOpen && (
+                <div
+                  className="absolute left-1/2 -translate-x-1/2 top-full
+                             min-w-[220px] rounded-2xl border border-[var(--mesm-grey-dk)]
+                             bg-[var(--mesm-grey-xd)]/95 shadow-xl backdrop-blur-xs
+                             py-2 z-[400]"
+                >
+                  <ul className="flex flex-col">
+                    {item.children.map((child) => {
+                      const childActive =
+                        pathname === child.href ||
+                        pathname.startsWith(`${child.href}/`);
+
+                      return (
+                        <li key={child.href} className="no-list">
+                          <Link
+                            href={child.href}
+                            className={[
+                              "block px-4 py-2 text-sm transition-colors",
+                              childActive
+                                ? "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)]"
+                                : "text-[var(--mesm-grey)] hover:bg-[var(--mesm-grey-dk)]/70",
+                            ].join(" ")}
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 export default function Header() {
   const pathname = usePathname() || "/";
@@ -15,9 +148,8 @@ export default function Header() {
 
   const starts = (p) => pathname === p || pathname.startsWith(`${p}/`);
 
-  // known (non-landing) sections
   const KNOWN_PREFIXES = [
-    "/", // home
+    "/",
     "/about",
     "/connect",
     "/services",
@@ -28,10 +160,9 @@ export default function Header() {
 
   const isKnownRoute = KNOWN_PREFIXES.some((p) => starts(p));
   const isLanding = !isKnownRoute;
-
   const showMobileStickyCTA = isLanding;
 
-  // ---- Measure header height and scene ----
+  // measure scene
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -54,6 +185,7 @@ export default function Header() {
     setHydrated(true);
   }, [pathname]);
 
+  // store header height in CSS variable
   useLayoutEffect(() => {
     if (headerRef.current) {
       const h = headerRef.current.offsetHeight;
@@ -61,10 +193,10 @@ export default function Header() {
     }
   }, []);
 
+  // track hero in view
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Track scene
     const el = document.querySelector("#home-scene");
     if (!el) {
       setSceneInView(false);
@@ -85,16 +217,16 @@ export default function Header() {
     }
   }, [pathname]);
 
-  // ---- Track scroll position (100vh) ----
+  // sticky CTA scroll trigger
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const handleScroll = () => {
-      const trigger = window.innerHeight; // 100vh in px
+      const trigger = window.innerHeight;
       setScrolledEnough(window.scrollY >= trigger);
     };
 
-    handleScroll(); // run on mount
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -103,46 +235,18 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
-                   flex items-center gap-2 justify-center w-full pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)] 
-                   pointer-events-auto bg-transparent"
+        className="site-header fixed top-0 left-0 right-0 z-300
+                   flex items-center justify-center gap-2
+                   pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
+                   box-border pointer-events-auto bg-transparent"
       >
-        {/* Left: Logo
-        <div className="min-h-[3.23rem]">
-          <Link
-            href="https://www.mesmeriseco.com/"
-            aria-label="Go to homepage"
-            className="justify-self-start"
-          >
-            <img
-              src="/assets/270px-transparent_M-logo.gif"
-              preload="auto"
-              aria-hidden={sceneInView}
-              className={[
-                "md:h-[3.23rem] h-[2.77rem] block transition-opacity duration-100 opacity-0",
-                sceneInView
-                  ? "opacity-0 pointer-events-none hidden"
-                  : "opacity-100",
-              ].join(" ")}
-            />
-          </Link>
-        </div> */}
+        {/* Logo */}
         <Link
           href="https://www.mesmeriseco.com/"
           aria-label="Go to homepage"
           className="justify-self-start"
         >
-          <div
-          // className={[
-          //   "flex items-center gap-2",
-          //   "bg-[var(--mesm-grey-dk)]/5",
-          //   "rounded-2xl px-5",
-          //   "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
-
-          //   "shadow-xl backdrop-blur-xs",
-          //   "min-h-[3rem] flex items-center",
-          // ].join(" ")}
-          >
+          <div>
             <img
               src="/LogoMark.png"
               preload="auto"
@@ -153,7 +257,6 @@ export default function Header() {
                 "bg-[var(--mesm-grey-dk)]/5",
                 "rounded-2xl px-4 py-2",
                 "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
-
                 "shadow-xl backdrop-blur-xs",
                 "min-h-[3rem] flex items-center",
                 sceneInView
@@ -164,16 +267,17 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Right: Header CTAs */}
-        <span className="">
-          <span className={"inline-flex gap-3"}>
-            {/* Connect: now ALWAYS rendered */}
-            <MenuToggle />
-          </span>
-        </span>
+        {/* Right side: desktop Toggle-style nav + mobile hamburger */}
+        <div className="flex items-center gap-3">
+          {/* Desktop: ToggleSwitch-styled nav with dropdowns */}
+          <DesktopNav pathname={pathname} />
+
+          {/* Mobile: hamburger + nested links (already styled) */}
+          <MobileMenu items={NAV_ITEMS} pathname={pathname} />
+        </div>
       </header>
 
-      {/* Mobile sticky CTA (non-landing pages only, after 100vh) */}
+      {/* Mobile sticky CTA (landing pages only, after 100vh) */}
       {showMobileStickyCTA && scrolledEnough && (
         <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden pb-6 px-10">
           <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">

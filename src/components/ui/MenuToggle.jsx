@@ -4,13 +4,14 @@ import { useRouter, usePathname } from "next/navigation";
 import ToggleSwitch from "./ToggleSwitch";
 import { motion } from "framer-motion";
 
-const OPTIONS = ["About", "Services", "Work", "Connect"];
+const OPTIONS = ["About", "Services", "Work", "Collaborate", "Connect"];
 
 const PATHS = {
   About: "/about",
   Services: "/services",
   Work: "/work",
   Connect: "/connect",
+  Collaborate: "/collaboration/",
 };
 
 const ALIASES = {
@@ -18,6 +19,7 @@ const ALIASES = {
   Services: ["services", "service"],
   Work: ["work", "projects", "project", "portfolio", "case-studies"],
   Connect: ["connect", "contact"],
+  Collaborate: ["collaboration", "collaborate"],
 };
 
 function normalizeBase(base) {
