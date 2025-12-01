@@ -4,12 +4,13 @@ import { useRouter, usePathname } from "next/navigation";
 import ToggleSwitch from "./ToggleSwitch";
 import { motion } from "framer-motion";
 
-const OPTIONS = ["About", "Services", "Work"];
+const OPTIONS = ["About", "Services", "Work", "Connect"];
 
 const PATHS = {
   About: "/about",
   Services: "/services",
   Work: "/work",
+  Connect: "/connect",
 };
 
 const ALIASES = {
@@ -97,7 +98,7 @@ export default function MenuToggle({ base = "/" }) {
           onChange={handleChange}
           aria-label="Navigate primary sections"
           selectedBg="var(--foreground)"
-          textSize="md"
+          textSize="lg"
         />
       </motion.div>
     </div>

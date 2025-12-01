@@ -1,43 +1,22 @@
 "use client";
 
 const SIZE_MAP = {
-  small: {
-    radius: "rounded-lg hover:rounded-md",
-    font: "md:text-sm text-xs leading-none",
-    px: "px-2",
-    py: "py-1",
-  },
-  large: {
-    radius: "rounded-2xl hover:rounded-lg",
-    font: "text-lg",
-    px: "px-3",
-    py: "py-[3.8]",
-  },
-  "x-large": {
-    radius: "hover:rounded-2xl rounded-3xl",
-    font: "md:text-5xl text-3xl",
-    px: "md:px-7 px-4",
-    py: "md:py-3 py-2",
-  },
-  none: { radius: "", font: "text-3xl font-normal", px: "px-0", py: "py-0" },
+  small: ["text-xs md:text-sm leading-none", "px-2 py-1"].join(" "),
+  large: ["text-base leading-tight", "px-3 py-2"].join(" "),
+  "x-large": ["text-3xl md:text-5xl", "px-4 md:px-7 py-2 md:py-3"].join(" "),
+  none: ["text-3xl font-normal", "px-0 py-0"].join(" "),
 };
 
 const VARIANTS = {
   primary:
-    "bg-[var(--mesm-blue)] border-[var(--mesm-blue)] text-[var(--background)] ",
-  // "hover:bg-transparent hover:border-[var(--mesm-blue)] hover:text-[var(--mesm-blue)]",
+    "bg-[var(--mesm-blue)] border-[var(--mesm-blue)] text-[var(--background)]",
   secondary:
-    "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)] ",
-  // "hover:bg-[var(--foreground)] hover:text-[var(--background)]",
+    "bg-transparent border-[var(--mesm-grey-dk)] text-[var(--mesm-l-grey)]",
   accent:
-    "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98 ",
-  // "hover:bg-[var(--accent)]/15 hover:text-[var(--accent)] duration-200",
+    "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98",
   accent2:
     "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98",
-  // "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)] duration-200",
-  CTA: "justify-center rounded-[1.1rem] text-center shadow-lg shadow-[#686767]/30  w-full bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)]",
-
-  // "hover:bg-[var(--accent2)]/15 hover:text-[var(--accent2)]",
+  CTA: "bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)] shadow-lg shadow-[#686767]/30",
 };
 
 export default function Button({
@@ -48,24 +27,27 @@ export default function Button({
   variant = "primary",
   ...props
 }) {
-  const cfg = SIZE_MAP[size] ?? SIZE_MAP.small;
+  const sizeClasses = SIZE_MAP[size] ?? SIZE_MAP.small;
   const variantClasses = VARIANTS[variant] ?? VARIANTS.primary;
+  const isCTA = variant === "CTA";
 
   return (
     <a
       href={href}
       className={[
-        "inline-block select-none border w-fit",
-        "hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]",
-        cfg.radius,
-        cfg.font,
-        cfg.px,
-        cfg.py,
-        variantClasses,
-        extraClass,
-        // buttery-smooth hover with GPU acceleration
+        // base layout
+        "inline-flex items-center justify-center select-none border",
         "duration-150 ease-out",
-        "", // or scale-x-[1.03] for horizontal-only
+        "rounded-2xl hover:rounded-xl",
+        // default width vs CTA full-width
+        isCTA ? "w-full h-[48px] text-center" : "w-fit",
+        // shared hover
+        "hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]",
+        // sizing + variant styling
+        sizeClasses,
+        variantClasses,
+        // custom overrides
+        extraClass,
       ].join(" ")}
       {...props}
     >

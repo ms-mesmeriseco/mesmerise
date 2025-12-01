@@ -104,10 +104,10 @@ export default function Header() {
       <header
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300 w-full box-border
-                   grid grid-cols-[auto_1fr_auto] items-center pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)] 
+                   flex items-center gap-2 justify-center w-full pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)] 
                    pointer-events-auto bg-transparent"
       >
-        {/* Left: Logo */}
+        {/* Left: Logo
         <div className="min-h-[3.23rem]">
           <Link
             href="https://www.mesmeriseco.com/"
@@ -126,24 +126,49 @@ export default function Header() {
               ].join(" ")}
             />
           </Link>
-        </div>
+        </div> */}
+        <Link
+          href="https://www.mesmeriseco.com/"
+          aria-label="Go to homepage"
+          className="justify-self-start"
+        >
+          <div
+          // className={[
+          //   "flex items-center gap-2",
+          //   "bg-[var(--mesm-grey-dk)]/5",
+          //   "rounded-2xl px-5",
+          //   "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
 
-        {/* Middle: spacer */}
-        <span />
+          //   "shadow-xl backdrop-blur-xs",
+          //   "min-h-[3rem] flex items-center",
+          // ].join(" ")}
+          >
+            <img
+              src="/LogoMark.png"
+              preload="auto"
+              aria-hidden={sceneInView}
+              className={[
+                "md:h-[1.5rem] h-[1.77rem] block transition-opacity duration-100 opacity-0",
+                "flex items-center gap-2",
+                "bg-[var(--mesm-grey-dk)]/5",
+                "rounded-2xl px-4 py-2",
+                "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
+
+                "shadow-xl backdrop-blur-xs",
+                "min-h-[3rem] flex items-center",
+                sceneInView
+                  ? "opacity-0 pointer-events-none hidden"
+                  : "opacity-100",
+              ].join(" ")}
+            />
+          </div>
+        </Link>
 
         {/* Right: Header CTAs */}
-        <span className="justify-self-end">
+        <span className="">
           <span className={"inline-flex gap-3"}>
             {/* Connect: now ALWAYS rendered */}
             <MenuToggle />
-            <Button
-              size="large"
-              variant="accent"
-              href="/connect"
-              extraClass="shadow-xl"
-            >
-              Connect
-            </Button>
           </span>
         </span>
       </header>

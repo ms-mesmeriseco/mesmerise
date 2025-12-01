@@ -1,7 +1,7 @@
 export default function SuccessPage() {
   return (
     <div className="px-[var(--global-margin-sm)] py-[var(--global-margin-lg)] text-center h-[50vh] items-center flex flex-col justify-center">
-      <h1 className="text-3xl mb-4">Success.</h1>
+      <h1 className="text-3xl mb-4">Success</h1>
       <p className="mb-6">
         Your free CRO Checklist is ready. Click below to access the Google
         Sheet:
