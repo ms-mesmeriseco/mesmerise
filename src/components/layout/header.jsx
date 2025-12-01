@@ -36,7 +36,32 @@ export const NAV_ITEMS = [
   // match your ToggleSwitch options
   { label: "Connect", href: "/connect" },
 ];
+export const MOB_NAV_ITEMS = [
+  { label: "About", href: "/about" },
 
+  {
+    label: "Services",
+    href: "/services",
+    children: [
+      { label: "Strategy", href: "/services/strategy" },
+      { label: "Branding", href: "/services/branding" },
+      { label: "Website", href: "/services/website" },
+      { label: "Performance & Growth", href: "/services/performance-growth" },
+      { label: "Analytics", href: "/services/analytics" },
+    ],
+  },
+
+  { label: "Work", href: "/work" },
+
+  {
+    label: "Collaborate",
+    href: "/collaboration",
+    children: [
+      { label: "Defined", href: "/collaboration/defined" },
+      { label: "Continuous", href: "/collaboration/continuous" },
+    ],
+  },
+];
 function isItemActive(item, pathname) {
   const direct = pathname === item.href || pathname.startsWith(`${item.href}/`);
 
@@ -101,34 +126,33 @@ function DesktopNav({ pathname }) {
               {/* Dropdown children (only for Services / Collaborate) */}
               {hasChildren && isOpen && (
                 <div
-                  className="absolute left-1/2 -translate-x-1/2 top-full
-                             min-w-[220px] rounded-2xl border border-[var(--mesm-grey-dk)]
-                             bg-[var(--mesm-grey-xd)]/95 shadow-xl backdrop-blur-xs
-                             py-2 z-[400]"
+                  className="absolute left-0  top-full
+               min-w-[220px] z-[400]"
                 >
-                  <ul className="flex flex-col">
+                  {/* Only margin & space — no bg, no border */}
+                  <div className="mt-2 pt-1 flex flex-col gap-1">
                     {item.children.map((child) => {
                       const childActive =
                         pathname === child.href ||
                         pathname.startsWith(`${child.href}/`);
 
                       return (
-                        <li key={child.href} className="no-list">
-                          <Link
-                            href={child.href}
-                            className={[
-                              "block px-4 py-2 text-sm transition-colors",
-                              childActive
-                                ? "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)]"
-                                : "text-[var(--mesm-grey)] hover:bg-[var(--mesm-grey-dk)]/70",
-                            ].join(" ")}
-                          >
-                            {child.label}
-                          </Link>
-                        </li>
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={[
+                            "block px-3 py-2 text-sm rounded-xl transition-colors w-fit",
+                            "text-[var(--background)] bg-[var(--foreground)]",
+                            childActive
+                              ? "bg-[var(--mesm-l-grey)]/20 text-[var(--foreground)]/20 shadow-lg"
+                              : "hover:bg-[var(--mesm-blue)] hover:text-[var(--background)] shadow-md",
+                          ].join(" ")}
+                        >
+                          {child.label}
+                        </Link>
                       );
                     })}
-                  </ul>
+                  </div>
                 </div>
               )}
             </div>
@@ -236,7 +260,7 @@ export default function Header() {
       <header
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300
-                   flex items-center justify-center gap-2
+                   flex items-center md:justify-center justify-end   gap-2
                    pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
                    box-border pointer-events-auto bg-transparent"
       >
@@ -273,7 +297,7 @@ export default function Header() {
           <DesktopNav pathname={pathname} />
 
           {/* Mobile: hamburger + nested links (already styled) */}
-          <MobileMenu items={NAV_ITEMS} pathname={pathname} />
+          <MobileMenu items={MOB_NAV_ITEMS} pathname={pathname} />
         </div>
       </header>
 
