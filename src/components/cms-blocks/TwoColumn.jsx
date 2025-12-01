@@ -38,7 +38,7 @@ export default function TwoColumn({
             <h2>{h2}</h2>
           </div>
         )}
-        <section className="grid grid-cols-1 md:grid-cols-2 md:gap-32 gap-6 items-start">
+        <section className="grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-6 items-start">
           {/* Column 1 */}
           <div className="blockAlignment flex flex-col gap-6">
             {column1.map((block, index) => (

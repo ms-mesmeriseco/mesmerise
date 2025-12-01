@@ -19,32 +19,27 @@ function minifyGraphQL(query) {
     .replace(/\s*([{}():,])\s*/g, "$1")
     .trim();
 }
-const rawQuery = `
-  query GetLandingPageBySlug($slug: String!) {
+const rawHeroQuery = `
+  query GetLandingPageHeroBySlug($slug: String!) {
     landingPageCollection(limit: 1, where: { pageSlug: $slug}) {
       items {
         __typename
-        sys {
-          id
-        }
+        sys { id }
 
         pageSlug
         mT
         metaDesc
         line1
         sub
-        heroL {
-        json
-        }
+        heroL { json }
         align
         media {
-        url
-        contentType 
+          url
+          contentType 
         }
-        hE {
-        json}
+        hE { json }
         ctaLab
-        trustCollection (limit:12) {
+        trustCollection(limit: 12) {
           items {
             url
             description
@@ -52,6 +47,21 @@ const rawQuery = `
             width
           }
         }
+      }
+    }
+  }
+`;
+
+const minifiedHeroQuery = minifyGraphQL(rawHeroQuery);
+
+export const GET_LANDING_PAGE_HERO_BY_SLUG = gql`
+  ${minifiedHeroQuery}
+`;
+const rawBlocksQuery = `
+  query GetLandingPageBlocksBySlug($slug: String!) {
+    landingPageCollection(limit: 1, where: { pageSlug: $slug}) {
+      items {
+        sys { id }
         pageBlocksCollection(limit: 23) {
           items {
             ... on IconRow {
@@ -78,7 +88,7 @@ const rawQuery = `
             ... on MediaCarouselWithText {
               ...MTFrag
             }
-            ...on ComparisonTable {
+            ... on ComparisonTable {
               ...Table
             }
           }
@@ -88,10 +98,10 @@ const rawQuery = `
   }
 `;
 
-const minifiedQuery = minifyGraphQL(rawQuery);
+const minifiedBlocksQuery = minifyGraphQL(rawBlocksQuery);
 
-export const GET_LANDING_PAGE_BY_SLUG = gql`
-  ${minifiedQuery}
+export const GET_LANDING_PAGE_BLOCKS_BY_SLUG = gql`
+  ${minifiedBlocksQuery}
   ${GET_MEDIA_CAROUSEL}
   ${GET_SINGLE_CASESTUDY}
   ${GET_THREE_COLUMN}
