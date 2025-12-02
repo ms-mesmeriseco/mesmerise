@@ -170,10 +170,22 @@ export default function LeftHero({
   heroEmbed,
   customContent,
 }) {
-  const listItems = useMemo(
-    () => getListItemsFromRichText(heroL?.json || {}),
-    [heroL]
-  );
+  const listItems = useMemo(() => {
+    if (Array.isArray(heroL)) {
+      return heroL;
+    }
+
+    if (typeof heroL === "string") {
+      return [heroL];
+    }
+
+    if (heroL?.json) {
+      return getListItemsFromRichText(heroL.json);
+    }
+
+    // 4) Fallback
+    return [];
+  }, [heroL]);
 
   const customers = [
     {
@@ -208,7 +220,7 @@ export default function LeftHero({
           // Mobile: single column; Desktop: 2 columns + bottom row for badges
           "grid grid-cols-1 md:grid-cols-5 md:grid-rows-[1fr_auto]",
           "md:gap-6 gap-12",
-          "md:min-h-[80vh]", // full screen height on md+
+          "md:min-h-[90vh]", // full screen height on md+
         ].join(" ")}
       >
         {/* TEXT — mobile order 1; desktop row 1 col 1 */}
