@@ -4,6 +4,7 @@ import TwoColumn from "@/components/cms-blocks/TwoColumn";
 import ProjectRail from "@/components/cms-blocks/ProjectRail";
 import IconRow from "@/components/cms-blocks/IconRow";
 import FAQ from "@/components/layout/FAQ.jsx";
+import Image from "next/image";
 
 export const croFAQ = [
   {
@@ -46,41 +47,43 @@ export function CROAudit() {
       ctaCol="false"
       ctaLab="Book A CRO Audit"
       column1={[
-        <img
+        <Image
           key="audit-img"
           src="https://images.ctfassets.net/cdpwrfmjljmf/2cdJeVHIJa7bkOrd2MfV02/704fc1a3bd3f2b7b0cce1620f58ea085/Pezzie-4.jpg"
           alt="CRO Audit"
+          width={800}
+          height={600}
         />,
-        <h6>Petar Petrović, Mesmerise Founder </h6>,
+        <h6 key="audit-caption">Petar Petrović, Mesmerise Founder</h6>,
       ]}
       column2={[
-        <div key="intro">
+        <div key="audit-intro">
           <h2>
             Why 1 in 3 Clients Pause Their Ad Spend After We Apply Our CRO
             Protocol
           </h2>
           <br />
           <p className="mb-3">
-            When we implement our Structural CRO Audit, there's a 33% chance a
-            client will hit an unexpected problem within weeks:
+            When we implement our Structural CRO Audit, there&apos;s a 33%
+            chance a client will hit an unexpected problem within weeks:
           </p>
           <p className="mb-3">
             They either have to pull back on ad spend, or rush to hire new staff
             to keep up with the surge in demand.
           </p>
-          <p className="mb-3">Here's what we uncover in the CRO audit:</p>
+          <p className="mb-3">Here&apos;s what we uncover in the CRO audit:</p>
           <ul className="list-disc pl-5 ">
             <li>
               The exact visual cue we place above the fold that signals
-              authority to cold traffic & stops bounce rates
+              authority to cold traffic &amp; stops bounce rates
             </li>
             <li>
-              The 'headline hammer' technique that is non negotiable if you want
-              to generate more money
+              The &apos;headline hammer&apos; technique that is non negotiable
+              if you want to generate more money
             </li>
             <li>
-              Why there's no such thing as 'bad traffic', just a mismatch of
-              intent{" "}
+              Why there&apos;s no such thing as &apos;bad traffic&apos;, just a
+              mismatch of intent
             </li>
           </ul>
 
@@ -103,52 +106,46 @@ export function Testimonials() {
         {
           icon: { url: "/icons/five-stars.svg" },
           textContent: (
-            <>
-              <div>
-                <p className="p2 mb-2">
-                  "Petar and the team are the best crew to worth with. They know
-                  the market and will get your company out there and ahead of
-                  the game."
-                </p>
-                <br />
-                <br />
-                <p>Jay Shelling, Flo Landscapes</p>
-              </div>
-            </>
+            <div key="testimonial-jay">
+              <p className="p2 mb-2">
+                &quot;Petar and the team are the best crew to work with. They
+                know the market and will get your company out there and ahead of
+                the game.&quot;
+              </p>
+              <br />
+              <br />
+              <p>Jay Shelling, Flo Landscapes</p>
+            </div>
           ),
         },
         {
           icon: { url: "/icons/five-stars.svg" },
           textContent: (
-            <>
-              <div>
-                <p className="p2 mb-2">
-                  "Petar and his team have injected new life into our business
-                  marketing and internet traffic. They have been incredible to
-                  work with and really listened to what our advertising needs
-                  were... Well worth the money."
-                </p>
-                <br />
-                <br />
-                <p>Matt & Peta Staples, Pro Sculpt</p>
-              </div>
-            </>
+            <div key="testimonial-prosculpt">
+              <p className="p2 mb-2">
+                &quot;Petar and his team have injected new life into our
+                business marketing and internet traffic. They have been
+                incredible to work with and really listened to what our
+                advertising needs were... Well worth the money.&quot;
+              </p>
+              <br />
+              <br />
+              <p>Matt &amp; Peta Staples, Pro Sculpt</p>
+            </div>
           ),
         },
         {
           icon: { url: "/icons/five-stars.svg" },
           textContent: (
-            <>
-              <div>
-                <p className="p2 mb-2">
-                  "Blew my online presence up since working with Mesmerise.
-                  Highly Recommend"
-                </p>
-                <br />
-                <br />
-                <p>Joseph Moon, Moon Building</p>
-              </div>
-            </>
+            <div key="testimonial-moon">
+              <p className="p2 mb-2">
+                &quot;Blew my online presence up since working with Mesmerise.
+                Highly recommend.&quot;
+              </p>
+              <br />
+              <br />
+              <p>Joseph Moon, Moon Building</p>
+            </div>
           ),
         },
       ]}
@@ -161,23 +158,26 @@ export function Converting() {
     <TwoColumn
       h2="Converting like crazy"
       column1={[
-        <img
-          key="audit-img"
+        <Image
+          key="brett-img"
           src="https://images.ctfassets.net/cdpwrfmjljmf/59SBvS0YErGDYTX80hhVOT/1c4978c214188a588249a93c85b56333/Brett_Benson.png"
-          alt="CRO Audit"
+          alt="Brett Benson case study"
+          width={800}
+          height={600}
         />,
-        <h4>
+        <h4 key="brett-heading">
           <b>Over $1,000,000+ of lead enquiries in 24 hours</b>
         </h4>,
-        <p>
+        <p key="brett-copy">
           Brett was getting nowhere with his old Squarespace website. This is
-          when we entered the chat, using our state-of-the-art Mesmerise Method,
+          when we entered the chat. Using our state-of-the-art Mesmerise Method,
           we gave him the flexibility and freedom he deserved.
         </p>,
-        <p>
+        <p key="brett-link">
           <a
             href="https://www.mesmeriseco.com/work/north-bay-building"
             target="_blank"
+            rel="noreferrer"
             className="text-sm mt-4 inline-block text-[var(--mesm-blue)] underline duration-200"
           >
             View North Bay Building Case Study
@@ -185,15 +185,17 @@ export function Converting() {
         </p>,
       ]}
       column2={[
-        <img
+        <Image
           key="mitch-img"
           src="https://images.ctfassets.net/cdpwrfmjljmf/1wMRjjHJajK5RbksU4A6uk/fd62668551dafba41e59405f6558270b/mitchj_construciton.jpg"
           alt="Mitch J Construction"
+          width={800}
+          height={600}
         />,
-        <h4>
+        <h4 key="mitch-heading">
           <b>1,380% increase in qualified enquiries</b>
         </h4>,
-        <p>
+        <p key="mitch-copy">
           Our conversion pathways resulted in a 3-month wait period, and Mitch
           begged us to alter the acquisition strategy because it was too
           powerful.
@@ -202,6 +204,7 @@ export function Converting() {
           <a
             href="https://www.mesmeriseco.com/bespoke-case-study"
             target="_blank"
+            rel="noreferrer"
             className="text-sm mt-4 inline-block text-[var(--mesm-blue)] underline duration-200"
           >
             Discover How We Booked Bespoke Landscapes Out
@@ -220,26 +223,29 @@ export function Kerime() {
       column1={[
         <div key="intro">
           <h2>
-            "Working with Mesmerise was the turning point in my business."
+            &quot;Working with Mesmerise was the turning point in my
+            business.&quot;
           </h2>
           <br />
           <p className="mb-3 p2">
-            "They just know what to do and do it... No frills, no pointless
-            talking, straight to delivery & outcomes.
+            &quot;They just know what to do and do it... No frills, no pointless
+            talking, straight to delivery &amp; outcomes.&quot;
           </p>
           <p className="mb-3">
             My marketing services went from fluffy, basic concepts to tangible
-            and visible outcomes and profit."
+            and visible outcomes and profit.
           </p>
         </div>,
       ]}
       column2={[
-        <img
-          key="audit-img"
+        <Image
+          key="kerime-img"
           src="https://images.ctfassets.net/cdpwrfmjljmf/2XCIr1eGqiUjuvCzOijCPm/6a998c6d34761a2f123a94922afc550e/Kez_Smiley.jpg"
-          alt="CRO Audit"
+          alt="Kerimé Abay"
+          width={800}
+          height={600}
         />,
-        <h6>Kerimé Abay, Hue Therapy</h6>,
+        <h6 key="kerime-caption">Kerimé Abay, Hue Therapy</h6>,
       ]}
     />
   );
