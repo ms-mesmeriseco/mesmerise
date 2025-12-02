@@ -199,11 +199,11 @@ export default function ProjectNavigationList({ activeTag = null }) {
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-wrap gap-1 mb-4 text-sm "
+          className="flex flex-wrap gap-1 mb-4 text-md "
         >
           <motion.button
             variants={item}
-            className={`px-3 py-0 rounded-md h-6 hover:bg-[var(--mesm-yellow)]  ${
+            className={`px-3 py-0 rounded-xl h-full hover:bg-[var(--mesm-yellow)]  ${
               !selectedLabel && !selectedRaw
                 ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
                 : "bg-[var(--mesm-grey)] text-gray-800 cursor-pointer"
@@ -218,9 +218,9 @@ export default function ProjectNavigationList({ activeTag = null }) {
             <motion.button
               key={label}
               variants={item}
-              className={`px-3 py-0 rounded-md h-6 hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] ${
+              className={`px-3 py-0 rounded-xl duration-100 h-full hover:bg-[var(--mesm-red)] hover:text-[var(--background)] ${
                 selectedLabel === label
-                  ? "bg-[var(--mesm-yellow)] text-[var(--mesm-grey)]"
+                  ? "bg-[var(--mesm-red)] text-[var(--background)]"
                   : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
               }`}
               onClick={() => handleSelectLabel(label)}

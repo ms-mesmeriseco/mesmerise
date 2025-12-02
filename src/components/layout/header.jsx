@@ -141,7 +141,7 @@ function DesktopNav({ pathname }) {
                             "text-[var(--background)] bg-[var(--foreground)]",
                             childActive
                               ? "bg-[var(--mesm-l-grey)]/20 text-[var(--foreground)]/20 shadow-lg"
-                              : "hover:bg-[var(--mesm-blue)] hover:text-[var(--background)] shadow-md",
+                              : "hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] shadow-md",
                           ].join(" ")}
                         >
                           {child.label}
@@ -274,6 +274,7 @@ export default function Header() {
         className={[
           "fixed top-0 left-0 right-0 z-[301]",
           "transition-all duration-300 ease-out",
+
           showPromo
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-full pointer-events-none",
@@ -283,7 +284,7 @@ export default function Header() {
           <Link
             href="/cro-audit"
             className="flex items-center justify-center gap-3 rounded-2xl px-4 py-2 
-                       bg-[var(--accent2)] text-[var(--background)] shadow-lg"
+                       bg-[var(--accent2)] text-[var(--background)] shadow-lg hover:bg-[var(--accent2-l)]  duration-200 transition-colors "
           >
             <span className="text-sm md:text-base">
               Feel like you're burning money and not seeing a return on ad
