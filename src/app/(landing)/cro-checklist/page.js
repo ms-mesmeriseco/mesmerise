@@ -6,6 +6,33 @@ import IconRow from "@/components/cms-blocks/IconRow";
 import FAQ from "@/components/layout/FAQ.jsx";
 import Image from "next/image";
 
+const CRO_LOGOS = [
+  {
+    url: "/client-logos/bespoke.png",
+    title: "bespoke landscaping",
+  },
+  {
+    url: "/client-logos/burra.png",
+    title: "burra commercial",
+  },
+  {
+    url: "/client-logos/flo.png",
+    title: "Flo Landscapes",
+  },
+  {
+    url: "/client-logos/goodluck.png",
+    title: "Good luck tattoo",
+  },
+  {
+    url: "/client-logos/sp.png",
+    title: "Street peace",
+  },
+  {
+    url: "/client-logos/tppt.png",
+    title: "Tom Peacock Personal Training",
+  },
+];
+
 export const croFAQ = [
   {
     question: "Is this just a list of best practices I can find on Google?",
@@ -255,13 +282,18 @@ export default function CROChecklistPage() {
   return (
     <>
       <LeftHero
-        pageHeader="The CRO Checklist That's Generating 25X ROAS, and Millions of Dollars in Pipeline"
+        pageHeader="The CRO Checklist Generating 25X ROAS, and Millions of Dollars in Pipeline"
         pageSubtitle="We use this exact step-by-step structural audit to identify 'leaks' in client campaigns, align traffic with intent, and turn failing pages into growth engines."
         showCta={false}
-        heroL={["Service-based businesses", "E-commerce", "SMB & Enterprise"]}
         customContent={<CROForm />}
+        heroMedia={{
+          url: "/assets/cro-checklist_1.png",
+          contentType: "image/jpeg",
+          title: "CRO Audit screenshot",
+        }}
+        logos={CRO_LOGOS}
       />
-      <div className="narrow-wrapper flex w-full flex-col justify-between gap-32">
+      <div className="narrow-wrapper flex w-full flex-col justify-between gap-64 mt-48">
         <CROAudit />
         <Testimonials />
         <ProjectRail />

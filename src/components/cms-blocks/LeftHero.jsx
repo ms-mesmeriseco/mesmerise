@@ -148,8 +148,8 @@ function MediaDisplay({ media, fill = false }) {
   if (!media?.url) return null;
   const isVideo = media?.contentType?.includes("video");
   const common = fill
-    ? "w-full h-full object-cover rounded-lg border-1 border-[var(--mesm-grey)]"
-    : "w-full h-full object-cover rounded-lg border-1 border-[var(--mesm-grey)]";
+    ? "w-full h-full object-contain rounded-lg "
+    : "w-full h-full object-contain rounded-lg ";
   return isVideo ? (
     <video src={media.url} autoPlay muted loop playsInline className={common} />
   ) : (
@@ -215,10 +215,10 @@ export default function LeftHero({
       {/* Grid lets us reorder on mobile and pin badges to base on desktop */}
       <section
         className={[
-          "wrapper relative overflow-hidden pt-4",
+          "hero-wrapper relative overflow-hidden pt-4",
           "",
           // Mobile: single column; Desktop: 2 columns + bottom row for badges
-          "grid grid-cols-1 md:grid-cols-5 md:grid-rows-[1fr_auto]",
+          "grid grid-cols-1 md:grid-cols-4 md:grid-rows-[1fr_auto]",
           "md:gap-6 gap-12",
           "md:min-h-[90vh]", // full screen height on md+
         ].join(" ")}
@@ -227,9 +227,9 @@ export default function LeftHero({
         <div
           className={[
             "md:order-none",
-            "md:row-start-1 md:col-start-1 md:col-span-3 col-span-1",
-            "flex flex-col justify-center text-left gap-5",
-            "text-[var(--foreground)]",
+            "md:row-start-1 md:col-start-1 md:col-span-2 col-span-1",
+            "flex flex-col justify-center text-left gap-2",
+            "text-[var(--foreground)] w-[90%]",
             "",
           ].join(" ")}
         >
@@ -238,7 +238,7 @@ export default function LeftHero({
             className="page-title-medium"
             text={`${pageHeader || ""}`}
           />
-          <StaggeredWords as="p" className="w-[90%]" text={pageSubtitle} />
+          <StaggeredWords as="p" text={pageSubtitle} />
 
           <PillList items={listItems} className="justify-start" />
           <div className="flex flex-col ">
@@ -262,7 +262,7 @@ export default function LeftHero({
         <div
           className={[
             "md:order-none",
-            "md:row-start-1 md:col-start-4 md:col-span-2 col-span-1",
+            "md:row-start-1 md:col-start-3 md:col-span-2 col-span-1",
             "flex items-center justify-center md:max-h-[70vh]",
           ].join(" ")}
         >

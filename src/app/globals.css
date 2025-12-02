@@ -175,6 +175,14 @@ a {
   /* padding-left: var(--global-margin-sm);
   padding-right: var(--global-margin-sm); */
 }
+.hero-wrapper {
+  width: 100%;
+  max-width: 1480px;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding-left: var(--global-margin-sm);
+  padding-right: var(--global-margin-sm); */
+}
 .narrow-wrapper {
   width: 100%;
   max-width: 1140px;

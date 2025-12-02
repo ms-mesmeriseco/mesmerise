@@ -53,7 +53,7 @@ export default function CROForm() {
   }
 
   return (
-    <form className="space-y-6 w-full" onSubmit={handleSubmit} noValidate>
+    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
       {/* Honeypot */}
       <div className="hidden" aria-hidden="true">
         <input
