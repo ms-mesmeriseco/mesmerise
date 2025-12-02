@@ -36,11 +36,11 @@ export default function Button({
       href={href}
       className={[
         // base layout
-        "inline-flex items-center justify-center select-none border",
+        "inline-flex items-center justify-center select-none border whitespace-nowrap",
         "duration-150 ease-out",
         "rounded-2xl hover:rounded-xl",
         // default width vs CTA full-width
-        isCTA ? "w-full h-[48px] text-center" : "w-fit",
+        isCTA ? "w-full h-[48px] text-center" : "w-full",
         // shared hover
         "hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]",
         // sizing + variant styling

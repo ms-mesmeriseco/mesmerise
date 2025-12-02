@@ -8,8 +8,6 @@ import MobileMenu from "../ui/MobileMenu";
 
 // --- NAV ITEMS (with children for Services + Collaborate) ---
 export const NAV_ITEMS = [
-  { label: "About", href: "/about" },
-
   {
     label: "Services",
     href: "/services",
@@ -25,16 +23,14 @@ export const NAV_ITEMS = [
   { label: "Work", href: "/work" },
 
   {
-    label: "Collaborate",
+    label: "Collaboration",
     href: "/collaboration",
     children: [
       { label: "Defined", href: "/collaboration/defined" },
       { label: "Continuous", href: "/collaboration/continuous" },
     ],
   },
-
-  // match your ToggleSwitch options
-  { label: "Connect", href: "/connect" },
+  { label: "About", href: "/about" },
 ];
 export const MOB_NAV_ITEMS = [
   { label: "About", href: "/about" },
@@ -260,7 +256,7 @@ export default function Header() {
       <header
         ref={headerRef}
         className="site-header fixed top-0 left-0 right-0 z-300
-                   flex items-center md:justify-center justify-end   gap-2
+                   flex items-center md:justify-between justify-end   gap-2
                    pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
                    box-border pointer-events-auto bg-transparent"
       >
@@ -272,20 +268,16 @@ export default function Header() {
         >
           <div>
             <img
-              src="/LogoMark.png"
+              src="/WordMark_Spaced.png"
               preload="auto"
-              aria-hidden={sceneInView}
               className={[
-                "md:h-[1.5rem] h-[1.77rem] block transition-opacity duration-100 opacity-0",
+                "md:h-[1.5rem] h-[1.77rem] block transition-opacity duration-100",
                 "flex items-center gap-2",
                 "bg-[var(--mesm-grey-dk)]/5",
-                "rounded-2xl px-4 py-2",
+                "rounded-2xl px-4 py-3",
                 "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
                 "shadow-xl backdrop-blur-xs",
                 "min-h-[3rem] flex items-center",
-                sceneInView
-                  ? "opacity-0 pointer-events-none hidden"
-                  : "opacity-100",
               ].join(" ")}
             />
           </div>
@@ -298,6 +290,14 @@ export default function Header() {
 
           {/* Mobile: hamburger + nested links (already styled) */}
           <MobileMenu items={MOB_NAV_ITEMS} pathname={pathname} />
+        </div>
+        <div className="hidden md:flex md:items-center md:gap-2">
+          <Button size="large" variant="Primary" href="tel:+61477210477">
+            <span className="text-xl">Strategy Session</span>
+          </Button>
+          <Button size="large" variant="CTA" href="/connect">
+            <span className="text-xl">Connect</span>
+          </Button>
         </div>
       </header>
 
