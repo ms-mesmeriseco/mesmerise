@@ -292,7 +292,11 @@ export default function Header() {
           <MobileMenu items={MOB_NAV_ITEMS} pathname={pathname} />
         </div>
         <div className="hidden md:flex md:items-center md:gap-2">
-          <Button size="large" variant="Primary" href="tel:+61477210477">
+          <Button
+            size="large"
+            variant="Primary"
+            href="/marketing-strategy-session"
+          >
             <span className="text-xl">Strategy Session</span>
           </Button>
           <Button size="large" variant="CTA" href="/connect">

@@ -40,7 +40,7 @@ export default function Button({
         "duration-150 ease-out",
         "rounded-2xl hover:rounded-xl",
         // default width vs CTA full-width
-        isCTA ? "w-full h-[48px] text-center" : "w-full",
+        isCTA ? "w-full h-[48px] text-center" : "w-fit",
         // shared hover
         "hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]",
         // sizing + variant styling
