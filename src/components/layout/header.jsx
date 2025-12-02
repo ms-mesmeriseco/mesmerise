@@ -165,6 +165,7 @@ export default function Header() {
   const [hydrated, setHydrated] = useState(false);
   const [sceneInView, setSceneInView] = useState(false);
   const [scrolledEnough, setScrolledEnough] = useState(false);
+  const [showPromo, setShowPromo] = useState(true);
 
   const starts = (p) => pathname === p || pathname.startsWith(`${p}/`);
 
@@ -237,6 +238,21 @@ export default function Header() {
     }
   }, [pathname]);
 
+  // promo banner visibility (hide after user scrolls)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleScroll = () => {
+      const y = window.scrollY || window.pageYOffset || 0;
+      // hide once they scroll a bit (change 40 to taste)
+      setShowPromo(y < 40);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // sticky CTA scroll trigger
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -253,12 +269,46 @@ export default function Header() {
 
   return (
     <>
+      {/* CRO Promo Banner */}
+      <div
+        className={[
+          "fixed top-0 left-0 right-0 z-[301]",
+          "transition-all duration-300 ease-out",
+          showPromo
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-full pointer-events-none",
+        ].join(" ")}
+      >
+        <div className="mx-auto max-w-6xl px-[var(--global-margin-sm)] py-2">
+          <Link
+            href="/cro-audit"
+            className="flex items-center justify-center gap-3 rounded-2xl px-4 py-2 
+                       bg-[var(--accent2)] text-[var(--background)] shadow-lg"
+          >
+            <span className="text-sm md:text-base">
+              Feel like you're burning money and not seeing a return on ad
+              spend?
+            </span>
+
+            <span className="hidden text-sm md:inline-flex items-center gap-1 underline">
+              You could benefit from a CRO Audit
+            </span>
+          </Link>
+        </div>
+      </div>
+
       <header
         ref={headerRef}
-        className="site-header fixed top-0 left-0 right-0 z-300
-                   flex items-center md:justify-between justify-end   gap-2
+        className="site-header fixed left-0 right-0 z-300
+                   flex items-center md:justify-between justify-end gap-2
                    pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
-                   box-border pointer-events-auto bg-transparent"
+                   box-border pointer-events-auto bg-transparent
+                   transition-all duration-300 ease-out"
+        style={{
+          // This must match the banner height (here: ~48px).
+          // Adjust if you change the banner's padding/height.
+          top: showPromo ? "48px" : "0px",
+        }}
       >
         {/* Logo */}
         <Link
