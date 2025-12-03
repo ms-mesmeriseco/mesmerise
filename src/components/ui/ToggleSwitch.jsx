@@ -23,7 +23,7 @@ export default function ToggleSwitch({
         "bg-[var(--mesm-grey-dk)]/5",
         "rounded-2xl p-1",
         "border border-[var(--mesm-grey-dk)]",
-        "w-fit mx-auto mb-8",
+        "w-fit mx-auto",
         "shadow-xl backdrop-blur-xs",
         sizeClass,
         className,
@@ -38,7 +38,7 @@ export default function ToggleSwitch({
             onClick={() => onChange(option)}
             aria-pressed={isActive}
             className={[
-              "flex-1 px-4 py-1 rounded-xl transition-colors cursor-pointer focus:outline-none border-1 border-transparent hover:border-[var(--mesm-grey)]",
+              "flex-1 px-3 py-1 rounded-xl transition-colors cursor-pointer focus:outline-none border-1 border-transparent hover:border-[var(--mesm-grey-dk)]",
               isActive ? selectedTextClass : "text-[var(--foreground)]",
             ].join(" ")}
             style={isActive ? { backgroundColor: selectedBg } : undefined}

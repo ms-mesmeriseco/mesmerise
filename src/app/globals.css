@@ -100,6 +100,7 @@ body.page-blog {
   --header-height: 48px;
   --accent: #1ae2bd;
   --accent2: #fba2f0;
+  --accent2-l: #ff90f2;
 }
 /* Header entrance */
 html[data-header-visible="false"] .site-header {
@@ -170,6 +171,14 @@ a {
 .wrapper {
   width: 100%;
   max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding-left: var(--global-margin-sm);
+  padding-right: var(--global-margin-sm); */
+}
+.hero-wrapper {
+  width: 100%;
+  max-width: 1360px;
   margin-left: auto;
   margin-right: auto;
   /* padding-left: var(--global-margin-sm);

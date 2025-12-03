@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 /* palette for hover background */
 const HOVER_COLORS = [
   "var(--mesm-red)",
-  "var(--mesm-yellow)",
-  "var(--mesm-blue)",
-  "var(--accent)",
-  "var(--accent2)",
+  // "var(--mesm-yellow)",
+  // "var(--mesm-blue)",
+  // "var(--accent)",
+  // "var(--accent2)",
 ];
 
 function hashToIndex(str, mod) {

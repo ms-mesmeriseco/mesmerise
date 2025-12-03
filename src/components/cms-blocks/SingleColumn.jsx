@@ -10,7 +10,7 @@ export default function SingleColumn({
 }) {
   const CTA = (
     <div className="w-full flex items-end justify-center mt-6">
-      <Button href={"/connect"} variant="primary" size="large">
+      <Button href={"/connect"} variant="accent2" size="large">
         {ctaLab || "Learn More"}
       </Button>
     </div>

@@ -4,12 +4,14 @@ import { useRouter, usePathname } from "next/navigation";
 import ToggleSwitch from "./ToggleSwitch";
 import { motion } from "framer-motion";
 
-const OPTIONS = ["About", "Services", "Work"];
+const OPTIONS = ["About", "Services", "Work", "Collaborate", "Connect"];
 
 const PATHS = {
   About: "/about",
   Services: "/services",
   Work: "/work",
+  Connect: "/connect",
+  Collaborate: "/collaboration/",
 };
 
 const ALIASES = {
@@ -17,6 +19,7 @@ const ALIASES = {
   Services: ["services", "service"],
   Work: ["work", "projects", "project", "portfolio", "case-studies"],
   Connect: ["connect", "contact"],
+  Collaborate: ["collaboration", "collaborate"],
 };
 
 function normalizeBase(base) {
@@ -78,7 +81,7 @@ export default function MenuToggle({ base = "/" }) {
   return (
     <div
       className={[
-        "menu-toggle flex justify-center",
+        "flex justify-center",
         shouldShowOnMobile ? "flex" : "hidden md:flex",
       ].join(" ")}
     >
@@ -89,7 +92,7 @@ export default function MenuToggle({ base = "/" }) {
           y: 0,
           transition: { duration: 0.3, delay: 0.8 },
         }}
-        className="w-full h-200px"
+        className="w-full"
       >
         <ToggleSwitch
           options={OPTIONS}
@@ -97,7 +100,7 @@ export default function MenuToggle({ base = "/" }) {
           onChange={handleChange}
           aria-label="Navigate primary sections"
           selectedBg="var(--foreground)"
-          textSize="xl"
+          textSize="lg"
         />
       </motion.div>
     </div>

@@ -5,8 +5,56 @@ import { motion } from "framer-motion";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import InView from "@/hooks/InView";
 import Card from "@/components/ui/Card";
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  isValidElement,
+} from "react";
 import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
+
+function renderTitle(titleText) {
+  if (!titleText) return null;
+
+  // Manual string title
+  if (typeof titleText === "string") {
+    return <h2 className="mb-4">{titleText}</h2>;
+  }
+
+  // Manual JSX/React node
+  if (isValidElement(titleText)) {
+    return titleText;
+  }
+
+  // Contentful rich text: { json: ... }
+  if (titleText?.json) {
+    return renderRichTextWithBreaks(titleText.json);
+  }
+
+  return null;
+}
+
+function renderItemContent(textContent) {
+  if (!textContent) return null;
+
+  // Manual string
+  if (typeof textContent === "string") {
+    return <p>{textContent}</p>;
+  }
+
+  // Manual JSX/React node
+  if (isValidElement(textContent)) {
+    return textContent;
+  }
+
+  // Contentful rich text: { json: ... }
+  if (textContent?.json) {
+    return documentToReactComponents(textContent.json);
+  }
+
+  return null;
+}
 
 export default function IconRow({ titleText, iconItems = [], displayTwo }) {
   const showCarousel = displayTwo && iconItems.length > 2;
@@ -100,7 +148,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
         data-marker="icon row"
         className="w-full py-8 text-center relative"
       >
-        {renderRichTextWithBreaks(titleText?.json)}
+        {renderTitle(titleText)}
         <br />
 
         {showCarousel ? (
@@ -108,7 +156,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
             <div
               ref={scrollerRef}
               className="relative w-full mx-auto overflow-x-auto overflow-y-visible snap-x snap-mandatory scroll-smooth
-                         [scrollbar-width:none] [-ms-overflow-style:none] "
+                         [scrollbar-width:none] [-ms-overflow-style:none]"
               style={{ scrollbarWidth: "none" }}
               aria-label="Icon cards"
             >
@@ -136,14 +184,10 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
                         <div className="relative overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)] bg-black/20">
                           <Card icon={icon}>
                             <div className="p-0 md:m-0 rounded-sm">
-                              <div className="min-h-[180px] flex flex-col justify-start">
-                                {textContent?.json && (
-                                  <div className="text-sm flex flex-col gap-6">
-                                    {documentToReactComponents(
-                                      textContent.json
-                                    )}
-                                  </div>
-                                )}
+                              <div className="min-h-[180px] flex flex-col justify-start text-left">
+                                <div className="text-sm flex flex-col gap-6">
+                                  {renderItemContent(textContent)}
+                                </div>
                               </div>
                             </div>
                           </Card>
@@ -190,12 +234,10 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
               const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;
               return (
                 <Card key={key} icon={icon}>
-                  <div className="min-h-[220px] flex flex-col justify-start">
-                    {textContent?.json && (
-                      <div className="text-sm flex flex-col gap-6">
-                        {documentToReactComponents(textContent.json)}
-                      </div>
-                    )}
+                  <div className="min-h-[220px] flex flex-col justify-start text-left">
+                    <div className="text-sm flex flex-col gap-6">
+                      {renderItemContent(textContent)}
+                    </div>
                   </div>
                 </Card>
               );
@@ -208,16 +250,26 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
 }
 
 IconRow.propTypes = {
-  blockTitle: PropTypes.string,
+  titleText: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+    PropTypes.shape({
+      json: PropTypes.object,
+    }),
+  ]),
   iconItems: PropTypes.arrayOf(
     PropTypes.shape({
       icon: PropTypes.shape({
         url: PropTypes.string,
         title: PropTypes.string,
       }),
-      textContent: PropTypes.shape({
-        json: PropTypes.object,
-      }),
+      textContent: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
+        PropTypes.shape({
+          json: PropTypes.object,
+        }),
+      ]),
     })
   ),
   displayTwo: PropTypes.bool,
