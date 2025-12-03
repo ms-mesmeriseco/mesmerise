@@ -16,21 +16,21 @@
 }
 @font-face {
   font-family: "Neue Haas";
-  src: url("/fonts/neue-haas/NeueHaasDisplayRoman.ttf") format("truetype");
+  src: url("/fonts/neue-haas/NeueHaasDisplay-Roman.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "Neue Haas";
-  src: url("/fonts/neue-haas/NeueHaasDisplayMedium.ttf") format("truetype");
+  src: url("/fonts/neue-haas/NeueHaasDisplay-Medium.woff2") format("woff2");
   font-style: medium;
   font-weight: 600;
   font-display: swap;
 }
 @font-face {
   font-family: "Neue Haas";
-  src: url("/fonts/neue-haas/NeueHaasDisplayBold.ttf") format("truetype");
+  src: url("/fonts/neue-haas/NeueHaasDisplay-Bold.woff2") format("woff2");
   font-style: bold;
   font-weight: 700;
   font-display: swap;
