@@ -46,7 +46,7 @@ export default function MobileMenu({ items = [], pathname }) {
         <nav
           className="absolute right-0 mt-3 w-[220px]
                      rounded-2xl border border-[var(--mesm-grey-dk)]
-                     bg-[var(--mesm-grey-xd)]/95
+                     bg-[var(--dark-grey)]/88
                      shadow-xl backdrop-blur-xs
                      p-2"
         >
