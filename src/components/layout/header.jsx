@@ -283,10 +283,10 @@ export default function Header() {
         <div className="mx-auto max-w-6xl px-[var(--global-margin-sm)] py-2">
           <Link
             href="/cro-audit"
-            className="flex items-center justify-center gap-3 rounded-2xl px-4 py-2 
+            className="flex items-center justify-center gap-3 md:rounded-2xl rounded-xl md:px-4 px-2 py-2 
                        bg-[var(--accent2)] text-[var(--background)] shadow-lg hover:bg-[var(--accent2-l)]  duration-200 transition-colors "
           >
-            <span className="text-sm md:text-base">
+            <span className="md:text-sm md:text-base text-xs">
               Feel like you're burning money and not seeing a return on ad
               spend?
             </span>
