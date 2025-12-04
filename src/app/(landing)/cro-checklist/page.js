@@ -69,7 +69,7 @@ export const croFAQ = [
 ];
 
 export async function generateMetadata({ params }) {
-  const title = "FREE CRO Checklist Generating 25X ROAS Audit | Mesmerise";
+  const title = "FREE CRO Checklist Generating 25X ROAS | Mesmerise";
   const description =
     "Stop burning ad spend. Use our internal agency CRO checklist to identify leaks and generate 25X ROAS. Turn your failing pages into goated growth engines.";
 
