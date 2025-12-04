@@ -17,7 +17,7 @@ export async function generateMetadata() {
 
 export default async function Work({ searchParams }) {
   const tagParam = searchParams?.tag;
-  const activeTag = Array.isArray(tagParam) ? tagParam[0] : tagParam ?? null;
+  const activeTag = Array.isArray(tagParam) ? tagParam[0] : (tagParam ?? null);
 
   return (
     <div className="flex flex-col min-h-screen mb-[4rem]">
