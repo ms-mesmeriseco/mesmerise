@@ -18,15 +18,38 @@ function normalizeUrl(u) {
 }
 
 async function fetchLanding(slug) {
-  const { data } = await getClient().query({
-    query: GET_LANDING_PAGE_HERO_BY_SLUG,
-    variables: { slug },
-  });
-  return data?.landingPageCollection?.items?.[0] || null;
+  if (!slug) {
+    console.error("fetchLanding called with no slug");
+    return null;
+  }
+
+  try {
+    const { data, errors } = await getClient().query({
+      query: GET_LANDING_PAGE_HERO_BY_SLUG,
+      variables: { slug },
+    });
+
+    if (errors?.length) {
+      console.error(
+        "Contentful GraphQL errors in fetchLanding:",
+        JSON.stringify(errors, null, 2)
+      );
+    }
+
+    return data?.landingPageCollection?.items?.[0] || null;
+  } catch (err) {
+    console.error(
+      "fetchLanding Contentful error:",
+      err?.networkError?.result || err?.message || err
+    );
+    return null;
+  }
 }
 
 export async function generateMetadata({ params }) {
-  const page = await fetchLanding(params.slug);
+  const { slug } = await params; // <- unwrap the Promise
+
+  const page = await fetchLanding(slug);
 
   const title = page?.mT || "Mesmerise Digital";
   const description =
@@ -36,13 +59,15 @@ export async function generateMetadata({ params }) {
   const rawOg = page?.media?.url || page?.media?.[0]?.url || null;
   const ogImage = normalizeUrl(rawOg) || DEFAULT_OG_IMAGE;
 
+  const url = `https://www.mesmeriseco.com/${slug}`;
+
   return {
     title,
     description,
     openGraph: {
       title,
       description,
-      url: `https://www.mesmeriseco.com/${params.slug}`, // (you might want /landing/ here btw)
+      url,
       type: "website",
       images: [
         {
@@ -60,13 +85,15 @@ export async function generateMetadata({ params }) {
       images: [ogImage],
     },
     alternates: {
-      canonical: `https://www.mesmeriseco.com/${params.slug}`,
+      canonical: url,
     },
   };
 }
 
 export default async function Page({ params }) {
-  const page = await fetchLanding(params.slug);
+  const { slug } = await params; // <- unwrap the Promise
+
+  const page = await fetchLanding(slug);
   if (!page) return <p>Not found.</p>;
 
   return (
