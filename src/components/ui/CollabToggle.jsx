@@ -20,8 +20,8 @@ export default function CollabToggle({ base = "/collaboration" }) {
   const modeFromPath = segments.includes("defined")
     ? "defined"
     : segments.includes("continuous")
-    ? "continuous"
-    : "defined"; // default
+      ? "continuous"
+      : "defined"; // default
 
   const value = modeFromPath === "defined" ? "Defined" : "Continuous";
 
@@ -44,6 +44,8 @@ export default function CollabToggle({ base = "/collaboration" }) {
         value={value}
         onChange={handleChange}
         aria-label="Switch collaboration mode"
+        selectedBg="var(--mesm-yellow)"
+        textSize="lg"
       />
     </motion.div>
   );
