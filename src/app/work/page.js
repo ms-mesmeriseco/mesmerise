@@ -1,5 +1,6 @@
 import ProjectNavigationList from "@/components/cms-blocks/ProjectNavigationList";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import { Suspense } from "react";
 
 export async function generateMetadata() {
   const title = "Work | Mesmerise Digital";
@@ -22,7 +23,9 @@ export default async function Work({ searchParams }) {
   return (
     <div className="flex flex-col min-h-screen mb-[4rem]">
       <PageTitleLarge text="Work" />
-      <ProjectNavigationList activeTag={activeTag} />
+      <Suspense fallback={<p>Loading projects...</p>}>
+        <ProjectNavigationList activeTag={activeTag} />
+      </Suspense>
     </div>
   );
 }
