@@ -68,6 +68,40 @@ export const croFAQ = [
   },
 ];
 
+export async function generateMetadata({ params }) {
+  const title = "FREE CRO Checklist Generating 25X ROAS Audit | Mesmerise";
+  const description =
+    "Stop burning ad spend. Use our internal agency CRO checklist to identify leaks and generate 25X ROAS. Turn your failing pages into goated growth engines.";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://www.mesmeriseco.com/cro-checklist`, // (you might want /landing/ here btw)
+      type: "website",
+      images: [
+        {
+          url: "/assets/social-default.png",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: "/assets/social-default.png",
+    },
+    alternates: {
+      canonical: `https://www.mesmeriseco.com/cro-checklist`,
+    },
+  };
+}
+
 export function CROAudit() {
   return (
     <TwoColumn
