@@ -13,7 +13,7 @@ export const CONTINUOUS_CONTENT = {
     text: "For businesses who think exponentially.",
     cta: "Let's talk",
   },
-  whoItsForTitle: "Who it’s for",
+  whoItsForTitle: "Who it's for",
   whoItsForItems: [
     "For ambitious startups, pioneering entrepreneurs and enterprise-level organisations looking for a long-term growth partner",
     "Innovative business owners who want to stay ahead of the curve and be at the forefront of their industry",
@@ -39,7 +39,7 @@ export const CONTINUOUS_CONTENT = {
     },
     {
       title: "4. Open Dialogue",
-      body: "Progress is transparent and continuous. We share insights, invite feedback, and keep communication flowing so you’re always in the loop.",
+      body: "Progress is transparent and continuous. We share insights, invite feedback, and keep communication flowing so you're always in the loop.",
     },
     {
       title: "5. Evolution & Impact",
