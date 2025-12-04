@@ -20,57 +20,72 @@ function abs(url) {
 }
 
 export async function generateMetadata({ params }) {
-  const { slug } = params || {};
+  // ⬇️ Unwrap params (Next 15+ app router behaviour)
+  const resolved = await params;
+  const { slug } = resolved || {};
   if (!slug) return {};
 
   const { isEnabled } = await draftMode();
   const client = getClient({ preview: isEnabled });
 
-  const { data } = await client.query({
-    query: GET_BLOG_POSTS,
-    variables: { slug, preview: isEnabled }, // 👈 pass preview
-  });
+  try {
+    const { data } = await client.query({
+      query: GET_BLOG_POSTS,
+      variables: { slug, preview: isEnabled }, // 👈 pass preview
+    });
 
-  const page = data?.blogPostPageCollection?.items?.[0];
-  if (!page) {
+    const page = data?.blogPostPageCollection?.items?.[0];
+    if (!page) {
+      return {
+        title: "Post not found",
+        description: "This post could not be located.",
+        robots: { index: false },
+      };
+    }
+
+    const metaTitle = page.metaTitle || page.postTitle || "Mesmerise Digital";
+
+    const metaDescription =
+      page.metaDescription?.json ||
+      (page.blogContent?.json?.content || [])
+        .map((n) =>
+          n.nodeType === "paragraph"
+            ? (n.content || []).map((c) => c.value || "").join("")
+            : ""
+        )
+        .join(" ")
+        .slice(0, 160);
+
+    const ogImage =
+      page.heroImage?.url ||
+      "https://www.mesmeriseco.com/assets/social-default.png";
+
+    const canonical = abs(`https://www.mesmeriseco.com/blog/${slug}`);
+
     return {
-      title: "Post not found",
-      description: "This post could not be located.",
+      title: metaTitle,
+      description: metaDescription,
+      alternates: { canonical },
+      openGraph: {
+        title: metaTitle,
+        description: metaDescription,
+        url: canonical,
+        type: "article",
+        images: ogImage ? [{ url: abs(ogImage) }] : undefined,
+      },
+    };
+  } catch (err) {
+    console.error(
+      "Blog generateMetadata Contentful error:",
+      err?.networkError?.result || err?.message || err
+    );
+    // Fallback minimal meta
+    return {
+      title: "Mesmerise Digital Blog",
+      description: "",
       robots: { index: false },
     };
   }
-
-  const metaTitle = page.metaTitle || page.postTitle || "Mesmerise Digital";
-
-  const metaDescription =
-    page.metaDescription?.json ||
-    (page.blogContent?.json?.content || [])
-      .map((n) =>
-        n.nodeType === "paragraph"
-          ? (n.content || []).map((c) => c.value || "").join("")
-          : ""
-      )
-      .join(" ")
-      .slice(0, 160);
-
-  const ogImage =
-    page.heroImage?.url ||
-    "https://www.mesmeriseco.com/assets/social-default.png";
-
-  const canonical = abs(`https://www.mesmeriseco.com/blog/${slug}`);
-
-  return {
-    title: metaTitle,
-    description: metaDescription,
-    alternates: { canonical },
-    openGraph: {
-      title: metaTitle,
-      description: metaDescription,
-      url: canonical,
-      type: "article",
-      images: ogImage ? [{ url: abs(ogImage) }] : undefined,
-    },
-  };
 }
 
 function AuthorCard({ author }) {
@@ -110,30 +125,51 @@ function AuthorCard({ author }) {
 }
 
 export default async function BlogPost({ params }) {
-  const { slug } = params;
+  // ⬇️ Unwrap params here as well
+  const resolved = await params;
+  const { slug } = resolved || {};
+  if (!slug) return <p>Blog post not found.</p>;
+
   const { isEnabled } = await draftMode(); // 👈 detect Draft Mode
   const client = getClient({ preview: isEnabled }); // 👈 preview-aware client
 
-  const { data } = await client.query({
-    query: GET_BLOG_POSTS,
-    variables: { slug, preview: isEnabled }, // 👈 pass preview through
-  });
+  let page;
+  let more;
 
-  const page = data?.blogPostPageCollection?.items?.[0];
-  if (!page) return <p>Blog post not found.</p>;
+  try {
+    const { data } = await client.query({
+      query: GET_BLOG_POSTS,
+      variables: { slug, preview: isEnabled }, // 👈 pass preview through
+    });
+
+    page = data?.blogPostPageCollection?.items?.[0];
+    if (!page) return <p>Blog post not found.</p>;
+
+    const tagIds =
+      page?.contentfulMetadata?.tags?.map((t) => t?.id).filter(Boolean) || [];
+
+    const moreResult = await client.query({
+      query: GET_ADJACENT_AND_RELATED_BLOGS,
+      variables: {
+        date: page.postDate || new Date(0).toISOString(),
+        slug,
+        tagIds: tagIds.length ? tagIds : undefined,
+        preview: isEnabled,
+      },
+      fetchPolicy: "no-cache",
+    });
+
+    more = moreResult.data;
+  } catch (err) {
+    console.error(
+      "BlogPost Contentful error:",
+      err?.networkError?.result || err?.message || err
+    );
+    return <p>Blog post not found.</p>;
+  }
+
   const tagIds =
     page?.contentfulMetadata?.tags?.map((t) => t?.id).filter(Boolean) || [];
-
-  const { data: more } = await client.query({
-    query: GET_ADJACENT_AND_RELATED_BLOGS,
-    variables: {
-      date: page.postDate || new Date(0).toISOString(),
-      slug,
-      tagIds: tagIds.length ? tagIds : undefined,
-      preview: isEnabled,
-    },
-    fetchPolicy: "no-cache",
-  });
 
   const prev = more?.prev?.items?.[0] || null;
   const next = more?.next?.items?.[0] || null;
@@ -265,7 +301,6 @@ export default async function BlogPost({ params }) {
             )}
 
             {author?.authorBio && <AuthorCard author={author} />}
-            {/* Prev / Next */}
             {(prev || next) && (
               <nav
                 className="mt-8 pt-6 border-t border-[var(--mesm-grey-dk)] flex items-center justify-between gap-3"
@@ -278,9 +313,6 @@ export default async function BlogPost({ params }) {
                       className="group inline-flex items-center gap-2 text-sm"
                     >
                       <span className="opacity-70">Previous article</span>
-                      {/* <span className="truncate group-hover:underline">
-                      {prev.postTitle}
-                    </span> */}
                     </Link>
                   ) : (
                     <span className="opacity-40 text-sm">No previous post</span>
@@ -292,9 +324,6 @@ export default async function BlogPost({ params }) {
                       href={`/blog/${next.slug}`}
                       className="group inline-flex items-center gap-2 text-sm"
                     >
-                      {/* <span className="truncate group-hover:underline">
-                      {next.postTitle}
-                    </span> */}
                       <span className="opacity-70">Next article</span>
                     </Link>
                   ) : (
