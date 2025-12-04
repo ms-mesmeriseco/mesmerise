@@ -26,11 +26,8 @@ export default function CollabModel() {
 
         <div className="grid md:grid-cols-2 justify-center items-stretch gap-[var(--global-margin-xs)]  border-t m-0 border-b border-[var(--mesm-grey-dk)] py-4">
           {offerings.map((pkg) => (
-            <Link href={pkg.cta.href}>
-              <div
-                key={pkg.title}
-                className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-yellow)] duration-200 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] hover:bg-[var(--mesm-yellow)] text-[var(--foreground)] hover:text-[var(--background)] cursor-pointer"
-              >
+            <Link key={pkg.title} href={pkg.cta.href}>
+              <div className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-yellow)] duration-200 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] hover:bg-[var(--mesm-yellow)] text-[var(--foreground)] hover:text-[var(--background)] cursor-pointer">
                 <h3 className="page-title-medium font-bold w-1/2">
                   {pkg.title}
                 </h3>
