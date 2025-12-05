@@ -62,7 +62,7 @@ const rawBlocksQuery = `
     landingPageCollection(limit: 1, where: { pageSlug: $slug}) {
       items {
         sys { id }
-        pageBlocksCollection(limit: 23) {
+        pageBlocksCollection(limit: 30) {
           items {
             ... on IconRow {
               ...IconRowFragment
