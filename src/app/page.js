@@ -10,7 +10,7 @@ import ServicesRail from "@/components/services/ServicesRail";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
-  () => import("@/components/cms-blocks/ProjectRail"),
+  () => import("@/components/sanity-blocks/ProjectRail"),
   { suspense: true }
 );
 const ImpactStats = dynamic(() => import("@/components/home/ImpactStats"), {

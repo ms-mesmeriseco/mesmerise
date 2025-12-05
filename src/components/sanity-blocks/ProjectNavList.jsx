@@ -11,11 +11,24 @@ import ServiceTags from "../services/ServiceTags";
 
 const FILTER_MAP = {
   Strategy: [
+    "Strategy",
     "Business Consulting",
+    "Competitor Analysis",
+    "Positioning",
+    "Interviews & Workshops",
+    "Customer Research",
     "Content Strategy",
+    "Personas & Archetypes",
+    "Conversion Rate Optimisation",
+    "Marketing Funnel",
     "Go-to-Market Strategy",
+    "Customer Journey Maps",
+    "Systems & Processes",
+    "Product Development",
   ],
   Branding: [
+    "Branding",
+    "Brand Strategy & Positioning",
     "Tone of Voice",
     "Brand Identity",
     "Logo",
@@ -23,16 +36,46 @@ const FILTER_MAP = {
     "Style Guide",
     "Colour Palette",
     "Creative Direction",
+    "Motion Graphics",
   ],
-  Website: ["Website Builders", "Web Design"],
+  Website: [
+    "Front-end development",
+    "Website",
+    "Back-end Development",
+    "User Experience",
+    "UI Design",
+    "CMS Integration",
+    "Systems Architecture",
+    "E-Commerce",
+    "Website Builders",
+    "Applications",
+    "Accessibility",
+    "Performance Testing",
+    "Ongoing Support",
+    "Security",
+    "Hosting & Deployment",
+    "Web Design",
+    "Prototyping",
+    "Search Engine Optimisation",
+  ],
   Performance: [
+    "Performance",
+    "Ad creative",
+    "Marketing Materials",
     "Paid Media Management",
     "Content Marketing",
     "Local SEO & Geo Targeting",
     "SEO",
+    "Customer Lifecycle",
     "Omni-Channel Marketing",
   ],
-  Analytics: ["Analytics Setup & Audit", "Web Traffic", "Reporting", "GA4"],
+  Analytics: [
+    "ANalytics",
+    "Analytics Setup & Audit",
+    "Web Traffic",
+    "Reporting",
+    "GA4",
+  ],
 };
 
 const normalize = (s) => (s || "").toString().trim().toLowerCase();
@@ -278,41 +321,10 @@ export default function ProjectNavigationList({ activeTag = null }) {
                   </div>
 
                   {/* Optional: per-project tags visible under each row */}
-                  {/*
+
                   <div className="mt-0 md:mt-0 pointer-events-none">
-                    {(() => {
-                      const projectNames = new Set(
-                        (project.serviceTags || [])
-                          .filter(Boolean)
-                          .map((s) => normalize(s))
-                      );
-
-                      const labelsForProject = availableFilterLabels.filter(
-                        (label) =>
-                          (FILTER_MAP[label] || []).some((alias) =>
-                            projectNames.has(normalize(alias))
-                          )
-                      );
-
-                      const firstEight = labelsForProject.slice(0, 8);
-                      const extra = Math.max(
-                        0,
-                        labelsForProject.length - firstEight.length
-                      );
-
-                      return (
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <ServiceTags items={firstEight} large={false} />
-                          {extra > 0 && (
-                            <span className="text-xs opacity-70">
-                              +{extra} more
-                            </span>
-                          )}
-                        </div>
-                      );
-                    })()}
+                    <ServiceTags tags={project.serviceTags || []} />
                   </div>
-                  */}
                 </div>
               </Link>
             </motion.div>

@@ -1,4 +1,4 @@
-import ProjectNavigationList from "@/components/cms-blocks/ProjectNavigationList";
+import ProjectNavList from "@/components/sanity-blocks/ProjectNavList";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import { Suspense } from "react";
 
@@ -24,7 +24,7 @@ export default async function Work({ searchParams }) {
     <div className="flex flex-col min-h-screen mb-[4rem]">
       <PageTitleLarge text="Work" />
       <Suspense fallback={<p>Loading projects...</p>}>
-        <ProjectNavigationList activeTag={activeTag} />
+        <ProjectNavList activeTag={activeTag} />
       </Suspense>
     </div>
   );
