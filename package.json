@@ -17,6 +17,7 @@
     "@react-three/fiber": "^9.3.0",
     "@react-three/postprocessing": "^3.0.4",
     "@sanity/client": "^7.13.1",
+    "@sanity/image-url": "^2.0.2",
     "@tailwindcss/postcss": "^4.1.11",
     "@vercel/analytics": "^1.5.0",
     "contentful": "^11.7.3",
