@@ -56,12 +56,12 @@ export async function GET() {
     { loc: `${baseUrl}/connect`, changefreq: "monthly", priority: "0.7" },
     { loc: `${baseUrl}/blog`, changefreq: "weekly", priority: "0.7" },
     {
-      loc: `${baseUrl}/defined`,
+      loc: `${baseUrl}/collaboration/defined`,
       changefreq: "weekly",
       priority: "0.7",
     },
     {
-      loc: `${baseUrl}/continuous`,
+      loc: `${baseUrl}/collaboration/continuous`,
       changefreq: "weekly",
       priority: "0.7",
     },
