@@ -5,97 +5,8 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
-import { BLOCKS } from "@contentful/rich-text-types";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import AvatarRow from "../ui/AvatarRow";
-
-/* --- helpers --- */
-function decodeEntities(str = "") {
-  return str
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'");
-}
-
-// optional: lightly sanitize to keep only the iframe tag (prevents stray HTML)
-function extractIframe(html = "") {
-  const match = html.match(/<iframe[^>]*>[\s\S]*?<\/iframe>/i);
-  return match ? match[0] : "";
-}
-
-const richRenderOptions = {
-  renderNode: {
-    [BLOCKS.PARAGRAPH]: (node, children) => {
-      const raw = (node.content || [])
-        .map((c) => (c.nodeType === "text" ? c.value || "" : ""))
-        .join("");
-
-      const looksLikeIframe =
-        raw.includes("<iframe") || raw.includes("&lt;iframe");
-
-      if (!looksLikeIframe) return <p>{children}</p>;
-
-      // 1) decode & 2) extract the iframe only
-      const decoded = decodeEntities(raw);
-      const iframe = extractIframe(decoded);
-      if (!iframe) return <p>{children}</p>;
-
-      // Make it responsive inside your aspect-[16/9] wrapper
-      return (
-        <div
-          className="absolute inset-0 w-full h-full"
-          // We assume this input is trusted (YouTube embed).
-          // If you ever allow arbitrary user input, add stricter sanitization.
-          dangerouslySetInnerHTML={{ __html: iframe }}
-        />
-      );
-    },
-  },
-};
-
-/* ---------- tiny helpers (shared) ---------- */
-function textFromNode(node) {
-  if (!node) return "";
-  if (node.nodeType === "text") return node.value || "";
-  const children = node.content || [];
-  return children.map(textFromNode).join("");
-}
-function collectListItems(node, out) {
-  if (!node) return;
-  const { nodeType, content = [] } = node;
-  if (nodeType === "unordered-list" || nodeType === "ordered-list") {
-    content.forEach((li) => {
-      if (li?.nodeType === "list-item") {
-        const text = li.content
-          ?.map((child) => {
-            if (child?.nodeType === "paragraph")
-              return textFromNode(child).trim();
-            if (
-              child?.nodeType === "unordered-list" ||
-              child?.nodeType === "ordered-list"
-            ) {
-              const nested = [];
-              collectListItems(child, nested);
-              return nested.join(" • ");
-            }
-            return "";
-          })
-          .filter(Boolean)
-          .join(" ")
-          .trim();
-        if (text) out.push(text);
-      }
-    });
-  }
-  content.forEach((c) => collectListItems(c, out));
-}
-function getListItemsFromRichText(doc) {
-  const items = [];
-  collectListItems(doc, items);
-  return items;
-}
+import { listFromHeroL, extractIframeFromBlocks } from "./heroUtils";
 
 function PillList({ items = [], className = "" }) {
   if (!items.length) return null;
@@ -117,13 +28,12 @@ function PillList({ items = [], className = "" }) {
             "rounded-xl border border-[var(--mesm-grey-dk)]",
             "text-md md:text-lg md:text-base font-medium",
             "bg-[var(--mesm-grey-dk)]/20",
-            "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-x-[1px] ",
+            "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-x-[1px]",
             "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
             "duration-200",
             "backdrop-blur-[1px]",
           ].join(" ")}
         >
-          {/* swap to inline SVG for smoother rendering & no layout shift */}
           <svg
             width="18"
             height="18"
@@ -146,91 +56,67 @@ function PillList({ items = [], className = "" }) {
 
 function MediaDisplay({ media, fill = false }) {
   if (!media?.url) return null;
-  const isVideo = media?.contentType?.includes("video");
-  const common = fill
-    ? "w-full h-full object-contain rounded-lg "
-    : "w-full h-full object-contain rounded-lg ";
+  const isVideo =
+    media?.mimeType?.includes("video") ||
+    media?.asset?._type === "sanity.fileAsset";
+
+  const common = "w-full h-full object-contain rounded-lg";
+
   return isVideo ? (
     <video src={media.url} autoPlay muted loop playsInline className={common} />
   ) : (
-    <img src={media.url} alt={media.title || ""} className={common} />
+    <img
+      src={media.url}
+      alt={media.alt || media.title || ""}
+      className={common}
+    />
   );
 }
 
-/* ---------- LeftHero ---------- */
 export default function LeftHero({
-  heroMedia,
+  heroMedia, // {url, mimeType, ...} from GROQ
   pageHeader,
   pageSubtitle,
-  heroL, // { json }
+  heroL, // Sanity blocks or strings
   showCta = true,
   ctaLabel,
   ctaUrl = "/connect",
   logos,
-  heroEmbed,
+  heroEmbed, // Sanity blocks array (hE)
   customContent,
 }) {
-  const listItems = useMemo(() => {
-    if (Array.isArray(heroL)) {
-      return heroL;
-    }
+  const listItems = useMemo(() => listFromHeroL(heroL), [heroL]);
 
-    if (typeof heroL === "string") {
-      return [heroL];
-    }
-
-    if (heroL?.json) {
-      return getListItemsFromRichText(heroL.json);
-    }
-
-    // 4) Fallback
-    return [];
-  }, [heroL]);
+  const iframeHtml = useMemo(
+    () => extractIframeFromBlocks(heroEmbed),
+    [heroEmbed]
+  );
 
   const customers = [
-    {
-      id: 1,
-      src: "/assets/customers/Tony.png",
-    },
-    {
-      id: 2,
-      src: "/assets/customers/Mitch.png",
-    },
+    { id: 1, src: "/assets/customers/Tony.png" },
+    { id: 2, src: "/assets/customers/Mitch.png" },
     { id: 3, src: "/assets/customers/Misty.png" },
-    {
-      id: 4,
-      src: "/assets/customers/Lani_love.png",
-    },
+    { id: 4, src: "/assets/customers/Lani_love.png" },
     { id: 5, src: "/assets/customers/Kirpy.png" },
     { id: 6, src: "/assets/customers/Kez.png" },
-    // {
-    //   id: 7,
-    //   src: "/assets/customers/Jay.png",
-    // },
-    // { id: 8, src: "/assets/customers/Bobsicins.png" },
   ];
 
   return (
     <InView>
-      {/* Grid lets us reorder on mobile and pin badges to base on desktop */}
       <section
         className={[
           "hero-wrapper relative overflow-hidden pt-4",
-          "",
-          // Mobile: single column; Desktop: 2 columns + bottom row for badges
           "grid grid-cols-1 md:grid-cols-4 md:grid-rows-[1fr_auto]",
           "md:gap-6 gap-12",
-          "md:min-h-[90vh]", // full screen height on md+
+          "md:min-h-[90vh]",
         ].join(" ")}
       >
-        {/* TEXT — mobile order 1; desktop row 1 col 1 */}
+        {/* TEXT */}
         <div
           className={[
-            "md:order-none",
             "md:row-start-1 md:col-start-1 md:col-span-2 col-span-1",
             "flex flex-col justify-center text-left gap-2",
             "text-[var(--foreground)] w-[90%]",
-            "",
           ].join(" ")}
         >
           <StaggeredWords
@@ -241,7 +127,8 @@ export default function LeftHero({
           <StaggeredWords as="p" text={pageSubtitle} />
 
           <PillList items={listItems} className="justify-start" />
-          <div className="flex flex-col ">
+
+          <div className="flex flex-col">
             {customContent
               ? customContent
               : showCta && (
@@ -255,27 +142,30 @@ export default function LeftHero({
                   </Button>
                 )}
           </div>
+
           <AvatarRow people={customers} />
         </div>
 
-        {/* MEDIA — mobile order 3; desktop row 1 col 2 */}
+        {/* MEDIA */}
         <div
           className={[
-            "md:order-none",
             "md:row-start-1 md:col-start-3 md:col-span-2 col-span-1",
             "flex items-center justify-center md:max-h-[70vh]",
           ].join(" ")}
         >
           <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
-            {heroEmbed?.json ? (
-              <div className="absolute inset-0 min-h-full">
-                {documentToReactComponents(heroEmbed.json, richRenderOptions)}
-              </div>
+            {iframeHtml ? (
+              <div
+                className="absolute inset-0 w-full h-full"
+                dangerouslySetInnerHTML={{ __html: iframeHtml }}
+              />
             ) : (
               <MediaDisplay media={heroMedia} fill />
             )}
           </div>
         </div>
+
+        {/* TRUST BADGES */}
         {logos?.length ? (
           <div className="w-full md:col-span-5 col-span-1">
             <TrustBadges logos={logos} />
