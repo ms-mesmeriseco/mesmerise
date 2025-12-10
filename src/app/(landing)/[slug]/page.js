@@ -131,9 +131,7 @@ export default async function Page({ params }) {
   if (!page) {
     return notFound();
   }
-
-  console.log("Rendering landing page for slug:", page);
-
+  console.log(page);
   return (
     <>
       <LandingPageClient page={page} />

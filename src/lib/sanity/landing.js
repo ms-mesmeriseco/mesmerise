@@ -69,6 +69,47 @@ export const landingBySlugQuery = groq`
         textContent
       },
 
+// inside "content": content[]-> { ... } for single column
+"icon": icon.asset->url,
+"accordionItems": accordionContent[]->{
+  _id,
+  _type,
+  entryTitle,
+  textContent
+}
+    },
+
+   // ---------- TWO COLUMN BLOCK ----------
+h2,
+ctaCol,
+ctaLab,
+
+"column1": column1[]->{
+      _id,
+      _type,
+      entryTitle,
+
+      // Rich text block
+      content,
+
+      // Image component
+      "image": imageContent.asset->{
+        url,
+        "dimensions": metadata.dimensions
+      },
+
+      // Video component
+      "videoFile": videoContent.asset->url,
+
+      // List icons component
+      listItems[]->{
+        _id,
+        _type,
+        entryTitle,
+        "icon": icon.asset->url,
+        textContent
+      },
+
       // Accordion widget (when used inside single column)
       accordionContent[]->{
         _id,
@@ -78,19 +119,24 @@ export const landingBySlugQuery = groq`
       }
     },
 
-    // ---------- TWO COLUMN BLOCK ----------
-    h2,
-    ctaCol,
-    column1[]->{
+"column2": column2[]->{
       _id,
       _type,
       entryTitle,
+
+      // Rich text block
       content,
+
+      // Image component
       "image": imageContent.asset->{
         url,
         "dimensions": metadata.dimensions
       },
+
+      // Video component
       "videoFile": videoContent.asset->url,
+
+      // List icons component
       listItems[]->{
         _id,
         _type,
@@ -98,6 +144,8 @@ export const landingBySlugQuery = groq`
         "icon": icon.asset->url,
         textContent
       },
+
+      // Accordion widget (when used inside single column)
       accordionContent[]->{
         _id,
         _type,
@@ -105,30 +153,7 @@ export const landingBySlugQuery = groq`
         textContent
       }
     },
-    column2[]->{
-      _id,
-      _type,
-      entryTitle,
-      content,
-      "image": imageContent.asset->{
-        url,
-        "dimensions": metadata.dimensions
-      },
-      "videoFile": videoContent.asset->url,
-      listItems[]->{
-        _id,
-        _type,
-        entryTitle,
-        "icon": icon.asset->url,
-        textContent
-      },
-      accordionContent[]->{
-        _id,
-        _type,
-        entryTitle,
-        textContent
-      }
-    },
+
 
     // ---------- ICON ROW ----------
     titleText,
@@ -205,12 +230,7 @@ export const landingBySlugQuery = groq`
       "url": asset->url
     },
 
-    // ---------- COMPARISON TABLE ----------
-    richTxt,
-    title1,
-    column1,
-    title2,
-    column2
+
   }
 }
 `;

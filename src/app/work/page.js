@@ -1,6 +1,8 @@
+import { Suspense } from "react";
+import { groq } from "next-sanity";
+import { sanityClient } from "@/sanity/client";
 import ProjectNavList from "@/components/sanity-blocks/ProjectNavList";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
-import { Suspense } from "react";
 
 export async function generateMetadata() {
   const title = "Work | Mesmerise Digital";
@@ -16,15 +18,37 @@ export async function generateMetadata() {
   };
 }
 
+const projectsQuery = groq`*[_type == "projectPage" && contentfulArchived != true]{
+  _id,
+  projectTitle,
+  "slug": slug.current,
+  projectDate,
+  collaborationModel,
+  serviceTags
+}`;
+
+async function fetchProjects() {
+  try {
+    const data = await sanityClient.fetch(projectsQuery);
+    return data || [];
+  } catch (err) {
+    console.error("Error fetching projects for /work:", err);
+    return [];
+  }
+}
+
 export default async function Work({ searchParams }) {
-  const tagParam = searchParams?.tag;
+  const tagParam = await searchParams?.tag;
   const activeTag = Array.isArray(tagParam) ? tagParam[0] : (tagParam ?? null);
+
+  const projects = await fetchProjects();
 
   return (
     <div className="flex flex-col min-h-screen mb-[4rem]">
       <PageTitleLarge text="Work" />
+      {/* Suspense isn't strictly needed now, but you can keep or remove it */}
       <Suspense fallback={<p>Loading projects...</p>}>
-        <ProjectNavList activeTag={activeTag} />
+        <ProjectNavList activeTag={activeTag} projects={projects} />
       </Suspense>
     </div>
   );

@@ -1,12 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-
-import { sanityClient } from "@/sanity/client";
-import { groq } from "next-sanity";
 import ServiceTags from "../services/ServiceTags";
 
 const FILTER_MAP = {
@@ -80,17 +77,18 @@ const FILTER_MAP = {
 
 const normalize = (s) => (s || "").toString().trim().toLowerCase();
 
-export default function ProjectNavigationList({ activeTag = null }) {
+export default function ProjectNavigationList({
+  activeTag = null,
+  projects = [],
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [projects, setProjects] = useState([]);
   const [selectedLabel, setSelectedLabel] = useState(null);
   const [selectedRaw, setSelectedRaw] = useState(null);
   const [noMatchMessage, setNoMatchMessage] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const isLoaded = true; // now it's always "loaded" because data is passed in
 
-  // --- alias -> label map (includes labels themselves) ---
   const aliasToLabel = useMemo(() => {
     const map = new Map();
     Object.keys(FILTER_MAP).forEach((label) => {
@@ -102,57 +100,6 @@ export default function ProjectNavigationList({ activeTag = null }) {
     return map;
   }, []);
 
-  // --- Fetch projects from Sanity (projectPage docs) ---
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const data = await sanityClient.fetch(
-          groq`*[_type == "projectPage" && contentfulArchived != true]{
-            _id,
-            projectTitle,
-            "slug": slug.current,
-            projectDate,
-            collaborationModel,
-            serviceTags
-          }`
-        );
-
-        setProjects(data || []);
-      } catch (err) {
-        console.error("Error loading projects from Sanity:", err);
-      } finally {
-        setIsLoaded(true);
-      }
-    }
-
-    fetchProjects();
-  }, []);
-
-  // --- Debug: title + tags ---
-  projects.forEach((p) => {
-    const tags = (p.serviceTags || []).filter(Boolean).join(", ");
-    console.log(`${p.projectTitle}: ${tags}`);
-  });
-
-  // --- Present tags across all projects (normalized) ---
-  const presentTagSet = useMemo(() => {
-    const set = new Set();
-    projects.forEach((p) =>
-      (p.serviceTags || []).forEach((t) => set.add(normalize(t)))
-    );
-    return set;
-  }, [projects]);
-
-  // --- Only render quick-filter buttons that actually appear in data ---
-  const availableFilterLabels = useMemo(() => {
-    return Object.keys(FILTER_MAP).filter((label) =>
-      (FILTER_MAP[label] || []).some((alias) =>
-        presentTagSet.has(normalize(alias))
-      )
-    );
-  }, [presentTagSet]);
-
-  // --- Sync selection from URL or prop (accept ANY tag; map to label if possible) ---
   useEffect(() => {
     const urlTag = searchParams.get("tag") ?? activeTag;
     if (urlTag) {
@@ -168,10 +115,24 @@ export default function ProjectNavigationList({ activeTag = null }) {
       setSelectedLabel(null);
       setSelectedRaw(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, activeTag, aliasToLabel]);
 
-  // --- Compute candidates for filtering ---
+  const presentTagSet = useMemo(() => {
+    const set = new Set();
+    projects.forEach((p) =>
+      (p.serviceTags || []).forEach((t) => set.add(normalize(t)))
+    );
+    return set;
+  }, [projects]);
+
+  const availableFilterLabels = useMemo(() => {
+    return Object.keys(FILTER_MAP).filter((label) =>
+      (FILTER_MAP[label] || []).some((alias) =>
+        presentTagSet.has(normalize(alias))
+      )
+    );
+  }, [presentTagSet]);
+
   const filteredProjects = useMemo(() => {
     if (!selectedLabel && !selectedRaw) {
       return [...projects].sort(
@@ -195,16 +156,14 @@ export default function ProjectNavigationList({ activeTag = null }) {
       .sort((a, b) => new Date(b.projectDate) - new Date(a.projectDate));
   }, [projects, selectedLabel, selectedRaw]);
 
-  // --- No match logic ---
   useEffect(() => {
-    if (!isLoaded) return;
     const display = selectedLabel || selectedRaw;
     if (display && filteredProjects.length === 0) {
       setNoMatchMessage(`No projects tagged "${display}".`);
     } else {
       setNoMatchMessage(null);
     }
-  }, [isLoaded, selectedLabel, selectedRaw, filteredProjects.length]);
+  }, [selectedLabel, selectedRaw, filteredProjects.length]);
 
   const handleSelectLabel = (label) => {
     setSelectedLabel(label);
@@ -277,15 +236,6 @@ export default function ProjectNavigationList({ activeTag = null }) {
             </motion.button>
           ))}
         </motion.div>
-      )}
-
-      {/* Loading Skeleton */}
-      {!isLoaded && (
-        <div className="flex flex-col gap-2 animate-pulse">
-          <div className="h-6 w-24 bg-gray-300 rounded" />
-          <div className="h-6 w-32 bg-gray-300 rounded" />
-          <div className="h-6 w-28 bg-gray-300 rounded" />
-        </div>
       )}
 
       {noMatchMessage && isLoaded && (

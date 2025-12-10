@@ -2,8 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { BLOCKS } from "@contentful/rich-text-types";
+import { PortableText } from "@portabletext/react";
 import { AnimatePresence, motion } from "framer-motion";
 import InView from "@/hooks/InView";
 
@@ -16,7 +15,11 @@ const DOT_COLORS = [
 ];
 
 export default function MediaCarouselWithText({ mediaContentCollection }) {
-  const items = mediaContentCollection?.items || [];
+  // Supports:
+  // - array directly: mediaContentCollection = block.mediaContent
+  // - or collection shape: { items: [...] }
+  const items = mediaContentCollection?.items || mediaContentCollection || [];
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasRendered, setHasRendered] = useState(false);
   const [progressKey, setProgressKey] = useState(0);
@@ -24,21 +27,46 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
   const timeoutRef = useRef();
 
   useEffect(() => {
-    if (!hasRendered) return;
+    if (!hasRendered || items.length === 0) return;
+
     timeoutRef.current = setTimeout(() => {
       setHasRendered(false);
       setActiveIndex((prev) => (prev + 1) % items.length);
     }, TRANSITION_DURATION);
+
     return () => clearTimeout(timeoutRef.current);
   }, [hasRendered, activeIndex, items.length]);
 
   if (items.length === 0) return null;
+
   const activeItem = items[activeIndex];
+
+  const mediaUrl =
+    activeItem?.fileUrl ||
+    activeItem?.mediaContent?.fileUrl || // fallback if you change projection later
+    null;
+
+  const isVideo = !!mediaUrl && /\.(mp4|mov|webm|ogg)$/i.test(mediaUrl);
 
   const handleMediaLoad = () => {
     setHasRendered(true);
     setProgressKey(Date.now());
   };
+
+  if (!mediaUrl) {
+    console.warn(
+      "MediaCarouselWithText: missing media URL on item",
+      activeItem
+    );
+    return null;
+  }
+
+  const rawTextContent = activeItem?.textContent || [];
+
+  const textBlocks = rawTextContent.map((block, idx) => ({
+    ...block,
+    _key: block._key ? `${block._key}-${idx}` : `pt-block-${idx}`,
+  }));
 
   return (
     <InView>
@@ -54,17 +82,9 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
             className="relative w-full md:aspect-[16/9] aspect-[5/6] overflow-hidden bg-black"
           >
             {/* Image or Video */}
-            {activeItem.mediaContent?.contentType?.startsWith("image/") ? (
-              <Image
-                src={activeItem.mediaContent.fileUrl}
-                alt={activeItem.labelText || "carousel image"}
-                fill
-                className="object-cover hover:opacity-50 md:opacity-90 opacity-50 duration-500"
-                onLoad={handleMediaLoad}
-              />
-            ) : (
+            {isVideo ? (
               <video
-                src={activeItem.mediaContent.fileUrl}
+                src={mediaUrl}
                 autoPlay
                 muted
                 loop
@@ -72,13 +92,20 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 className="w-full h-full object-cover hover:opacity-50 md:opacity-90 opacity-50 duration-500"
                 onLoadedData={handleMediaLoad}
               />
+            ) : (
+              <Image
+                src={mediaUrl}
+                alt={activeItem.labelText || "carousel image"}
+                fill
+                className="object-cover hover:opacity-50 md:opacity-90 opacity-50 duration-500"
+                onLoad={handleMediaLoad}
+              />
             )}
 
-            {/* Overlay text */}
-            {activeItem.textContent?.json && (
+            {rawTextContent.length > 0 && (
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={activeIndex}
+                  key={`${activeIndex}-text`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -86,23 +113,29 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                   lazy="true"
                   className="absolute top-1 left-1 text-white md:p-4 p-2 rounded-lg md:max-w-[50%] max-w-[100%] text-sm z-10"
                 >
-                  {documentToReactComponents(activeItem.textContent.json, {
-                    renderNode: {
-                      [BLOCKS.HEADING_3]: (_node, children) => (
-                        <h3 className="text-lg font-bold">{children}</h3>
-                      ),
-                      [BLOCKS.HEADING_4]: (_node, children) => (
-                        <h4 className="text-base font-medium">{children}</h4>
-                      ),
-                    },
-                  })}
+                  <PortableText
+                    value={textBlocks}
+                    components={{
+                      block: {
+                        h3: ({ children }) => (
+                          <h3 className="text-lg font-bold">{children}</h3>
+                        ),
+                        h4: ({ children }) => (
+                          <h4 className="text-base font-medium">{children}</h4>
+                        ),
+                        normal: ({ children }) => (
+                          <p className="text-sm leading-relaxed">{children}</p>
+                        ),
+                      },
+                    }}
+                  />
                 </motion.div>
               </AnimatePresence>
             )}
           </motion.div>
         </AnimatePresence>
 
-        {/* --- Mobile dots (replace labels on mobile) --- */}
+        {/* --- Mobile dots --- */}
         <div className="mt-4 flex items-center justify-center gap-3 md:hidden">
           {items.map((item, idx) => {
             const color = DOT_COLORS[idx % DOT_COLORS.length];
@@ -117,8 +150,8 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 }}
                 className={[
                   "relative inline-flex shrink-0 rounded-full transition-transform",
-                  "w-5 h-5", // base dot size
-                  "bg-[var(--mesm-yellow)]",
+                  "w-5 h-5",
+                  color,
                   isActive ? "" : "opacity-20 hover:opacity-100",
                 ].join(" ")}
               />
@@ -126,12 +159,12 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
           })}
         </div>
 
-        {/* --- Desktop labels (hidden on mobile) --- */}
+        {/* --- Desktop labels --- */}
         <div
           className="hidden md:grid mt-4 gap-2 font-medium"
           style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             {items.map((item, idx) => (
               <motion.div
                 key={idx}
@@ -155,7 +188,6 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                   {item.labelText || `Slide ${idx + 1}`}
                 </button>
 
-                {/* Progress bar under active button (desktop only) */}
                 {idx === activeIndex && hasRendered && (
                   <div className="absolute bottom-0 left-0 h-[0.1rem] bg-black w-full overflow-hidden">
                     <div
@@ -170,7 +202,6 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
           </AnimatePresence>
         </div>
 
-        {/* Animations */}
         <style jsx>{`
           @keyframes progress {
             from {

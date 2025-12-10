@@ -1,40 +1,43 @@
 import PropTypes from "prop-types";
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 export default function Card({ icon, children }) {
+  const src = icon;
+  const alt = icon?.alt || icon?.title || "";
+
   return (
-    <motion.div
-      initial={{
-        borderColor: "var(--mesm-grey-dk)",
-        backgroundColor: "var(--mesm-grey-xd)",
-      }}
-      whileHover={{
-        borderColor: "var(--mesm-blue)",
-        backgroundColor: "var(--mesm-grey-dk)",
-      }}
+    <div
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="flex flex-col items-start text-left gap-8 min-h-full rounded-sm p-[2rem] justify-between border border-[var(--mesm-grey-dk)] [&>p+p]:mt-4"
+      className="flex flex-col items-start bg-[var(--mesm-grey-xd)] border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] opacity-95 hover:opacity-100 rounded-xl duration-200 text-left gap-8 min-h-full p-[2rem] justify-between [&>p+p]:mt-4"
     >
-      {icon?.url && (
+      {src && (
         <Image
-          src={icon.url}
-          alt={icon.title || ""}
-          width={0}
-          height={0}
+          src={src}
+          alt={alt}
+          width={96}
+          height={48}
           className="h-12 w-auto object-contain self-start"
-          style={{ height: "48px", width: "auto", maxWidth: "96px" }}
+          style={{ maxWidth: "96px" }}
         />
       )}
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 Card.propTypes = {
   icon: PropTypes.shape({
+    // legacy / manual
     url: PropTypes.string,
+    src: PropTypes.string,
     title: PropTypes.string,
+    alt: PropTypes.string,
+    // Sanity-style
+    asset: PropTypes.shape({
+      url: PropTypes.string,
+      _ref: PropTypes.string,
+      _id: PropTypes.string,
+    }),
   }),
   children: PropTypes.node,
 };

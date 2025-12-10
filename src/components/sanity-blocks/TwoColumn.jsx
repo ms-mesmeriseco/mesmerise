@@ -1,6 +1,5 @@
 "use client";
 
-import { isValidElement } from "react";
 import InView from "@/hooks/InView";
 import BlockRenderer from "@/lib/utils/BlockRenderer";
 import Button from "../ui/Button";
@@ -15,27 +14,10 @@ function boolOrNull(v) {
   return null; // null/undefined/other → no CTA
 }
 
-// Helper: decide how to render each item
-function renderBlockOrNode(item, index, align, colKey) {
-  // If it's already JSX/React element, just render it
-  if (isValidElement(item)) {
-    return (
-      <div key={`node-${colKey}-${index}`} className="w-full">
-        {item}
-      </div>
-    );
-  }
-
-  // Otherwise assume it's a "block" for BlockRenderer
-  const key = item?._id || `block-${colKey}-${index}`;
-
-  return <BlockRenderer key={key} block={item} index={index} center={align} />;
-}
-
 export default function TwoColumn({
   column1 = [],
   column2 = [],
-  align,
+  marker = "mesmerise",
   ctaCol,
   ctaLab,
   h2,
@@ -51,13 +33,11 @@ export default function TwoColumn({
     </div>
   );
 
-  // Make sure we always have arrays (Sanity refs resolved by GROQ)
-  const col1Items = column1 || [];
-  const col2Items = column2 || [];
+  console.log("TwoColumn:", { column1, column2, ctaCol, ctaLab });
 
   return (
     <InView>
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-12" data-marker={marker}>
         {h2 && (
           <div className="w-full text-center">
             <h2>{h2}</h2>
@@ -67,18 +47,12 @@ export default function TwoColumn({
         <section className="grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-6 items-start">
           {/* Column 1 */}
           <div className="blockAlignment flex flex-col gap-6">
-            {col1Items.map((item, index) =>
-              renderBlockOrNode(item, index, align, "c1")
-            )}
-            {showCTA && place === true && CTA}
+            <BlockRenderer block={column1} />
           </div>
 
           {/* Column 2 */}
           <div className="blockAlignment flex flex-col gap-6">
-            {col2Items.map((item, index) =>
-              renderBlockOrNode(item, index, align, "c2")
-            )}
-            {showCTA && place === false && CTA}
+            <BlockRenderer block={column2} />
           </div>
         </section>
       </div>

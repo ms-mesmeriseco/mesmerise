@@ -304,7 +304,7 @@ export default function Header() {
                    flex items-center md:justify-between justify-end gap-2
                    pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
                    box-border pointer-events-auto bg-transparent
-                   transition-all duration-300 ease-out"
+                   transition-all duration-300 ease-out "
         style={{
           // This must match the banner height (here: ~48px).
           // Adjust if you change the banner's padding/height.
@@ -314,15 +314,16 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="https://www.mesmeriseco.com/"
+          as="/"
           aria-label="Go to homepage"
           className="justify-self-start"
         >
-          <div>
+          <div className="h-[48px]">
             <img
               src="/WordMark_Spaced.png"
               preload="auto"
               className={[
-                "md:h-[1.5rem] h-[1.77rem] block transition-opacity duration-100",
+                "h-full w-auto block transition-opacity duration-100",
                 "flex items-center gap-2",
                 "bg-[var(--mesm-grey-dk)]/5",
                 "rounded-2xl px-4 py-3",

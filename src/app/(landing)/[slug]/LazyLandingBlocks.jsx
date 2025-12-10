@@ -1,14 +1,33 @@
-// src/app/(landing)/[slug]/LazyLandingBlocks.jsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getClient } from "@/lib/apollo-client";
-import { GET_LANDING_PAGE_BLOCKS_BY_SLUG } from "@/lib/graphql/queries/getLandingPages";
+import { sanityClient } from "@/sanity/client";
+import { landingBySlugQuery } from "@/lib/sanity/landing";
 import PageBase from "@/components/layout/PageBase";
+
+async function fetchLanding(slug) {
+  if (!slug) {
+    console.error("fetchLanding called with no slug");
+    return null;
+  }
+
+  try {
+    const page = await sanityClient.fetch(landingBySlugQuery, { slug });
+
+    if (!page) {
+      console.warn(`No landing page found in Sanity for slug "${slug}"`);
+    }
+
+    return page;
+  } catch (err) {
+    console.error("fetchLanding Sanity error:", err);
+    return null;
+  }
+}
 
 export default function LazyLandingBlocks({ slug }) {
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(null); // will hold the Sanity landingPage doc
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -39,9 +58,9 @@ export default function LazyLandingBlocks({ slug }) {
     return () => observer.disconnect();
   }, []);
 
-  // Run the Apollo query manually once we decide to load
+  // Fetch Sanity landing page once we decide to load
   useEffect(() => {
-    if (!shouldLoad) return;
+    if (!shouldLoad || !slug) return;
 
     let cancelled = false;
 
@@ -50,14 +69,15 @@ export default function LazyLandingBlocks({ slug }) {
         setLoading(true);
         setError(null);
 
-        const client = getClient();
-        const result = await client.query({
-          query: GET_LANDING_PAGE_BLOCKS_BY_SLUG,
-          variables: { slug },
-        });
+        const page = await fetchLanding(slug);
 
-        if (!cancelled) {
-          setData(result.data);
+        if (cancelled) return;
+
+        if (!page) {
+          setData(null);
+          setError(new Error("Landing page not found"));
+        } else {
+          setData(page);
         }
       } catch (err) {
         if (!cancelled) {
@@ -77,8 +97,9 @@ export default function LazyLandingBlocks({ slug }) {
     };
   }, [shouldLoad, slug]);
 
-  const blocks =
-    data?.landingPageCollection?.items?.[0]?.pageBlocksCollection?.items ?? [];
+  // Assuming your GROQ returns:
+  // *[_type == "landingPage" && pageSlug.current == $slug][0]{ ..., pageBlocks[]-> }
+  const blocks = data?.pageBlocks ?? [];
 
   return (
     <section ref={triggerRef} className="w-full">
@@ -102,7 +123,7 @@ export default function LazyLandingBlocks({ slug }) {
       )}
 
       {/* Render blocks */}
-      {blocks.length > 0 && <PageBase blocks={blocks} />}
+      {blocks.length > 0 && !loading && !error && <PageBase blocks={blocks} />}
     </section>
   );
 }

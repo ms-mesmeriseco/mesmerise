@@ -1,7 +1,5 @@
-// app/landing/[slug]/LandingPageClient.jsx
 "use client";
 
-import PageBase from "@/components/layout/PageBase";
 import LeftHero from "@/components/cms-blocks/LeftHero";
 import CenterHero from "@/components/cms-blocks/CenterHero";
 import LazyLandingBlocks from "./LazyLandingBlocks";
@@ -28,13 +26,13 @@ export default function LandingPageClient({ page }) {
         heroL={page.heroL}
         showCta
         ctaUrl="/connect"
-        logos={page.trustCollection?.items}
+        logos={page.trust || []}
         heroEmbed={page.hE}
         ctaLabel={page.ctaLab}
       />
 
       {/* Below-the-fold content, fetched on scroll */}
-      <LazyLandingBlocks slug={page.pageSlug} />
+      <LazyLandingBlocks slug={page.slug} />
     </>
   );
 }
