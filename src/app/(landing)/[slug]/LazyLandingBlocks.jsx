@@ -102,7 +102,7 @@ export default function LazyLandingBlocks({ slug }) {
   const blocks = data?.pageBlocks ?? [];
 
   return (
-    <section ref={triggerRef} className="w-full">
+    <section ref={triggerRef} className="w-full min-h-screen">
       {/* Before we decide to load */}
       {!shouldLoad && (
         <div className="w-full py-16 text-center text-sm text-[var(--mesm-grey)]" />
@@ -111,7 +111,7 @@ export default function LazyLandingBlocks({ slug }) {
       {/* After load triggered, while fetching */}
       {shouldLoad && loading && (
         <div className="w-full py-16 text-center text-sm text-[var(--mesm-grey)]">
-          Loading page content…
+          ...
         </div>
       )}
 

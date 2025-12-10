@@ -33,7 +33,7 @@ export default function TwoColumn({
     </div>
   );
 
-  console.log("TwoColumn:", { column1, column2, ctaCol, ctaLab });
+  // console.log("TwoColumn:", { column1, column2, ctaCol, ctaLab });
 
   return (
     <InView>
@@ -48,11 +48,13 @@ export default function TwoColumn({
           {/* Column 1 */}
           <div className="blockAlignment flex flex-col gap-6">
             <BlockRenderer block={column1} />
+            {showCTA && place === true && CTA}
           </div>
 
           {/* Column 2 */}
           <div className="blockAlignment flex flex-col gap-6">
             <BlockRenderer block={column2} />
+            {showCTA && place === false && CTA}
           </div>
         </section>
       </div>

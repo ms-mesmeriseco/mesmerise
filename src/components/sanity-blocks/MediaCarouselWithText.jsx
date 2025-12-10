@@ -7,12 +7,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import InView from "@/hooks/InView";
 
 const TRANSITION_DURATION = 4200; // in ms
-const DOT_COLORS = [
-  "bg-[var(--mesm-red)]",
-  "bg-[var(--mesm-yellow)]",
-  "bg-[var(--accent2)]",
-  "bg-[var(--accent)]",
-];
 
 export default function MediaCarouselWithText({ mediaContentCollection }) {
   // Supports:
@@ -138,7 +132,6 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
         {/* --- Mobile dots --- */}
         <div className="mt-4 flex items-center justify-center gap-3 md:hidden">
           {items.map((item, idx) => {
-            const color = DOT_COLORS[idx % DOT_COLORS.length];
             const isActive = idx === activeIndex;
             return (
               <button
@@ -151,7 +144,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 className={[
                   "relative inline-flex shrink-0 rounded-full transition-transform",
                   "w-5 h-5",
-                  color,
+                  "bg-[var(--mesm-yellow)]",
                   isActive ? "" : "opacity-20 hover:opacity-100",
                 ].join(" ")}
               />

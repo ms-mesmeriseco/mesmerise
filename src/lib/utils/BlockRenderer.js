@@ -94,11 +94,7 @@ export default function BlockRenderer({ block, center }) {
                   const isInternal =
                     href.startsWith("/") || href.startsWith("#");
 
-                  const content = (
-                    <span className="underline decoration-dotted underline-offset-2 hover:decoration-solid">
-                      {children}
-                    </span>
-                  );
+                  const content = <span>{children}</span>;
 
                   // use next/link for internal URLs
                   if (isInternal) {

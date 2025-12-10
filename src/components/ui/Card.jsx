@@ -8,7 +8,7 @@ export default function Card({ icon, children }) {
   return (
     <div
       transition={{ duration: 0.2, ease: "easeInOut" }}
-      className="flex flex-col items-start bg-[var(--mesm-grey-xd)] border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] opacity-95 hover:opacity-100 rounded-xl duration-200 text-left gap-8 min-h-full p-[2rem] justify-between [&>p+p]:mt-4"
+      className="flex flex-col items-start bg-[var(--mesm-grey-xd)] border-1 border-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey-dk)] opacity-95 hover:opacity-100 rounded-xl duration-200 text-left gap-8 min-h-full p-[2rem] justify-between [&>p+p]:mt-4"
     >
       {src && (
         <Image

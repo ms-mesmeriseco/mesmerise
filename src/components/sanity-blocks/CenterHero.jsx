@@ -7,7 +7,10 @@ import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import Image from "next/image";
 import AvatarRow from "../ui/AvatarRow";
-import { listFromHeroL, extractIframeFromBlocks } from "./heroUtils";
+import {
+  listFromHeroL,
+  extractIframeFromBlocks,
+} from "../sanity-blocks/heroUtils";
 
 function PillList({ items }) {
   if (!items?.length) return null;

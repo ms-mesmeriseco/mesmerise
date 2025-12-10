@@ -6,7 +6,10 @@ import InView from "@/hooks/InView";
 import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import AvatarRow from "../ui/AvatarRow";
-import { listFromHeroL, extractIframeFromBlocks } from "./heroUtils";
+import {
+  listFromHeroL,
+  extractIframeFromBlocks,
+} from "../sanity-blocks/heroUtils";
 
 function PillList({ items = [], className = "" }) {
   if (!items.length) return null;

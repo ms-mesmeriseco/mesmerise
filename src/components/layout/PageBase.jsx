@@ -4,13 +4,12 @@
 import SingleColumn from "@/components/sanity-blocks/SingleColumn";
 import TwoColumn from "@/components/sanity-blocks/TwoColumn";
 import IconRow from "@/components/sanity-blocks/IconRow";
-import AccordionWidget from "@/components/cms-blocks/Accordion";
-import SwitchListAccordion from "@/components/cms-blocks/SwitchListAccordion";
+import AccordionWidget from "@/components/sanity-blocks/Accordion";
+import SwitchListAccordion from "@/components/sanity-blocks/SwitchListAccordion";
 import PillBlock from "@/components/sanity-blocks/PillBlock";
-import SingleCaseStudy from "@/components/cms-blocks/SingleCaseStudy";
+import SingleCaseStudy from "@/components/sanity-blocks/SingleCaseStudy";
 import MediaCarouselWithText from "@/components/sanity-blocks/MediaCarouselWithText";
-import ThreeColumnImage from "@/components/cms-blocks/ThreeColumnImage";
-import ComparisonTable from "@/components/cms-blocks/ComparisonTable";
+import ComparisonTable from "@/components/sanity-blocks/ComparisonTable";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -28,6 +27,7 @@ export default function PageBase({ blocks, metadata }) {
     animate: { opacity: 1, transition: { duration: 0.3 } },
     exit: { opacity: 0, transition: { duration: 0.2 } },
   };
+  console.log("PageBase blocks:", blocks);
 
   return (
     <motion.div
@@ -175,42 +175,16 @@ export default function PageBase({ blocks, metadata }) {
               );
             }
 
-            // 📖 SINGLE CASE STUDY
             case "singleCaseStudy":
               return (
-                <div
-                  className="col-span-12"
-                  key={block._id || `block-${index}`}
-                >
-                  <SingleCaseStudy
-                    study={block.caseStudy}
-                    summary={block.summary}
-                    results={block.results}
-                    timeFrame={block.timeFrame}
-                  />
-                </div>
+                <SingleCaseStudy
+                  key={block._id}
+                  study={block}
+                  summary={block.summary}
+                  results={block.results}
+                  timeFrame={block.timeFrame}
+                />
               );
-
-            // 🌠 THREE COLUMN IMAGES
-            case "threeColumnBlockBlank":
-              return (
-                <div
-                  className="col-span-12"
-                  key={block._id || `block-${index}`}
-                >
-                  <ThreeColumnImage
-                    textContentOne={block.textContentOne}
-                    textContentTwo={block.textContentTwo}
-                    textContentThree={block.textContentThree}
-                    mediaCollection={{
-                      items: (block.threeColMedia || []).map((m) => ({
-                        url: m.url,
-                      })),
-                    }}
-                  />
-                </div>
-              );
-
             // 🎠 MEDIA CAROUSEL
             case "mediaCarouselWithText": {
               const mediaItems = block.mediaContent || [];
@@ -229,23 +203,18 @@ export default function PageBase({ blocks, metadata }) {
               );
             }
 
-            // ✅ COMPARISON TABLE
-            case "comparisonTable":
-              return (
-                <div
-                  className="col-span-12"
-                  key={block._id || `block-${index}`}
-                >
-                  <ComparisonTable
-                    richTxt={block.richTxt}
-                    column1={block.column1}
-                    column2={block.column2}
-                    title1={block.title1}
-                    title2={block.title2}
-                  />
-                </div>
-              );
-
+            // case "comparisonTable": {
+            //   return (
+            //     <ComparisonTable
+            //       richTxt={block.richTxt}
+            //       positive={block.positive}
+            //       negative={block.negative}
+            //       title1={block.title1}
+            //       title2={block.title2}
+            //       key={block._id || `block-${index}`}
+            //     />
+            //   );
+            // }
             default:
               return null;
           }

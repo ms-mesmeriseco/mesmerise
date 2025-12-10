@@ -1,7 +1,7 @@
 "use client";
 
-import LeftHero from "@/components/cms-blocks/LeftHero";
-import CenterHero from "@/components/cms-blocks/CenterHero";
+import LeftHero from "@/components/sanity-blocks/LeftHero";
+import CenterHero from "@/components/sanity-blocks/CenterHero";
 import LazyLandingBlocks from "./LazyLandingBlocks";
 
 export default function LandingPageClient({ page }) {
