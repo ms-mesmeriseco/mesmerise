@@ -72,8 +72,43 @@ function renderItemContent(textContent) {
   return null;
 }
 
-export default function IconRow({ titleText, iconItems = [], displayTwo }) {
-  const showCarousel = displayTwo && iconItems.length > 2;
+// Normalize iconItems so we can accept either:
+// - manual iconItems prop
+// - or a raw Sanity block with .items[]
+function normalizeIconItems(iconItemsProp = [], block) {
+  if (Array.isArray(iconItemsProp) && iconItemsProp.length > 0) {
+    return iconItemsProp;
+  }
+
+  if (!block?.items || !Array.isArray(block.items)) return [];
+
+  return block.items.map((item) => ({
+    icon: item.icon || item.logo || item.image,
+    textContent:
+      item.textContent || item.body || item.text || item.content || item.copy,
+  }));
+}
+
+export default function IconRow({
+  titleText,
+  iconItems = [],
+  displayTwo,
+  block,
+}) {
+  // Prefer explicit props; fall back to Sanity block fields
+  const resolvedTitle =
+    titleText ??
+    block?.title ??
+    block?.heading ??
+    block?.label ??
+    block?.titleText;
+
+  const items = normalizeIconItems(iconItems, block);
+
+  const resolvedDisplayTwo =
+    typeof displayTwo === "boolean" ? displayTwo : !!block?.displayTwo;
+
+  const showCarousel = resolvedDisplayTwo && items.length > 2;
 
   const scrollerRef = useRef(null);
   const cardsRef = useRef([]);
@@ -82,8 +117,8 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
   const [atEnd, setAtEnd] = useState(false);
 
   useEffect(() => {
-    cardsRef.current = cardsRef.current.slice(0, iconItems.length);
-  }, [iconItems.length]);
+    cardsRef.current = cardsRef.current.slice(0, items.length);
+  }, [items.length]);
 
   const updateCenter = useCallback(() => {
     const scroller = scrollerRef.current;
@@ -146,7 +181,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
     if (centerIndex > 0) snapTo(centerIndex - 1);
   };
   const goNext = () => {
-    if (centerIndex < iconItems.length - 1) snapTo(centerIndex + 1);
+    if (centerIndex < items.length - 1) snapTo(centerIndex + 1);
   };
 
   const cardVariants = {
@@ -164,7 +199,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
         data-marker="icon row"
         className="w-full py-8 text-center relative"
       >
-        {renderTitle(titleText)}
+        {renderTitle(resolvedTitle)}
         <br />
 
         {showCarousel ? (
@@ -177,7 +212,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
               aria-label="Icon cards"
             >
               <ul className="flex gap-2 py-3 select-none">
-                {iconItems.map((item, idx) => {
+                {items.map((item, idx) => {
                   const { icon, textContent } = item || {};
                   const key = icon?.title
                     ? `${icon.title}-${idx}`
@@ -245,7 +280,7 @@ export default function IconRow({ titleText, iconItems = [], displayTwo }) {
           </div>
         ) : (
           <div className="grid lg:auto-cols-auto lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-[var(--global-margin-xs)]">
-            {iconItems.map((item, idx) => {
+            {items.map((item, idx) => {
               const { icon, textContent } = item || {};
               const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;
               return (
@@ -269,13 +304,11 @@ IconRow.propTypes = {
   titleText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
-    // Sanity Portable Text (array of blocks)
-    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.arrayOf(PropTypes.object), // Portable Text
   ]),
   iconItems: PropTypes.arrayOf(
     PropTypes.shape({
       icon: PropTypes.shape({
-        // Sanity image shapes are flexible; Card likely handles this
         url: PropTypes.string,
         src: PropTypes.string,
         alt: PropTypes.string,
@@ -290,4 +323,22 @@ IconRow.propTypes = {
     })
   ),
   displayTwo: PropTypes.bool,
+  // Optional raw Sanity block
+  block: PropTypes.shape({
+    title: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
+    heading: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
+    label: PropTypes.string,
+    titleText: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
+    displayTwo: PropTypes.bool,
+    items: PropTypes.arrayOf(PropTypes.object),
+  }),
 };

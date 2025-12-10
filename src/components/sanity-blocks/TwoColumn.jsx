@@ -14,6 +14,27 @@ function boolOrNull(v) {
   return null; // null/undefined/other → no CTA
 }
 
+// Decide whether this is a Sanity block array or "manual" React content
+function renderColumnContent(content) {
+  if (!content) return null;
+
+  const arr = Array.isArray(content) ? content : [content];
+
+  const looksLikeSanityBlocks =
+    arr.length > 0 &&
+    arr.every(
+      (item) => item && typeof item === "object" && "_type" in item // basic sanity block sniff
+    );
+
+  // Sanity mode → let BlockRenderer handle it
+  if (looksLikeSanityBlocks) {
+    return <BlockRenderer block={content} />;
+  }
+
+  // Manual mode → treat entries as React children
+  return arr.map((child, i) => <div key={child?.key ?? i}>{child}</div>);
+}
+
 export default function TwoColumn({
   column1 = [],
   column2 = [],
@@ -33,8 +54,6 @@ export default function TwoColumn({
     </div>
   );
 
-  // console.log("TwoColumn:", { column1, column2, ctaCol, ctaLab });
-
   return (
     <InView>
       <div className="flex flex-col gap-12" data-marker={marker}>
@@ -47,13 +66,13 @@ export default function TwoColumn({
         <section className="grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-6 items-start">
           {/* Column 1 */}
           <div className="blockAlignment flex flex-col gap-6">
-            <BlockRenderer block={column1} />
+            {renderColumnContent(column1)}
             {showCTA && place === true && CTA}
           </div>
 
           {/* Column 2 */}
           <div className="blockAlignment flex flex-col gap-6">
-            <BlockRenderer block={column2} />
+            {renderColumnContent(column2)}
             {showCTA && place === false && CTA}
           </div>
         </section>

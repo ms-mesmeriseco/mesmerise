@@ -1,8 +1,8 @@
-import LeftHero from "@/components/cms-blocks/LeftHero";
+import LeftHero from "@/components/sanity-blocks/LeftHero";
 import CROForm from "./CROForm";
-import TwoColumn from "@/components/cms-blocks/TwoColumn";
-import ProjectRail from "@/components/cms-blocks/ProjectRail";
-import IconRow from "@/components/cms-blocks/IconRow";
+import TwoColumn from "@/components/sanity-blocks/TwoColumn";
+import ProjectRail from "@/components/sanity-blocks/ProjectRail";
+import IconRow from "@/components/sanity-blocks/IconRow";
 import FAQ from "@/components/layout/FAQ.jsx";
 import Image from "next/image";
 
@@ -68,7 +68,7 @@ export const croFAQ = [
   },
 ];
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata() {
   const title = "FREE CRO Checklist Generating 25X ROAS | Mesmerise";
   const description =
     "Stop burning ad spend. Use our internal agency CRO checklist to identify leaks and generate 25X ROAS. Turn your failing pages into goated growth engines.";
@@ -165,7 +165,7 @@ export function Testimonials() {
       displayTwo
       iconItems={[
         {
-          icon: { url: "/icons/five-stars.svg" },
+          icon: "/icons/five-stars.svg",
           textContent: (
             <div key="testimonial-jay">
               <p className="p2 mb-2">
@@ -180,7 +180,7 @@ export function Testimonials() {
           ),
         },
         {
-          icon: { url: "/icons/five-stars.svg" },
+          icon: "/icons/five-stars.svg",
           textContent: (
             <div key="testimonial-prosculpt">
               <p className="p2 mb-2">
@@ -196,7 +196,7 @@ export function Testimonials() {
           ),
         },
         {
-          icon: { url: "/icons/five-stars.svg" },
+          icon: "/icons/five-stars.svg",
           textContent: (
             <div key="testimonial-moon">
               <p className="p2 mb-2">
