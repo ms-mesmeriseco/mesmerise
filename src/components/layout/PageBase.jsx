@@ -10,6 +10,8 @@ import PillBlock from "@/components/sanity-blocks/PillBlock";
 import SingleCaseStudy from "@/components/sanity-blocks/SingleCaseStudy";
 import MediaCarouselWithText from "@/components/sanity-blocks/MediaCarouselWithText";
 import ComparisonTable from "@/components/sanity-blocks/ComparisonTable";
+import CtaBentoBox from "@/components/sanity-blocks/CtaBentoBox";
+import TestimonialsCarousel from "@/components/sanity-blocks/TestimonialCarousel";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -219,6 +221,29 @@ export default function PageBase({ blocks, metadata }) {
                 </div>
               );
             }
+
+            case "ctaBentoBox": {
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <CtaBentoBox block={block} />
+                </div>
+              );
+            }
+
+            case "testimonialCarousel": {
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <TestimonialsCarousel block={block} />
+                </div>
+              );
+            }
+
             default:
               return null;
           }

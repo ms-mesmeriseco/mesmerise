@@ -222,6 +222,27 @@ title1,
 title2,
 "negative": column2,
 
+    // ---------- BENTO BOX ----------
+
+      bentoTitle,
+      ctaBox1,
+      ctaLink1,
+      ctaBox2,
+      ctaLink2,
+
+          // ---------- TESTIMONIALS CAROUSEL ----------
+    carouselTitle,
+    testimonials[]{
+      _key,
+      author,
+      role,
+      "logo": logo.asset->url,
+      body,
+    },
+
   }
+
+
+
 }
 `;
