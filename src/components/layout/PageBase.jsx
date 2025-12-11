@@ -203,18 +203,22 @@ export default function PageBase({ blocks, metadata }) {
               );
             }
 
-            // case "comparisonTable": {
-            //   return (
-            //     <ComparisonTable
-            //       richTxt={block.richTxt}
-            //       positive={block.positive}
-            //       negative={block.negative}
-            //       title1={block.title1}
-            //       title2={block.title2}
-            //       key={block._id || `block-${index}`}
-            //     />
-            //   );
-            // }
+            case "comparisonTable": {
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <ComparisonTable
+                    richTxt={block.richTxt}
+                    positive={block.positive}
+                    negative={block.negative}
+                    title1={block.title1}
+                    title2={block.title2}
+                  />
+                </div>
+              );
+            }
             default:
               return null;
           }

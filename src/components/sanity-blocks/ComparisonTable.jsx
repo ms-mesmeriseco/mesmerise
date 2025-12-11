@@ -40,8 +40,8 @@ function makeColumnComponents(variant) {
           className="
             flex items-center gap-4
             rounded-2xl bg-black/20 border border-white/10
-            px-4 py-2 no-list w-fit
-            opacity-70 hover:opacity-100 transition-opacity
+            px-4 py-2 no-list w-full
+            transition-opacity
           "
         >
           <span
@@ -103,19 +103,22 @@ export default function ComparisonTable({
 
   return (
     <InView>
-      <section className="my-8 w-full col-span-full">
-        {/* Top copy */}
+      <section className="flex-col flex justify-center items-center">
+        {/* Full-width header */}
         {hasHeader && (
-          <div className="mb-4">
+          <div className="mb-8 text-center max-w-3xl">
             <PortableText value={richTxt} components={headerComponents} />
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-4">
-          {/* Column 1: ticks */}
-          <div>
+        {/* Two comparison columns */}
+        <div className="gap-12 md:gap-12 grid grid-cols-1 md:grid-cols-2">
+          {/* Column 1 */}
+          <div className="border-1 rounded-2xl border-[var(--mesm-grey-dk)]/50 hover:border-[var(--mesm-grey-dk)] duration-200 bg-[var(--accent)]/20  md:p-6 p-4">
             {title1 && (
-              <h3 className="mb-3 text-base font-semibold">{title1}</h3>
+              <h3 className="mb-4 w-full text-center text-[var(--foreground)]">
+                {title1}
+              </h3>
             )}
             {hasPositive && (
               <PortableText
@@ -125,11 +128,9 @@ export default function ComparisonTable({
             )}
           </div>
 
-          {/* Column 2: crosses */}
-          <div>
-            {title2 && (
-              <h3 className="mb-3 text-base font-semibold">{title2}</h3>
-            )}
+          {/* Column 2 */}
+          <div className="border-1 rounded-2xl border-[var(--mesm-grey-dk)]/50 hover:border-[var(--mesm-grey-dk)] duration-200 bg-[var(--mesm-red)]/20 md:p-6 p-4">
+            {title2 && <h3 className="mb-4 w-full text-center">{title2}</h3>}
             {hasNegative && (
               <PortableText
                 value={negative}
