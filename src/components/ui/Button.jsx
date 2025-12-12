@@ -1,7 +1,7 @@
 "use client";
 
 const SIZE_MAP = {
-  small: ["text-xs md:text-sm leading-none", "px-2 py-1"].join(" "),
+  small: ["text-xs md:text-sm leading-none", "px-4 py-1"].join(" "),
   large: ["text-base leading-tight", "px-3 py-2"].join(" "),
   "x-large": ["text-3xl md:text-5xl", "px-4 md:px-7 py-2 md:py-3"].join(" "),
   none: ["text-3xl font-normal", "px-0 py-0"].join(" "),

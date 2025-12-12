@@ -1,4 +1,4 @@
-import BlogNav from "@/components/cms-blocks/BlogNav";
+import BlogNav from "@/components/sanity-blocks/BlogNav";
 import PageTitleLarge from "@/components/layout/PageTitleLarge";
 
 export default function BlogPage() {

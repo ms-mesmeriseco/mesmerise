@@ -226,8 +226,8 @@ h4 {
 }
 h4 strong {
   font-style: normal;
-  font-weight: 600;
-
+  color: var(--mesm-blue);
+  font-weight: 400;
   opacity: 0.9;
 }
 h5 {
@@ -338,6 +338,9 @@ ol li {
   font-weight: 400;
   color: var(--mesm-l-grey, 0.8);
 }
+li a {
+  color: var(--mesm-blue);
+}
 ol {
   font-variant-numeric: tabular-nums;
 }
@@ -351,6 +354,9 @@ ul {
 footer ul li {
   list-style-type: none;
   margin: 0;
+}
+footer a {
+  color: var(--foreground);
 }
 footer {
   margin-top: 30vh;
@@ -374,7 +380,8 @@ footer {
   -webkit-text-stroke: 1px var(--foreground);
   color: rgba(0, 0, 0, 0);
 }
-b {
+strong {
+  font-weight: 400;
   font-style: normal;
 }
 

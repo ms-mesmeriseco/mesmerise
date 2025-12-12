@@ -1,14 +1,18 @@
-import { draftMode } from "next/headers";
-import { getClient } from "@/lib/apollo-client";
-import { GET_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
-import { GET_ADJACENT_AND_RELATED_BLOGS } from "@/lib/graphql/queries/getBlogPosts";
-import renderRichTextWithBreaks from "@/lib/utils/renderRichTextWithBreaks";
-import BlogTOC from "@/components/blog/BlogTOC";
+// app/blog/[slug]/page.js
+import React from "react";
+import { draftMode } from "next/headers"; // optional: keep if you wire preview later
 import Image from "next/image";
-import StaggeredWords from "@/hooks/StaggeredWords";
 import Link from "next/link";
-import BlogRail from "@/components/cms-blocks/BlogRail";
+import { PortableText } from "@portabletext/react";
 
+import BlogTOC from "@/components/blog/BlogTOC";
+import StaggeredWords from "@/hooks/StaggeredWords";
+import BlogRail from "@/components/sanity-blocks/BlogRail";
+
+import { sanityClient } from "@/sanity/client";
+import { blogPostBySlugQuery, adjacentBlogPostsQuery } from "@/lib/sanity/blog";
+
+// --- helpers ---
 function abs(url) {
   if (!url) return undefined;
   try {
@@ -19,78 +23,232 @@ function abs(url) {
   }
 }
 
+// Simple slugify helper for heading IDs / TOC
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]/g, "");
+}
+
+// Convert Portable Text blocks → plain text for meta description
+function blocksToPlainText(blocks, maxChars) {
+  if (!Array.isArray(blocks)) return "";
+  const text = blocks
+    .filter((b) => b._type === "block")
+    .map((b) => (b.children || []).map((c) => c.text || "").join(""))
+    .join(" ")
+    .trim();
+
+  return maxChars ? text.slice(0, maxChars) : text;
+}
+
+// Build TOC anchors from Sanity Portable Text (h3 blocks)
+function getH3AnchorsFromPortableText(blocks) {
+  if (!Array.isArray(blocks)) return [];
+  return blocks
+    .filter((block) => block._type === "block" && block.style === "h3")
+    .map((block, idx) => {
+      const text =
+        (block.children || [])
+          .map((c) => c.text || "")
+          .join("")
+          .trim() || `Section ${idx + 1}`;
+      const id = slugify(text);
+      return { text, id };
+    });
+}
+
+// Normalize PT keys so there are no duplicates (migration sometimes creates dupes)
+function normalizePortableTextKeys(value) {
+  if (!Array.isArray(value)) return value;
+  const seen = new Set();
+
+  const fixNode = (node) => {
+    if (!node || typeof node !== "object") return node;
+    const copy = { ...node };
+
+    if (copy._key) {
+      const base = String(copy._key);
+      let newKey = base;
+      let i = 1;
+      while (seen.has(newKey)) {
+        newKey = `${base}-${i++}`;
+      }
+      copy._key = newKey;
+      seen.add(newKey);
+    }
+
+    for (const prop of Object.keys(copy)) {
+      const v = copy[prop];
+      if (Array.isArray(v)) {
+        copy[prop] = v.map(fixNode);
+      }
+    }
+
+    return copy;
+  };
+
+  return value.map(fixNode);
+}
+
+// PortableText components for blog / FAQ / author bio
+const blogPortableComponents = {
+  block: {
+    normal: ({ children }) => (
+      <p className="leading-relaxed mb-4 last:mb-0">{children}</p>
+    ),
+    h2: ({ children }) => (
+      <h2 className="mt-10 mb-4 text-2xl font-semibold">{children}</h2>
+    ),
+    h3: ({ children, value }) => {
+      const text =
+        (value?.children || [])
+          .map((c) => c.text || "")
+          .join("")
+          .trim() || "";
+      const id = slugify(text || "section");
+      return (
+        <h3 id={id} className="mt-8 mb-3 text-xl font-600 scroll-mt-[120px] ">
+          {children}
+        </h3>
+      );
+    },
+    h4: ({ children }) => (
+      <h4 className="mt-6 mb-2 text-lg font-semibold">{children}</h4>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-5 space-y-1 mb-4">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-5 space-y-1 mb-4">{children}</ol>
+    ),
+  },
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-semibold">{children}</strong>
+    ),
+    em: ({ children }) => <em className="italic">{children}</em>,
+    underline: ({ children }) => (
+      <span className="underline underline-offset-2">{children}</span>
+    ),
+
+    link: ({ children, value }) => {
+      const href = value?.href || "#";
+      const target = value?.target || "_self";
+      const rel = target === "_blank" ? "noopener noreferrer" : undefined;
+
+      const isInternal = href.startsWith("/") || href.startsWith("#");
+
+      const content = (
+        <span className="underline underline-offset-2 hover:decoration-solid">
+          {children}
+        </span>
+      );
+
+      // Internal → use next/link
+      if (isInternal) {
+        return <Link href={href}>{content}</Link>;
+      }
+
+      // External → plain <a>
+      return (
+        <a href={href} target={target} rel={rel}>
+          {content}
+        </a>
+      );
+    },
+  },
+  types: {
+    image: ({ value }) => {
+      const url = value?.asset?.url;
+      if (!url) return null;
+      const alt = value.alt || "";
+      return (
+        <figure className="my-6">
+          {/* Using plain img here to avoid width/height requirements */}
+          <img src={url} alt={alt} className="w-full h-auto rounded-md" />
+        </figure>
+      );
+    },
+    file: ({ value }) => {
+      const href = value?.asset?.url;
+      if (!href) return null;
+      return <video href={href}></video>;
+    },
+    break: ({ value }) => {
+      if (value?.style === "readMore") {
+        return (
+          <div className="my-8 py-4 border-y border-[var(--mesm-grey-dk)] text-center text-sm uppercase tracking-wide">
+            Read more
+          </div>
+        );
+      }
+      return <hr className="my-8 border-[var(--mesm-grey-dk)]" />;
+    },
+  },
+};
+
+// --- Metadata from Sanity ---
 export async function generateMetadata({ params }) {
-  // ⬇️ Unwrap params (Next 15+ app router behaviour)
   const resolved = await params;
   const { slug } = resolved || {};
   if (!slug) return {};
 
-  const { isEnabled } = await draftMode();
-  const client = getClient({ preview: isEnabled });
+  await draftMode().catch(() => null);
 
+  let page;
   try {
-    const { data } = await client.query({
-      query: GET_BLOG_POSTS,
-      variables: { slug, preview: isEnabled }, // 👈 pass preview
-    });
-
-    const page = data?.blogPostPageCollection?.items?.[0];
-    if (!page) {
-      return {
-        title: "Post not found",
-        description: "This post could not be located.",
-        robots: { index: false },
-      };
-    }
-
-    const metaTitle = page.metaTitle || page.postTitle || "Mesmerise Digital";
-
-    const metaDescription =
-      page.metaDescription?.json ||
-      (page.blogContent?.json?.content || [])
-        .map((n) =>
-          n.nodeType === "paragraph"
-            ? (n.content || []).map((c) => c.value || "").join("")
-            : ""
-        )
-        .join(" ")
-        .slice(0, 160);
-
-    const ogImage =
-      page.heroImage?.url ||
-      "https://www.mesmeriseco.com/assets/social-default.png";
-
-    const canonical = abs(`https://www.mesmeriseco.com/blog/${slug}`);
-
-    return {
-      title: metaTitle,
-      description: metaDescription,
-      alternates: { canonical },
-      openGraph: {
-        title: metaTitle,
-        description: metaDescription,
-        url: canonical,
-        type: "article",
-        images: ogImage ? [{ url: abs(ogImage) }] : undefined,
-      },
-    };
+    page = await sanityClient.fetch(blogPostBySlugQuery, { slug });
   } catch (err) {
-    console.error(
-      "Blog generateMetadata Contentful error:",
-      err?.networkError?.result || err?.message || err
-    );
-    // Fallback minimal meta
+    console.error("Sanity blog generateMetadata error:", err);
+  }
+
+  if (!page) {
     return {
-      title: "Mesmerise Digital Blog",
-      description: "",
+      title: "Post not found",
+      description: "This post could not be located.",
       robots: { index: false },
     };
   }
+
+  const normMetaDesc = normalizePortableTextKeys(page.metaDescription);
+  const normBlogContent = normalizePortableTextKeys(page.blogContent);
+
+  const metaTitle = page.metaTitle || page.postTitle || "Mesmerise Digital";
+
+  const metaDescription =
+    blocksToPlainText(normMetaDesc, 160) ||
+    blocksToPlainText(normBlogContent, 160) ||
+    "Insights from Mesmerise Digital.";
+
+  const ogImage = page.heroImage?.url
+    ? abs(page.heroImage.url)
+    : "https://www.mesmeriseco.com/assets/social-default.png";
+
+  const canonical = abs(`https://www.mesmeriseco.com/blog/${slug}`);
+
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    alternates: { canonical },
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      url: canonical,
+      type: "article",
+      images: ogImage ? [{ url: ogImage }] : undefined,
+    },
+  };
 }
 
+// --- Author card wired to Sanity ---
 function AuthorCard({ author }) {
   if (!author) return null;
-  const avatar = author.authorAvatar;
+  const avatarUrl = author.authorAvatar?.url;
+  const authorBio = normalizePortableTextKeys(author.authorBio);
 
   return (
     <section
@@ -98,12 +256,12 @@ function AuthorCard({ author }) {
       itemScope
       itemType="https://schema.org/Person"
     >
-      {avatar?.url && (
+      {avatarUrl && (
         <Image
-          src={avatar.url}
+          src={avatarUrl}
           alt={`Avatar of ${author.name ?? "author"}`}
-          width={Math.min(avatar.width ?? 96, 128)}
-          height={Math.min(avatar.height ?? 96, 128)}
+          width={96}
+          height={96}
           className="rounded-full shrink-0"
         />
       )}
@@ -114,9 +272,12 @@ function AuthorCard({ author }) {
             {author.name}
           </h3>
         )}
-        {author?.authorBio?.json && (
+        {authorBio && (
           <div className="prose max-w-none text-[var(--foreground)]">
-            {renderRichTextWithBreaks(author.authorBio.json)}
+            <PortableText
+              value={authorBio}
+              components={blogPortableComponents}
+            />
           </div>
         )}
       </div>
@@ -124,109 +285,44 @@ function AuthorCard({ author }) {
   );
 }
 
+// --- Main blog page (Sanity) ---
 export default async function BlogPost({ params }) {
-  // ⬇️ Unwrap params here as well
   const resolved = await params;
   const { slug } = resolved || {};
   if (!slug) return <p>Blog post not found.</p>;
-
-  const { isEnabled } = await draftMode(); // 👈 detect Draft Mode
-  const client = getClient({ preview: isEnabled }); // 👈 preview-aware client
 
   let page;
   let more;
 
   try {
-    const { data } = await client.query({
-      query: GET_BLOG_POSTS,
-      variables: { slug, preview: isEnabled }, // 👈 pass preview through
-    });
-
-    page = data?.blogPostPageCollection?.items?.[0];
+    page = await sanityClient.fetch(blogPostBySlugQuery, { slug });
     if (!page) return <p>Blog post not found.</p>;
 
-    const tagIds =
-      page?.contentfulMetadata?.tags?.map((t) => t?.id).filter(Boolean) || [];
-
-    const moreResult = await client.query({
-      query: GET_ADJACENT_AND_RELATED_BLOGS,
-      variables: {
-        date: page.postDate || new Date(0).toISOString(),
-        slug,
-        tagIds: tagIds.length ? tagIds : undefined,
-        preview: isEnabled,
-      },
-      fetchPolicy: "no-cache",
+    more = await sanityClient.fetch(adjacentBlogPostsQuery, {
+      slug,
+      date: page.postDate || new Date(0).toISOString(),
     });
-
-    more = moreResult.data;
-  } catch (err) {
-    console.error(
-      "BlogPost Contentful error:",
-      err?.networkError?.result || err?.message || err
+    // 👇 TEMP LOGGING
+    console.log("BLOG CONTENT RAW:", JSON.stringify(page.blogContent, null, 2));
+    console.log(
+      "FIRST BLOCK MARKDEFS:",
+      JSON.stringify(page.blogContent?.[0]?.markDefs, null, 2)
     );
+  } catch (err) {
+    console.error("BlogPost Sanity error:", err);
     return <p>Blog post not found.</p>;
   }
 
-  const tagIds =
-    page?.contentfulMetadata?.tags?.map((t) => t?.id).filter(Boolean) || [];
-
-  const prev = more?.prev?.items?.[0] || null;
-  const next = more?.next?.items?.[0] || null;
-  const related = (more?.related?.items || []).filter(
-    (r) => r?.slug && r?.slug !== slug
-  );
+  const prev = more?.prev || null;
+  const next = more?.next || null;
 
   const author = page.blogAuthor;
-  const avatar = author?.authorAvatar;
+  const avatarUrl = author?.authorAvatar?.url;
 
-  const assetBlocks = page.blogContent?.links?.assets?.block ?? [];
-  const assetHyperlinks = page.blogContent?.links?.assets?.hyperlink ?? [];
-  const assetMap = Object.fromEntries(
-    [...assetBlocks, ...assetHyperlinks].map((a) => [a.sys.id, a])
-  );
+  const normBlogContent = normalizePortableTextKeys(page.blogContent);
+  const normFaqContent = normalizePortableTextKeys(page.faqContent);
 
-  const collectEntries = (rich) => ({
-    block: rich?.links?.entries?.block ?? [],
-    inline: rich?.links?.entries?.inline ?? [],
-    hyperlink: rich?.links?.entries?.hyperlink ?? [],
-  });
-
-  const blogEntries = collectEntries(page.blogContent);
-  const faqEntries = collectEntries(page.faqContent);
-
-  const entryMap = Object.fromEntries(
-    [
-      ...blogEntries.block,
-      ...blogEntries.inline,
-      ...blogEntries.hyperlink,
-      ...faqEntries.block,
-      ...faqEntries.inline,
-      ...faqEntries.hyperlink,
-    ].map((e) => [e.sys.id, e])
-  );
-
-  const getH3Anchors = (json) => {
-    const anchors = [];
-    if (!json?.content) return anchors;
-    json.content.forEach((node, idx) => {
-      if (node.nodeType === "heading-3") {
-        const text =
-          (node.content ?? [])
-            .map((c) => c?.value || "")
-            .join("")
-            .trim() || `Section ${idx}`;
-        const id = text
-          .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^\w-]/g, "");
-        anchors.push({ text, id });
-      }
-    });
-    return anchors;
-  };
-
-  const h3Anchors = getH3Anchors(page.blogContent?.json);
+  const h3Anchors = getH3AnchorsFromPortableText(normBlogContent);
 
   const formattedDate = page.postDate
     ? new Date(page.postDate).toLocaleString("en-AU", {
@@ -255,19 +351,20 @@ export default async function BlogPost({ params }) {
             </aside>
           )}
 
-          <article className="max-w-xl w-full flex flex-col gap-6 md:pt-7">
+          <article className="max-w-3xl w-full flex flex-col gap-6 md:pt-7">
             <StaggeredWords
               as="h1"
               className="page-title-medium"
-              text={page.postHeading}
+              text={page.postHeading || page.postTitle}
             />
+
             <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start md:py-8 py-2">
-              {avatar?.url && (
+              {avatarUrl && (
                 <Image
-                  src={avatar.url}
+                  src={avatarUrl}
                   alt={`Avatar of ${author?.name ?? "author"}`}
-                  width={Math.min(avatar.width ?? 48, 96)}
-                  height={Math.min(avatar.height ?? 48, 96)}
+                  width={48}
+                  height={48}
                   className="rounded-full shrink-0"
                 />
               )}
@@ -282,25 +379,28 @@ export default async function BlogPost({ params }) {
               </span>
             </span>
 
-            {page.blogContent?.json && (
-              <div className="[&>p+p]:mt-4 flex flex-col gap-4">
-                {renderRichTextWithBreaks(page.blogContent.json, assetMap, {
-                  blog: true,
-                  entryMap,
-                })}
+            {/* Blog Content – Portable Text */}
+            {normBlogContent && (
+              <div className="flex flex-col gap-4">
+                <PortableText
+                  value={normBlogContent}
+                  components={blogPortableComponents}
+                />
               </div>
             )}
 
-            {page.faqContent?.json && (
-              <div className="[&>p+p]:mt-4 flex flex-col gap-4">
-                {renderRichTextWithBreaks(page.faqContent.json, assetMap, {
-                  blog: true,
-                  entryMap,
-                })}
+            {/* FAQ Content – Portable Text */}
+            {normFaqContent && normFaqContent.length > 0 && (
+              <div className="mt-10 flex flex-col gap-4">
+                <PortableText
+                  value={normFaqContent}
+                  components={blogPortableComponents}
+                />
               </div>
             )}
 
             {author?.authorBio && <AuthorCard author={author} />}
+
             {(prev || next) && (
               <nav
                 className="mt-8 pt-6 border-t border-[var(--mesm-grey-dk)] flex items-center justify-between gap-3"
@@ -335,8 +435,10 @@ export default async function BlogPost({ params }) {
           </article>
         </main>
       </div>
+
       <h6 className="pt-24">Learn more</h6>
       <div className="py-4 border-y border-[var(--mesm-grey-dk)]">
+        {/* BlogRail is still Contentful for now – we can Sanity-fy this next */}
         <BlogRail />
       </div>
     </>

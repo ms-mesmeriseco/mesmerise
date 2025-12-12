@@ -59,7 +59,7 @@ export default function PillBlock({ pills = [], blockTitle }) {
         </div>
 
         {/* Content row */}
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 md:px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] md:gap-18 gap-10 text-base leading-relaxed min-h-[50vh]">
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 md:px-[var(--global-margin-xs)] py-[var(--global-margin-sm)] md:gap-18 gap-10 text-base leading-relaxed">
           <AnimatePresence mode="wait" initial={false}>
             {/* TEXT */}
             <motion.div
@@ -95,7 +95,7 @@ export default function PillBlock({ pills = [], blockTitle }) {
             {activePill?.media?.url && (
               <motion.div
                 key={`img-${activeIndex}`}
-                className="relative w-full h-auto md:min-h-[50vh] min-h-[20vh] overflow-hidden"
+                className="relative w-full h-auto md:min-h-[30vh] min-h-[20vh] overflow-hidden"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
