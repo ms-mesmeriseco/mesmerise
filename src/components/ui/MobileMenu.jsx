@@ -13,7 +13,7 @@ export default function MobileMenu({ items = [], pathname }) {
   }, [pathname]);
 
   return (
-    <div className="relative md:hidden">
+    <div className="relative">
       {/* Hamburger button */}
       <button
         type="button"

@@ -103,7 +103,7 @@ export const blogPostBySlugQuery = groq`
     // ---------- BLOCK-LEVEL FILE ----------
     _type == "file" => {
       ...,
-      "asset": asset->{
+      "file": asset->{
         url
       }
     },

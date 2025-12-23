@@ -109,7 +109,10 @@ const blogPortableComponents = {
           .trim() || "";
       const id = slugify(text || "section");
       return (
-        <h3 id={id} className="text-xl font-600 scroll-mt-[120px] ">
+        <h3
+          id={id}
+          className="text-xl font-600 scroll-mt-[120px] [&>a]:text-[var(--mesm-blue)]"
+        >
           {children}
         </h3>
       );
@@ -142,11 +145,7 @@ const blogPortableComponents = {
 
       const isInternal = href.startsWith("/") || href.startsWith("#");
 
-      const content = (
-        <span className="underline underline-offset-2 hover:decoration-solid">
-          {children}
-        </span>
-      );
+      const content = <span className="">{children}</span>;
 
       // Internal → use next/link
       if (isInternal) {
@@ -174,9 +173,17 @@ const blogPortableComponents = {
       );
     },
     file: ({ value }) => {
-      const href = value?.asset?.url;
+      const href = value?.file?.url;
       if (!href) return null;
-      return <video href={href}></video>;
+      return (
+        <video
+          controls
+          autoPlay
+          muted
+          className="rounded-md"
+          src={href}
+        ></video>
+      );
     },
     break: ({ value }) => {
       if (value?.style === "readMore") {
@@ -189,7 +196,6 @@ const blogPortableComponents = {
       return <hr className="my-8 border-[var(--mesm-grey-dk)]" />;
     },
 
-    // ✅ accordionItem rendered with ExpandingCard
     accordionItem: ({ value }) => {
       if (!value) return null;
 
@@ -197,7 +203,6 @@ const blogPortableComponents = {
         <div className="">
           <ExpandingCard
             title={value.entryTitle || "TL;DR"}
-            // icon optional if you want one later
             defaultExpanded={false}
           >
             <PortableText

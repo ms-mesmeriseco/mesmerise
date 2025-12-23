@@ -301,15 +301,11 @@ export default function Header() {
       <header
         ref={headerRef}
         className="site-header fixed left-0 right-0 z-300
-                   flex items-center md:justify-between justify-end gap-2
-                   pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
-                   box-border pointer-events-auto bg-transparent
-                   transition-all duration-300 ease-out "
-        style={{
-          // This must match the banner height (here: ~48px).
-          // Adjust if you change the banner's padding/height.
-          top: showPromo ? "48px" : "0px",
-        }}
+             flex items-center justify-between gap-2
+             pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
+             box-border pointer-events-auto bg-transparent
+             transition-all duration-300 ease-out"
+        style={{ top: showPromo ? "48px" : "0px" }}
       >
         {/* Logo */}
         <Link
@@ -319,41 +315,59 @@ export default function Header() {
           className="justify-self-start"
         >
           <div className="h-[48px]">
+            {/* Desktop wordmark (>=1035) */}
             <img
               src="/WordMark_Spaced.png"
-              preload="auto"
+              alt="Mesmerise Digital"
               className={[
-                "h-full w-auto block transition-opacity duration-100",
-                "flex items-center gap-2",
-                "bg-[var(--mesm-grey-dk)]/5",
+                "h-full w-auto transition-opacity duration-100",
+                "items-center gap-2 bg-[var(--mesm-grey-dk)]/5",
                 "rounded-2xl px-4 py-3",
                 "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
-                "shadow-xl backdrop-blur-xs",
-                "min-h-[3rem] flex items-center",
+                "shadow-xl backdrop-blur-xs min-h-[3rem]",
+                "hidden [@media(min-width:1035px)]:flex",
+              ].join(" ")}
+            />
+
+            {/* Compact logomark (<1035) */}
+            <img
+              src="/LogoMark.png"
+              alt="Mesmerise Digital"
+              className={[
+                "h-full w-auto transition-opacity duration-100",
+                "items-center gap-2 bg-[var(--mesm-grey-dk)]/5",
+                "rounded-2xl px-4 py-3",
+                "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
+                "shadow-xl backdrop-blur-xs min-h-[3rem]",
+                "flex [@media(min-width:1035px)]:hidden",
               ].join(" ")}
             />
           </div>
         </Link>
 
-        {/* Right side: desktop Toggle-style nav + mobile hamburger */}
+        {/* Right side */}
         <div className="flex items-center gap-3">
-          {/* Desktop: ToggleSwitch-styled nav with dropdowns */}
-          <DesktopNav pathname={pathname} />
+          {/* Desktop nav + CTAs (>=1035) */}
+          <div className="hidden [@media(min-width:1035px)]:flex items-center gap-3">
+            <DesktopNav pathname={pathname} />
+            <div className="flex items-center gap-2">
+              <Button
+                size="large"
+                variant="Primary"
+                href="/marketing-strategy-session"
+              >
+                <span className="text-xl">Strategy Session</span>
+              </Button>
+              <Button size="large" variant="CTA" href="/connect">
+                <span className="text-xl">Connect</span>
+              </Button>
+            </div>
+          </div>
 
-          {/* Mobile: hamburger + nested links (already styled) */}
-          <MobileMenu items={MOB_NAV_ITEMS} pathname={pathname} />
-        </div>
-        <div className="hidden md:flex md:items-center md:gap-2">
-          <Button
-            size="large"
-            variant="Primary"
-            href="/marketing-strategy-session"
-          >
-            <span className="text-xl">Strategy Session</span>
-          </Button>
-          <Button size="large" variant="CTA" href="/connect">
-            <span className="text-xl">Connect</span>
-          </Button>
+          {/* Compact header (<1035): hamburger only */}
+          <div className="flex [@media(min-width:1035px)]:hidden">
+            <MobileMenu items={MOB_NAV_ITEMS} pathname={pathname} />
+          </div>
         </div>
       </header>
 
