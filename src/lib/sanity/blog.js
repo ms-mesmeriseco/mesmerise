@@ -1,4 +1,3 @@
-// lib/sanity/blog.ts
 import { groq } from "next-sanity";
 
 export const blogPostBySlugQuery = groq`
@@ -8,11 +7,10 @@ export const blogPostBySlugQuery = groq`
   postTitle,
   "slug": slug.current,
   metaTitle,
-  metaDescription[]{..., },
+  metaDescription[]{...,},
   postHeading,
   postDate,
 
-  // Hero image
   "heroImage": {
     "url": heroImage.asset->url,
     "width": heroImage.asset->metadata.dimensions.width,
@@ -20,19 +18,71 @@ export const blogPostBySlugQuery = groq`
     "alt": coalesce(heroImage.alt, "")
   },
 
-  // Author
   "blogAuthor": blogAuthor->{
     name,
-    "authorAvatar": {
-      "url": authorAvatar.asset->url
-    },
+    "authorAvatar": { "url": authorAvatar.asset->url },
     authorBio[]{...,}
   },
 
-  // Blog content with dereferenced assets
+  // --------------------------------------------------
+  // Blog content (Portable Text)
+  // --------------------------------------------------
   "blogContent": blogContent[]{
     ...,
-    // block-level images
+
+    // ✅ If the block itself is a reference (embedded accordionItem)
+    _type == "reference" => {
+      "_key": _key,
+      ...@->{
+        _id,
+        _type,
+
+        // only expand when it's an accordionItem
+        _type == "accordionItem" => {
+          _id,
+          _type,
+          entryTitle1,
+          entryTitle,
+          textContent[]{
+            ...,
+
+            // inline annotations inside accordionItem text
+            markDefs[]{
+              ...,
+              _type == "reference" => @->{
+                _id,
+                _type,
+                entryTitle,
+                "slug": slug.current
+              },
+              _type == "image" => { ..., "asset": asset->{ url, metadata } },
+              _type == "file"  => { ..., "asset": asset->{ url } }
+            }
+          }
+        }
+      }
+    },
+
+      // -----------------------------
+      // listIconItem  ✅ (THIS is what you're missing)
+      // -----------------------------
+      _type == "listIconItem" => {
+        _id,
+        _type,
+        entryTitle,
+        "iconUrl": icon.asset->url,
+        textContent[]{
+          ...,
+          markDefs[]{
+            ...,
+            _type == "reference" => @->{ _id, _type, entryTitle, "slug": slug.current },
+            _type == "image" => { ..., "asset": asset->{ url, metadata } },
+            _type == "file"  => { ..., "asset": asset->{ url } }
+          }
+        }
+      },
+
+    // ---------- BLOCK-LEVEL IMAGE ----------
     _type == "image" => {
       ...,
       "asset": asset->{
@@ -40,16 +90,27 @@ export const blogPostBySlugQuery = groq`
         "dimensions": metadata.dimensions
       }
     },
-    // block-level files
+
+    // ---------- BLOCK-LEVEL FILE ----------
     _type == "file" => {
       ...,
       "asset": asset->{
         url
       }
     },
-    // fix markDefs for inline images/files
+
+    // ---------- INLINE MARK DEFINITIONS (normal Portable Text marks) ----------
     markDefs[]{
       ...,
+
+      // annotation: reference (your schema uses type: 'reference' in marks)
+      _type == "reference" => @->{
+        _id,
+        _type,
+        entryTitle,
+        "slug": slug.current
+      },
+
       _type == "image" => {
         ...,
         "asset": asset->{
@@ -57,7 +118,15 @@ export const blogPostBySlugQuery = groq`
           "dimensions": metadata.dimensions
         }
       },
+
       _type == "file" => {
+        ...,
+        "asset": asset->{
+          url
+        }
+      },
+
+      _type == "video" => {
         ...,
         "asset": asset->{
           url
@@ -66,9 +135,36 @@ export const blogPostBySlugQuery = groq`
     }
   },
 
-  // FAQ content with same treatment
+  // --------------------------------------------------
+  // FAQ content (if this is also Portable Text)
+  // --------------------------------------------------
   "faqContent": faqContent[]{
     ...,
+
+    _type == "reference" => {
+      "_key": _key,
+      ...@->{
+        _id,
+        _type,
+
+        _type == "accordionItem" => {
+          _id,
+          _type,
+          entryTitle1,
+          entryTitle,
+          textContent[]{
+            ...,
+            markDefs[]{
+              ...,
+              _type == "reference" => @->{ _id, _type, entryTitle, "slug": slug.current },
+              _type == "image" => { ..., "asset": asset->{ url, metadata } },
+              _type == "file"  => { ..., "asset": asset->{ url } }
+            }
+          }
+        }
+      }
+    },
+
     _type == "image" => {
       ...,
       "asset": asset->{
@@ -76,27 +172,20 @@ export const blogPostBySlugQuery = groq`
         "dimensions": metadata.dimensions
       }
     },
+
     _type == "file" => {
       ...,
       "asset": asset->{
         url
       }
     },
+
     markDefs[]{
       ...,
-      _type == "image" => {
-        ...,
-        "asset": asset->{
-          url,
-          "dimensions": metadata.dimensions
-        }
-      },
-      _type == "file" => {
-        ...,
-        "asset": asset->{
-          url
-        }
-      }
+      _type == "reference" => @->{ _id, _type, entryTitle, "slug": slug.current },
+      _type == "image" => { ..., "asset": asset->{ url, "dimensions": metadata.dimensions } },
+      _type == "file"  => { ..., "asset": asset->{ url } },
+      _type == "video" => { ..., "asset": asset->{ url } }
     }
   }
 }

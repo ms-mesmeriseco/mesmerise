@@ -355,6 +355,9 @@ footer ul li {
   list-style-type: none;
   margin: 0;
 }
+footer u li a {
+  color: var(--foreground);
+}
 footer a {
   color: var(--foreground);
 }
@@ -381,7 +384,7 @@ footer {
   color: rgba(0, 0, 0, 0);
 }
 strong {
-  font-weight: 400;
+  font-weight: 600;
   font-style: normal;
 }
 

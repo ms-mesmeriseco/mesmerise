@@ -1,4 +1,3 @@
-// src/lib/utils/BlockRenderer.jsx
 "use client";
 
 import ListIcons from "@/components/sanity-blocks/ListIcons";
@@ -215,6 +214,26 @@ export default function BlockRenderer({ block, center }) {
           accordionItems={block.accordionItems || []}
         />
       );
+
+    case "accordionItem": {
+      const items = (block.accordionItems || []).map((it) => ({
+        // AccordionWidget likely wants something like title + content
+        entryTitle: it.entryTitle,
+        title: it.entryTitle, // keep both to be safe
+        textContent: it.textContent || [],
+        content: it.textContent || [],
+        _key: it._key || it._id,
+      }));
+
+      return (
+        <div className={`m-auto ${widgetAlign}`}>
+          <AccordionWidget
+            icon={block.icon?.asset?.url || block.icon || undefined}
+            accordionItems={items}
+          />
+        </div>
+      );
+    }
 
     default:
       return null;

@@ -1,9 +1,10 @@
-// app/blog/[slug]/page.js
 import React from "react";
-import { draftMode } from "next/headers"; // optional: keep if you wire preview later
+import { draftMode } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
+import ListCard from "@/components/ui/ListCard";
+import ExpandingCard from "@/components/ui/ExpandingCard";
 
 import BlogTOC from "@/components/blog/BlogTOC";
 import StaggeredWords from "@/hooks/StaggeredWords";
@@ -188,6 +189,35 @@ const blogPortableComponents = {
       }
       return <hr className="my-8 border-[var(--mesm-grey-dk)]" />;
     },
+
+    // ✅ accordionItem rendered with ExpandingCard
+    accordionItem: ({ value }) => {
+      if (!value) return null;
+
+      return (
+        <div className="my-6">
+          <ExpandingCard
+            title={value.entryTitle || "TL;DR"}
+            // icon optional if you want one later
+            defaultExpanded={false}
+          >
+            <PortableText
+              value={value.textContent || []}
+              components={blogPortableComponents}
+            />
+          </ExpandingCard>
+        </div>
+      );
+    },
+
+    listIconItem: ({ value }) => (
+      <ListCard icon={value.icon} entryTitle={value.entryTitle}>
+        <PortableText
+          value={value.textContent || []}
+          components={blogPortableComponents}
+        />
+      </ListCard>
+    ),
   },
 };
 

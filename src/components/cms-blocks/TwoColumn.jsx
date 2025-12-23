@@ -2,7 +2,7 @@
 
 import { isValidElement } from "react";
 import InView from "@/hooks/InView";
-import BlockRenderer from "@/lib/utils/BlockRenderer";
+import BlockRenderer from "@/sanity/BlockRenderer";
 import Button from "../ui/Button";
 
 function boolOrNull(v) {
