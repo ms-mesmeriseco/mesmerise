@@ -62,9 +62,17 @@ export const blogPostBySlugQuery = groq`
         }
       }
     },
+// Embedded docs will come through as references
+  _type == "reference" => {
+    "_key": _key,
+    ...@->{
+      _id,
+      _type,
+
+    
 
       // -----------------------------
-      // listIconItem  ✅ (THIS is what you're missing)
+      // listIconItem (your schema)
       // -----------------------------
       _type == "listIconItem" => {
         _id,
@@ -75,12 +83,13 @@ export const blogPostBySlugQuery = groq`
           ...,
           markDefs[]{
             ...,
-            _type == "reference" => @->{ _id, _type, entryTitle, "slug": slug.current },
-            _type == "image" => { ..., "asset": asset->{ url, metadata } },
-            _type == "file"  => { ..., "asset": asset->{ url } }
+            _type == "link" => { href, target }
           }
         }
-      },
+      }
+    }
+  },
+
 
     // ---------- BLOCK-LEVEL IMAGE ----------
     _type == "image" => {

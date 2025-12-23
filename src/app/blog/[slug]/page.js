@@ -5,7 +5,6 @@ import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import ListCard from "@/components/ui/ListCard";
 import ExpandingCard from "@/components/ui/ExpandingCard";
-
 import BlogTOC from "@/components/blog/BlogTOC";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import BlogRail from "@/components/sanity-blocks/BlogRail";
@@ -110,7 +109,7 @@ const blogPortableComponents = {
           .trim() || "";
       const id = slugify(text || "section");
       return (
-        <h3 id={id} className="mt-8 mb-3 text-xl font-600 scroll-mt-[120px] ">
+        <h3 id={id} className="text-xl font-600 scroll-mt-[120px] ">
           {children}
         </h3>
       );
@@ -195,7 +194,7 @@ const blogPortableComponents = {
       if (!value) return null;
 
       return (
-        <div className="my-6">
+        <div className="">
           <ExpandingCard
             title={value.entryTitle || "TL;DR"}
             // icon optional if you want one later
@@ -210,14 +209,19 @@ const blogPortableComponents = {
       );
     },
 
-    listIconItem: ({ value }) => (
-      <ListCard icon={value.icon} entryTitle={value.entryTitle}>
-        <PortableText
-          value={value.textContent || []}
-          components={blogPortableComponents}
-        />
-      </ListCard>
-    ),
+    listIconItem: ({ value }) => {
+      if (!value) return null;
+      return (
+        <div className="my-6">
+          <ListCard icon={value.iconUrl} entryTitle={value.entryTitle}>
+            <PortableText
+              value={value.textContent || []}
+              components={blogPortableComponents}
+            />
+          </ListCard>
+        </div>
+      );
+    },
   },
 };
 
