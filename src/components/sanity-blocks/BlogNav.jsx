@@ -190,6 +190,18 @@ export default function BlogScroll() {
                 </h5>
 
                 {/* Per-post tags hidden until tags exist */}
+                {post.serviceTags?.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-1">
+                    {post.serviceTags.map((tag) => (
+                      <span
+                        key={tag._id || tag.slug}
+                        className="px-2 py-0.5 text-xs rounded-full bg-[var(--mesm-grey-dk)]/20 text-[var(--mesm-grey)]"
+                      >
+                        {tag.title}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </Link>

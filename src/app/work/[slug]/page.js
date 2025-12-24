@@ -15,7 +15,11 @@ const PROJECT_QUERY = groq`
     "slug": slug.current,
     projectDate,
     collaborationModel,
-    serviceTags,
+    "serviceTags": serviceTags[]->{
+  _id,
+  title,
+  "slug": slug.current
+},
     projectScope,
     dataOne,
     dataTwo,
@@ -227,8 +231,11 @@ export default async function ProjectPage({ params }) {
 
       {/* --- TAGS --- */}
       <div className="inline-flex col-span-12 gap-2 pt-6">
-        {page.serviceTags && page.serviceTags.length > 0 && (
-          <ServiceTags items={page.serviceTags} large={false} />
+        {page.serviceTags?.length > 0 && (
+          <ServiceTags
+            items={page.serviceTags.map((t) => t.title)} // <- back to string[]
+            large={false}
+          />
         )}
       </div>
 

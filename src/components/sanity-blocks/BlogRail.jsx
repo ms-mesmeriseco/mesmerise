@@ -66,8 +66,25 @@ export default function BlogRail() {
               </div>
             </Link>
 
-            {/* Tags – omitted for now, since Sanity schema doesn't yet have them */}
-            {/* If you add a tags field later, we can render chips again here */}
+            {post.serviceTags?.length > 0 && (
+              <div className="flex flex-wrap gap-1 mt-1">
+                {post.serviceTags.map((tag) => (
+                  <span
+                    key={tag._id || tag.slug}
+                    className="
+              text-xs px-2 py-0.5 rounded-full
+              bg-[var(--mesm-grey-dk)]/20
+              text-[var(--mesm-grey)]
+              hover:bg-[var(--mesm-grey-dk)]/40
+              hover:text-[var(--foreground)]
+              transition-colors
+            "
+                  >
+                    {tag.title}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>

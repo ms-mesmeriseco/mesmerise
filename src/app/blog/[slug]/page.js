@@ -342,11 +342,11 @@ export default async function BlogPost({ params }) {
       date: page.postDate || new Date(0).toISOString(),
     });
     // 👇 TEMP LOGGING
-    console.log("BLOG CONTENT RAW:", JSON.stringify(page.blogContent, null, 2));
-    console.log(
-      "FIRST BLOCK MARKDEFS:",
-      JSON.stringify(page.blogContent?.[0]?.markDefs, null, 2)
-    );
+    // console.log("BLOG CONTENT RAW:", JSON.stringify(page.blogContent, null, 2));
+    // console.log(
+    //   "FIRST BLOCK MARKDEFS:",
+    //   JSON.stringify(page.blogContent?.[0]?.markDefs, null, 2)
+    // );
   } catch (err) {
     console.error("BlogPost Sanity error:", err);
     return <p>Blog post not found.</p>;
@@ -402,8 +402,8 @@ export default async function BlogPost({ params }) {
                 <Image
                   src={avatarUrl}
                   alt={`Avatar of ${author?.name ?? "author"}`}
-                  width={48}
-                  height={48}
+                  width={72}
+                  height={72}
                   className="rounded-full shrink-0"
                 />
               )}

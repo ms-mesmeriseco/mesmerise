@@ -10,7 +10,11 @@ export const blogPostBySlugQuery = groq`
   metaDescription[]{...,},
   postHeading,
   postDate,
-
+  "serviceTags": serviceTags[]->{
+    _id,
+    title,
+    "slug": slug.current
+  },
   "heroImage": {
     "url": heroImage.asset->url,
     "width": heroImage.asset->metadata.dimensions.width,
@@ -104,7 +108,8 @@ export const blogPostBySlugQuery = groq`
     _type == "file" => {
       ...,
       "file": asset->{
-        url
+        url,
+        "dimensions": metadata.dimensions
       }
     },
 
@@ -230,10 +235,16 @@ export const blogRailPostsQuery = groq`
   "slug": slug.current,
   postTitle,
   postDate,
-  // Minimal hero image shape for the rail
+
   "heroImage": {
     "url": heroImage.asset->url,
     "alt": coalesce(heroImage.alt, postTitle)
+  },
+
+  "serviceTags": serviceTags[]->{
+    _id,
+    title,
+    "slug": slug.current
   }
 }
 `;
@@ -248,6 +259,13 @@ export const blogScrollPostsQuery = groq`
   "heroImage": {
     "url": heroImage.asset->url,
     "alt": coalesce(heroImage.alt, postTitle)
+  },
+
+  // ✅ ADD THIS
+  "serviceTags": serviceTags[]->{
+    _id,
+    title,
+    "slug": slug.current
   }
 }
 `;

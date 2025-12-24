@@ -118,7 +118,7 @@ export default function LeftHero({
         <div
           className={[
             "md:row-start-1 md:col-start-1 md:col-span-2 col-span-1",
-            "flex flex-col justify-center text-left gap-2",
+            "flex flex-col justify-center text-left gap-4",
             "text-[var(--foreground)] w-[90%]",
           ].join(" ")}
         >

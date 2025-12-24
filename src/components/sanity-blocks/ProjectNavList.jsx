@@ -67,7 +67,7 @@ const FILTER_MAP = {
     "Omni-Channel Marketing",
   ],
   Analytics: [
-    "ANalytics",
+    "Analytics",
     "Analytics Setup & Audit",
     "Web Traffic",
     "Reporting",
