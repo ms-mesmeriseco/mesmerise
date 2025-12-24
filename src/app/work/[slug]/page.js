@@ -15,11 +15,7 @@ const PROJECT_QUERY = groq`
     "slug": slug.current,
     projectDate,
     collaborationModel,
-    "serviceTags": serviceTags[]->{
-  _id,
-  title,
-  "slug": slug.current
-},
+    "serviceTags": serviceTags[]->title,
     projectScope,
     dataOne,
     dataTwo,
@@ -82,6 +78,7 @@ export async function generateMetadata({ params }) {
   }
 
   const page = await sanityClient.fetch(PROJECT_QUERY, { slug });
+  console.log("SERVICE TAGS (raw):", page?.serviceTags);
 
   if (!page) {
     return {
@@ -232,10 +229,7 @@ export default async function ProjectPage({ params }) {
       {/* --- TAGS --- */}
       <div className="inline-flex col-span-12 gap-2 pt-6">
         {page.serviceTags?.length > 0 && (
-          <ServiceTags
-            items={page.serviceTags.map((t) => t.title)} // <- back to string[]
-            large={false}
-          />
+          <ServiceTags tags={page.serviceTags.filter(Boolean)} large={false} />
         )}
       </div>
 

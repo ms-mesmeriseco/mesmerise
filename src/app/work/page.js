@@ -18,7 +18,7 @@ export async function generateMetadata() {
   };
 }
 
-const projectsQuery = groq`*[_type == "projectPage" && contentfulArchived != true]{
+const projectsQuery = groq`*[_type == "projectPage"]{
   _id,
   projectTitle,
   "slug": slug.current,
@@ -42,6 +42,7 @@ export default async function Work({ searchParams }) {
   const activeTag = Array.isArray(tagParam) ? tagParam[0] : (tagParam ?? null);
 
   const projects = await fetchProjects();
+  console.log("SERVICE TAGS (raw):", projects.serviceTags);
 
   return (
     <div className="flex flex-col min-h-screen mb-[4rem]">
