@@ -21,7 +21,6 @@ const PROJECT_QUERY = groq`
     dataTwo,
     dataThree,
     extendedDescription,
-    metaDescription,
     heroMedia{
       "url": asset->url,
       "width": asset->metadata.dimensions.width,
@@ -67,7 +66,7 @@ function renderBlocks(blocks, { h2Class = "", pClass = "" } = {}) {
 //   METADATA FROM SANITY
 // =======================
 export async function generateMetadata({ params }) {
-  const { slug } = await params; // 👈 await params, not params.slug
+  const { slug } = await params;
 
   if (!slug) {
     return {
@@ -95,8 +94,7 @@ export async function generateMetadata({ params }) {
     page.metaDescription ||
     "Explore how ambitious brands scaled with Mesmerise. From booked out calendars to 25x ROAS, data-backed proof, not promises.";
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.mesmeriseco.com";
+  const baseUrl = "https://www.mesmeriseco.com";
   const canonicalUrl = `${baseUrl}/work/${slug}`;
 
   return {
@@ -110,10 +108,10 @@ export async function generateMetadata({ params }) {
       siteName: "Mesmerise Digital",
       images: [
         {
-          url: page.heroMedia?.url || `${baseUrl}/assets/og-default.jpg`,
+          url: page.heroMedia?.url || `${baseUrl}/assets/social-default.png`,
           width: 1200,
           height: 630,
-          alt: page.heroMedia?.alt || projectName,
+          alt: projectName,
         },
       ],
       locale: "en_AU",
@@ -123,7 +121,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title,
       description,
-      images: [page.heroMedia?.url || `${baseUrl}/assets/og-default.jpg`],
+      images: [page.heroMedia?.url || `${baseUrl}/assets/social-default.png`],
     },
   };
 }

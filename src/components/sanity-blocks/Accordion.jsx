@@ -90,7 +90,7 @@ export default function AccordionWidget({
 
   return (
     <section className="w-full max-w-4xl mx-auto">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 ">
         {accordionItems.map((item, index) => {
           const { entryTitle, textContent } = item || {};
 
