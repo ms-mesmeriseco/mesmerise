@@ -390,37 +390,58 @@ export default async function BlogPost({ params }) {
             </aside>
           )}
 
-          <article className="max-w-3xl w-full flex flex-col gap-6 md:pt-7">
+          <article className="max-w-xl w-full flex flex-col gap-6 md:pt-7">
             <StaggeredWords
               as="h1"
               className="page-title-medium"
               text={page.postHeading || page.postTitle}
             />
 
-            <span className="text-sm text-[var(--mesm-l-grey)] flex flex-row gap-4 items-start md:py-8 py-2">
-              {avatarUrl && (
-                <Image
-                  src={avatarUrl}
-                  alt={`Avatar of ${author?.name ?? "author"}`}
-                  width={72}
-                  height={72}
-                  className="rounded-full shrink-0"
-                />
-              )}
-              <span>
-                {formattedDate && (
-                  <>
-                    {formattedDate}
-                    <br />
-                  </>
+            <div className="flex items-center gap-8 rounded-md w-fit pb-6">
+              {/* Avatar */}
+              <div className="relative h-10 w-10 shrink-0">
+                {avatarUrl ? (
+                  <Image
+                    src={avatarUrl}
+                    alt={`Avatar of ${author?.name ?? "author"}`}
+                    fill
+                    sizes="32px"
+                    className="rounded-full object-cover ring-1 ring-[var(--mesm-grey-dk)]"
+                  />
+                ) : (
+                  <div className="h-full w-full rounded-full grid place-items-center bg-[var(--mesm-grey-dk)] text-[var(--foreground)] text-xs font-semibold ring-1 ring-[var(--mesm-grey-dk)]">
+                    {(author?.name || "A")
+                      .split(" ")
+                      .filter(Boolean)
+                      .slice(0, 2)
+                      .map((s) => s[0])
+                      .join("")
+                      .toUpperCase()}
+                  </div>
                 )}
-                {author?.name ? <>By {author.name}</> : null}
-              </span>
-            </span>
+              </div>
+
+              {/* Meta */}
+              <div className="flex flex-row gap-4 leading-tight">
+                {author?.name && (
+                  <div className="text-sm md:text-[15px] font-medium text-[var(--foreground)]">
+                    <span className="decoration-[var(--mesm-grey-dk)]">
+                      {author.name}
+                    </span>
+                  </div>
+                )}
+                {/* <div className="m-auto h-2 w-2 rounded-full border border-[var(--mesm-grey)] bg-[var(--background)]"></div> */}
+                {formattedDate && (
+                  <div className="text-sm md:text-[15px] font-light text-[var(--mesm-l-grey)]">
+                    {formattedDate}
+                  </div>
+                )}
+              </div>
+            </div>
 
             {/* Blog Content – Portable Text */}
             {normBlogContent && (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 border-t-1 pt-6 border-[var(--mesm-grey-dk)]">
                 <PortableText
                   value={normBlogContent}
                   components={blogPortableComponents}
