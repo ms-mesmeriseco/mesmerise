@@ -226,7 +226,7 @@ export default async function ProjectPage({ params }) {
       </div>
 
       {/* --- TAGS --- */}
-      <div className="inline-flex col-span-12 gap-2 pt-6">
+      <div className="inline-flex md:col-span-3 col-span-12 gap-2 ">
         <ServiceTags items={page.serviceTags} large={false} />
       </div>
 

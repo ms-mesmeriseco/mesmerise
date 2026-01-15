@@ -25,7 +25,7 @@ const projectsQuery = groq`*[_type == "projectPage"]{
   projectDate,
   collaborationModel,
   serviceTags,
-    heroMedia{
+  heroMedia{
       "url": asset->url,
       "width": asset->metadata.dimensions.width,
       "height": asset->metadata.dimensions.height,
