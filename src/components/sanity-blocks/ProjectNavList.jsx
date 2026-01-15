@@ -76,7 +76,24 @@ const FILTER_MAP = {
   ],
 };
 
-const normalize = (s) => (s || "").toString().trim().toLowerCase();
+const normalize = (s) =>
+  decodeURIComponent((s ?? "").toString())
+    .trim()
+    .toLowerCase();
+
+// ---- Sanity tag helpers ----
+const getTagTitle = (t) =>
+  typeof t === "string" ? t : t?.title || t?.name || "";
+const getTagSlug = (t) => {
+  if (typeof t === "string") return "";
+  // Sanity slug shape is usually { current: "my-slug" }
+  return t?.slug?.current || t?.slug || "";
+};
+const tagTokens = (t) => {
+  const title = normalize(getTagTitle(t));
+  const slug = normalize(getTagSlug(t));
+  return [title, slug].filter(Boolean);
+};
 
 export default function ProjectNavigationList({
   activeTag = null,
@@ -88,45 +105,54 @@ export default function ProjectNavigationList({
   const [selectedLabel, setSelectedLabel] = useState(null);
   const [selectedRaw, setSelectedRaw] = useState(null);
   const [noMatchMessage, setNoMatchMessage] = useState(null);
-  const isLoaded = true; // now it's always "loaded" because data is passed in
   const [hoveredProject, setHoveredProject] = useState(null);
 
+  // Build a map that lets “Strategy”, or any alias, map to the label “Strategy”
   const aliasToLabel = useMemo(() => {
     const map = new Map();
     Object.keys(FILTER_MAP).forEach((label) => {
       map.set(normalize(label), label);
-      (FILTER_MAP[label] || []).forEach((alias) => {
-        map.set(normalize(alias), label);
-      });
+      (FILTER_MAP[label] || []).forEach((alias) =>
+        map.set(normalize(alias), label)
+      );
     });
     return map;
   }, []);
 
+  // Read URL tag + decide whether it maps to a quick-filter label or a raw tag/slug
   useEffect(() => {
     const urlTag = searchParams.get("tag") ?? activeTag;
-    if (urlTag) {
-      const mapped = aliasToLabel.get(normalize(urlTag));
-      if (mapped) {
-        setSelectedLabel(mapped);
-        setSelectedRaw(null);
-      } else {
-        setSelectedLabel(null);
-        setSelectedRaw(urlTag);
-      }
-    } else {
+    const clean = urlTag ? normalize(urlTag) : "";
+
+    if (!clean) {
       setSelectedLabel(null);
       setSelectedRaw(null);
+      return;
+    }
+
+    const mapped = aliasToLabel.get(clean);
+    if (mapped) {
+      setSelectedLabel(mapped);
+      setSelectedRaw(null);
+    } else {
+      // raw could be a Sanity slug like "performance" or an actual tag title
+      setSelectedLabel(null);
+      setSelectedRaw(urlTag);
     }
   }, [searchParams, activeTag, aliasToLabel]);
 
+  // Build a set of all tag tokens present in your dataset (titles + slugs)
   const presentTagSet = useMemo(() => {
     const set = new Set();
-    projects.forEach((p) =>
-      (p.serviceTags || []).forEach((t) => set.add(normalize(t)))
-    );
+    for (const p of projects) {
+      for (const t of p.serviceTags || []) {
+        for (const token of tagTokens(t)) set.add(token);
+      }
+    }
     return set;
   }, [projects]);
 
+  // Only show quick-filter buttons if at least one alias actually exists in your data
   const availableFilterLabels = useMemo(() => {
     return Object.keys(FILTER_MAP).filter((label) =>
       (FILTER_MAP[label] || []).some((alias) =>
@@ -135,28 +161,34 @@ export default function ProjectNavigationList({
     );
   }, [presentTagSet]);
 
-  const filteredProjects = useMemo(() => {
-    if (!selectedLabel && !selectedRaw) {
-      return [...projects].sort(
-        (a, b) => new Date(b.projectDate) - new Date(a.projectDate)
-      );
-    }
+  // Compute candidate tokens based on selection:
+  // - If selectedLabel, candidates are that label + aliases (titles)
+  // - If selectedRaw, candidates is the raw token (slug or title)
+  const candidateTokens = useMemo(() => {
+    if (!selectedLabel && !selectedRaw) return null;
 
-    let candidates;
     if (selectedLabel) {
-      candidates = new Set(
-        (FILTER_MAP[selectedLabel] || [selectedLabel]).map((n) => normalize(n))
-      );
-    } else {
-      candidates = new Set([normalize(selectedRaw)]);
+      const aliases = FILTER_MAP[selectedLabel] || [];
+      return new Set([selectedLabel, ...aliases].map(normalize));
     }
 
-    return projects
-      .filter((p) =>
-        (p.serviceTags || []).some((t) => candidates.has(normalize(t)))
-      )
-      .sort((a, b) => new Date(b.projectDate) - new Date(a.projectDate));
-  }, [projects, selectedLabel, selectedRaw]);
+    return new Set([normalize(selectedRaw)]);
+  }, [selectedLabel, selectedRaw]);
+
+  const filteredProjects = useMemo(() => {
+    const sorted = [...projects].sort(
+      (a, b) => new Date(b.projectDate) - new Date(a.projectDate)
+    );
+
+    if (!candidateTokens) return sorted;
+
+    return sorted.filter((p) =>
+      (p.serviceTags || []).some((t) => {
+        const tokens = tagTokens(t);
+        return tokens.some((tok) => candidateTokens.has(tok));
+      })
+    );
+  }, [projects, candidateTokens]);
 
   useEffect(() => {
     const display = selectedLabel || selectedRaw;
@@ -173,20 +205,20 @@ export default function ProjectNavigationList({
     router.push(label ? `/work?tag=${encodeURIComponent(label)}` : "/work");
   };
 
-  // --- Framer Motion variants ---
+  // Framer Motion variants
   const container = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { staggerChildren: 0.0035 } },
   };
   const item = {
-    hidden: { opacity: 0, transition: { staggerChildren: 0.0035 } },
-    show: { opacity: 1, transition: { staggerChildren: 0.0035 } },
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
   };
 
   return (
     <section className="flex flex-col gap-[var(--global-margin-xs)] nav-list">
-      {/* Active raw filter chip (for tags not in quick filters) */}
-      {isLoaded && selectedRaw && (
+      {/* Raw filter chip */}
+      {selectedRaw && (
         <div className="mb-2">
           <span className="inline-flex items-center gap-2 text-sm px-3 py-1 rounded-lg bg-[var(--mesm-grey)] text-gray-800">
             Filtering by “{selectedRaw}”
@@ -201,17 +233,17 @@ export default function ProjectNavigationList({
         </div>
       )}
 
-      {/* Quick-filter buttons (allowlist only) */}
-      {isLoaded && availableFilterLabels.length > 0 && (
+      {/* Quick filters */}
+      {availableFilterLabels.length > 0 && (
         <motion.div
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-wrap gap-1 mb-4 text-md "
+          className="flex flex-wrap gap-1 mb-4 text-md"
         >
           <motion.button
             variants={item}
-            className={`px-3 py-0 rounded-xl h-full hover:bg-[var(--mesm-yellow)]  ${
+            className={`px-3 py-0 rounded-xl h-full hover:bg-[var(--mesm-yellow)] ${
               !selectedLabel && !selectedRaw
                 ? "bg-[var(--mesm-yellow)] text-[var(--background)]"
                 : "bg-[var(--mesm-grey)] text-gray-800 cursor-pointer"
@@ -240,66 +272,66 @@ export default function ProjectNavigationList({
         </motion.div>
       )}
 
-      {noMatchMessage && isLoaded && (
+      {noMatchMessage && (
         <p className="mb-4 text-sm text-gray-500">{noMatchMessage}</p>
       )}
 
       {/* Projects */}
       <AnimatePresence>
-        {isLoaded &&
-          filteredProjects.map((project) => (
-            <motion.div
-              key={project._id || project.slug}
-              layout
-              variants={item}
-              initial="hidden"
-              animate="show"
-              exit="hidden"
-              whileHover={{ x: 2 }}
-              onMouseEnter={() => setHoveredProject(project)}
-              onMouseLeave={() => setHoveredProject(null)}
-            >
-              <Link href={`/work/${project.slug}`}>
-                <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
-                  {/* Row 1: Title + Year */}
-                  <div className="flex flex-row md:flex-row justify-between items-center my-2">
-                    <span className="md:text-5xl">{project.projectTitle}</span>
-                    <span className="md:text-5xl">
-                      {project.projectDate
-                        ? new Date(project.projectDate).toLocaleDateString(
-                            "en-GB",
-                            { year: "numeric" }
-                          )
-                        : ""}
-                    </span>
-                  </div>
-
-                  {/* Optional: per-project tags visible under each row */}
-
-                  <div className="mt-0 md:mt-0 pointer-events-none">
-                    {(() => {
-                      const tags = (project.serviceTags || [])
-                        .map((t) => (typeof t === "string" ? t : t?.title))
-                        .filter(Boolean);
-
-                      const visible = tags.slice(0, 3);
-                      const hasMore = tags.length > 2;
-
-                      return (
-                        <ServiceTags
-                          items={hasMore ? [...visible, "..."] : visible}
-                          large={false}
-                          clickable={false}
-                          highlight={true}
-                        />
-                      );
-                    })()}
-                  </div>
+        {filteredProjects.map((project) => (
+          <motion.div
+            key={project._id || project.slug}
+            layout
+            variants={item}
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+            whileHover={{ x: 2 }}
+            onMouseEnter={() => setHoveredProject(project)}
+            onMouseLeave={() => setHoveredProject(null)}
+          >
+            <Link href={`/work/${project.slug}`}>
+              <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
+                <div className="flex flex-row md:flex-row justify-between items-center my-2">
+                  <span className="md:text-5xl">{project.projectTitle}</span>
+                  <span className="md:text-5xl">
+                    {project.projectDate
+                      ? new Date(project.projectDate).toLocaleDateString(
+                          "en-GB",
+                          {
+                            year: "numeric",
+                          }
+                        )
+                      : ""}
+                  </span>
                 </div>
-              </Link>
-            </motion.div>
-          ))}
+
+                {/* Visible per-project tags */}
+                <div className="mt-0 md:mt-0 pointer-events-none">
+                  {(() => {
+                    const tags = (project.serviceTags || [])
+                      .map((t) => getTagTitle(t))
+                      .filter(Boolean);
+
+                    const visible = tags.slice(0, 3);
+                    const hasMore = tags.length > 2;
+
+                    return (
+                      <ServiceTags
+                        items={hasMore ? [...visible, "..."] : visible}
+                        large={false}
+                        clickable={false}
+                        highlight={true}
+                      />
+                    );
+                  })()}
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
       </AnimatePresence>
+
       {/* Hover preview (desktop only) */}
       <div className="hidden md:block">
         <AnimatePresence>
@@ -310,8 +342,8 @@ export default function ProjectNavigationList({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
-              className="fixed bottom-6 right-6 z-50 w-[450px] overflow-hidden ] bg-[var(--background)] shadow-lg"
-              style={{ aspectRatio: "3 / 2" }} // 6/4 ratio
+              className="fixed bottom-6 right-6 z-50 w-[360px] overflow-hidden rounded-xl border border-[var(--mesm-grey-dk)] bg-[var(--background)] shadow-lg"
+              style={{ aspectRatio: "3 / 2" }}
             >
               <div className="relative h-full w-full">
                 <Image

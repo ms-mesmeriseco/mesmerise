@@ -24,7 +24,11 @@ const projectsQuery = groq`*[_type == "projectPage"]{
   "slug": slug.current,
   projectDate,
   collaborationModel,
-  serviceTags,
+serviceTags[]->{
+  _id,
+  title,
+  "slug": slug.current
+},
   heroMedia{
       "url": asset->url,
       "width": asset->metadata.dimensions.width,
