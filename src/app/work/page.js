@@ -24,7 +24,13 @@ const projectsQuery = groq`*[_type == "projectPage"]{
   "slug": slug.current,
   projectDate,
   collaborationModel,
-  serviceTags
+  serviceTags,
+    heroMedia{
+      "url": asset->url,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height,
+      "alt": coalesce(alt, asset->originalFilename)
+    },
 }`;
 
 async function fetchProjects() {

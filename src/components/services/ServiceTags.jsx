@@ -22,6 +22,8 @@ export default function ServiceTags({
   items = [],
   label = "Service Capabilities",
   large = true,
+  clickable = true,
+  highlight = false,
 }) {
   const router = useRouter();
   const EXCLUDED_TAGS = ["Layout: Highlight Grid"];
@@ -32,10 +34,16 @@ export default function ServiceTags({
   };
   const item = { hidden: { opacity: 0 }, show: { opacity: 1 } };
 
-  const BASE_COLOR_CLASSES = [
+  const BASE_COLOUR_CLASSES = [
     "font-normal whitespace-nowrap cursor-pointer transition duration-200",
     "bg-[var(--mesm-grey)]/10 text-[var(--foreground)]",
     "border-1 border-[var(--mesm-grey-dk)]",
+
+    "hover:bg-[var(--hover-color)] hover:text-[var(--background)]",
+  ].join(" ");
+  const HIGHLIGHT_CLASS = [
+    "font-normal whitespace-nowrap cursor-pointer transition duration-200",
+    "bg-[var(--mesm-grey)] text-[var(--background)]",
 
     "hover:bg-[var(--hover-color)] hover:text-[var(--background)]",
   ].join(" ");
@@ -68,8 +76,8 @@ export default function ServiceTags({
               <motion.button
                 key={idx}
                 variants={item}
-                onClick={(e) => handleClick(tag, e)}
-                className={`${BASE_COLOR_CLASSES} ${SIZE_CLASSES}`}
+                onClick={clickable ? (e) => handleClick(tag, e) : null}
+                className={`${BASE_COLOUR_CLASSES} ${SIZE_CLASSES}`}
                 type="button"
                 style={{ "--hover-color": hoverColor }}
               >

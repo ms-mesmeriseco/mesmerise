@@ -77,7 +77,6 @@ export async function generateMetadata({ params }) {
   }
 
   const page = await sanityClient.fetch(PROJECT_QUERY, { slug });
-  console.log("SERVICE TAGS (raw):", page?.serviceTags);
 
   if (!page) {
     return {
@@ -147,6 +146,8 @@ export default async function ProjectPage({ params }) {
         year: "numeric",
       })
     : "";
+  console.log("SERVICE TAGS (clean):", page.serviceTags);
+  const tagArray = Array.isArray(page.serviceTags) ? page.serviceTags : [];
 
   return (
     <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)]">
@@ -226,9 +227,7 @@ export default async function ProjectPage({ params }) {
 
       {/* --- TAGS --- */}
       <div className="inline-flex col-span-12 gap-2 pt-6">
-        {page.serviceTags?.length > 0 && (
-          <ServiceTags tags={page.serviceTags.filter(Boolean)} large={false} />
-        )}
+        <ServiceTags items={page.serviceTags} large={false} />
       </div>
 
       <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]" />

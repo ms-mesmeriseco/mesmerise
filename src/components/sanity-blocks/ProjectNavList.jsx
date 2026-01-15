@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import ServiceTags from "../services/ServiceTags";
+import Image from "next/image";
 
 const FILTER_MAP = {
   Strategy: [
@@ -88,6 +89,7 @@ export default function ProjectNavigationList({
   const [selectedRaw, setSelectedRaw] = useState(null);
   const [noMatchMessage, setNoMatchMessage] = useState(null);
   const isLoaded = true; // now it's always "loaded" because data is passed in
+  const [hoveredProject, setHoveredProject] = useState(null);
 
   const aliasToLabel = useMemo(() => {
     const map = new Map();
@@ -254,6 +256,8 @@ export default function ProjectNavigationList({
               animate="show"
               exit="hidden"
               whileHover={{ x: 2 }}
+              onMouseEnter={() => setHoveredProject(project)}
+              onMouseLeave={() => setHoveredProject(null)}
             >
               <Link href={`/work/${project.slug}`}>
                 <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
@@ -273,13 +277,60 @@ export default function ProjectNavigationList({
                   {/* Optional: per-project tags visible under each row */}
 
                   <div className="mt-0 md:mt-0 pointer-events-none">
-                    <ServiceTags tags={project.serviceTags || []} />
+                    {(() => {
+                      const tags = (project.serviceTags || [])
+                        .map((t) => (typeof t === "string" ? t : t?.title))
+                        .filter(Boolean);
+
+                      const visible = tags.slice(0, 3);
+                      const hasMore = tags.length > 2;
+
+                      return (
+                        <ServiceTags
+                          items={hasMore ? [...visible, "..."] : visible}
+                          large={false}
+                          clickable={false}
+                          highlight={true}
+                        />
+                      );
+                    })()}
                   </div>
                 </div>
               </Link>
             </motion.div>
           ))}
       </AnimatePresence>
+      {/* Hover preview (desktop only) */}
+      <div className="hidden md:block">
+        <AnimatePresence>
+          {hoveredProject?.heroMedia?.url && (
+            <motion.div
+              key={hoveredProject._id || hoveredProject.slug}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              className="fixed bottom-6 right-6 z-50 w-[450px] overflow-hidden ] bg-[var(--background)] shadow-lg"
+              style={{ aspectRatio: "3 / 2" }} // 6/4 ratio
+            >
+              <div className="relative h-full w-full">
+                <Image
+                  src={hoveredProject.heroMedia.url}
+                  alt={
+                    hoveredProject.heroMedia.alt ||
+                    hoveredProject.projectTitle ||
+                    "Project preview"
+                  }
+                  fill
+                  sizes="360px"
+                  className="object-cover"
+                  priority={false}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </section>
   );
 }
