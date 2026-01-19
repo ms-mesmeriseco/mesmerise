@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 
 import { sanityClient } from "@/sanity/client";
 import { blogScrollPostsQuery } from "@/lib/sanity/blog";
+import BlogPostCard from "@/components/blog/BlogPostCard"; // ✅ new reusable card
 
-export default function BlogScroll() {
+export default function BlogNav() {
   const [posts, setPosts] = useState([]);
   const [selectedTagId, setSelectedTagId] = useState(null); // kept for future tags
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,15 +18,45 @@ export default function BlogScroll() {
     (async () => {
       try {
         const items = await sanityClient.fetch(blogScrollPostsQuery);
-        setPosts(items || []);
+        const list = items || [];
+        setPosts(list);
+
+        // ✅ Debug logs: confirm tag payload shape + totals
+        console.groupCollapsed("[BlogScroll] serviceTags debug");
+        console.log("posts:", list.length);
+        console.log(
+          "posts with serviceTags:",
+          list.filter((p) => (p?.serviceTags || []).length > 0).length,
+        );
+        console.log(
+          "total tag refs returned:",
+          list.reduce(
+            (acc, p) => acc + ((p?.serviceTags || []).length || 0),
+            0,
+          ),
+        );
+        console.log(
+          "sample (first 5 posts) tags:",
+          list.slice(0, 5).map((p) => ({
+            slug: p?.slug,
+            title: p?.postTitle,
+            serviceTags: (p?.serviceTags || []).map((t) => ({
+              _id: t?._id,
+              title: t?.title,
+              slug: t?.slug,
+            })),
+          })),
+        );
+        console.groupEnd();
       } catch (error) {
         console.error("Failed to fetch blog posts from Sanity:", error);
       }
     })();
   }, []);
 
-  // Tags disabled for now (until you add tags to Sanity schema)
+  // Tags disabled for now (until tags exist)
   const allTags = useMemo(() => [], []);
+
   const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
 
@@ -157,54 +186,7 @@ export default function BlogScroll() {
       {/* Grid of posts */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2 transition-all duration-300">
         {visiblePosts.map((post) => (
-          <Link
-            key={`blog-${post.slug}`}
-            href={`/blog/${post.slug}`}
-            className="relative group w-full rounded-md overflow-hidden hover:text-[var(--background)] duration-200"
-          >
-            <div className="flex flex-col h-full">
-              {/* Image */}
-              <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden border border-[var(--mesm-grey-dk)]">
-                {post.heroImage?.url && (
-                  <Image
-                    src={post.heroImage.url}
-                    alt={post.heroImage.alt || post.postTitle || "Blog image"}
-                    fill
-                    className="object-cover transition-transform duration-300 md:group-hover:scale-105"
-                    sizes="(min-width: 768px) 33vw, 100vw"
-                    priority={false}
-                  />
-                )}
-              </div>
-
-              {/* Content */}
-              <div className="py-2">
-                <h5
-                  className={[
-                    "text-sm font-bold duration-200",
-                    "text-[var(--foreground)]",
-                    "md:text-[var(--mesm-grey)] md:group-hover:text-[var(--foreground)]",
-                  ].join(" ")}
-                >
-                  {post.postTitle}
-                </h5>
-
-                {/* Per-post tags hidden until tags exist */}
-                {post.serviceTags?.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-1">
-                    {post.serviceTags.map((tag) => (
-                      <span
-                        key={tag._id || tag.slug}
-                        className="px-2 py-0.5 text-xs rounded-full bg-[var(--mesm-grey-dk)]/20 text-[var(--mesm-grey)]"
-                      >
-                        {tag.title}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </Link>
+          <BlogPostCard key={`blog-${post.slug}`} post={post} />
         ))}
       </div>
 

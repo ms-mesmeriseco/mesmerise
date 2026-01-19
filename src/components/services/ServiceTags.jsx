@@ -18,6 +18,12 @@ function hashToIndex(str, mod) {
   return h % mod;
 }
 
+// supports:
+// - string: "Performance"
+// - object: { title: "Performance", slug: "performance" }
+const getTagTitle = (t) => (typeof t === "string" ? t : t?.title || "");
+const getTagSlug = (t) => (typeof t === "string" ? t : t?.slug || "");
+
 export default function ServiceTags({
   items = [],
   label = "Service Capabilities",
@@ -38,14 +44,12 @@ export default function ServiceTags({
     "font-normal whitespace-nowrap cursor-pointer transition duration-200",
     "bg-[var(--mesm-grey)]/10 text-[var(--foreground)]",
     "border-1 border-[var(--mesm-grey-dk)]",
-
     "hover:bg-[var(--hover-color)] hover:text-[var(--background)]",
   ].join(" ");
-  const HIGHLIGHT_CLASS = [
-    "font-normal whitespace-nowrap cursor-pointer transition duration-200",
-    "bg-[var(--mesm-grey)] text-[var(--background)]",
 
-    "hover:bg-[var(--hover-color)] hover:text-[var(--background)]",
+  const HIGHLIGHT_CLASS = [
+    "font-normal whitespace-nowrap cursor-pointer transition duration-200 text-sm py-1",
+    "bg-[var(--mesm-grey-xd)] text-[var(--background)] border-1 text-[var(--foreground)]/80 border-[var(--foreground)]/60",
   ].join(" ");
 
   const SIZE_CLASSES = large
@@ -56,8 +60,16 @@ export default function ServiceTags({
 
   const handleClick = (tag, e) => {
     e.stopPropagation();
-    router.push(`/work?tag=${encodeURIComponent(tag)}`);
+
+    // if you pass strings, we treat them as the query token
+    // if you pass objects, prefer slug
+    const slugOrToken = getTagSlug(tag);
+    if (!slugOrToken) return;
+
+    router.push(`/work?tag=${encodeURIComponent(slugOrToken)}`);
   };
+
+  const buttonClass = `${highlight ? HIGHLIGHT_CLASS : BASE_COLOUR_CLASSES} ${SIZE_CLASSES}`;
 
   return (
     <section data-marker={label} className="flex flex-col">
@@ -68,20 +80,25 @@ export default function ServiceTags({
         className={`flex flex-wrap ${gapSize}`}
       >
         {items
-          .filter((tag) => !EXCLUDED_TAGS.includes(tag))
-          .map((tag, idx) => {
+          .filter((t) => {
+            const title = getTagTitle(t);
+            return title && !EXCLUDED_TAGS.includes(title);
+          })
+          .map((t, idx) => {
+            const title = getTagTitle(t);
             const hoverColor =
-              HOVER_COLORS[hashToIndex(tag, HOVER_COLORS.length)];
+              HOVER_COLORS[hashToIndex(title, HOVER_COLORS.length)];
+
             return (
               <motion.button
-                key={idx}
+                key={`${title}-${idx}`}
                 variants={item}
-                onClick={clickable ? (e) => handleClick(tag, e) : null}
-                className={`${BASE_COLOUR_CLASSES} ${SIZE_CLASSES}`}
+                onClick={clickable ? (e) => handleClick(t, e) : undefined}
+                className={buttonClass}
                 type="button"
                 style={{ "--hover-color": hoverColor }}
               >
-                {tag}
+                {title}
               </motion.button>
             );
           })}

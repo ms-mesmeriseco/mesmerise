@@ -10,11 +10,11 @@ export const blogPostBySlugQuery = groq`
   metaDescription[]{...,},
   postHeading,
   postDate,
-  "serviceTags": tags[]->{
-    _id,
-    title,
-    "slug": slug.current
-  },
+"serviceTags": serviceTags[]->{
+  _id,
+  title,
+  "slug": slug.current
+},
   "heroImage": {
     "url": heroImage.asset->url,
     "width": heroImage.asset->metadata.dimensions.width,
@@ -241,11 +241,11 @@ export const blogRailPostsQuery = groq`
     "alt": coalesce(heroImage.alt, postTitle)
   },
 
-  "serviceTags": serviceTag[]->{
-    _id,
-    title,
-    "slug": slug.current
-  }
+"serviceTags": serviceTags[]->{
+  _id,
+  title,
+  "slug": slug.current
+}
 }
 `;
 
@@ -260,10 +260,10 @@ export const blogScrollPostsQuery = groq`
     "url": heroImage.asset->url,
     "alt": coalesce(heroImage.alt, postTitle)
   },
-  "serviceTags": serviceTag[]->{
-    _id,
-    title,
-    "slug": slug.current
-  }
+"serviceTags": serviceTags[]->{
+  _id,
+  title,
+  "slug": slug.current
+},
 }
 `;

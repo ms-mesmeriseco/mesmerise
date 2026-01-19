@@ -76,24 +76,23 @@ const FILTER_MAP = {
   ],
 };
 
+// quick filter labels -> canonical slugs used in the URL
+const LABEL_TO_SLUG = {
+  Strategy: "strategy",
+  Branding: "branding",
+  Website: "website",
+  Performance: "performance",
+  Analytics: "analytics",
+};
+
 const normalize = (s) =>
   decodeURIComponent((s ?? "").toString())
     .trim()
     .toLowerCase();
 
-// ---- Sanity tag helpers ----
-const getTagTitle = (t) =>
-  typeof t === "string" ? t : t?.title || t?.name || "";
-const getTagSlug = (t) => {
-  if (typeof t === "string") return "";
-  // Sanity slug shape is usually { current: "my-slug" }
-  return t?.slug?.current || t?.slug || "";
-};
-const tagTokens = (t) => {
-  const title = normalize(getTagTitle(t));
-  const slug = normalize(getTagSlug(t));
-  return [title, slug].filter(Boolean);
-};
+// assumes dereferenced tags in shape: { title: string, slug: string }
+const getTagTitle = (t) => (typeof t === "string" ? t : t?.title || "");
+const getTagSlug = (t) => (typeof t === "string" ? "" : t?.slug || "");
 
 export default function ProjectNavigationList({
   activeTag = null,
@@ -102,24 +101,46 @@ export default function ProjectNavigationList({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [selectedLabel, setSelectedLabel] = useState(null);
-  const [selectedRaw, setSelectedRaw] = useState(null);
-  const [noMatchMessage, setNoMatchMessage] = useState(null);
+  const [selectedLabel, setSelectedLabel] = useState(null); // one of FILTER_MAP keys
+  const [selectedRaw, setSelectedRaw] = useState(null); // a real tag slug/title
   const [hoveredProject, setHoveredProject] = useState(null);
 
-  // Build a map that lets “Strategy”, or any alias, map to the label “Strategy”
+  // alias/title -> label (for quick filters)
   const aliasToLabel = useMemo(() => {
     const map = new Map();
-    Object.keys(FILTER_MAP).forEach((label) => {
+    for (const label of Object.keys(FILTER_MAP)) {
       map.set(normalize(label), label);
-      (FILTER_MAP[label] || []).forEach((alias) =>
-        map.set(normalize(alias), label)
-      );
-    });
+      for (const alias of FILTER_MAP[label] || [])
+        map.set(normalize(alias), label);
+    }
     return map;
   }, []);
 
-  // Read URL tag + decide whether it maps to a quick-filter label or a raw tag/slug
+  // which quick-filter labels are actually present in returned projects?
+  const availableFilterLabels = useMemo(() => {
+    const present = new Set();
+
+    for (const p of projects) {
+      for (const t of p.serviceTags || []) {
+        const title = normalize(getTagTitle(t));
+        const slug = normalize(getTagSlug(t));
+        if (title) present.add(title);
+        if (slug) present.add(slug);
+      }
+    }
+
+    return Object.keys(FILTER_MAP).filter((label) => {
+      const labelSlug = normalize(LABEL_TO_SLUG[label]);
+      if (labelSlug && present.has(labelSlug)) return true;
+
+      // show label if any alias exists as a title (or (rarely) slug)
+      return (FILTER_MAP[label] || []).some((alias) =>
+        present.has(normalize(alias))
+      );
+    });
+  }, [projects]);
+
+  // sync selected state from URL (?tag=) or activeTag prop
   useEffect(() => {
     const urlTag = searchParams.get("tag") ?? activeTag;
     const clean = urlTag ? normalize(urlTag) : "";
@@ -130,46 +151,39 @@ export default function ProjectNavigationList({
       return;
     }
 
+    // if tag matches one of our canonical quick-filter slugs, select that label
+    const labelFromSlug = Object.entries(LABEL_TO_SLUG).find(
+      ([, slug]) => normalize(slug) === clean
+    )?.[0];
+
+    if (labelFromSlug) {
+      setSelectedLabel(labelFromSlug);
+      setSelectedRaw(null);
+      return;
+    }
+
+    // if tag matches a label/alias, select that label
     const mapped = aliasToLabel.get(clean);
     if (mapped) {
       setSelectedLabel(mapped);
       setSelectedRaw(null);
-    } else {
-      // raw could be a Sanity slug like "performance" or an actual tag title
-      setSelectedLabel(null);
-      setSelectedRaw(urlTag);
+      return;
     }
+
+    // otherwise treat as a real tag slug/title
+    setSelectedLabel(null);
+    setSelectedRaw(urlTag);
   }, [searchParams, activeTag, aliasToLabel]);
 
-  // Build a set of all tag tokens present in your dataset (titles + slugs)
-  const presentTagSet = useMemo(() => {
-    const set = new Set();
-    for (const p of projects) {
-      for (const t of p.serviceTags || []) {
-        for (const token of tagTokens(t)) set.add(token);
-      }
-    }
-    return set;
-  }, [projects]);
-
-  // Only show quick-filter buttons if at least one alias actually exists in your data
-  const availableFilterLabels = useMemo(() => {
-    return Object.keys(FILTER_MAP).filter((label) =>
-      (FILTER_MAP[label] || []).some((alias) =>
-        presentTagSet.has(normalize(alias))
-      )
-    );
-  }, [presentTagSet]);
-
-  // Compute candidate tokens based on selection:
-  // - If selectedLabel, candidates are that label + aliases (titles)
-  // - If selectedRaw, candidates is the raw token (slug or title)
   const candidateTokens = useMemo(() => {
     if (!selectedLabel && !selectedRaw) return null;
 
     if (selectedLabel) {
       const aliases = FILTER_MAP[selectedLabel] || [];
-      return new Set([selectedLabel, ...aliases].map(normalize));
+      const labelSlug = LABEL_TO_SLUG[selectedLabel];
+      return new Set(
+        [selectedLabel, labelSlug, ...aliases].map(normalize).filter(Boolean)
+      );
     }
 
     return new Set([normalize(selectedRaw)]);
@@ -184,25 +198,44 @@ export default function ProjectNavigationList({
 
     return sorted.filter((p) =>
       (p.serviceTags || []).some((t) => {
-        const tokens = tagTokens(t);
-        return tokens.some((tok) => candidateTokens.has(tok));
+        const title = normalize(getTagTitle(t));
+        const slug = normalize(getTagSlug(t));
+        return (
+          (slug && candidateTokens.has(slug)) ||
+          (title && candidateTokens.has(title))
+        );
       })
     );
   }, [projects, candidateTokens]);
 
-  useEffect(() => {
-    const display = selectedLabel || selectedRaw;
-    if (display && filteredProjects.length === 0) {
-      setNoMatchMessage(`No projects tagged "${display}".`);
-    } else {
-      setNoMatchMessage(null);
-    }
-  }, [selectedLabel, selectedRaw, filteredProjects.length]);
+  const displayFilterText = useMemo(() => {
+    if (selectedLabel) return selectedLabel;
+    if (!selectedRaw) return null;
+
+    const clean = normalize(selectedRaw);
+    return (
+      Object.entries(LABEL_TO_SLUG).find(
+        ([, slug]) => normalize(slug) === clean
+      )?.[0] ?? selectedRaw
+    );
+  }, [selectedLabel, selectedRaw]);
+
+  const noMatchMessage =
+    displayFilterText && filteredProjects.length === 0
+      ? `No projects tagged "${displayFilterText}".`
+      : null;
 
   const handleSelectLabel = (label) => {
     setSelectedLabel(label);
     setSelectedRaw(null);
-    router.push(label ? `/work?tag=${encodeURIComponent(label)}` : "/work");
+
+    if (!label) {
+      router.push("/work");
+      return;
+    }
+
+    const slug = LABEL_TO_SLUG[label] || label;
+    router.push(`/work?tag=${encodeURIComponent(slug)}`);
   };
 
   // Framer Motion variants
@@ -210,18 +243,15 @@ export default function ProjectNavigationList({
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { staggerChildren: 0.0035 } },
   };
-  const item = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1 },
-  };
+  const item = { hidden: { opacity: 0 }, show: { opacity: 1 } };
 
   return (
     <section className="flex flex-col gap-[var(--global-margin-xs)] nav-list">
-      {/* Raw filter chip */}
+      {/* Raw filter chip (for non-quick-filter tags/slugs) */}
       {selectedRaw && (
         <div className="mb-2">
           <span className="inline-flex items-center gap-2 text-sm px-3 py-1 rounded-lg bg-[var(--mesm-grey)] text-gray-800">
-            Filtering by “{selectedRaw}”
+            Filtering by “{displayFilterText}”
             <button
               onClick={() => handleSelectLabel(null)}
               className="underline decoration-dotted"

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { getClient } from "@/lib/apollo-client";
 import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
 
-export default function BlogScroll() {
+export default function BlogNav() {
   const [posts, setPosts] = useState([]);
   const [selectedTagId, setSelectedTagId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,7 +27,7 @@ export default function BlogScroll() {
               ?.filter(
                 (t) =>
                   t?.name?.toLowerCase() !== "showbloginfooter" &&
-                  t?.id?.toLowerCase() !== "showbloginfooter"
+                  t?.id?.toLowerCase() !== "showbloginfooter",
               )
               ?.map((t) => ({
                 id: t?.id,

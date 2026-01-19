@@ -1,14 +1,23 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { sanityClient } from "@/sanity/client";
 import { groq } from "next-sanity";
 
+const normalize = (s) => (s ?? "").toString().trim().toLowerCase();
+
+// only used as a fallback if someone passes "Performance" instead of "performance"
+const toSlug = (s) =>
+  normalize(s)
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
 export default function ProjectRail({
-  tagSlug = "Layout: Highlight Grid", // now expected to match a value in `serviceTags`
+  tagSlug = "layout-highlight-grid", // ✅ now expects slug (not title)
   max = 6,
 }) {
   const [projects, setProjects] = useState([]);
@@ -22,7 +31,10 @@ export default function ProjectRail({
   const scrollerRef = useRef(null);
   const cardsRef = useRef([]);
 
-  // --- Fetch projects from Sanity, filtered by serviceTags ---
+  // ensure we always query a slug-like token
+  const tagToken = useMemo(() => toSlug(tagSlug), [tagSlug]);
+
+  // --- Fetch projects from Sanity, filtered by referenced serviceTag.slug.current ---
   useEffect(() => {
     (async () => {
       try {
@@ -30,15 +42,20 @@ export default function ProjectRail({
 
         const data = await sanityClient.fetch(
           groq`*[
-            _type == "projectPage" 
+            _type == "projectPage"
             && contentfulArchived != true
-            && $tag in serviceTags
+            && $tag in serviceTags[]->slug.current
           ] | order(projectDate desc)[0...$limit]{
             _id,
             projectTitle,
             "slug": slug.current,
             projectDate,
-            serviceTags,
+            // dereference tags (handy for debugging / future UI)
+            "serviceTags": serviceTags[]->{
+              _id,
+              title,
+              "slug": slug.current
+            },
             dataOne,
             heroMedia{
               "url": asset->url,
@@ -47,7 +64,7 @@ export default function ProjectRail({
               "height": asset->metadata.dimensions.height
             }
           }`,
-          { tag: tagSlug, limit }
+          { tag: tagToken, limit },
         );
 
         setProjects((data || []).slice(0, max));
@@ -57,7 +74,7 @@ export default function ProjectRail({
         setIsLoaded(true);
       }
     })();
-  }, [tagSlug, max]);
+  }, [tagToken, max]);
 
   // Keep refs in sync
   useEffect(() => {
@@ -143,7 +160,6 @@ export default function ProjectRail({
 
     return textBlocks.map((block, idx) => {
       const text = block.children?.map((child) => child.text).join("") ?? "";
-
       if (!text) return null;
 
       if (block.style === "h2") {
@@ -265,7 +281,7 @@ export default function ProjectRail({
             className={`h-6 w-6 rounded-full border border-[var(--mesm-yellow)] bg-[var(--mesm-yellow)] ${
               atStart
                 ? "opacity-40 cursor-default bg-transparent"
-                : "bg-[var(--mesm-yellow)] hover:bg-transparent duration-200  cursor-pointer "
+                : "bg-[var(--mesm-yellow)] hover:bg-transparent duration-200 cursor-pointer"
             }`}
           />
           <button
