@@ -49,7 +49,7 @@ export default function ServiceTags({
 
   const HIGHLIGHT_CLASS = [
     "font-normal whitespace-nowrap cursor-pointer transition duration-200 text-sm py-1",
-    "bg-[var(--mesm-grey-xd)] text-[var(--background)] border-1 text-[var(--foreground)]/80 border-[var(--foreground)]/60",
+    "bg-[var(--mesm-grey)]/80 text-[var(--foreground)].80 ",
   ].join(" ");
 
   const SIZE_CLASSES = large

@@ -12,10 +12,10 @@ export default function ListCard({
   return (
     <motion.div
       whileHover={{
-        translateX: "2px",
+        translateX: "1px",
       }}
       transition={{ damping: 20, duration: 0.1 }}
-      className={`flex md:flex-row flex-col md:max-w-3xl gap-6 md:items-center items-start bg-[var(--mesm-grey-xd)] border-1 border-[var(--mesm-grey-dk)] md:py-4 py-8 px-8 rounded-sm shadow hover:border-[var(--mesm-grey)] duration-100`}
+      className={`flex md:flex-row flex-col md:max-w-3xl gap-6 md:items-center items-start bg-[var(--mesm-grey-xd)] hover:bg-[var(--mesm-grey)]/35 border-1 border-[var(--mesm-grey-dk)] md:py-4 py-8 px-8 rounded-sm shadow hover:border-[var(--mesm-grey)] duration-200`}
       {...props}
     >
       {icon && (

@@ -1,13 +1,12 @@
-// components/cms-blocks/BlogRail.jsx (or .tsx)
+// components/cms-blocks/BlogRail.jsx
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import { sanityClient } from "@/sanity/client";
 import { blogRailPostsQuery } from "@/lib/sanity/blog";
+import BlogPostCard from "@/components/blog/BlogPostCard";
 
 export default function BlogRail() {
   const [posts, setPosts] = useState([]);
@@ -23,7 +22,7 @@ export default function BlogRail() {
 
         // Remove the current post from the rail
         const filtered = (items || []).filter(
-          (post) => post.slug !== currentSlug
+          (post) => post.slug !== currentSlug,
         );
 
         setPosts(filtered);
@@ -39,53 +38,10 @@ export default function BlogRail() {
     <section className="w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {posts.slice(0, 3).map((post) => (
-          <div
+          <BlogPostCard
             key={`blog-rail-post-${post._id || post.slug}`}
-            className="flex flex-col w-full"
-          >
-            {/* Image & Title link */}
-            <Link
-              href={`/blog/${post.slug}`}
-              className="group relative block w-full overflow-hidden "
-            >
-              <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden border border-[var(--mesm-grey-dk)]">
-                {post.heroImage?.url && (
-                  <Image
-                    src={post.heroImage.url}
-                    alt={post.heroImage.alt || "Blog image"}
-                    fill
-                    className="object-cover transition-transform duration-300 md:group-hover:scale-105"
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  />
-                )}
-              </div>
-              <div className="py-2">
-                <h5 className="text-sm font-bold leading-tight text-[var(--mesm-grey)] group-hover:text-[var(--foreground)] transition-colors duration-200">
-                  {post.postTitle}
-                </h5>
-              </div>
-            </Link>
-
-            {post.serviceTags?.length > 0 && (
-              <div className="flex flex-wrap gap-1 mt-1">
-                {post.serviceTags.map((tag) => (
-                  <span
-                    key={tag._id || tag.slug}
-                    className="
-              text-xs px-2 py-0.5 rounded-full
-              bg-[var(--mesm-grey-dk)]/20
-              text-[var(--mesm-grey)]
-              hover:bg-[var(--mesm-grey-dk)]/40
-              hover:text-[var(--foreground)]
-              transition-colors
-            "
-                  >
-                    {tag.title}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
+            post={post}
+          />
         ))}
       </div>
     </section>

@@ -32,7 +32,7 @@ export default function BlogPostCard({ post }) {
       </div>
 
       {/* Meta */}
-      <div className="pt-2 opacity-60 hover:opacity-100 transition-opacity duration-200">
+      <div className="pt-2 opacity-60 group-hover:opacity-100 transition-opacity duration-200">
         <h5
           className="
             text-md font-bold leading-tight

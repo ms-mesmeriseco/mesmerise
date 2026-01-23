@@ -118,15 +118,15 @@ const blogPortableComponents = {
       );
     },
     h4: ({ children }) => (
-      <h4 className="mt-6 mb-2 text-lg font-semibold">{children}</h4>
+      <h4 className="mb-2 text-lg font-semibold">{children}</h4>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc pl-5 space-y-1 mb-4">{children}</ul>
+      <ul className="list-disc pl-5 space-y-1">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal pl-5 space-y-1 mb-4">{children}</ol>
+      <ol className="list-decimal pl-5 space-y-1">{children}</ol>
     ),
   },
   marks: {
@@ -166,7 +166,7 @@ const blogPortableComponents = {
       if (!url) return null;
       const alt = value.alt || "";
       return (
-        <figure className="my-6">
+        <figure className="">
           {/* Using plain img here to avoid width/height requirements */}
           <img src={url} alt={alt} className="w-full h-auto rounded-md" />
         </figure>
@@ -217,7 +217,7 @@ const blogPortableComponents = {
     listIconItem: ({ value }) => {
       if (!value) return null;
       return (
-        <div className="my-6">
+        <div className="">
           <ListCard icon={value.iconUrl} entryTitle={value.entryTitle}>
             <PortableText
               value={value.textContent || []}
