@@ -331,7 +331,7 @@ export default function Header() {
 
             {/* Compact logomark (<1035) */}
             <img
-              src="/LogoMark.png"
+              src="/WordMark_Spaced.png"
               alt="Mesmerise Digital"
               className={[
                 "h-full w-auto transition-opacity duration-100",
