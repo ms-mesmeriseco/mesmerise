@@ -62,7 +62,7 @@ function isItemActive(item, pathname) {
   const direct = pathname === item.href || pathname.startsWith(`${item.href}/`);
 
   const childHit = item.children?.some(
-    (child) => pathname === child.href || pathname.startsWith(`${child.href}/`)
+    (child) => pathname === child.href || pathname.startsWith(`${child.href}/`),
   );
 
   return direct || childHit;
@@ -189,7 +189,7 @@ export default function Header() {
 
     const el = document.querySelector("#home-scene");
     const raw = getComputedStyle(document.documentElement).getPropertyValue(
-      "--header-height"
+      "--header-height",
     );
     const headerH = parseInt(raw) || 0;
 
@@ -223,7 +223,7 @@ export default function Header() {
       setSceneInView(false);
     } else {
       const raw = getComputedStyle(document.documentElement).getPropertyValue(
-        "--header-height"
+        "--header-height",
       );
       const headerH = parseInt(raw) || 0;
 
@@ -231,7 +231,7 @@ export default function Header() {
         ([entry]) => {
           setSceneInView(entry.isIntersecting && entry.intersectionRatio > 0);
         },
-        { root: null, rootMargin: `-${headerH}px 0px 0px 0px`, threshold: [0] }
+        { root: null, rootMargin: `-${headerH}px 0px 0px 0px`, threshold: [0] },
       );
       io.observe(el);
       return () => io.disconnect();
@@ -345,11 +345,14 @@ export default function Header() {
           </div>
         </Link>
 
+        <div className="hidden [@media(min-width:1035px)]:flex ">
+          <DesktopNav pathname={pathname} />
+        </div>
+
         {/* Right side */}
         <div className="flex items-center gap-3">
           {/* Desktop nav + CTAs (>=1035) */}
           <div className="hidden [@media(min-width:1035px)]:flex items-center gap-3">
-            <DesktopNav pathname={pathname} />
             <div className="flex items-center gap-2">
               <Button
                 size="large"
