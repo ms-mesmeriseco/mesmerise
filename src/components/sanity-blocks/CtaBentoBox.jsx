@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import InView from "@/hooks/InView";
+import Image from "next/image";
 
 export default function CtaBentoBox({ block }) {
   if (!block) return null;
@@ -27,7 +28,15 @@ export default function CtaBentoBox({ block }) {
         <div className="mx-auto w-full max-w-5xl">
           {/* Header */}
           {heading && (
-            <div className="mb-16">
+            <div className="mb-16 flex flex-col justify-center items-center gap-4">
+              <Image
+                src="/display-picture-RED-180px.png"
+                alt="Mesmerise Digital"
+                width={48}
+                height={48}
+                priority
+                className="rounded-full"
+              />
               <h2 className="text-center text-2xl md:text-3xl font-semibold">
                 {heading}
               </h2>
