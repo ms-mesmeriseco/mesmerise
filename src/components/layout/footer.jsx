@@ -3,31 +3,51 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getClient } from "@/lib/apollo-client";
-import { GET_FOOTER_BLOG_POSTS } from "@/lib/graphql/queries/getFooterPosts";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import FooterSignup from "./FooterSignup";
+
+import { sanityClient } from "@/sanity/client";
+import { groq } from "next-sanity";
+
+// ✅ Inline GROQ (drop-in, no extra files needed)
+const FOOTER_BLOG_POSTS_QUERY = groq`
+*[
+  _type == "blogPostPage"
+  && contentfulArchived != true
+  && defined(slug.current)
+  && $tagSlug in serviceTags[]->slug.current
+]
+| order(postDate desc)[0...$limit]{
+  _id,
+  "slug": slug.current,
+  postTitle
+}
+`;
 
 export default function Footer() {
   useSectionMarker("footer");
   const [blogPosts, setBlogPosts] = useState([]);
 
   useEffect(() => {
+    let alive = true;
+
     (async () => {
       try {
-        const { data } = await getClient().query({
-          query: GET_FOOTER_BLOG_POSTS,
-          variables: {
-            limit: 10,
-            tagIds: ["showBlogInFooter"], // your tag ID
-          },
-          fetchPolicy: "cache-first",
+        const items = await sanityClient.fetch(FOOTER_BLOG_POSTS_QUERY, {
+          limit: 10,
+          tagSlug: "show-blog-in-footer", // ✅ tag slug in Sanity serviceTags
         });
-        setBlogPosts(data?.blogPostPageCollection?.items || []);
+
+        if (!alive) return;
+        setBlogPosts(Array.isArray(items) ? items : []);
       } catch (err) {
         console.error("Failed to fetch blog posts:", err);
       }
     })();
+
+    return () => {
+      alive = false;
+    };
   }, []);
 
   const year = new Date().getFullYear();
@@ -61,26 +81,6 @@ export default function Footer() {
           </div>
 
           <div className="rounded-2xl">
-            {/* <h3 className="page-title-medium mb-3">Subscribe</h3>
-            <Script
-              src="https://subscribe-forms.beehiiv.com/embed.js"
-              strategy="lazyOnload"
-            />
-            <iframe
-              src="https://subscribe-forms.beehiiv.com/3d0daa80-71d0-4b99-b83a-3afefd7adea5"
-              className="beehiiv-embed"
-              data-test-id="beehiiv-embed"
-              frameBorder="0"
-              scrolling="no"
-              style={{
-                width: "100%",
-                height: "252px",
-                margin: 0,
-                borderRadius: 12,
-                backgroundColor: "transparent",
-                boxShadow: "0 0 #0000",
-              }}
-            /> */}
             <h6 className="opacity-80">
               {" "}
               Join to gain insight across brand, web, and performance you won't
@@ -182,7 +182,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column: Insights (latest 4) */}
+          {/* Column: Insights (latest 10 by tag) */}
           <div className="col-span-1">
             <Link href="/blog">
               <h5 className="mb-3 text-sm font-medium tracking-wide opacity-80 hover:underline">
@@ -191,7 +191,7 @@ export default function Footer() {
             </Link>
             <ul className="grid grid-cols-1 text-sm">
               {blogPosts.map((post) => (
-                <li key={post.slug}>
+                <li key={post._id ?? post.slug}>
                   <Link
                     className="footer-link line-clamp-1 w-fit"
                     href={`/blog/${post.slug}`}

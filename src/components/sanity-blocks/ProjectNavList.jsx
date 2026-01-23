@@ -135,7 +135,7 @@ export default function ProjectNavigationList({
 
       // show label if any alias exists as a title (or (rarely) slug)
       return (FILTER_MAP[label] || []).some((alias) =>
-        present.has(normalize(alias))
+        present.has(normalize(alias)),
       );
     });
   }, [projects]);
@@ -153,7 +153,7 @@ export default function ProjectNavigationList({
 
     // if tag matches one of our canonical quick-filter slugs, select that label
     const labelFromSlug = Object.entries(LABEL_TO_SLUG).find(
-      ([, slug]) => normalize(slug) === clean
+      ([, slug]) => normalize(slug) === clean,
     )?.[0];
 
     if (labelFromSlug) {
@@ -182,7 +182,7 @@ export default function ProjectNavigationList({
       const aliases = FILTER_MAP[selectedLabel] || [];
       const labelSlug = LABEL_TO_SLUG[selectedLabel];
       return new Set(
-        [selectedLabel, labelSlug, ...aliases].map(normalize).filter(Boolean)
+        [selectedLabel, labelSlug, ...aliases].map(normalize).filter(Boolean),
       );
     }
 
@@ -191,7 +191,7 @@ export default function ProjectNavigationList({
 
   const filteredProjects = useMemo(() => {
     const sorted = [...projects].sort(
-      (a, b) => new Date(b.projectDate) - new Date(a.projectDate)
+      (a, b) => new Date(b.projectDate) - new Date(a.projectDate),
     );
 
     if (!candidateTokens) return sorted;
@@ -204,7 +204,7 @@ export default function ProjectNavigationList({
           (slug && candidateTokens.has(slug)) ||
           (title && candidateTokens.has(title))
         );
-      })
+      }),
     );
   }, [projects, candidateTokens]);
 
@@ -215,7 +215,7 @@ export default function ProjectNavigationList({
     const clean = normalize(selectedRaw);
     return (
       Object.entries(LABEL_TO_SLUG).find(
-        ([, slug]) => normalize(slug) === clean
+        ([, slug]) => normalize(slug) === clean,
       )?.[0] ?? selectedRaw
     );
   }, [selectedLabel, selectedRaw]);
@@ -330,7 +330,7 @@ export default function ProjectNavigationList({
                           "en-GB",
                           {
                             year: "numeric",
-                          }
+                          },
                         )
                       : ""}
                   </span>
@@ -372,7 +372,7 @@ export default function ProjectNavigationList({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
-              className="fixed bottom-6 right-6 z-50 w-[360px] overflow-hidden rounded-xl border border-[var(--mesm-grey-dk)] bg-[var(--background)] shadow-lg"
+              className="fixed bottom-6 right-6 z-50 w-[360px] overflow-hidden bg-[var(--background)] shadow-lg"
               style={{ aspectRatio: "3 / 2" }}
             >
               <div className="relative h-full w-full">
