@@ -12,6 +12,7 @@ import MediaCarouselWithText from "@/components/sanity-blocks/MediaCarouselWithT
 import ComparisonTable from "@/components/sanity-blocks/ComparisonTable";
 import CtaBentoBox from "@/components/sanity-blocks/CtaBentoBox";
 import TestimonialsCarousel from "@/components/sanity-blocks/TestimonialCarousel";
+import ThreeColumnImagesBlock from "@/components/sanity-blocks/ThreeColumnImagesBlock";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -204,6 +205,15 @@ export default function PageBase({ blocks, metadata }) {
                 </div>
               );
             }
+            case "threeColumnBlockBlank":
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <ThreeColumnImagesBlock key={block._id} block={block} />
+                </div>
+              );
 
             case "comparisonTable": {
               return (

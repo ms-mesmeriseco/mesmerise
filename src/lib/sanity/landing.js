@@ -206,6 +206,16 @@ summary,
 results,
 timeFrame,
 
+    // ---------- THREE COLUMN IMAGES ----------
+    textContentOne,
+    textContentTwo,
+    textContentThree,
+    "media": media[]{
+      _key,
+      "url": asset->url,
+      "alt": coalesce(alt, "")
+    },
+
     // ---------- MEDIA CAROUSEL WITH TEXT ----------
     mediaContent[]->{
       _id,
