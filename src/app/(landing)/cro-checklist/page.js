@@ -3,6 +3,7 @@ import CROForm from "./CROForm";
 import TwoColumn from "@/components/sanity-blocks/TwoColumn";
 import ProjectRail from "@/components/sanity-blocks/ProjectRail";
 import IconRow from "@/components/sanity-blocks/IconRow";
+import ListCard from "@/components/ui/ListCard";
 import FAQ from "@/components/layout/FAQ.jsx";
 import Image from "next/image";
 
@@ -124,34 +125,67 @@ export function CROAudit() {
             Protocol
           </h2>
           <br />
-          <p className="mb-3">
+          <h4 className="mb-3">
             When we implement our Structural CRO Audit, there&apos;s a 33%
             chance a client will hit an unexpected problem within weeks:
-          </p>
+          </h4>
           <p className="mb-3">
             They either have to pull back on ad spend, or rush to hire new staff
             to keep up with the surge in demand.
           </p>
-          <p className="mb-3">Here&apos;s what we uncover in the CRO audit:</p>
-          <ul className="list-disc pl-5 ">
-            <li>
-              The exact visual cue we place above the fold that signals
-              authority to cold traffic &amp; stops bounce rates
-            </li>
-            <li>
-              The &apos;headline hammer&apos; technique that is non negotiable
-              if you want to generate more money
-            </li>
-            <li>
-              Why there&apos;s no such thing as &apos;bad traffic&apos;, just a
-              mismatch of intent
-            </li>
-          </ul>
-
-          <p className="p2 mb-3">
-            Stop wasted ad spend, discover how our Mesmerise Method turns clicks
-            into loyal customers.
-          </p>
+        </div>,
+      ]}
+    />
+  );
+}
+export function Uncover() {
+  return (
+    <TwoColumn
+      ctaCol="true"
+      ctaLab="Book A CRO Audit"
+      column1={[
+        <h2 key="title">Here&apos;s what we uncover in the CRO audit:</h2>,
+        <p key="subtitle">
+          Stop wasted ad spend, discover how our Mesmerise Method turns clicks
+          into loyal customers.
+        </p>,
+      ]}
+      column2={[
+        <div key="audit-intro">
+          <div className="list-disc flex flex-col gap-2">
+            <ListCard
+              children={
+                <h4>
+                  The exact visual cue we place above the fold that signals
+                  authority to cold traffic stops bounce rates
+                </h4>
+              }
+            />
+            <ListCard
+              children={
+                <h4>
+                  The exact visual cue we place above the fold that signals
+                  authority to cold traffic &amp; stops bounce rates
+                </h4>
+              }
+            />
+            <ListCard
+              children={
+                <h4>
+                  The &apos;headline hammer&apos; technique that is non
+                  negotiable if you want to generate more money
+                </h4>
+              }
+            />
+            <ListCard
+              children={
+                <h4>
+                  Why there&apos;s no such thing as &apos;bad traffic&apos;,
+                  just a mismatch of intent
+                </h4>
+              }
+            />
+          </div>
         </div>,
       ]}
     />
@@ -227,7 +261,7 @@ export function Converting() {
           height={600}
         />,
         <h4 key="brett-heading">
-          <b>Over $1,000,000+ of lead enquiries in 24 hours</b>
+          Over $1,000,000+ of lead enquiries in 24 hours
         </h4>,
         <p key="brett-copy">
           Brett was getting nowhere with his old Squarespace website. This is
@@ -253,9 +287,7 @@ export function Converting() {
           width={800}
           height={600}
         />,
-        <h4 key="mitch-heading">
-          <b>1,380% increase in qualified enquiries</b>
-        </h4>,
+        <h4 key="mitch-heading">1,380% increase in qualified enquiries</h4>,
         <p key="mitch-copy">
           Our conversion pathways resulted in a 3-month wait period, and Mitch
           begged us to alter the acquisition strategy because it was too
@@ -329,6 +361,7 @@ export default function CROChecklistPage() {
       />
       <div className="narrow-wrapper flex w-full flex-col justify-between gap-64 mt-48">
         <CROAudit />
+        <Uncover />
         <Testimonials />
         <ProjectRail />
         <Converting />
