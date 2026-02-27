@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import InView from "@/hooks/InView";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function TestimonialsCarousel({ block }) {
   if (!block) return null;
@@ -17,21 +18,42 @@ export default function TestimonialsCarousel({ block }) {
     return null;
   }
 
-  const [index, setIndex] = useState(0);
+  const [[index, direction], setIndexAndDirection] = useState([0, 0]);
   const current = testimonials[index];
 
-  const goPrev = () => {
-    setIndex((prev) => (prev > 0 ? prev - 1 : prev));
+  const paginate = (newDirection) => {
+    setIndexAndDirection(([prevIndex]) => {
+      const nextIndex = prevIndex + newDirection;
+      if (nextIndex < 0 || nextIndex > testimonials.length - 1) {
+        return [prevIndex, 0];
+      }
+      return [nextIndex, newDirection];
+    });
   };
 
-  const goNext = () => {
-    setIndex((prev) => (prev < testimonials.length - 1 ? prev + 1 : prev));
-  };
+  const goPrev = () => paginate(-1);
+  const goNext = () => paginate(1);
 
   const atStart = index === 0;
   const atEnd = index === testimonials.length - 1;
 
-  console.log("TestimonialsCarousel:", { block, index, current });
+  const slideVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 24 : -24,
+      opacity: 0,
+      scale: 0.995,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+    },
+    exit: (dir) => ({
+      x: dir > 0 ? -24 : 24,
+      opacity: 0,
+      scale: 0.995,
+    }),
+  };
 
   return (
     <InView>
@@ -47,44 +69,56 @@ export default function TestimonialsCarousel({ block }) {
           )}
 
           {/* Card */}
-          <div className="relative rounded-2xl bg-[var(--mesm-grey)]/30 px-6 py-8 md:px-10 md:py-10 flex flex-col md:gap-6 gap-4 justify-center items-center">
-            {/* Author / meta */}
+          <div className="relative rounded-2xl bg-[var(--mesm-grey)]/30 px-6 py-8 md:px-10 md:py-10 flex flex-col md:gap-6 gap-4 justify-center items-center overflow-hidden">
+            <AnimatePresence mode="wait" initial={false} custom={direction}>
+              <motion.div
+                key={index}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.28, ease: "easeOut" }}
+                className="w-full flex flex-col md:gap-6 gap-4 justify-center items-center"
+              >
+                {/* Author / meta */}
+                {current?.logo && (
+                  <div className="h-12 w-12 rounded-full bg-black/40 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={current.logo}
+                      alt={current.author || current.role || "Logo"}
+                      width={48}
+                      height={48}
+                      className="object-contain"
+                    />
+                  </div>
+                )}
 
-            {current?.logo && (
-              <div className="h-12 w-12 rounded-full bg-black/40 flex items-center justify-center overflow-hidden">
-                <Image
-                  src={current.logo}
-                  alt={current.author || current.role || "Logo"}
-                  width={48}
-                  height={48}
-                  className="object-contain"
-                />
-              </div>
-            )}
+                <div className="flex flex-col text-center">
+                  {current?.author && (
+                    <span className="text-sm font-semibold text-[var(--foreground)]">
+                      {current.author}
+                    </span>
+                  )}
+                  {current?.role && (
+                    <span className="text-sm text-[var(--mesm-l-grey)]">
+                      {current.role}
+                    </span>
+                  )}
+                </div>
 
-            <div className="flex flex-col text-center">
-              {current?.author && (
-                <span className="text-sm font-semibold text-[var(--foreground)]">
-                  {current.author}
-                </span>
-              )}
-              {current?.role && (
-                <span className="text-sm text-[var(--mesm-l-grey)]">
-                  {current.role}
-                </span>
-              )}
-            </div>
-
-            {/* Body */}
-            <div className="mb-6 text-center">
-              <div className="text-sm md:text-base text-[var(--mesm-l-grey)] leading-relaxed space-y-3">
-                {current?.body && <PortableText value={current.body} />}
-              </div>
-            </div>
+                {/* Body */}
+                <div className="mb-6 text-center">
+                  <div className="text-sm md:text-base text-[var(--mesm-l-grey)] leading-relaxed space-y-3">
+                    {current?.body && <PortableText value={current.body} />}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Nav: left/right dots + index */}
-          <div className="flex items-center gap-4 ml-auto">
+          {/* Nav */}
+          <div className="flex items-center gap-4 m-auto">
             <div className="flex items-center gap-2">
               <button
                 type="button"
