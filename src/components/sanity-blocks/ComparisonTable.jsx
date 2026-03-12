@@ -39,7 +39,7 @@ function makeColumnComponents(variant) {
         <li
           className="
             flex items-center gap-4
-            rounded-2xl bg-black/20 border border-white/10
+            rounded-2xl 
             px-4 py-2 no-list w-full
             transition-opacity
           "
@@ -103,7 +103,7 @@ export default function ComparisonTable({
 
   return (
     <InView>
-      <section className="flex-col flex justify-center items-center">
+      <section className="narrow-wrapper w-full m-auto flex flex-col justify-center items-center">
         {/* Full-width header */}
         {hasHeader && (
           <div className="mb-8 text-center max-w-3xl">
@@ -114,7 +114,7 @@ export default function ComparisonTable({
         {/* Two comparison columns */}
         <div className="gap-12 md:gap-12 grid grid-cols-1 md:grid-cols-2">
           {/* Column 1 */}
-          <div className="border-1 rounded-2xl border-[var(--mesm-grey-dk)]/50 hover:border-[var(--mesm-grey-dk)] duration-200 bg-[var(--accent)]/20  md:p-6 p-4">
+          <div className="border-1 rounded-md border-[var(--mesm-grey-dk)]/50 hover:border-[var(--mesm-grey-dk)] duration-200 bg-[var(--accent)]/20  md:p-6 p-4">
             {title1 && (
               <h3 className="mb-4 w-full text-center text-[var(--foreground)]">
                 {title1}
@@ -129,7 +129,7 @@ export default function ComparisonTable({
           </div>
 
           {/* Column 2 */}
-          <div className="border-1 rounded-2xl border-[var(--mesm-grey-dk)]/50 hover:border-[var(--mesm-grey-dk)] duration-200 bg-[var(--mesm-red)]/20 md:p-6 p-4">
+          <div className="border-1 rounded-md border-[var(--mesm-grey-dk)]/50 hover:border-[var(--mesm-grey-dk)] duration-200 bg-[var(--mesm-red)]/20 md:p-6 p-4">
             {title2 && <h3 className="mb-4 w-full text-center">{title2}</h3>}
             {hasNegative && (
               <PortableText

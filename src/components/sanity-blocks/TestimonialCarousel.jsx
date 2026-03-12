@@ -57,7 +57,7 @@ export default function TestimonialsCarousel({ block }) {
 
   return (
     <InView>
-      <section className="my-16 w-full">
+      <section className="narrow-wrapper my-16 w-full">
         <div className="max-w-4xl mx-auto px-6 md:px-0 flex flex-col gap-4">
           {/* Heading */}
           {(carouselTitle || entryTitle) && (

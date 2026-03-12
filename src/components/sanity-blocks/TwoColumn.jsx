@@ -23,7 +23,7 @@ function renderColumnContent(content) {
   const looksLikeSanityBlocks =
     arr.length > 0 &&
     arr.every(
-      (item) => item && typeof item === "object" && "_type" in item // basic sanity block sniff
+      (item) => item && typeof item === "object" && "_type" in item, // basic sanity block sniff
     );
 
   // Sanity mode → let BlockRenderer handle it
@@ -56,7 +56,7 @@ export default function TwoColumn({
 
   return (
     <InView>
-      <div className="flex flex-col gap-12" data-marker={marker}>
+      <div className="narrow-wrapper flex flex-col gap-12" data-marker={marker}>
         {h2 && (
           <div className="w-full text-center">
             <h2>{h2}</h2>

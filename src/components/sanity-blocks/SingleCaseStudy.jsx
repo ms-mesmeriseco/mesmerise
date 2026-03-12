@@ -73,11 +73,11 @@ export default function SingleCaseStudy({ study, showText = true }) {
         { id: "two", value: dataTwo },
         { id: "three", value: dataThree },
       ].filter((dp) => Array.isArray(dp.value) && dp.value.length > 0),
-    [dataOne, dataTwo, dataThree]
+    [dataOne, dataTwo, dataThree],
   );
 
   return (
-    <section className="w-full col-span-full flex flex-col gap-6">
+    <section className="narrow-wrapper w-full col-span-full flex flex-col gap-6">
       {/* Image */}
       <div className="relative w-full aspect-[16/9] overflow-hidden">
         {heroSrc && (

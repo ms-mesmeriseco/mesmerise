@@ -97,9 +97,9 @@ export default function SwitchListAccordion({ items, title }) {
   return (
     <InView>
       {/* ===== Desktop / tablet ===== */}
-      <div>
+      <section className="narrow-wrapper">
         {title && <h2 className="text-center">{title}</h2>}
-        <section className="hidden md:grid md:grid-cols-2 md:gap-8 items-center justify-center">
+        <div className="hidden md:grid md:grid-cols-2 md:gap-8 items-center justify-center">
           {/* Left (1/2): Accordion */}
           <div className="col-span-1 flex flex-col justify-center gap-6">
             {items.map((item, idx) => (
@@ -158,7 +158,7 @@ export default function SwitchListAccordion({ items, title }) {
 
           {/* Right (1/2): Media */}
           <div className="col-span-1 flex items-center justify-center">
-            <div className="relative w-full h-[80vh] max-w-full overflow-hidden rounded-xl shadow">
+            <div className="relative w-full min-h-[60vh] max-w-full overflow-hidden rounded-xl shadow">
               <AnimatePresence initial={false} mode="wait">
                 {items[activeIndex] && (
                   <motion.div
@@ -178,8 +178,8 @@ export default function SwitchListAccordion({ items, title }) {
               </AnimatePresence>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       {/* ===== Mobile ===== */}
       <section className="md:hidden flex flex-col gap-6 items-stretch justify-center mt-4">

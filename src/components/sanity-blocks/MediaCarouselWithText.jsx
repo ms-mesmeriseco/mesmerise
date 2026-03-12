@@ -50,7 +50,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
   if (!mediaUrl) {
     console.warn(
       "MediaCarouselWithText: missing media URL on item",
-      activeItem
+      activeItem,
     );
     return null;
   }
@@ -64,7 +64,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
 
   return (
     <InView>
-      <section className="w-full justify-center">
+      <section className="narrow-wrapper w-full justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}

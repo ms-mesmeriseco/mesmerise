@@ -37,7 +37,7 @@ export default function PageBase({ blocks, metadata }) {
       {...anim(opacity)}
       className="flex flex-col items-center justify-center mb-[10rem] md:mt-[var(--header-height)] pt-12"
     >
-      <main className="narrow-wrapper grid grid-cols-12 lg:gap-y-[10rem] md:gap-y-[4rem] gap-y-[4rem] w-full">
+      <main className="grid grid-cols-12 lg:gap-y-[10rem] md:gap-y-[4rem] gap-y-[4rem] w-full">
         {blocks.map((block, index) => {
           const type = block._type;
 

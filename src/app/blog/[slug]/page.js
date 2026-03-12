@@ -166,9 +166,9 @@ const blogPortableComponents = {
       if (!url) return null;
       const alt = value.alt || "";
       return (
-        <figure className="">
+        <figure className="py-4">
           {/* Using plain img here to avoid width/height requirements */}
-          <img src={url} alt={alt} className="w-full h-auto rounded-md" />
+          <img src={url} alt={alt} className="w-full h-auto  rounded-md" />
         </figure>
       );
     },

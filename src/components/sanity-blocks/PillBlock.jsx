@@ -23,7 +23,7 @@ export default function PillBlock({ pills = [], blockTitle }) {
 
   return (
     <InView>
-      <section className="flex flex-col gap-[var(--global-margin-lg)] justify-center">
+      <section className="narrow-wrapper flex flex-col gap-[var(--global-margin-lg)] justify-center">
         {blockTitle && (
           <h2 className="text-2xl font-semibold text-center mb-4">
             {blockTitle}

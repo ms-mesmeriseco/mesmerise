@@ -20,7 +20,7 @@ export default function SingleColumn({
     <InView>
       <section
         data-marker={marker}
-        className="w-full m-auto flex flex-col justify-center items-center gap-2 py-18"
+        className="narrow-wrapper w-full m-auto flex flex-col justify-center items-center gap-2 py-18"
       >
         {/* pass the whole PT array to BlockRenderer */}
         <BlockRenderer block={content} center={align} />

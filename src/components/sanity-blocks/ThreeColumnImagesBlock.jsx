@@ -58,7 +58,7 @@ export default function ThreeColumnImagesBlock({ block }) {
     : [];
 
   return (
-    <section className="w-full">
+    <section className="narrow-wrapper w-full">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {images.map((img) => (
           <figure key={img._key ?? img.url} className="w-full">

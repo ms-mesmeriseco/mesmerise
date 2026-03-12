@@ -24,7 +24,7 @@ export default function CtaBentoBox({ block }) {
 
   return (
     <InView>
-      <section className="my-12 w-full bg-[var(--mesm-grey)]/20 border border-[var(--mesm-grey)]/20 py-12 px-6 md:px-12 rounded-2xl flex flex-col justify-center items-center">
+      <section className="narrow-wrapper my-12 w-full bg-[var(--mesm-grey)]/20 border border-[var(--mesm-grey)]/20 py-12 px-6 md:px-12 rounded-2xl flex flex-col justify-center items-center">
         <div className="mx-auto w-full max-w-5xl">
           {/* Header */}
           {heading && (
