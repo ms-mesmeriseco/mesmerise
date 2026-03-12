@@ -203,7 +203,9 @@ export default function IconRow({
         <br />
 
         {showCarousel ? (
-          <div className="relative flex flex-col items-center">
+          <div
+            className={`relative flex flex-col items-center ${items.length <= 4 ? "narrow-wrapper" : "w-full"}`}
+          >
             <div
               ref={scrollerRef}
               className="relative w-full mx-auto overflow-x-auto overflow-y-visible snap-x snap-mandatory scroll-smooth
