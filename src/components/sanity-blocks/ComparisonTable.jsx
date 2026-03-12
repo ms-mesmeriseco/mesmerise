@@ -103,7 +103,7 @@ export default function ComparisonTable({
 
   return (
     <InView>
-      <section className="narrow-wrapper w-full m-auto flex flex-col justify-center items-center">
+      <section className="narrow-wrapper md:px-24 m-auto flex flex-col justify-center items-center">
         {/* Full-width header */}
         {hasHeader && (
           <div className="mb-8 text-center max-w-3xl">

@@ -250,6 +250,19 @@ title2,
       body,
     },
 
+    // ---------- IMPACT STATS ----------
+    _type == "impactStats" => {
+      _id,
+      _type,
+      entryTitle,
+      stats[]{
+        _key,
+        value,
+        label,
+        "logo": logo.asset->url
+      }
+    },
+
   }
 
 

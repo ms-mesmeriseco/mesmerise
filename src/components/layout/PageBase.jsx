@@ -13,6 +13,7 @@ import ComparisonTable from "@/components/sanity-blocks/ComparisonTable";
 import CtaBentoBox from "@/components/sanity-blocks/CtaBentoBox";
 import TestimonialsCarousel from "@/components/sanity-blocks/TestimonialCarousel";
 import ThreeColumnImagesBlock from "@/components/sanity-blocks/ThreeColumnImagesBlock";
+import DataRow from "@/components/sanity-blocks/DataRow";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -250,6 +251,16 @@ export default function PageBase({ blocks, metadata }) {
                   key={block._id || `block-${index}`}
                 >
                   <TestimonialsCarousel block={block} />
+                </div>
+              );
+            }
+            case "impactStats": {
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <DataRow stats={block.stats} />
                 </div>
               );
             }
