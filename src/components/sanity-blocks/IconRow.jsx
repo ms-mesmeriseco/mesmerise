@@ -279,18 +279,26 @@ export default function IconRow({
             </div>
           </div>
         ) : (
-          <div className="grid lg:auto-cols-auto lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-[var(--global-margin-xs)]">
+          <div
+            className={`flex flex-wrap justify-center gap-[var(--global-margin-xs)] 
+               ${items.length >= 4 ? "grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1" : ""}`}
+          >
             {items.map((item, idx) => {
               const { icon, textContent } = item || {};
               const key = icon?.title ? `${icon.title}-${idx}` : `icon-${idx}`;
               return (
-                <Card key={key} icon={icon}>
-                  <div className="min-h-[220px] flex flex-col justify-start text-left">
-                    <div className="text-sm flex flex-col gap-6">
-                      {renderItemContent(textContent)}
+                <div
+                  key={key}
+                  className="w-full sm:w-[calc(50%-var(--global-margin-xs))] lg:w-[calc(25%-var(--global-margin-xs))] max-w-[400px]"
+                >
+                  <Card icon={icon}>
+                    <div className="min-h-[220px] flex flex-col justify-start text-left">
+                      <div className="text-sm flex flex-col gap-6">
+                        {renderItemContent(textContent)}
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </div>
               );
             })}
           </div>
@@ -320,7 +328,7 @@ IconRow.propTypes = {
         PropTypes.node,
         PropTypes.arrayOf(PropTypes.object), // Portable Text
       ]),
-    })
+    }),
   ),
   displayTwo: PropTypes.bool,
   // Optional raw Sanity block
