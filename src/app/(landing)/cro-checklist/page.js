@@ -47,25 +47,19 @@ export const croFAQ = [
       "This makes a proper CRO strategy even more important, as you can't afford to waste ad spend. This checklist helps you ensure that every dollar you spend is landing on a structure designed to hold it, rather than slipping through the cracks and putting money in the bin.",
   },
   {
-    question: "What kind of research do you conduct to inform your strategy?",
+    question: "Does this work for B2B or complex industries?",
     textContent:
-      "We analyse your positioning, customer psychology, competitor landscape, and digital footprint. This includes website analytics, keyword and intent mapping, on-page session recordings, customer reviews, and creative angles. <br/><br/>We break down the fundamentals and build back up from there. It allows us to craft a strategy that lowers acquisition costs (CAC) and increases client lifetime value (LTV).",
+      "Yes. The principles of 'Intent Matching' and 'Structural Clarity' are universal. Whether you are selling a $50 e-commerce product or a $50,000 enterprise solution, the human brain processes information the same way. This checklist aligns your page with that biological reality.",
   },
   {
-    question: "What exactly will I walk away with?",
+    question: "How long will it take to implement these changes?",
     textContent:
-      "You'll walk away with a clear roadmap showing you where to focus your budget and a priority of next steps aligned to your goal.  <br/><br/>No more confusion or second-guessing. <br/><br/>Everything is laid out in a straightforward, easy-to-read document. Think of it as a decision-making blueprint you can rely on to guide your short-term and long-term goals.",
+      "The audit itself takes less than 15 minutes. You can run through your page with this checklist over a cup of coffee. The changes you identify, however, will continue to compound your returns for the lifespan of your business.",
   },
   {
-    question:
-      "Can you tailor the strategy deck towards specific pain points I'm having?",
+    question: "Why are you giving this away for free?",
     textContent:
-      "Yes. Every strategy deck is tailored to where your business is right now and the challenges you're facing. For example, if you're established but struggling with conversions, we'll focus on funnel performance and conversion optimisation. If you're just starting, we'll prioritise the foundations such as brand tone, visual identity, customer avatars, competitor analysis, positioning, and a funnel built for visibility and trust.",
-  },
-  {
-    question: "How involved am I in the strategy process?",
-    textContent:
-      "It's an open collaboration. Your knowledge and input are essential, and you'll be involved at every stage. We combine your expertise with our frameworks to ensure the final strategy feels authentic, achievable, and aligned with your ambitions. ",
+      "Simple. We know that once you see the results from fixing the 'easy' structural errors, you'll likely want our help scaling the traffic that goes to that page. It is an investment in our future relationship.",
   },
 ];
 
@@ -153,14 +147,6 @@ export function Uncover() {
       column2={[
         <div key="audit-intro">
           <div className="list-disc flex flex-col gap-2">
-            <ListCard
-              children={
-                <h4>
-                  The exact visual cue we place above the fold that signals
-                  authority to cold traffic stops bounce rates
-                </h4>
-              }
-            />
             <ListCard
               children={
                 <h4>
@@ -359,7 +345,7 @@ export default function CROChecklistPage() {
         }}
         logos={CRO_LOGOS}
       />
-      <div className="narrow-wrapper flex w-full flex-col justify-between gap-64 mt-48">
+      <div className="flex w-full flex-col justify-between gap-64 mt-48">
         <CROAudit />
         <Uncover />
         <Testimonials />
