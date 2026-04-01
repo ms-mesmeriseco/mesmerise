@@ -18,7 +18,7 @@ function PillList({ items = [], className = "" }) {
     <div
       role="list"
       className={["flex flex-col gap-1 md:gap-2 items-start", className].join(
-        " "
+        " ",
       )}
     >
       {items.map((item, i) => (
@@ -63,7 +63,7 @@ function MediaDisplay({ media, fill = false }) {
     media?.mimeType?.includes("video") ||
     media?.asset?._type === "sanity.fileAsset";
 
-  const common = "w-full h-full object-contain rounded-lg";
+  const common = "w-full h-full object-contain rounded-md";
 
   return isVideo ? (
     <video src={media.url} autoPlay muted loop playsInline className={common} />
@@ -92,7 +92,7 @@ export default function LeftHero({
 
   const iframeHtml = useMemo(
     () => extractIframeFromBlocks(heroEmbed),
-    [heroEmbed]
+    [heroEmbed],
   );
 
   const customers = [
@@ -156,7 +156,7 @@ export default function LeftHero({
             "flex items-center justify-center md:max-h-[70vh]",
           ].join(" ")}
         >
-          <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
+          <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden">
             {iframeHtml ? (
               <div
                 className="absolute inset-0 w-full h-full"

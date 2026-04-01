@@ -263,6 +263,27 @@ title2,
       }
     },
 
+    // ---------- CASE STUDY HERO (NEW) ----------
+    _type == "caseStudyHero" => {
+      heading,
+      "logo": logo.asset->url,
+      "heroImage": heroImage.asset->url,
+      "button1": mainCta {
+        label,
+        url
+      },
+      "button2": secondaryCta {
+        label,
+        url
+      },
+      stats[]{
+        _key,
+        value,
+        label,
+        "logo": logo.asset->url
+      }
+    },
+
   }
 
 
