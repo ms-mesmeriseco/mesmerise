@@ -20,7 +20,7 @@ export default function CaseStudyHero({ block }) {
     <section className="narrow-wrapper ">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left Column: Content */}
-        <div className="flex flex-col justify-between order-2 md:order-1 h-full py-8">
+        <div className="flex flex-col justify-between order-2 md:order-1 h-full py-2">
           <div>
             {logoSrc && (
               <div className="relative mb-8 h-12 w-32">
@@ -33,7 +33,7 @@ export default function CaseStudyHero({ block }) {
               </div>
             )}
 
-            <h2 className="mb-10">{heading}</h2>
+            <h3 className="mb-6">{heading}</h3>
 
             <div className="flex flex-wrap gap-4 mb-16">
               {button1?.label && (
@@ -54,10 +54,8 @@ export default function CaseStudyHero({ block }) {
           <div className="flex flex-wrap gap-10 md:gap-20">
             {stats?.map((stat) => (
               <div key={stat._key} className="flex flex-col">
-                <span className="font-semibold text-[4rem]/[4.2rem]">
-                  {stat.value}
-                </span>
-                <h5 className="text-sm">{stat.label}</h5>
+                <span className="text-[3.2rem]/[4rem]">{stat.value}</span>
+                <h6 className="text-sm">{stat.label}</h6>
               </div>
             ))}
           </div>
