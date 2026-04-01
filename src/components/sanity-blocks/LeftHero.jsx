@@ -6,6 +6,7 @@ import InView from "@/hooks/InView";
 import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import AvatarRow from "../ui/AvatarRow";
+import GoogleBrow from "../ui/GoogleBrow";
 import {
   listFromHeroL,
   extractIframeFromBlocks,
@@ -122,6 +123,7 @@ export default function LeftHero({
             "text-[var(--foreground)] w-[90%]",
           ].join(" ")}
         >
+          <GoogleBrow />
           <StaggeredWords
             as="h1"
             className="page-title-medium"
