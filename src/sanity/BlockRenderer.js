@@ -69,7 +69,7 @@ export default function BlockRenderer({ block, center }) {
                   <h3 className="text-2xl font-semibold mb-3">{children}</h3>
                 ),
                 h4: ({ children }) => (
-                  <h4 className="text-xl font-medium mb-2">{children}</h4>
+                  <h4 className="text-xl mb-2">{children}</h4>
                 ),
                 normal: ({ children }) => (
                   <p className="mb-3 leading-relaxed">{children}</p>

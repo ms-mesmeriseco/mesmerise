@@ -115,7 +115,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                           <h3 className="text-lg font-bold">{children}</h3>
                         ),
                         h4: ({ children }) => (
-                          <h4 className="text-base font-medium">{children}</h4>
+                          <h4 className="text-base">{children}</h4>
                         ),
                         normal: ({ children }) => (
                           <p className="text-sm leading-relaxed">{children}</p>
@@ -154,7 +154,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
 
         {/* --- Desktop labels --- */}
         <div
-          className="hidden md:grid mt-4 gap-2 font-medium"
+          className="hidden md:grid mt-4 gap-2"
           style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
         >
           <AnimatePresence>

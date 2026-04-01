@@ -424,7 +424,7 @@ export default async function BlogPost({ params }) {
               {/* Meta */}
               <div className="flex flex-row gap-4 leading-tight">
                 {author?.name && (
-                  <div className="text-sm md:text-[15px] font-medium text-[var(--foreground)]">
+                  <div className="text-sm md:text-[15px] text-[var(--foreground)]">
                     <span className="decoration-[var(--mesm-grey-dk)]">
                       {author.name}
                     </span>

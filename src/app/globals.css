@@ -3,17 +3,19 @@
 @font-face {
   font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplayXThin.ttf") format("truetype");
-  font-style: thin;
+  font-style: normal; /* Changed from thin */
   font-weight: 100;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplayLight.ttf") format("truetype");
-  font-style: light;
+  font-style: normal; /* Changed from light */
   font-weight: 300;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplay-Roman.woff2") format("woff2");
@@ -21,17 +23,19 @@
   font-weight: 400;
   font-display: swap;
 }
+
 @font-face {
   font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplay-Medium.woff2") format("woff2");
-  font-style: medium;
-  font-weight: 600;
+  font-style: normal; /* Changed from medium */
+  font-weight: 500; /* Note: Medium is usually 500, Semi-Bold is 600 */
   font-display: swap;
 }
+
 @font-face {
   font-family: "Neue Haas";
   src: url("/fonts/neue-haas/NeueHaasDisplay-Bold.woff2") format("woff2");
-  font-style: bold;
+  font-style: normal; /* Changed from bold */
   font-weight: 700;
   font-display: swap;
 }

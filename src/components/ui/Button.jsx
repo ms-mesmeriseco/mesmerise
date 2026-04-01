@@ -1,8 +1,8 @@
 "use client";
 
 const SIZE_MAP = {
-  small: ["text-xs md:text-sm leading-none", "px-4 py-1"].join(" "),
-  large: ["text-base leading-tight", "px-4 py-2"].join(" "),
+  small: ["text-sm md:text-md leading-none", "px-4 py-1"].join(" "),
+  large: ["text-xl leading-tight", "px-4 py-2"].join(" "),
   "x-large": ["text-3xl md:text-5xl", "px-4 md:px-7 py-2 md:py-3"].join(" "),
   none: ["text-3xl font-normal", "px-0 py-0"].join(" "),
 };
@@ -36,7 +36,7 @@ export default function Button({
       href={href}
       className={[
         // base layout
-        "inline-flex items-center justify-center select-none border whitespace-nowrap",
+        " inline-flex items-center justify-center select-none border whitespace-nowrap",
         "duration-150 ease-out",
         "rounded-2xl hover:rounded-xl",
         // default width vs CTA full-width

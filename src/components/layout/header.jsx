@@ -320,7 +320,7 @@ export default function Header() {
               src="/WordMark_Spaced.png"
               alt="Mesmerise Digital"
               className={[
-                "h-full w-auto transition-opacity duration-100",
+                "h-full w-auto transition-opacity duration-100 overflow-visible",
                 "items-center gap-2 bg-[var(--mesm-grey-dk)]/5",
                 "rounded-2xl px-4 py-3",
                 "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
@@ -334,7 +334,7 @@ export default function Header() {
               src="/WordMark_Spaced.png"
               alt="Mesmerise Digital"
               className={[
-                "h-full w-auto transition-opacity duration-100",
+                "h-full w-auto transition-opacity duration-100 overflow-visible",
                 "items-center gap-2 bg-[var(--mesm-grey-dk)]/5",
                 "rounded-2xl px-4 py-3",
                 "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",

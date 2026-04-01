@@ -80,7 +80,7 @@ export default function PillBlock({ pills = [], blockTitle }) {
                         </h3>
                       ),
                       h4: ({ children }) => (
-                        <h4 className="text-lg font-medium mb-1">{children}</h4>
+                        <h4 className="text-lg mb-1">{children}</h4>
                       ),
                       normal: ({ children }) => (
                         <p className="mb-3">{children}</p>

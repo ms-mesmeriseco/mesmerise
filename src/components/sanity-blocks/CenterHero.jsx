@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import Image from "next/image";
 import AvatarRow from "../ui/AvatarRow";
+import GoogleBrow from "../ui/GoogleBrow";
 import {
   listFromHeroL,
   extractIframeFromBlocks,
@@ -27,7 +28,7 @@ function PillList({ items }) {
             "inline-flex items-center gap-2",
             "px-3 py-0.5 md:px-3.5 md:py-1",
             "rounded-xl border-1 border-[var(--mesm-grey-dk)]",
-            "text-md md:text-lg md:text-base font-medium",
+            "text-md md:text-lg md:text-base ",
             "bg-[var(--mesm-grey-dk)]/20",
             "hover:border-[var(--mesm-blue)] hover:bg-[var(--mesm-blue)]/20 hover:bg-[var(--background)]/90 hover:translate-y-[-1px]",
             "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
@@ -87,7 +88,7 @@ export default function CenterHero({
 
   const iframeHtml = useMemo(
     () => extractIframeFromBlocks(heroEmbed),
-    [heroEmbed]
+    [heroEmbed],
   );
 
   const customers = [
@@ -105,6 +106,7 @@ export default function CenterHero({
         <div className="flex flex-col items-center">
           <div className="wrapper flex flex-col items-center justify-between min-h-[85vh] md:py-14 py-10">
             <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] md:justify-center justify-start items-start md:items-center text-left md:text-center md:w-4/5">
+              <GoogleBrow />
               <StaggeredWords
                 as="h1"
                 className="page-title-medium"

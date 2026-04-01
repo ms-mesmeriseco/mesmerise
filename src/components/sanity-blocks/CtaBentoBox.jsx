@@ -51,7 +51,7 @@ export default function CtaBentoBox({ block }) {
                   {ctaBox1 && <PortableText value={ctaBox1} />}
                 </div>
 
-                <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
+                <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
                   Learn more
                 </span>
               </Link>
@@ -63,7 +63,7 @@ export default function CtaBentoBox({ block }) {
                   {ctaBox2 && <PortableText value={ctaBox2} />}
                 </div>
 
-                <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
+                <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
                   Learn more
                 </span>
               </Link>
