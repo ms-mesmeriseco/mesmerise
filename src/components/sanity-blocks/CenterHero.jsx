@@ -102,7 +102,7 @@ export default function CenterHero({
 
   return (
     <InView>
-      <section className="relative min-h-screen overflow-x-hidden text-center">
+      <section className="relative min-h-[70vh] overflow-x-hidden text-center">
         <div className="flex flex-col items-center">
           <div className="wrapper flex flex-col items-center justify-between min-h-[85vh] md:py-14 py-10">
             <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] md:justify-center justify-start items-start md:items-center text-left md:text-center md:w-4/5">
@@ -114,13 +114,13 @@ export default function CenterHero({
               />
               <StaggeredWords as="p" className="p2" text={pageSubtitle} />
 
-              <div className="flex flex-col gap-2 md:items-center md:justify-center justify-start items-start">
+              <div className="flex flex-col gap-8 md:items-center md:justify-center justify-start items-start">
                 <PillList items={listItems} />
                 {showCta && (
                   <Button
                     href={ctaUrl}
-                    extraClass="md:mt-8 mt-4"
-                    variant="accent"
+                    extraClass=""
+                    variant="accent2"
                     size="large"
                   >
                     {ctaLabel || "Learn more"}

@@ -2,6 +2,7 @@ import ClickableImage from "@/components/ui/ClickableImage";
 import ServiceTags from "@/components/services/ServiceTags";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
 import StaggeredWords from "@/hooks/StaggeredWords";
+import RelatedProjects from "@/components/sanity-blocks/RelatedProjects";
 
 import { sanityClient } from "@/sanity/client";
 import { groq } from "next-sanity";
@@ -34,6 +35,17 @@ const PROJECT_QUERY = groq`
       "mimeType": asset->mimeType,
       "filename": asset->originalFilename
     }
+  }
+`;
+
+const ALL_PROJECTS_QUERY = groq`
+  *[_type == "projectPage"]{
+    _id,
+    projectTitle,
+    "slug": slug.current,
+    projectDate,
+    "serviceTags": serviceTags[]->title,
+    heroMedia{ "url": asset->url, "alt": coalesce(alt, asset->originalFilename) }
   }
 `;
 
@@ -135,7 +147,11 @@ export default async function ProjectPage({ params }) {
     return notFound();
   }
 
-  const page = await sanityClient.fetch(PROJECT_QUERY, { slug });
+  // Fetch both in parallel for better performance
+  const [page, allProjects] = await Promise.all([
+    sanityClient.fetch(PROJECT_QUERY, { slug }),
+    sanityClient.fetch(ALL_PROJECTS_QUERY),
+  ]);
 
   if (!page) {
     return notFound();
@@ -150,103 +166,102 @@ export default async function ProjectPage({ params }) {
   const tagArray = Array.isArray(page.serviceTags) ? page.serviceTags : [];
 
   return (
-    <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)]">
-      {/* --- HERO ROW --- */}
-      <div className="col-span-12 md:col-span-12 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[60vh]">
-        {page.heroMedia?.url && (
-          <ClickableImage
-            src={page.heroMedia.url}
-            alt={page.heroMedia.alt || page.projectTitle}
-            width={page.heroMedia.width}
-            height={page.heroMedia.height}
-            className="w-full h-full object-cover"
-          />
-        )}
-      </div>
+    <>
+      <main className="grid grid-cols-12 gap-x-[var(--global-margin-sm)] gap-y-[var(--global-margin-sm)]">
+        {/* --- HERO ROW --- */}
+        <div className="col-span-12 md:col-span-12 lg:min-h-[80vh] md:min-h-[50vh] sm:min-h-[30vh] h-[60vh]">
+          {page.heroMedia?.url && (
+            <ClickableImage
+              src={page.heroMedia.url}
+              alt={page.heroMedia.alt || page.projectTitle}
+              width={page.heroMedia.width}
+              height={page.heroMedia.height}
+              className="w-full h-full object-cover"
+            />
+          )}
+        </div>
 
-      {/* --- DATA CARDS --- */}
-      {page.dataOne && page.dataOne.length > 0 && (
-        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-full">
-          {/* Data One */}
-          <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
-            <StaggeredChildren baseDelay={0} once={true}>
-              {renderBlocks(page.dataOne, {
-                h2Class: "page-title-large",
-              })}
-            </StaggeredChildren>
-          </div>
-
-          {/* Data Two */}
-          {page.dataTwo && page.dataTwo.length > 0 && (
-            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
-              <StaggeredChildren baseDelay={0.2} once={true}>
-                {renderBlocks(page.dataTwo, {
+        {/* --- DATA CARDS --- */}
+        {page.dataOne && page.dataOne.length > 0 && (
+          <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-full">
+            {/* Data One */}
+            <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
+              <StaggeredChildren baseDelay={0} once={true}>
+                {renderBlocks(page.dataOne, {
                   h2Class: "page-title-large",
                 })}
               </StaggeredChildren>
             </div>
+
+            {/* Data Two */}
+            {page.dataTwo && page.dataTwo.length > 0 && (
+              <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
+                <StaggeredChildren baseDelay={0.2} once={true}>
+                  {renderBlocks(page.dataTwo, {
+                    h2Class: "page-title-large",
+                  })}
+                </StaggeredChildren>
+              </div>
+            )}
+
+            {/* Data Three */}
+            {page.dataThree && page.dataThree.length > 0 && (
+              <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
+                <StaggeredChildren baseDelay={0.4} once={true}>
+                  {renderBlocks(page.dataThree, {
+                    h2Class: "page-title-large",
+                  })}
+                </StaggeredChildren>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* divider row */}
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]" />
+
+        {/* --- LEFT COLUMN: PROJECT META --- */}
+        <div className="col-span-12 lg:col-span-6 rounded-lg flex flex-col gap-2 md:max-w-[475px]">
+          <h1 className="">{page.projectTitle}</h1>
+          <h6>{formattedDate}</h6>
+
+          {/* If you later change collaborationModel to string, render it here */}
+          {typeof page.collaborationModel === "string" && (
+            <h6>{page.collaborationModel}</h6>
           )}
 
-          {/* Data Three */}
-          {page.dataThree && page.dataThree.length > 0 && (
-            <div className="text-base leading-relaxed [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
-              <StaggeredChildren baseDelay={0.4} once={true}>
-                {renderBlocks(page.dataThree, {
-                  h2Class: "page-title-large",
+          {page.projectScope && page.projectScope.length > 0 && (
+            <>
+              <StaggeredWords as="h6" text="Project scope" className="" />
+              <div className="text-base leading-relaxed [&>p+p]:mt-4">
+                {renderBlocks(page.projectScope, {
+                  pClass: "p4",
                 })}
-              </StaggeredChildren>
-            </div>
+              </div>
+            </>
           )}
         </div>
-      )}
 
-      {/* divider row */}
-      <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]" />
+        {/* --- TAGS --- */}
+        <div className="inline-flex md:col-span-3 col-span-12 gap-2 ">
+          <ServiceTags items={page.serviceTags} large={false} />
+        </div>
 
-      {/* --- LEFT COLUMN: PROJECT META --- */}
-      <div className="col-span-12 lg:col-span-6 rounded-lg flex flex-col gap-2 md:max-w-[475px]">
-        <h1 className="">{page.projectTitle}</h1>
-        <h6>{formattedDate}</h6>
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]" />
 
-        {/* If you later change collaborationModel to string, render it here */}
-        {typeof page.collaborationModel === "string" && (
-          <h6>{page.collaborationModel}</h6>
-        )}
-
-        {page.projectScope && page.projectScope.length > 0 && (
-          <>
-            <StaggeredWords as="h6" text="Project scope" className="" />
-            <div className="text-base leading-relaxed [&>p+p]:mt-4">
-              {renderBlocks(page.projectScope, {
-                pClass: "p4",
-              })}
-            </div>
-          </>
-        )}
-      </div>
-
-      {/* --- TAGS --- */}
-      <div className="inline-flex md:col-span-3 col-span-12 gap-2 ">
-        <ServiceTags items={page.serviceTags} large={false} />
-      </div>
-
-      <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]" />
-
-      {/* --- EXTENDED DESCRIPTION --- */}
-      {page.extendedDescription && page.extendedDescription.length > 0 && (
-        <div className="col-span-12 min-h-[50vh] border-b border-[var(--mesm-grey)] py-8">
-          <div className="text-base md:w-1/2 ml-auto w-full leading-relaxed ">
-            <div className="max-w-[475px]">
-              {renderBlocks(page.extendedDescription, {
-                pClass: "p2 mb-6",
-              })}
+        {/* --- EXTENDED DESCRIPTION --- */}
+        {page.extendedDescription && page.extendedDescription.length > 0 && (
+          <div className="col-span-12 min-h-[50vh] py-8">
+            <div className="text-base md:w-1/2 ml-auto w-full leading-relaxed ">
+              <div className="max-w-[475px]">
+                {renderBlocks(page.extendedDescription, {
+                  pClass: "p2 mb-6",
+                })}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* --- MEDIA GALLERY --- */}
-      <div className="col-span-12 grid grid-cols-12 gap-[var(--global-margin-sm)] pt-4">
         {page.mediaGallery?.map((media, idx, arr) => {
           const mod = idx % 3; // 0 -> full, 1 & 2 -> halves
           const isLast = idx === arr.length - 1;
@@ -284,7 +299,8 @@ export default async function ProjectPage({ params }) {
             </div>
           );
         })}
-      </div>
-    </main>
+      </main>
+      <RelatedProjects projects={allProjects} currentProject={page} />
+    </>
   );
 }

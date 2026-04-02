@@ -27,10 +27,10 @@ function PillList({ items = [], className = "" }) {
           key={`pill-${i}`}
           role="listitem"
           className={[
-            "inline-flex items-center gap-2",
+            "inline-flex items-center gap-3",
             "px-3 py-0.5 md:px-3.5 md:py-1",
-            "rounded-xl border border-[var(--mesm-grey-dk)]",
-            "text-md md:text-lg md:text-base",
+            "rounded-2xl border border-[var(--mesm-grey-dk)]",
+            "text-md md:text-lg md:text-[1.3rem]",
             "bg-[var(--mesm-grey-dk)]/20",
             "hover:border-[var(--mesm-blue)]/70 hover:bg-[var(--background)]/90 hover:translate-x-[1px]",
             "focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/25",
@@ -39,8 +39,8 @@ function PillList({ items = [], className = "" }) {
           ].join(" ")}
         >
           <svg
-            width="18"
-            height="18"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             aria-hidden="true"
             className="shrink-0"
@@ -111,7 +111,7 @@ export default function LeftHero({
         className={[
           "hero-wrapper relative overflow-hidden pt-4",
           "grid grid-cols-1 md:grid-cols-4 md:grid-rows-[1fr_auto]",
-          "md:gap-6 gap-12",
+          "md:gap-2 gap-12",
           "md:min-h-[90vh]",
         ].join(" ")}
       >
@@ -120,7 +120,7 @@ export default function LeftHero({
           className={[
             "md:row-start-1 md:col-start-1 md:col-span-2 col-span-1",
             "flex flex-col justify-center text-left gap-4",
-            "text-[var(--foreground)] w-[90%]",
+            "text-[var(--foreground)] w-[95%]",
           ].join(" ")}
         >
           <GoogleBrow />
@@ -129,7 +129,7 @@ export default function LeftHero({
             className="page-title-medium"
             text={`${pageHeader || ""}`}
           />
-          <StaggeredWords as="p" text={pageSubtitle} />
+          <StaggeredWords as="h4" className="" text={pageSubtitle} />
 
           <PillList items={listItems} className="justify-start" />
 

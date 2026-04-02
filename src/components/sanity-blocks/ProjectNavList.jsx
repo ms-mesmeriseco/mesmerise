@@ -322,9 +322,11 @@ export default function ProjectNavigationList({
           >
             <Link href={`/work/${project.slug}`}>
               <div className="border-b border-[var(--mesm-grey)] py-[var(--global-margin-xs)] cursor-pointer hover:opacity-80 transition duration-100">
-                <div className="flex flex-row md:flex-row justify-between items-center my-2">
-                  <span className="md:text-5xl">{project.projectTitle}</span>
-                  <span className="md:text-5xl">
+                <div className="flex flex-row md:flex-row justify-between md:items-center my-1 md:my-2">
+                  <span className="md:text-5xl text-2xl">
+                    {project.projectTitle}
+                  </span>
+                  <span className="md:text-5xl text-2xl">
                     {project.projectDate
                       ? new Date(project.projectDate).toLocaleDateString(
                           "en-GB",
@@ -337,7 +339,7 @@ export default function ProjectNavigationList({
                 </div>
 
                 {/* Visible per-project tags */}
-                <div className="mt-0 md:mt-0 pointer-events-none">
+                <div className="mt-0 md:mt-0 pointer-events-none hidden md:block">
                   {(() => {
                     const tags = (project.serviceTags || [])
                       .map((t) => getTagTitle(t))
@@ -351,7 +353,7 @@ export default function ProjectNavigationList({
                         items={hasMore ? [...visible, "..."] : visible}
                         large={false}
                         clickable={false}
-                        highlight={true}
+                        highlight={false}
                       />
                     );
                   })()}

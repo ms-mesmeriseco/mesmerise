@@ -225,7 +225,7 @@ h3 {
 }
 h4 {
   font-size: 1.5rem;
-  line-height: 1.8rem;
+  line-height: 2rem;
   font-weight: 400;
   color: var(--foreground);
   margin-bottom: var(--global-margin-xs);
@@ -325,8 +325,8 @@ a button:hover {
   font-weight: 400;
 }
 .page-title-medium {
-  font-size: 3.23rem;
-  line-height: 3.77rem;
+  font-size: 3.77rem;
+  line-height: 4.77rem;
   /* max-width: 780px; */
   font-weight: 400;
 }
