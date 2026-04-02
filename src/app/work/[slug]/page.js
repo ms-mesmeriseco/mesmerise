@@ -205,7 +205,7 @@ export default async function ProjectPage({ params }) {
 
       {/* --- LEFT COLUMN: PROJECT META --- */}
       <div className="col-span-12 lg:col-span-6 rounded-lg flex flex-col gap-2 md:max-w-[475px]">
-        <h1 className="font-medium">{page.projectTitle}</h1>
+        <h1 className="">{page.projectTitle}</h1>
         <h6>{formattedDate}</h6>
 
         {/* If you later change collaborationModel to string, render it here */}

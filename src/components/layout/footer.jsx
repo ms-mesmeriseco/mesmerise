@@ -99,7 +99,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
           {/* Column: Quick Links */}
           <div>
-            <h5 className="mb-3 text-sm font-medium tracking-wide  opacity-80">
+            <h5 className="mb-3 text-sm tracking-wide  opacity-80">
               Quick Links
             </h5>
             <ul className="space-y-2 text-sm">
@@ -128,7 +128,7 @@ export default function Footer() {
 
           {/* Column: Collaboration */}
           <div>
-            <h5 className="mb-3 text-sm font-medium tracking-wide  opacity-80">
+            <h5 className="mb-3 text-sm tracking-wide  opacity-80">
               Collaboration
             </h5>
             <ul className="space-y-2 text-sm">
@@ -147,7 +147,7 @@ export default function Footer() {
 
           {/* Column: Offerings */}
           <div>
-            <h5 className="mb-3 text-sm font-medium tracking-wide  opacity-80">
+            <h5 className="mb-3 text-sm tracking-wide  opacity-80">
               Offerings
             </h5>
             <ul className="space-y-2 text-sm">
@@ -185,7 +185,7 @@ export default function Footer() {
           {/* Column: Insights (latest 10 by tag) */}
           <div className="col-span-1">
             <Link href="/blog">
-              <h5 className="mb-3 text-sm font-medium tracking-wide opacity-80 hover:underline">
+              <h5 className="mb-3 text-sm tracking-wide opacity-80 hover:underline">
                 Blog
               </h5>
             </Link>

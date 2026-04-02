@@ -34,7 +34,10 @@ export default function GoogleBrow() {
         className="w-8 h-auto object-contain bg-white/95 p-1 rounded-full"
       />
 
-      <motion.span variants={itemVariants} className="text-lg font-bold">
+      <motion.span
+        variants={itemVariants}
+        className="text-[1.2rem]/[1.2rem] font-bold"
+      >
         5.0
       </motion.span>
 
@@ -42,7 +45,7 @@ export default function GoogleBrow() {
         variants={itemVariants}
         src="/icons/five-stars_MESM.png"
         alt="Five Stars"
-        className="w-24 h-auto object-contain pb-[6px]"
+        className="w-27 h-auto object-contain pb-[4.5px]"
       />
     </motion.div>
   );

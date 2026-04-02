@@ -20,7 +20,7 @@ export default function HeroBlock() {
         <motion.div
           variants={wordVariants}
           animate="animate"
-          className="flex flex-col gap-0 text-6xl md:text-8xl font-medium leading-none"
+          className="flex flex-col gap-0 text-6xl md:text-8xl leading-none"
         >
           {words.map((w) => (
             <span key={w} className="h-[6rem] font-bold">

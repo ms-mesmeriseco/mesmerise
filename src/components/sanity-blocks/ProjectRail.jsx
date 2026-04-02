@@ -255,7 +255,7 @@ export default function ProjectRail({
                               </div>
                             )}
                             <div>
-                              <h6 className="text-base font-medium mb-2">
+                              <h6 className="text-base mb-2">
                                 {title}
                               </h6>
                             </div>

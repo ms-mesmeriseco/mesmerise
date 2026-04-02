@@ -37,7 +37,7 @@ export default function ExpandingCard({
               className="object-contain"
             />
           )}
-          <span className="font-medium">{title}</span>
+          <span className="">{title}</span>
         </div>
         {expansionIcon?.url ? (
           <Image

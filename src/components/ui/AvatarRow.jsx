@@ -102,7 +102,7 @@ export default function AvatarRow({
                     />
                   ) : (
                     <span
-                      className="flex h-full w-full items-center justify-center rounded-full bg-white/10 text-white/80 text-sm font-medium"
+                      className="flex h-full w-full items-center justify-center rounded-full bg-white/10 text-white/80 text-sm "
                       aria-hidden={!!initials}
                       title={p.alt}
                     >

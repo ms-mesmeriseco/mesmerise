@@ -17,7 +17,7 @@ export default function StaticTrustBadges({
         {/* Static heading block (15%) */}
         <div className="w-2/12 min-w-[120px]">
           {heading && (
-            <h4 className="text-base md:text-xl font-medium">{heading}</h4>
+            <h4 className="text-base md:text-xl">{heading}</h4>
           )}
         </div>
 

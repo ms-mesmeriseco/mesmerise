@@ -77,7 +77,7 @@ export default function SteppedAccordion({
                       aria-expanded={isOpen}
                       className="w-full text-left px-4 py-3 md:px-5 md:py-4 flex items-center justify-between gap-4 transition-colors cursor-pointer"
                     >
-                      <span className="font-medium leading-tight text-xl md:text-3xl">
+                      <span className="leading-tight text-xl md:text-3xl">
                         {step.title}
                       </span>
                       <motion.span
@@ -157,7 +157,7 @@ export default function SteppedAccordion({
                       aria-expanded={isOpen}
                       className="w-full text-left px-4 py-3 md:px-5 md:py-4 flex items-center justify-between gap-4 transition-colors cursor-pointer"
                     >
-                      <span className="font-medium leading-tight text-xl md:text-3xl">
+                      <span className="leading-tight text-xl md:text-3xl">
                         {step.title}
                       </span>
                       <motion.span
