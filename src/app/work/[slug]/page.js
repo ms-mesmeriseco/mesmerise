@@ -162,7 +162,7 @@ export default async function ProjectPage({ params }) {
         year: "numeric",
       })
     : "";
-  console.log("SERVICE TAGS (clean):", page.serviceTags);
+  // console.log("SERVICE TAGS (clean):", page.serviceTags);
   const tagArray = Array.isArray(page.serviceTags) ? page.serviceTags : [];
 
   return (

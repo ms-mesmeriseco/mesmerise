@@ -108,7 +108,7 @@ function FloatingCard({ visible, x, y, index, body }) {
         <p className="p2 opacity-95">{body}</p>
       </div>
     </motion.div>,
-    document.body
+    document.body,
   );
 }
 

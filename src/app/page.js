@@ -7,11 +7,13 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 import dynamic from "next/dynamic";
 import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 import ServicesRail from "@/components/services/ServicesRail";
+import HeroButton from "@/components/ui/HeroButton";
+import TeamBlock from "@/components/about/TeamBlock";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
   () => import("@/components/sanity-blocks/ProjectRail"),
-  { suspense: true }
+  { suspense: true },
 );
 const ImpactStats = dynamic(() => import("@/components/home/ImpactStats"), {
   suspense: true,
@@ -56,41 +58,40 @@ function Splash({ innerRef }) {
   }, [inView]);
 
   return (
-    // <InView once={true} margin="-60% 0px -60% 0px">
-    <section
-      ref={innerRef}
-      id="home-scene"
-      data-marker="HELLO"
-      className="fade-in relative h-[90vh] w-full border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] overflow-hidden"
-    >
-      {/* Mobile: video */}
-      <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
-        <video
-          ref={videoRef}
-          className="h-auto w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-        >
-          {/* Provide both for best compatibility (webm first if you have it) */}
+    <InView once={true}>
+      <section
+        ref={innerRef}
+        id="home-scene"
+        className="fade-in relative h-[80vh] w-full overflow-hidden"
+      >
+        {/* Mobile: video */}
+        <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
+          <video
+            ref={videoRef}
+            className="h-auto w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+          >
+            {/* Provide both for best compatibility (webm first if you have it) */}
 
-          <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
-        </video>
-        {/* Optional subtle overlay to match your scene look */}
-        <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-      </div>
+            <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
+          </video>
+          {/* Optional subtle overlay to match your scene look */}
+          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+        </div>
 
-      {/* Tablet/Desktop: 3D scene */}
-      <div className="hidden md:block absolute inset-0">
-        <Scene
-          onLoaded={() => {
-            /* keep if you still use the notifier */
-          }}
-        />
-      </div>
-    </section>
-    // </InView>
+        {/* Tablet/Desktop: 3D scene */}
+        <div className="hidden md:block absolute inset-0">
+          <Scene
+            onLoaded={() => {
+              /* keep if you still use the notifier */
+            }}
+          />
+        </div>
+      </section>
+    </InView>
   );
 }
 
@@ -98,17 +99,18 @@ function Statement({ innerRef }) {
   return (
     <section
       ref={innerRef}
-      data-marker="WHAT WE DO"
-      className="min-h-[50vh] flex items-start justify-center text-white"
+      className="min-h-[98vh] flex items-center justify-center text-white  border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] "
     >
       <div>
         <InView>
           <StaggeredWords
+            triggerOnLoad={true}
             as="h1"
             text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert."
-            className="page-title-large"
-            margin="-40% 0px"
+            className="page-title-large pb-6"
+            // margin="-40% 0px"
           />
+          <HeroButton href="/connect">Let's connect</HeroButton>
         </InView>
       </div>
     </section>
@@ -117,10 +119,7 @@ function Statement({ innerRef }) {
 
 function SecondaryStatement() {
   return (
-    <section
-      data-marker="WHAT WE BRING"
-      className="min-h-[50vh] flex items-start justify-center text-white"
-    >
+    <section className="min-h-[50vh] flex items-start justify-center text-white">
       <div>
         <StaggeredWords
           as="p"
@@ -135,10 +134,7 @@ function SecondaryStatement() {
 
 function ProjectsRow() {
   return (
-    <section
-      data-marker="How it looks"
-      className="relative py-12 md:py-16 text-white"
-    >
+    <section className="relative py-12 md:py-16 text-white">
       <InView>
         <ProjectRail tag="highlight" />
       </InView>
@@ -158,8 +154,9 @@ export default function HomePage() {
         dark ? "bg-black" : "bg-black",
       ].join(" ")}
     >
-      <Splash innerRef={splashRef} />
       <Statement innerRef={section2Ref} />
+      <Splash innerRef={splashRef} />
+
       <ProjectsRow />
       <SecondaryStatement />
       <div className="md:hidden">
@@ -168,6 +165,44 @@ export default function HomePage() {
       <div className="md:block  hidden">
         <ImpactStats />
       </div>
+      <TeamBlock
+        heading="Our team"
+        team={[
+          {
+            id: "1",
+            name: "Petar Petrović",
+            title: "Founder",
+            photo: {
+              url: "/assets/team/Petar.jpg",
+              alt: "Petar Petrovic portrait",
+            },
+          },
+          {
+            id: "2",
+            name: "Matilda Sutherland",
+            title: "Design & Development",
+            photo: {
+              url: "/assets/team/Matilda.jpg",
+            },
+          },
+          {
+            id: "3",
+            name: "Simba Dhaliwal",
+            title: "Business Development",
+            photo: {
+              url: "/assets/team/Simba.jpg",
+            },
+          },
+          {
+            id: "4",
+            name: "Nicole Uren",
+            title: "Digital Marketing Strategist",
+            photo: {
+              url: "/assets/team/Nicole.jpg",
+            },
+          },
+        ]}
+      />
 
       <CollabModel />
       <ServicesRail />
