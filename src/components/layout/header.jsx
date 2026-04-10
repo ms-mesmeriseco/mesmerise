@@ -3,7 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Button from "../ui/Button";
+import HeroButton from "../ui/HeroButton";
 import MobileMenu from "../ui/MobileMenu";
 
 // --- NAV ITEMS (with children for Services + Collaborate) ---
@@ -354,16 +354,7 @@ export default function Header() {
           {/* Desktop nav + CTAs (>=1035) */}
           <div className="hidden [@media(min-width:1035px)]:flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <Button
-                size="large"
-                variant="Primary"
-                href="/marketing-strategy-session"
-              >
-                <span className="text-xl">Strategy Session</span>
-              </Button>
-              <Button size="large" variant="CTA" href="/connect">
-                <span className="text-xl">Connect</span>
-              </Button>
+              <HeroButton href="/connect">Let's connect</HeroButton>
             </div>
           </div>
 

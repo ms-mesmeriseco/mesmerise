@@ -103,16 +103,19 @@ function Statement({ innerRef }) {
       ref={innerRef}
       className="min-h-[98vh] flex items-center justify-center text-white  border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] "
     >
-      <div>
+      <div className="">
         <InView>
           <StaggeredWords
             triggerOnLoad={true}
             as="h1"
             text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert."
-            className="page-title-large pb-6"
+            className="page-title-large py-18"
             // margin="-40% 0px"
           />
-          <HeroButton href="/connect">Let's connect</HeroButton>
+
+          <HeroButton href="/connect" size="lg">
+            <h3>Let's connect</h3>
+          </HeroButton>
         </InView>
       </div>
     </section>
