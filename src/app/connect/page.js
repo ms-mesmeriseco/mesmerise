@@ -2,6 +2,7 @@ import PageTitleLarge from "@/components/layout/PageTitleLarge";
 import ContactForm from "./ContactForm";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import CopyEmailButton from "@/components/ui/CopyEmailButton";
+import SmallTitle from "@/components/ui/SmallTitle";
 
 export async function generateMetadata() {
   const title = "Contact us | Mesmerise Digital";
@@ -45,8 +46,8 @@ export default function ConnectPage() {
         </div>
         <div className="hidden md:block w-1/2"></div>
       </div>
-      <h6>Or go direct to source:</h6>
-      <div className="flex flex-col md:flex-row md:h-[40vh] h-[60vh] gap-[var(--global-margin-xs)] border-t-1 pt-[var(--global-margin-sm)] border-[var(--mesm-grey-dk)]">
+      <SmallTitle>Or go directly to the source</SmallTitle>
+      <div className="flex flex-col md:flex-row md:h-[40vh] h-[60vh] gap-[var(--global-margin-xs)] ">
         <div className="flex-1 border-1 border-[var(--mesm-grey-dk)] rounded-md flex items-center justify-center duration-200 cursor-pointer hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] text-[var(--foreground)]">
           <a
             href="tel:+61477210477"

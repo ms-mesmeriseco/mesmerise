@@ -9,6 +9,7 @@ import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 import ServicesRail from "@/components/services/ServicesRail";
 import HeroButton from "@/components/ui/HeroButton";
 import TeamBlock from "@/components/about/TeamBlock";
+import TrustedBy from "@/components/home/TrustedBy";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -203,7 +204,7 @@ export default function HomePage() {
           },
         ]}
       />
-
+      <TrustedBy />
       <CollabModel />
       <ServicesRail />
     </main>
