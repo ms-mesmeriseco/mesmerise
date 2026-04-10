@@ -7,15 +7,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        haas: ['"Neue Haas"', 'sans-serif'],
+        haas: ['"Neue Haas"', "sans-serif"],
       },
       fontSize: {
-        h1: ['4.22rem', { lineHeight: '6.4rem' }],
-        h2: ['3.15rem'],
-        h3: ['2.39rem'],
-        h4: ['1.8rem'],
-        h5: ['1.33rem'],
-        h6: ['0.778rem'],
+        h1: ["4.22rem", { lineHeight: "6.4rem" }],
+        h2: ["3.15rem"],
+        h3: ["2.39rem"],
+        h4: ["1.8rem"],
+        h5: ["1.33rem"],
+        h6: ["0.778rem"],
       },
     },
   },

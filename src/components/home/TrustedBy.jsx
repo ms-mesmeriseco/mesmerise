@@ -16,8 +16,8 @@ const clientLogosQuery = `
   }
 `;
 
-function LogoCard({ clientName, logoUrl, url, index }) {
-  const card = (
+function LogoCard({ clientName, logoUrl, index }) {
+  return (
     <motion.div
       className="relative flex flex-col p-6 md:p-8 group"
       initial={{ opacity: 0, y: 12 }}
@@ -25,7 +25,7 @@ function LogoCard({ clientName, logoUrl, url, index }) {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
     >
-      <span className="absolute top-3 left-3 text-sm text-white/40 bg-[var(--mesm-grey-dk)]/40 border border-[var(--mesm-grey-dk)]/60 rounded-xl px-2.5 py-1 leading-relaxed group-hover:bg-[var(--mesm-blue)] group-hover:text-[var(--background)] transition-colors duration-150">
+      <span className="absolute top-3 left-3 text-sm text-white/40 bg-[var(--mesm-grey-dk)]/30 border border-[var(--mesm-grey-dk)]/50 rounded-xl px-2.5 py-1 leading-relaxed group-hover:bg-[var(--mesm-blue)] group-hover:text-[var(--background)] transition-colors duration-50">
         {clientName}
       </span>
       <div className="flex items-center justify-center w-full h-24 mt-4">
@@ -39,16 +39,51 @@ function LogoCard({ clientName, logoUrl, url, index }) {
       </div>
     </motion.div>
   );
+}
 
-  //   if (url) {
-  //     return (
-  //       <a href={url} target="_blank" rel="noopener noreferrer" className="block">
-  //         {card}
-  //       </a>
-  //     );
-  //   }
+// Marquee card — simpler, no motion stagger needed inside the ticker
+function MarqueeCard({ clientName, logoUrl }) {
+  return (
+    <div className="flex flex-col items-center justify-center shrink-0 w-40 mx-3 group">
+      <div className="relative flex flex-col items-center justify-center  p-4 w-full h-24 bg-black/20">
+        <Image
+          src={logoUrl}
+          alt={clientName}
+          width={100}
+          height={40}
+          className="object-contain max-h-10 w-auto brightness-0 invert mt-3"
+        />
+      </div>
+    </div>
+  );
+}
+function MarqueeRow({ clients, reverse = false }) {
+  const doubled = [...clients, ...clients];
 
-  return card;
+  return (
+    <div className="overflow-hidden w-full">
+      <div
+        className={`flex ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
+      >
+        {doubled.map((client, idx) => (
+          <MarqueeCard key={`${client._id}-${idx}`} {...client} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Marquee({ clients }) {
+  const mid = Math.ceil(clients.length / 2);
+  const rowOne = clients.slice(0, mid);
+  const rowTwo = clients.slice(mid);
+
+  return (
+    <div className="flex flex-col gap-4">
+      <MarqueeRow clients={rowOne} />
+      <MarqueeRow clients={rowTwo} reverse />
+    </div>
+  );
 }
 
 export default function TrustedBy() {
@@ -81,12 +116,18 @@ export default function TrustedBy() {
       <InView>
         <SmallTitle>Trusted by</SmallTitle>
 
+        {/* Mobile: marquee ticker */}
+        <div className="md:hidden mt-6">
+          <Marquee clients={clients} />
+        </div>
+
+        {/* Desktop: grid */}
         <motion.div
           variants={container}
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-[var(--global-margin-xs)]"
+          className="hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-[var(--global-margin-xs)]"
         >
           {clients.map((client, idx) => (
             <LogoCard key={client._id} index={idx} {...client} />

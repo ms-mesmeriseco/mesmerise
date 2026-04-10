@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useInView } from "framer-motion";
 import InView from "@/hooks/InView";
 import StaggeredWords from "@/hooks/StaggeredWords";
@@ -10,6 +10,7 @@ import ServicesRail from "@/components/services/ServicesRail";
 import HeroButton from "@/components/ui/HeroButton";
 import TeamBlock from "@/components/about/TeamBlock";
 import TrustedBy from "@/components/home/TrustedBy";
+import TestimonialsRail from "@/components/home/TestimonialRail";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -146,13 +147,11 @@ function ProjectsRow() {
 export default function HomePage() {
   const splashRef = useRef(null);
   const section2Ref = useRef(null);
-  const { dark } = usePageStageController(splashRef, section2Ref);
 
   return (
     <main
       className={[
         "relative min-h-screen text-white transition-colors duration-700",
-        dark ? "bg-black" : "bg-black",
       ].join(" ")}
     >
       <Statement innerRef={section2Ref} />
@@ -205,6 +204,7 @@ export default function HomePage() {
         ]}
       />
       <TrustedBy />
+      <TestimonialsRail />
       <CollabModel />
       <ServicesRail />
     </main>
