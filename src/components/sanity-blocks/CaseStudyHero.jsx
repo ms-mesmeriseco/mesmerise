@@ -14,7 +14,7 @@ export default function CaseStudyHero({ block }) {
     typeof heroImage === "string" ? heroImage : heroImage?.url || null;
   const logoSrc = typeof logo === "string" ? logo : logo?.url || null;
 
-  console.log("CaseStudyHero block data:", block);
+  // console.log("CaseStudyHero block data:", block);
 
   return (
     <section className="narrow-wrapper ">
@@ -37,13 +37,13 @@ export default function CaseStudyHero({ block }) {
 
             <div className="flex flex-wrap gap-4 mb-16">
               {button1?.label && (
-                <Button href={button1.url} variant="primary" size="large">
+                <Button href={button1.link} variant="primary" size="large">
                   {button1.label}
                 </Button>
               )}
 
               {button2?.label && (
-                <Button href={button2.url} variant="secondary" size="large">
+                <Button href={button2.link} variant="secondary" size="large">
                   {button2.label}
                 </Button>
               )}

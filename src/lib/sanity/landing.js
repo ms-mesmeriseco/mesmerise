@@ -270,11 +270,11 @@ title2,
       "heroImage": heroImage.asset->url,
       "button1": mainCta {
         label,
-        url
+        link
       },
       "button2": secondaryCta {
         label,
-        url
+        link
       },
       stats[]{
         _key,
