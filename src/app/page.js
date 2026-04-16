@@ -11,6 +11,7 @@ import HeroButton from "@/components/ui/HeroButton";
 import TeamBlock from "@/components/about/TeamBlock";
 import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
+import Statement from "@/components/layout/Statement";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -64,7 +65,7 @@ function Splash({ innerRef }) {
       <section
         ref={innerRef}
         id="home-scene"
-        className="fade-in relative h-[80vh] w-full overflow-hidden"
+        className="fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)]"
       >
         {/* Mobile: video */}
         <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
@@ -97,34 +98,9 @@ function Splash({ innerRef }) {
   );
 }
 
-function Statement({ innerRef }) {
-  return (
-    <section
-      ref={innerRef}
-      className="min-h-[98vh] flex items-center justify-center text-white  border-b pb-36 mb-12 border-[var(--mesm-grey-dk)] "
-    >
-      <div className="">
-        <InView>
-          <StaggeredWords
-            triggerOnLoad={true}
-            as="h1"
-            text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert."
-            className="page-title-large py-18"
-            // margin="-40% 0px"
-          />
-
-          <HeroButton href="/connect" size="lg">
-            <h3>Let's connect</h3>
-          </HeroButton>
-        </InView>
-      </div>
-    </section>
-  );
-}
-
 function SecondaryStatement() {
   return (
-    <section className="min-h-[50vh] flex items-start justify-center text-white">
+    <section className="min-h-[50vh] flex items-start justify-center text-white border-b py-12 border-[var(--mesm-grey-dk)]">
       <div>
         <StaggeredWords
           as="p"
@@ -139,7 +115,7 @@ function SecondaryStatement() {
 
 function ProjectsRow() {
   return (
-    <section className="relative py-12 md:py-16 text-white">
+    <section className="relative text-white">
       <InView>
         <ProjectRail tag="highlight" />
       </InView>
@@ -157,11 +133,16 @@ export default function HomePage() {
         "relative min-h-screen text-white transition-colors duration-700",
       ].join(" ")}
     >
-      <Statement innerRef={section2Ref} />
       <Splash innerRef={splashRef} />
 
+      <Statement text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert." />
+
       <ProjectsRow />
-      <SecondaryStatement />
+
+      <Statement
+        text="Bridging the gap between aesthetic solutions and undeniable data."
+        showCTA="true"
+      />
       <div className="md:hidden">
         <ImpactStatsMobile />
       </div>

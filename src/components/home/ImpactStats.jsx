@@ -155,10 +155,7 @@ export default function ImpactStats() {
   };
 
   return (
-    <section
-      data-marker="RESULTS"
-      className="relative py-12 md:py-16 text-white"
-    >
+    <section data-marker="RESULTS" className="relative py-4 text-white">
       <InView>
         <motion.div
           variants={container}

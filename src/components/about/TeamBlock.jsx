@@ -8,13 +8,18 @@ import { motion } from "framer-motion";
  * @param {Array} team - [{ id, name, title, photo: { url, width, height, alt? }, href? }]
  * @param {string} heading - Optional section heading
  */
-export default function TeamBlock({ team = [], heading = "The Team" }) {
+export default function TeamBlock({
+  team = [],
+  heading2 = null,
+  heading6 = null,
+}) {
   if (!team?.length) return null;
 
   return (
     <section className="py-10 md:py-14">
       {/* Optional heading */}
-      {heading ? <h2 className="">{heading}</h2> : null}
+      {heading2 ? <h2 className="">{heading2}</h2> : null}
+      {heading6 ? <h6 className="">{heading6}</h6> : null}
 
       <ul
         className="

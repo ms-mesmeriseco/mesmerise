@@ -20,7 +20,7 @@ export function OurWhy() {
   return (
     <>
       <PageTitleLarge text="Our Why" />
-      <div className="md:max-w-1/2 flex flex-col gap-6 md:min-h-[40vh] items-left">
+      <div className="md:max-w-[475px] flex flex-col gap-6 md:min-h-[40vh] items-left">
         <StaggeredWords
           as="p"
           className="p2"
@@ -36,12 +36,12 @@ export function OurWhy() {
       <div className="md:max-w-1/2 py-6 flex flex-col gap-6 ml-auto md:min-h-[40vh] items-left">
         <StaggeredWords
           as="p"
-          className="p2"
+          className="p2 md:max-w-[475px]"
           text="It's not long before these clients are blown away by the results - generally calling us with an 'oh my god, it worked!'"
         />
         <StaggeredWords
           as="p"
-          className="p2"
+          className="p2 md:max-w-[475px]"
           text="That breakthrough is our North Star. It makes us feel warm and fuzzy to be able to provide confidence and security for our clients."
         />
       </div>
@@ -53,7 +53,7 @@ export function Philosophy() {
   return (
     <>
       <PageTitleLarge text="Our Philosophy" />
-      <div className="md:max-w-1/2 flex flex-col gap-6 md:min-h-[40vh] items-left">
+      <div className="md:max-w-[475px] flex flex-col gap-6 md:min-h-[40vh] items-left">
         <StaggeredWords
           as="p"
           className="p2"
@@ -69,18 +69,18 @@ export function Philosophy() {
       <div className="md:max-w-1/2 py-6 flex flex-col gap-6 ml-auto min-h-[40vh] items-left">
         <StaggeredWords
           as="p"
-          className="p2"
+          className="p2 md:max-w-[475px]"
           text="Our philosophy naturally ties in with human psychology, the only “trend” that remains a constant in our industry."
         />
         <StaggeredWords
           as="p"
-          className="p2"
+          className="p2 md:max-w-[475px] "
           text="We're influenced by the works of Eugene Schwartz, who showed us how markets evolve and how awareness shapes action; Robert Greene, who revealed the laws of power, trust, and influence; and Carl Jung, who famously explored identity, archetypes, and the way people seek meaning. These are the foundations of how people think, feel, and make decisions."
         />
 
         <StaggeredWords
           as="p"
-          className="p2"
+          className="p2 md:max-w-[475px]"
           text="We take these timeless principles and build digital ecosystems. Strategy, design, data, and communication work together, guided by the mental models that have shaped human behaviour for centuries. The result is a state of the art approach that shifts identity beliefs, builds authority, and compounds into long-term security and growth."
         />
       </div>
@@ -93,7 +93,7 @@ export default function AboutPage() {
     <div className="about">
       <OurWhy />
       <TeamBlock
-        heading="Who are we?"
+        heading2="Who are we?"
         team={[
           {
             id: "1",

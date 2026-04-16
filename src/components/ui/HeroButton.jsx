@@ -41,11 +41,11 @@ export default function HeroButton({
   };
 
   const baseStyles =
-    "inline-flex items-center justify-center select-none border whitespace-nowrap duration-150 ease-out rounded-2xl hover:rounded-xl";
+    "inline-flex items-center justify-center select-none whitespace-nowrap duration-150 ease-out rounded-2xl hover:rounded-xl";
 
   const sizeStyles = {
-    default: "w-full h-[48px] md:w-fit px-6 py-1",
-    lg: "w-full h-[64px] md:w-fit px-6 py-2 text-lg md:text-xl rounded-3xl",
+    default: "w-fit h-[48px] md:w-fit px-6 py-1",
+    lg: "h-[64px] w-fit px-6 py-2 text-md md:text-xl rounded-3xl",
   };
   return (
     <a
@@ -59,6 +59,7 @@ export default function HeroButton({
         relative overflow-hidden
         ${sizeStyles[size]}
         bg-[var(--mesm-yellow)]  
+        border border-[var(--mesm-yellow)]
         text-[var(--background)] tracking-wide 
         hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] transition-colors duration-250
         ${extraClass}

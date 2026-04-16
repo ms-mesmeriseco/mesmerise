@@ -7,7 +7,7 @@ import InView from "@/hooks/InView";
 import SmallTitle from "@/components/ui/SmallTitle";
 
 const testimonialsQuery = `
-  *[_type == "testimonial"] | order(order asc) {
+  *[_type == "testimonial"] | order(coalesce(order, 9999) asc)  {
     _id,
     quote,
     authorName,
@@ -15,10 +15,13 @@ const testimonialsQuery = `
     authorCompany,
     "authorPhotoUrl": authorPhoto.asset->url,
     "clientLogoUrl": clientLogo.asset->url,
+
   }
 `;
 
-function CardWithPhoto({
+const SHORT_QUOTE_THRESHOLD = 130;
+
+function Card({
   quote,
   authorName,
   authorTitle,
@@ -26,8 +29,11 @@ function CardWithPhoto({
   authorPhotoUrl,
   clientLogoUrl,
 }) {
+  const isShort = quote?.length <= SHORT_QUOTE_THRESHOLD;
+  console.log(quote.length);
+
   return (
-    <div className="shrink-0 w-[340px] md:w-[420px] border border-white/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
+    <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] hover:bg-[var(--foreground)]/10 duration-200 border border-white/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
       {clientLogoUrl && (
         <div className="h-10 flex items-start">
           <Image
@@ -39,50 +45,39 @@ function CardWithPhoto({
           />
         </div>
       )}
-      <p className="text-white text-base md:text-lg leading-relaxed flex-1">
-        {quote}
-      </p>
-      <div className="flex items-center gap-3">
-        <div className="shrink-0 w-11 h-11 rounded-full overflow-hidden border border-white/30">
-          <Image
-            src={authorPhotoUrl}
-            alt={authorName}
-            width={44}
-            height={44}
-            className="object-cover w-full h-full pointer-events-none"
-          />
-        </div>
-        <div className="flex flex-col">
-          <span className="text-white text-sm font-medium">{authorName}</span>
-          {authorTitle && (
-            <span className="text-white/60 text-xs">{authorTitle}</span>
-          )}
-          {authorCompany && (
-            <span className="text-white/60 text-xs uppercase tracking-wide">
-              {authorCompany}
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
 
-function CardNoPhoto({ quote, authorName, authorTitle, authorCompany }) {
-  return (
-    <div className="shrink-0 w-[340px] md:w-[480px] border border-white/20 rounded-lg p-7 flex flex-col justify-between gap-8 select-none">
-      <p className="text-white p3 font-semibold leading-snug flex-1">{quote}</p>
-      <div className="flex flex-col">
-        <span className="text-white text-sm font-medium">{authorName}</span>
-        {authorTitle && (
-          <span className="text-white/60 text-xs">{authorTitle}</span>
-        )}
-        {authorCompany && (
-          <span className="text-white/60 text-xs uppercase tracking-wide">
-            {authorCompany}
-          </span>
-        )}
-      </div>
+      {isShort ? (
+        <span className="text-white text-2xl leading-snug">{quote}</span>
+      ) : (
+        <p className="text-white leading-snug">{quote}</p>
+      )}
+
+      {authorName && (
+        <div className="flex items-center gap-3">
+          {authorPhotoUrl && (
+            <div className="shrink-0 w-11 h-11 rounded-full overflow-hidden border border-white/30">
+              <Image
+                src={authorPhotoUrl}
+                alt={authorName}
+                width={44}
+                height={44}
+                className="object-cover w-full h-full pointer-events-none"
+              />
+            </div>
+          )}
+          <div className="flex flex-col">
+            <span className="text-white text-sm font-medium">{authorName}</span>
+            {authorTitle && (
+              <span className="text-white/60 text-xs">{authorTitle}</span>
+            )}
+            {authorCompany && (
+              <span className="text-white/60 text-xs uppercase tracking-wide">
+                {authorCompany}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -133,7 +128,7 @@ export default function TestimonialsRail() {
     e.preventDefault();
     const x = e.pageX - rail.offsetLeft;
     const walk = x - drag.current.startX;
-    drag.current.velX = e.pageX - drag.current.lastX; // track velocity
+    drag.current.velX = e.pageX - drag.current.lastX;
     drag.current.lastX = e.pageX;
     rail.scrollLeft = drag.current.scrollLeft - walk;
   };
@@ -144,26 +139,23 @@ export default function TestimonialsRail() {
     drag.current.active = false;
     rail.style.cursor = "grab";
 
-    // Kick off inertia
     let velocity = -drag.current.velX * 1.2;
-
     const glide = () => {
       if (!railRef.current) return;
-      velocity *= 0.92; // friction — higher = slides longer, lower = stops faster
-      if (Math.abs(velocity) < 0.5) return; // stop when negligible
+      velocity *= 0.92;
+      if (Math.abs(velocity) < 0.5) return;
       railRef.current.scrollLeft += velocity;
       drag.current.raf = requestAnimationFrame(glide);
     };
-
     drag.current.raf = requestAnimationFrame(glide);
   };
+
   if (!testimonials.length) return null;
 
   return (
     <section className="relative overflow-hidden">
       <InView>
         <SmallTitle>What our clients say</SmallTitle>
-
         <div
           ref={railRef}
           onMouseDown={onMouseDown}
@@ -172,17 +164,11 @@ export default function TestimonialsRail() {
           onMouseLeave={onMouseUp}
           className="mt-4 flex gap-2 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory cursor-grab"
         >
-          {testimonials.map((t) =>
-            t.authorPhotoUrl ? (
-              <div key={t._id} className="snap-start">
-                <CardWithPhoto {...t} />
-              </div>
-            ) : (
-              <div key={t._id} className="snap-start">
-                <CardNoPhoto {...t} />
-              </div>
-            ),
-          )}
+          {testimonials.map((t) => (
+            <div key={t._id} className="snap-start">
+              <Card {...t} />
+            </div>
+          ))}
           <div className="shrink-0 w-4" />
         </div>
       </InView>
