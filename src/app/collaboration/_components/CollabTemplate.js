@@ -14,7 +14,7 @@ function Statement({ marker, text, className }) {
   return (
     <section
       data-marker={marker}
-      className="flex items-center justify-center text-white min-h-screen max-w-[1200px]"
+      className="flex items-center justify-center text-[var(--foreground)] min-h-screen max-w-[1200px]"
     >
       <div className="text-left">
         <InView>
@@ -35,7 +35,7 @@ function SecondaryStatement({ marker, text, cta }) {
   return (
     <section
       data-marker={marker}
-      className="min-h-screen flex items-center justify-center px-6 text-white"
+      className="min-h-screen flex items-center justify-center px-6 text-[var(--foreground)]"
     >
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords

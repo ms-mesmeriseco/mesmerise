@@ -122,7 +122,7 @@ function Splash({ innerRef }) {
 
 function ProjectsRow() {
   return (
-    <section className="relative text-white">
+    <section className="relative text-[var(--foreground)]">
       <InView>
         <ProjectRail tag="highlight" />
       </InView>
@@ -132,7 +132,7 @@ function ProjectsRow() {
 
 function SecondaryStatement({ text, cta }) {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 text-white">
+    <section className="min-h-screen flex items-center justify-center px-6 text-[var(--foreground)]">
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords
           as="p"
@@ -172,8 +172,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-white transition-colors duration-700",
-        testimonialsInView ? "bg-[var(--mesm-red)]" : "bg-[var(--background)]", // 3. swap class
+        "relative min-h-screen text-[var(--foreground)] transition-colors duration-700",
       ].join(" ")}
     >
       <Splash innerRef={splashRef} />

@@ -31,7 +31,7 @@ function useIsMobile(breakpoint = 600) {
 
 function IntroPara({ text }) {
   return (
-    <section className="flex items-center justify-left text-white min-h-[70vh] md:max-w-3/4">
+    <section className="flex items-center justify-left text-[var(--foreground)] min-h-[70vh] md:max-w-3/4">
       <div className="text-left">
         <InView>
           <StaggeredWords
@@ -48,7 +48,7 @@ function IntroPara({ text }) {
 
 function SecondPara({ text }) {
   return (
-    <section className="flex items-center justify-right ml-auto text-white min-h-[70vh] md:max-w-3/4">
+    <section className="flex items-center justify-right ml-auto text-[var(--foreground)] min-h-[70vh] md:max-w-3/4">
       <div className="text-left">
         <InView>
           <StaggeredWords
@@ -65,7 +65,7 @@ function SecondPara({ text }) {
 
 function ThirdPara({ text }) {
   return (
-    <section className="flex items-center justify-center text-white min-h-[70vh] md:w-3/4">
+    <section className="flex items-center justify-center text-[var(--foreground)] min-h-[70vh] md:w-3/4">
       <div className="text-left">
         <InView>
           <StaggeredWords
@@ -83,7 +83,7 @@ function ThirdPara({ text }) {
 function FinalCTA({ text }) {
   return (
     <InView>
-      <section className="flex flex-col justify-left text-white pb-4">
+      <section className="flex flex-col justify-left text-[var(--foreground)] pb-4">
         <div>
           <StaggeredWords
             as="h3"

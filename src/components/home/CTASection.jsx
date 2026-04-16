@@ -10,7 +10,7 @@ export default function CTASection() {
         <StaggeredWords
           as="h2"
           text="Ready to work with Melbourne's premium boutique digital marketing agency?"
-          className="page-title-medium text-white text-3xl md:text-4xl leading-[1.1] tracking-tight"
+          className="page-title-medium text-[var(--foreground)] text-3xl md:text-4xl leading-[1.1] tracking-tight"
         />
         <StaggeredWords
           as="p"

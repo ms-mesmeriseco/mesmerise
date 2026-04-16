@@ -13,7 +13,7 @@ export default function AvatarRow({
 }) {
   const sizesAttr = useMemo(
     () => "(max-width: 768px) 48px, (max-width: 1024px) 56px, 64px",
-    []
+    [],
   );
 
   const marginShift = Math.max(0, Math.min(1, overlap)) * size;
@@ -41,8 +41,8 @@ export default function AvatarRow({
           const style = isEdge
             ? undefined
             : reverse
-            ? { marginRight: `-${marginShift}px` }
-            : { marginLeft: `-${marginShift}px` };
+              ? { marginRight: `-${marginShift}px` }
+              : { marginLeft: `-${marginShift}px` };
 
           const commonProps = {
             className:
@@ -87,7 +87,7 @@ export default function AvatarRow({
             >
               <Wrapper {...commonProps}>
                 <span
-                  className="block rounded-full ring-1 ring-[var(--mesm-grey-dk)] hover:ring-white/80 bg-black/10"
+                  className="block rounded-full ring-1 ring-[var(--mesm-grey-dk)] hover:ring-[var(--foreground)]/80 bg-black/10"
                   style={{ width: size, height: size }}
                 >
                   {p.src ? (
@@ -102,7 +102,7 @@ export default function AvatarRow({
                     />
                   ) : (
                     <span
-                      className="flex h-full w-full items-center justify-center rounded-full bg-white/10 text-white/80 text-sm "
+                      className="flex h-full w-full items-center justify-center rounded-full bg-[var(--foreground)]/10 text-[var(--foreground)]/80 text-sm "
                       aria-hidden={!!initials}
                       title={p.alt}
                     >

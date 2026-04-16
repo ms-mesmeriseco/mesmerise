@@ -32,7 +32,7 @@ function Card({
   const isShort = quote?.length <= SHORT_QUOTE_THRESHOLD;
 
   return (
-    <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] hover:bg-[var(--foreground)]/10 duration-200 border border-white/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
+    <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] hover:bg-[var(--foreground)]/10 duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
       {clientLogoUrl && (
         <div className="h-10 flex items-start">
           <Image
@@ -46,15 +46,17 @@ function Card({
       )}
 
       {isShort ? (
-        <span className="text-white text-2xl leading-snug">{quote}</span>
+        <span className="text-[var(--foreground)] text-2xl leading-snug">
+          {quote}
+        </span>
       ) : (
-        <p className="text-white leading-snug">{quote}</p>
+        <p className="text-[var(--foreground)] leading-snug">{quote}</p>
       )}
 
       {authorName && (
         <div className="flex items-center gap-3">
           {authorPhotoUrl && (
-            <div className="shrink-0 w-11 h-11 rounded-full overflow-hidden border border-white/30">
+            <div className="shrink-0 w-11 h-11 rounded-full overflow-hidden border border-[var(--foreground)]/30">
               <Image
                 src={authorPhotoUrl}
                 alt={authorName}
@@ -65,12 +67,16 @@ function Card({
             </div>
           )}
           <div className="flex flex-col">
-            <span className="text-white text-sm font-medium">{authorName}</span>
+            <span className="text-[var(--foreground)] text-sm font-medium">
+              {authorName}
+            </span>
             {authorTitle && (
-              <span className="text-white/60 text-xs">{authorTitle}</span>
+              <span className="text-[var(--foreground)]/60 text-xs">
+                {authorTitle}
+              </span>
             )}
             {authorCompany && (
-              <span className="text-white/60 text-xs uppercase tracking-wide">
+              <span className="text-[var(--foreground)]/60 text-xs uppercase tracking-wide">
                 {authorCompany}
               </span>
             )}

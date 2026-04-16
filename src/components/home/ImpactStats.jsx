@@ -48,7 +48,7 @@ function StatCard({
       onMouseLeave={handleLeave}
       onMouseMove={handleMove}
       onTouchStart={handleTouchStart}
-      className="relative flex flex-col justify-between border border-[var(--mesm-grey-dk)] rounded-lg p-6 md:p-7 gap-3 bg-black/20 hover:bg-white/5 transition-colors cursor-default"
+      className="relative flex flex-col justify-between border border-[var(--mesm-grey-dk)] rounded-lg p-6 md:p-7 gap-3 bg-black/20 hover:bg-[var(--foreground)]/5 transition-colors cursor-default"
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -155,7 +155,10 @@ export default function ImpactStats() {
   };
 
   return (
-    <section data-marker="RESULTS" className="relative py-4 text-white">
+    <section
+      data-marker="RESULTS"
+      className="relative py-4 text-[var(--foreground)]"
+    >
       <InView>
         <motion.div
           variants={container}

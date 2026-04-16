@@ -31,7 +31,7 @@ export default function GoogleBrow() {
         variants={itemVariants}
         src="https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw"
         alt="Google Brow"
-        className="w-8 h-auto object-contain bg-white/95 p-1 rounded-full"
+        className="w-8 h-auto object-contain bg-[var(--foreground)]/95 p-1 rounded-full"
       />
 
       <motion.span

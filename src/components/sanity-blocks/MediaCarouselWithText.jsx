@@ -105,7 +105,7 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.1 }}
                   lazy="true"
-                  className="absolute top-1 left-1 text-white md:p-4 p-2 rounded-lg md:max-w-[50%] max-w-[100%] text-sm z-10"
+                  className="absolute top-1 left-1 text-[var(--foreground)] md:p-4 p-2 rounded-lg md:max-w-[50%] max-w-[100%] text-sm z-10"
                 >
                   <PortableText
                     value={textBlocks}

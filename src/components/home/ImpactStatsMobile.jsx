@@ -29,7 +29,7 @@ export default function ImpactStatsMobile() {
         body: "No more waiting for the phone to ring. Clients move from chasing work to switching off the phone until they can hire more staff. At the top end, enquiries grew by 2,800%.",
       },
     ],
-    []
+    [],
   );
 
   const itemRefs = useRef([]);
@@ -99,7 +99,7 @@ export default function ImpactStatsMobile() {
         rootMargin: "-30% 0px -30% 0px",
         // coarser thresholds reduce jitter
         threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
-      }
+      },
     );
 
     const queuedRaf = { current: null };
@@ -122,7 +122,7 @@ export default function ImpactStatsMobile() {
   return (
     <section
       data-marker="RESULTS"
-      className="relative md:hidden py-10 text-white"
+      className="relative md:hidden py-10 text-[var(--foreground)]"
     >
       <InView>
         <motion.div

@@ -25,7 +25,7 @@ function LogoCard({ clientName, logoUrl, index }) {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
     >
-      <span className="absolute top-3 left-3 text-sm text-white/40 bg-[var(--mesm-grey-dk)]/30 border border-[var(--mesm-grey-dk)]/50 rounded-xl px-2.5 py-1 leading-relaxed group-hover:bg-[var(--mesm-blue)] group-hover:text-[var(--background)] transition-colors duration-50">
+      <span className="absolute top-3 left-3 text-sm text-[var(--foreground)]/40 bg-[var(--mesm-grey-dk)]/30 border border-[var(--mesm-grey-dk)]/50 rounded-xl px-2.5 py-1 leading-relaxed group-hover:bg-[var(--mesm-blue)] group-hover:text-[var(--background)] transition-colors duration-50">
         {clientName}
       </span>
       <div className="flex items-center justify-center w-full h-24 mt-4">
@@ -112,7 +112,7 @@ export default function TrustedBy() {
   };
 
   return (
-    <section className="relative py-12 md:py-16 text-white">
+    <section className="relative py-12 md:py-16 text-[var(--foreground)]">
       <InView>
         <SmallTitle>Trusted by</SmallTitle>
 

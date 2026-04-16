@@ -26,7 +26,7 @@ export default function StaggeredWords({
     : "";
 
   const wrapperClass = glass
-    ? "px-4 py-1 rounded-4xl border border-white/20 bg-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] text-stroke"
+    ? "px-4 py-1 rounded-4xl border border-[var(--foreground)]/20 bg-[var(--foreground)]/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] text-stroke"
     : "";
 
   return (

@@ -160,7 +160,7 @@ export default function ServicesRail({
                 >
                   {/* Card body (no media) */}
                   <div
-                    className="relative aspect-[2/3] overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)] bg-black/20"
+                    className="relative aspect-[2/3] overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)] "
                     style={{
                       boxShadow: showDetails
                         ? `0 0 0 1px var(--mesm-grey-dk), 0 0 0 2px ${accent}33 inset`
@@ -189,7 +189,7 @@ export default function ServicesRail({
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-black/45 backdrop-blur-[2px] text-white p-3 flex flex-col justify-between mt-[120px]"
+                            className="absolute inset-0 text-[var(--foreground)] p-3 flex flex-col justify-between mt-[120px]"
                           >
                             <div className="space-y-2">
                               {svc.blurb && (

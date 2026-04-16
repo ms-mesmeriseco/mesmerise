@@ -247,7 +247,7 @@ export default function ProjectRail({
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-black/45 backdrop-blur-[2px] text-white p-3 flex flex-col justify-between"
+                            className="absolute inset-0 bg-black/45 backdrop-blur-[2px] text-[var(--foreground)] p-3 flex flex-col justify-between"
                           >
                             {blocks && (
                               <div className="prose-invert prose-p:my-1 leading-relaxed lg:w-1/2">
@@ -255,9 +255,7 @@ export default function ProjectRail({
                               </div>
                             )}
                             <div>
-                              <h6 className="text-base mb-2">
-                                {title}
-                              </h6>
+                              <h6 className="text-base mb-2">{title}</h6>
                             </div>
                           </motion.div>
                         </Link>

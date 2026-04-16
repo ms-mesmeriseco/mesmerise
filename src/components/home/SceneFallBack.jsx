@@ -23,7 +23,7 @@ export default function SceneFallback({
       {showEnableButton && onEnable3D && (
         <button
           onClick={onEnable3D}
-          className="absolute bottom-4 right-4 px-3 py-2 rounded-lg border border-white/30 bg-black/50 backdrop-blur text-sm"
+          className="absolute bottom-4 right-4 px-3 py-2 rounded-lg border border-[var(--foreground)]/30 bg-black/50 backdrop-blur text-sm"
         >
           Enable 3D
         </button>

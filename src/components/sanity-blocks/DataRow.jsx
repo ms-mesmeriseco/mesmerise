@@ -8,7 +8,7 @@ import InView from "@/hooks/InView";
 function StatCard({ title, sub, logo, index }) {
   return (
     <motion.article
-      className="relative flex flex-col border border-[var(--mesm-grey-dk)] rounded-lg p-6 md:p-7 gap-3 bg-black/20 hover:bg-white/5 transition-colors cursor-default group min-h-[250px]"
+      className="relative flex flex-col border border-[var(--mesm-grey-dk)] rounded-lg p-6 md:p-7 gap-3 bg-black/20 hover:bg-[var(--foreground)]/5 transition-colors cursor-default group min-h-[250px]"
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -61,7 +61,7 @@ export default function DataRow({ stats = [] }) {
   return (
     <section
       data-marker="RESULTS"
-      className="relative py-12 md:py-16 text-white"
+      className="relative py-12 md:py-16 text-[var(--foreground)]"
     >
       <InView>
         <motion.div

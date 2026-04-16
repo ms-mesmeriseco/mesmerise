@@ -6,7 +6,7 @@ import { useInView } from "framer-motion";
 export default function InViewTheme({
   children,
   theme = {},
-  amount = 0.2,
+  amount = 0.4,
   as: Tag = "div",
   className,
   ...props

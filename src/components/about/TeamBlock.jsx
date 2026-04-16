@@ -68,21 +68,21 @@ export default function TeamBlock({
                       priority={idx < 2 ? false : undefined}
                     />
                   ) : (
-                    <div className="absolute inset-0 grid place-items-center text-white/40">
+                    <div className="absolute inset-0 grid place-items-center text-[var(--foreground)]/40">
                       <span className="text-sm">Photo coming soon</span>
                     </div>
                   )}
 
                   {/* Subtle top gradient to match site aesthetic */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/0 via-black/0 to-black/0" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--foreground)]/0 via-black/0 to-black/0" />
                 </div>
 
                 {/* Caption */}
                 <div className="py-4">
-                  <p className="text-base md:text-lg text-white leading-tight p2">
+                  <p className="text-base md:text-lg text-[var(--foreground)] leading-tight p2">
                     {person.name || "Unnamed"}
                   </p>
-                  <h5 className="mt-1 text-sm text-white/60">
+                  <h5 className="mt-1 text-sm text-[var(--foreground)]/60">
                     {person.title || "—"}
                   </h5>
                 </div>

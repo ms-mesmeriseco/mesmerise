@@ -206,7 +206,7 @@ export default function Footer() {
       </nav>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/10">
+      <div className="border-t border-[var(--foreground)]/10">
         <div className="mx-auto flex w-full flex-col items-start justify-between gap-4 md:px-[var(--global-margin-md)] py-5 text-sm opacity-80 md:flex-row md:items-center">
           <h6>© {year} Mesmerise Digital. All rights reserved.</h6>
           <ul className="flex items-center gap-5">
