@@ -13,6 +13,7 @@ import TeamBlock from "@/components/about/TeamBlock";
 import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
 import Statement from "@/components/layout/Statement";
+import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -25,6 +26,25 @@ const ImpactStats = dynamic(() => import("@/components/home/ImpactStats"), {
 const CollabModel = dynamic(() => import("@/components/home/CollabModel"), {
   suspense: true,
 });
+
+const caseStudyBlock = {
+  heading: "How We Helped Acme Co. 10x Their Revenue",
+  logo: "/images/acme-logo.png", // or a full URL string
+  heroImage: "/images/acme-hero.jpg", // or a full URL string
+  button1: {
+    label: "View Case Study",
+    link: "/case-studies/acme",
+  },
+  button2: {
+    label: "Contact Us",
+    link: "/contact",
+  },
+  stats: [
+    { _key: "stat1", value: "10x", label: "Revenue Growth" },
+    { _key: "stat2", value: "3.2M", label: "Users Reached" },
+    { _key: "stat3", value: "98%", label: "Client Satisfaction" },
+  ],
+};
 
 // Page stage controller: tracks which section we're in, for background color changes
 
@@ -136,12 +156,23 @@ function SecondaryStatement({ text, cta }) {
 
 export default function HomePage() {
   const splashRef = useRef(null);
-  const section2Ref = useRef(null);
+
+  const testimonialsRef = useRef(null);
+  const testimonialsInView = useInView(testimonialsRef, { amount: 0.2 });
+
+  useEffect(() => {
+    if (testimonialsInView) {
+      document.body.classList.add("testimonials-active");
+    } else {
+      document.body.classList.remove("testimonials-active");
+    }
+  }, [testimonialsInView]);
 
   return (
     <main
       className={[
         "relative min-h-screen text-white transition-colors duration-700",
+        testimonialsInView ? "bg-[var(--mesm-red)]" : "bg-[var(--background)]", // 3. swap class
       ].join(" ")}
     >
       <Splash innerRef={splashRef} />
@@ -154,12 +185,16 @@ export default function HomePage() {
         text="Bridging the gap between aesthetic solutions and undeniable data."
         showCTA="true"
       />
+
       <div className="md:hidden">
         <ImpactStatsMobile />
       </div>
+
       <div className="md:block  hidden">
         <ImpactStats />
       </div>
+      <CaseStudyHero narrow={false} block={caseStudyBlock} />
+      <TrustedBy />
       <TeamBlock
         heading="Our team"
         team={[
@@ -198,15 +233,15 @@ export default function HomePage() {
           },
         ]}
       />
-      <TrustedBy />
-      <TestimonialsRail />
-      <CollabModel />
+
+      <TestimonialsRail innerRef={testimonialsRef} />
       <ServicesRail />
+      <CollabModel />
+
       <SecondaryStatement
         text="Let's create something that looks sexy, and converts."
         cta="Book a consultation"
       />
-      <CTASection />
     </main>
   );
 }

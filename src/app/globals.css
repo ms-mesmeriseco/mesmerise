@@ -378,7 +378,10 @@ footer {
     font-weight: 600;
   }
 }
-
+body.testimonials-active {
+  background-color: var(--mesm-red);
+  transition: background-color 0.7s ease;
+}
 .nav-list h3 {
   font-weight: 300;
 }

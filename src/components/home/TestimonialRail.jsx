@@ -82,7 +82,7 @@ function Card({
   );
 }
 
-export default function TestimonialsRail() {
+export default function TestimonialsRail({ innerRef }) {
   const [testimonials, setTestimonials] = useState([]);
   const railRef = useRef(null);
   const drag = useRef({
@@ -153,7 +153,7 @@ export default function TestimonialsRail() {
   if (!testimonials.length) return null;
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden" ref={innerRef}>
       <InView>
         <SmallTitle>What our clients say</SmallTitle>
         <div

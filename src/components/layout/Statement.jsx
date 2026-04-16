@@ -11,7 +11,7 @@ export default function Statement({
   return (
     <section
       data-marker={marker}
-      className="flex items-center justify-center text-white min-h-screen max-w-[1200px]"
+      className="flex items-center justify-center text-white min-h-screen max-w-[1280px]"
     >
       <div className="text-left">
         <InView>
@@ -24,7 +24,7 @@ export default function Statement({
           {showCTA && (
             <div className="mt-8">
               <HeroButton href="/connect" size="lg">
-                Let's connect
+                <h3>Let's connect</h3>
               </HeroButton>
             </div>
           )}

@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Button from "../ui/Button";
 
-export default function CaseStudyHero({ block }) {
+export default function CaseStudyHero({ block, narrow = true }) {
   if (!block) return null;
 
   const { heading, button1, button2, heroImage, stats, logo } = block;
@@ -17,7 +17,7 @@ export default function CaseStudyHero({ block }) {
   // console.log("CaseStudyHero block data:", block);
 
   return (
-    <section className="narrow-wrapper ">
+    <section className={narrow ? "narrow-wrapper" : ""}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left Column: Content */}
         <div className="flex flex-col justify-between order-2 md:order-1 h-full py-2">
