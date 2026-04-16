@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 import ServicesRail from "@/components/services/ServicesRail";
 import HeroButton from "@/components/ui/HeroButton";
+import StaggeredWords from "@/hooks/StaggeredWords";
 import TeamBlock from "@/components/about/TeamBlock";
 import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
@@ -108,6 +109,31 @@ function ProjectsRow() {
   );
 }
 
+function SecondaryStatement({ text, cta }) {
+  return (
+    <section className="min-h-screen flex items-center justify-center px-6 text-white">
+      <div className="max-w-[1200px] text-center text-balance">
+        <StaggeredWords
+          as="p"
+          text={text}
+          className="page-title-large"
+          margin="-40% 0px"
+        />
+        {cta ? (
+          <>
+            <br />
+            <br />
+            <br />
+            <HeroButton size="lg" href="/connect">
+              {cta}
+            </HeroButton>
+          </>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   const splashRef = useRef(null);
   const section2Ref = useRef(null);
@@ -176,6 +202,10 @@ export default function HomePage() {
       <TestimonialsRail />
       <CollabModel />
       <ServicesRail />
+      <SecondaryStatement
+        text="Let's create something that looks sexy, and converts."
+        cta="Book a consultation"
+      />
       <CTASection />
     </main>
   );

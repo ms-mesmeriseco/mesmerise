@@ -367,8 +367,8 @@ footer u li a {
 footer a {
   color: var(--foreground);
 }
+
 footer {
-  margin-top: 30vh;
   h5 {
     font-size: 0.8rem;
     font-weight: 400;
@@ -378,6 +378,7 @@ footer {
     font-weight: 600;
   }
 }
+
 .nav-list h3 {
   font-weight: 300;
 }

@@ -3,8 +3,8 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 
 export default function CTASection() {
   return (
-    <section className="w-full min-h-[50vh] grid grid-cols-1 md:grid-cols-2 gap-16 ]">
-      <div className="flex flex-col gap-8 items-start"></div>
+    <section className="w-full min-h-[60vh] grid grid-cols-1 md:grid-cols-2 gap-16  items-end pb-16">
+      <div className="flex flex-col gap-8"> </div>
 
       <div className="flex flex-col gap-8 justify-center ">
         <StaggeredWords

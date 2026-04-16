@@ -53,7 +53,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative z-[200] bg-[var(--background)] border-t-1 border-[var(--mesm-grey-dk)] m-[var(--global-margin-md)]">
+    <footer className="relative z-[200] bg-[var(--background)] border-t-1 border-[var(--mesm-grey-dk)] m-[var(--global-margin-sm)]">
       {/* Top strip: brand + newsletter */}
       <section data-marker=" " className="mx-auto w-full pb-12 md:pb-16 pt-6">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
