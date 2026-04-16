@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useInView } from "framer-motion";
 import InView from "@/hooks/InView";
-import StaggeredWords from "@/hooks/StaggeredWords";
+import CTASection from "@/components/home/CTASection";
 import dynamic from "next/dynamic";
 import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 import ServicesRail from "@/components/services/ServicesRail";
@@ -98,21 +98,6 @@ function Splash({ innerRef }) {
   );
 }
 
-function SecondaryStatement() {
-  return (
-    <section className="min-h-[50vh] flex items-start justify-center text-white border-b py-12 border-[var(--mesm-grey-dk)]">
-      <div>
-        <StaggeredWords
-          as="p"
-          text="Bridging the gap between aesthetic solutions and undeniable data."
-          className="page-title-large"
-          margin="-40% 0px"
-        />
-      </div>
-    </section>
-  );
-}
-
 function ProjectsRow() {
   return (
     <section className="relative text-white">
@@ -191,6 +176,7 @@ export default function HomePage() {
       <TestimonialsRail />
       <CollabModel />
       <ServicesRail />
+      <CTASection />
     </main>
   );
 }
