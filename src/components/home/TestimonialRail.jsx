@@ -30,7 +30,6 @@ function Card({
   clientLogoUrl,
 }) {
   const isShort = quote?.length <= SHORT_QUOTE_THRESHOLD;
-  console.log(quote.length);
 
   return (
     <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] hover:bg-[var(--foreground)]/10 duration-200 border border-white/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
@@ -153,7 +152,7 @@ export default function TestimonialsRail({ innerRef }) {
   if (!testimonials.length) return null;
 
   return (
-    <section className="relative overflow-hidden" ref={innerRef}>
+    <section className="relative overflow-hidden">
       <InView>
         <SmallTitle>What our clients say</SmallTitle>
         <div

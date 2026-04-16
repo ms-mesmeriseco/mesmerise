@@ -14,6 +14,7 @@ import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
 import Statement from "@/components/layout/Statement";
 import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
+import InViewTheme from "@/hooks/InViewTheme";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -194,7 +195,9 @@ export default function HomePage() {
         <ImpactStats />
       </div>
       <CaseStudyHero narrow={false} block={caseStudyBlock} />
+
       <TrustedBy />
+
       <TeamBlock
         heading="Our team"
         team={[
@@ -234,7 +237,17 @@ export default function HomePage() {
         ]}
       />
 
-      <TestimonialsRail innerRef={testimonialsRef} />
+      <InViewTheme
+        as="section"
+        theme={{
+          "--background": "var(--mesm-red)",
+          "--foreground": "#ffffff",
+        }}
+      >
+        <div className="min-h-screen flex items-center ">
+          <TestimonialsRail />
+        </div>
+      </InViewTheme>
       <ServicesRail />
       <CollabModel />
 

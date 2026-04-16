@@ -45,8 +45,6 @@ body.page-blog,
 body.page-landing,
 body.page-connect,
 body.page-about {
-  --background: #000000;
-  --foreground: #ffffff;
   --footer-bg: var(--mesm-blue);
   --footer-txt: #000000;
   --accent: #1ae2bd;
@@ -62,21 +60,12 @@ body.page-blog {
   }
 }
 
-/* body.page-connect {
-  --background: var(--mesm-yellow);
-  --foreground: #000000;
-  --footer-bg: var(--mesm-blue);
-  --footer-txt: #000000;
-  --accent: var(--mesm-red);
-} */
+html {
+  transition:
+    background-color 0.1s ease,
+    color 0.1s ease;
+}
 
-/* body.page-about {
-  --background: var(--mesm-red);
-  --foreground: #ffffff;
-  --footer-bg: var(--mesm-blue);
-  --footer-txt: #000000;
-  --accent: var(--mesm-yellow);
-} */
 :root {
   --foreground: #ffffff;
   --background: #000000;
@@ -147,6 +136,9 @@ body {
   font-weight: 400;
   max-width: 100vw;
   overflow-x: hidden;
+  transition:
+    background-color 0.1s,
+    color 0.1s;
 }
 
 * {
@@ -378,10 +370,7 @@ footer {
     font-weight: 600;
   }
 }
-body.testimonials-active {
-  background-color: var(--mesm-red);
-  transition: background-color 0.7s ease;
-}
+
 .nav-list h3 {
   font-weight: 300;
 }

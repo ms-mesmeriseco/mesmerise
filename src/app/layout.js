@@ -125,7 +125,7 @@ Google Tag Manager (noscript) */}
         {/* <!-- DO NOT MODIFY UNLESS TO REPLACE A USER IDENTIFIER -->
 <!-- End Reddit Pixel --> */}
       </head>
-      <body className={"bg-[var(--background)] text-[var(--foreground)]"}>
+      <body>
         <BodyThemeWrapper />
         <Header />
         <Template>
