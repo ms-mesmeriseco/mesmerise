@@ -86,7 +86,7 @@ function Splash({ innerRef }) {
       <section
         ref={innerRef}
         id="home-scene"
-        className=" fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)]"
+        className=" fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)] mb-2"
       >
         {/* Mobile: video */}
         <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
@@ -171,7 +171,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-white transition-colors duration-300",
+        "relative min-h-screen text-white transition-colors duration-200",
       ].join(" ")}
     >
       <Splash innerRef={splashRef} />
@@ -193,7 +193,7 @@ export default function HomePage() {
         <ImpactStats />
       </div>
       <InView>
-        <div className="h-screen flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center">
           <CaseStudyHero narrow={false} block={caseStudyBlock} />
         </div>
       </InView>

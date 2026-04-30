@@ -1,6 +1,6 @@
 /** @type {import("next").Viewport} */
 import Header from "@/components/layout/header";
-import MenuToggle from "@/components/ui/MenuToggle";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 import Footer from "@/components/layout/footer";
 import Inner from "@/components/layout/Inner";
 import Template from "@/components/layout/template";
@@ -126,6 +126,7 @@ Google Tag Manager (noscript) */}
 <!-- End Reddit Pixel --> */}
       </head>
       <body>
+        <ScrollToTop />
         <BodyThemeWrapper />
         <Header />
         <Template>

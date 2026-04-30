@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useInView } from "framer-motion";
 
-export function useInViewTheme(theme = {}, options = { amount: 0.2 }) {
+export function useInViewTheme(theme = {}, options = { amount: 0.4 }) {
   const ref = useRef(null);
   const inView = useInView(ref, options);
 
