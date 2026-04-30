@@ -171,7 +171,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-[var(--foreground)] transition-colors duration-300 h-screen overflow-y-scroll ",
+        "relative min-h-screen text-white transition-colors duration-300",
       ].join(" ")}
     >
       <Splash innerRef={splashRef} />
