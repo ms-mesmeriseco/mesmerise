@@ -5,17 +5,26 @@ import Image from "next/image";
 import { sanityClient } from "@/sanity/client";
 import InView from "@/hooks/InView";
 import SmallTitle from "@/components/ui/SmallTitle";
+import VideoCard from "../ui/VideoCard";
 
-const testimonialsQuery = `
-  *[_type == "testimonial"] | order(coalesce(order, 9999) asc)  {
+const railQuery = `
+  *[_type == "testimonialsRail" && title == "Homepage Testimonials"][0] {
     _id,
-    quote,
-    authorName,
-    authorTitle,
-    authorCompany,
-    "authorPhotoUrl": authorPhoto.asset->url,
-    "clientLogoUrl": clientLogo.asset->url,
-
+    title,
+    items[]-> {
+      _id,
+      _type,
+      quote,
+      authorName,
+      authorTitle,
+      authorCompany,
+      "authorPhotoUrl": authorPhoto.asset->url,
+      "clientLogoUrl": clientLogo.asset->url,
+      mediaType,
+      caption,
+      "imageUrl": image.asset->url,
+      "videoUrl": video.asset->url,
+    }
   }
 `;
 
@@ -32,7 +41,7 @@ function Card({
   const isShort = quote?.length <= SHORT_QUOTE_THRESHOLD;
 
   return (
-    <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] hover:bg-[var(--foreground)]/10 duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
+    <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] h-fit hover:bg-[var(--foreground)]/10 duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
       {clientLogoUrl && (
         <div className="h-10 flex items-start">
           <Image
@@ -44,7 +53,6 @@ function Card({
           />
         </div>
       )}
-
       {isShort ? (
         <span className="text-[var(--foreground)] text-2xl leading-snug">
           {quote}
@@ -52,11 +60,10 @@ function Card({
       ) : (
         <p className="text-[var(--foreground)] leading-snug">{quote}</p>
       )}
-
       {authorName && (
         <div className="flex items-center gap-3">
           {authorPhotoUrl && (
-            <div className="shrink-0 w-11 h-11 rounded-full overflow-hidden border border-[var(--foreground)]/30">
+            <div className="shrink-0 w-11  rounded-full overflow-hidden border border-[var(--foreground)]/30">
               <Image
                 src={authorPhotoUrl}
                 alt={authorName}
@@ -87,8 +94,43 @@ function Card({
   );
 }
 
+function MediaCard({
+  mediaType,
+  imageUrl,
+  imageWidth,
+  imageHeight,
+  videoUrl,
+  caption,
+}) {
+  const maxWidth = imageHeight > imageWidth ? "max-w-[275px]" : "max-w-[400px]";
+
+  return (
+    <div
+      className={`my-1 shrink-0 ${maxWidth} h-fit rounded-lg overflow-hidden border border-[var(--foreground)]/20 select-none relative`}
+    >
+      {mediaType === "image" && imageUrl && (
+        <div style={{ aspectRatio: `${imageWidth} / ${imageHeight}` }}>
+          <Image
+            src={imageUrl}
+            alt={caption || ""}
+            width={275}
+            height={0}
+            className="object-cover pointer-events-none"
+          />
+        </div>
+      )}
+      {mediaType === "video" && videoUrl && <VideoCard videoUrl={videoUrl} />}
+      {/* {caption && (
+        <div className=" p-3 bg-black/40 backdrop-blur-sm">
+          <p className="text-white text-xs">{caption}</p>
+        </div>
+      )} */}
+    </div>
+  );
+}
+
 export default function TestimonialsRail({ innerRef }) {
-  const [testimonials, setTestimonials] = useState([]);
+  const [items, setItems] = useState([]);
   const railRef = useRef(null);
   const drag = useRef({
     active: false,
@@ -102,10 +144,10 @@ export default function TestimonialsRail({ innerRef }) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await sanityClient.fetch(testimonialsQuery);
-        setTestimonials(data || []);
+        const data = await sanityClient.fetch(railQuery);
+        setItems(data?.items || []);
       } catch (err) {
-        console.error("Failed to fetch testimonials:", err);
+        console.error("Failed to fetch testimonials rail:", err);
       }
     }
     fetchData();
@@ -143,7 +185,6 @@ export default function TestimonialsRail({ innerRef }) {
     if (!rail) return;
     drag.current.active = false;
     rail.style.cursor = "grab";
-
     let velocity = -drag.current.velX * 1.2;
     const glide = () => {
       if (!railRef.current) return;
@@ -155,26 +196,32 @@ export default function TestimonialsRail({ innerRef }) {
     drag.current.raf = requestAnimationFrame(glide);
   };
 
-  if (!testimonials.length) return null;
+  if (!items.length) return null;
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden h-screen snap-center">
       <InView>
-        <SmallTitle>What our clients say</SmallTitle>
-        <div
-          ref={railRef}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
-          className="mt-4 flex gap-2 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory cursor-grab"
-        >
-          {testimonials.map((t) => (
-            <div key={t._id} className="snap-start">
-              <Card {...t} />
+        <div className="h-screen flex flex-col items-center">
+          <div className="w-full my-auto">
+            <SmallTitle>What our clients say</SmallTitle>
+            <div
+              ref={railRef}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseUp}
+              className="mt-4 flex gap-2 overflow-x-auto pb-4 scrollbar-hide cursor-grab"
+            >
+              {items.map((item) =>
+                item._type === "mediaBlock" ? (
+                  <MediaCard key={item._id} {...item} />
+                ) : (
+                  <Card key={item._id} {...item} />
+                ),
+              )}
+              <div className="shrink-0 w-4" />
             </div>
-          ))}
-          <div className="shrink-0 w-4" />
+          </div>
         </div>
       </InView>
     </section>

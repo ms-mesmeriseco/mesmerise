@@ -61,7 +61,7 @@ export default function HeroButton({
         bg-[var(--mesm-yellow)]  
         border border-[var(--mesm-yellow)]
         text-[var(--background)] tracking-wide 
-        hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] transition-colors duration-250
+        hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-yellow)] transition-colors duration-250
         ${extraClass}
       `}
       {...props}

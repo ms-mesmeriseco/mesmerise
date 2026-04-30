@@ -6,7 +6,7 @@ import { useInView } from "framer-motion";
 export default function InViewTheme({
   children,
   theme = {},
-  amount = 0.4,
+  amount = 0.3,
   as: Tag = "div",
   className,
   ...props
@@ -53,7 +53,7 @@ export default function InViewTheme({
       Object.keys(theme).forEach((key) => {
         root.style.removeProperty(key);
         console.log(
-          `  removed ${key} | confirmed:`,
+          `removed ${key} | confirmed:`,
           root.style.getPropertyValue(key) || "(cleared)",
         );
       });

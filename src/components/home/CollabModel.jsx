@@ -19,7 +19,10 @@ const offerings = [
 
 export default function CollabModel() {
   return (
-    <section data-marker="how we work" className="py-24 flex flex-col h-full">
+    <section
+      data-marker="how we work"
+      className="py-24 flex flex-col h-full snap-center h-screen justify-center items-center"
+    >
       <InView>
         <h6>Collaboration Models</h6>
         {/* <PageTitleMedium text="Collaboration Models" center /> */}

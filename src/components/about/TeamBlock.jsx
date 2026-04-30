@@ -46,13 +46,13 @@ export default function TeamBlock({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="no-list"
+              className="no-list snap-center "
             >
               <CardWrapper
                 {...wrapperProps}
                 className="
-                  group block bg-black/10
-                  overflow-hidden shadow-sm hover:shadow-md transition-shadow
+                  group block 
+                  overflow-hidden 
                 "
               >
                 {/* Image */}
@@ -74,7 +74,7 @@ export default function TeamBlock({
                   )}
 
                   {/* Subtle top gradient to match site aesthetic */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--foreground)]/0 via-black/0 to-black/0" />
+                  <div className="pointer-events-none absolute inset-0  " />
                 </div>
 
                 {/* Caption */}

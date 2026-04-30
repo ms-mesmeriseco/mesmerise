@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import InView from "@/hooks/InView";
-import CTASection from "@/components/home/CTASection";
 import dynamic from "next/dynamic";
 import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 import ServicesRail from "@/components/services/ServicesRail";
@@ -29,21 +28,21 @@ const CollabModel = dynamic(() => import("@/components/home/CollabModel"), {
 });
 
 const caseStudyBlock = {
-  heading: "How We Helped Acme Co. 10x Their Revenue",
-  logo: "/images/acme-logo.png", // or a full URL string
-  heroImage: "/images/acme-hero.jpg", // or a full URL string
+  heading: "The Sauna Company",
+  logo: "https://cdn.sanity.io/images/wpr5jlmc/production/eccddb9def0b9cd61a9e72e70f9899723bbf3fb0-564x123.png", // or a full URL string
+  heroImage:
+    "https://cdn.sanity.io/images/wpr5jlmc/production/732f9b7be4430aa864f46a98bcd6f7d6ed97a6e3-2048x1365.jpg", // or a full URL string
   button1: {
-    label: "View Case Study",
-    link: "/case-studies/acme",
+    label: "Read Case Study",
+    link: "https://www.mesmeriseco.com/work/the-sauna-company",
   },
   button2: {
-    label: "Contact Us",
-    link: "/contact",
+    label: "Let's Chat",
+    link: "https://www.mesmeriseco.com/connect",
   },
   stats: [
-    { _key: "stat1", value: "10x", label: "Revenue Growth" },
-    { _key: "stat2", value: "3.2M", label: "Users Reached" },
-    { _key: "stat3", value: "98%", label: "Client Satisfaction" },
+    { _key: "stat1", value: "1670%", label: "Increase in online enquiries" },
+    { _key: "stat2", value: "50%", label: "Increase in phone call enquiries" },
   ],
 };
 
@@ -87,7 +86,7 @@ function Splash({ innerRef }) {
       <section
         ref={innerRef}
         id="home-scene"
-        className="fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)]"
+        className="snap-center  fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)]"
       >
         {/* Mobile: video */}
         <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
@@ -122,7 +121,7 @@ function Splash({ innerRef }) {
 
 function ProjectsRow() {
   return (
-    <section className="relative text-[var(--foreground)]">
+    <section className="relative text-[var(--foreground)] snap-center ">
       <InView>
         <ProjectRail tag="highlight" />
       </InView>
@@ -132,7 +131,7 @@ function ProjectsRow() {
 
 function SecondaryStatement({ text, cta }) {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 text-[var(--foreground)]">
+    <section className="snap-center min-h-screen flex items-center justify-center px-6 text-[var(--foreground)] snap-center ">
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords
           as="p"
@@ -172,7 +171,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-[var(--foreground)] transition-colors duration-700",
+        "relative min-h-screen text-[var(--foreground)] transition-colors duration-700 h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth ease-in-out",
       ].join(" ")}
     >
       <Splash innerRef={splashRef} />
@@ -186,19 +185,20 @@ export default function HomePage() {
         showCTA="true"
       />
 
-      <div className="md:hidden">
+      <div className="md:hidden snap-center ">
         <ImpactStatsMobile />
       </div>
 
-      <div className="md:block  hidden">
+      <div className="md:block  hidden snap-center ">
         <ImpactStats />
       </div>
-      <CaseStudyHero narrow={false} block={caseStudyBlock} />
-
+      <div className="snap-center h-screen flex flex-col items-center justify-center">
+        <CaseStudyHero narrow={false} block={caseStudyBlock} />
+      </div>
       <TrustedBy />
 
       <TeamBlock
-        heading="Our team"
+        heading6="Who we are"
         team={[
           {
             id: "1",
