@@ -11,7 +11,7 @@ export default function Statement({
   return (
     <section
       data-marker={marker}
-      className="snap-center  flex items-center justify-center text-[var(--foreground)] min-h-screen max-w-[1280px]"
+      className="flex items-center justify-center text-[var(--foreground)] max-w-[1280px] py-8"
     >
       <div className="text-left">
         <InView>

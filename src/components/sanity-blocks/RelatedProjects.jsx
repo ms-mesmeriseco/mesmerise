@@ -47,7 +47,7 @@ export default function RelatedProjects({ projects = [], currentProject }) {
   return (
     <section className="py-20 mt-20">
       <h6>Related projects</h6>
-      <div className="border-b-1 border-[var(--mesm-grey)] flex justify-between items-end mb-4"></div>
+      <div className="border-b-1 border-[var(--mesm-grey-dk)] flex justify-between items-end mb-4"></div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {relatedProjects.map((project) => (

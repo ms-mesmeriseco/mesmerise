@@ -86,7 +86,7 @@ function Splash({ innerRef }) {
       <section
         ref={innerRef}
         id="home-scene"
-        className="snap-center  fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)]"
+        className=" fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)]"
       >
         {/* Mobile: video */}
         <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
@@ -121,7 +121,7 @@ function Splash({ innerRef }) {
 
 function ProjectsRow() {
   return (
-    <section className="relative text-[var(--foreground)] snap-center ">
+    <section className="relative text-[var(--foreground)] ">
       <InView>
         <ProjectRail tag="highlight" />
       </InView>
@@ -131,7 +131,7 @@ function ProjectsRow() {
 
 function SecondaryStatement({ text, cta }) {
   return (
-    <section className="snap-center min-h-screen flex items-center justify-center px-6 text-[var(--foreground)] snap-center ">
+    <section className="min-h-screen flex items-center justify-center px-6 text-[var(--foreground)] ">
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords
           as="p"
@@ -171,7 +171,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-[var(--foreground)] transition-colors duration-700 h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth ease-in-out",
+        "relative min-h-screen text-[var(--foreground)] transition-colors duration-300 h-screen overflow-y-scroll ",
       ].join(" ")}
     >
       <Splash innerRef={splashRef} />
@@ -185,16 +185,18 @@ export default function HomePage() {
         showCTA="true"
       />
 
-      <div className="md:hidden snap-center ">
+      <div className="md:hidden ">
         <ImpactStatsMobile />
       </div>
 
-      <div className="md:block  hidden snap-center ">
+      <div className="md:block  hidden ">
         <ImpactStats />
       </div>
-      <div className="snap-center h-screen flex flex-col items-center justify-center">
-        <CaseStudyHero narrow={false} block={caseStudyBlock} />
-      </div>
+      <InView>
+        <div className="h-screen flex flex-col items-center justify-center">
+          <CaseStudyHero narrow={false} block={caseStudyBlock} />
+        </div>
+      </InView>
       <TrustedBy />
 
       <TeamBlock

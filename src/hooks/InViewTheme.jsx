@@ -6,6 +6,8 @@ import { useInView } from "framer-motion";
 export default function InViewTheme({
   children,
   theme = {},
+  transitionDuration = "0.6s",
+  transitionEasing = "ease-in-out",
   amount = 0.3,
   as: Tag = "div",
   className,
@@ -14,53 +16,50 @@ export default function InViewTheme({
   const ref = useRef(null);
   const inView = useInView(ref, { amount });
 
+  // Inject a transition style on the properties being animated
   useEffect(() => {
-    console.log(
-      "[InViewTheme] mounted, ref:",
-      ref.current,
-      "theme:",
-      theme,
-      "amount:",
-      amount,
-    );
-    return () => console.log("[InViewTheme] unmounted");
-  }, []);
+    const properties = Object.keys(theme);
+    if (properties.length === 0) return;
+
+    const styleId = "in-view-theme-transitions";
+    let styleEl = document.getElementById(styleId);
+    if (!styleEl) {
+      styleEl = document.createElement("style");
+      styleEl.id = styleId;
+      document.head.appendChild(styleEl);
+    }
+
+    // CSS custom properties themselves can't be transitioned directly,
+    // so we transition the properties on the elements that USE them.
+    // Add transition to body (or whatever consumes the vars).
+    styleEl.textContent = `
+      body, :root * {
+        transition:
+          background-color ${transitionDuration} ${transitionEasing},
+          color ${transitionDuration} ${transitionEasing},
+          border-color ${transitionDuration} ${transitionEasing},
+          fill ${transitionDuration} ${transitionEasing},
+          stroke ${transitionDuration} ${transitionEasing};
+      }
+    `;
+
+    return () => styleEl?.remove();
+  }, [transitionDuration, transitionEasing]);
 
   useEffect(() => {
-    console.log(
-      "[InViewTheme] inView changed →",
-      inView,
-      "| ref.current:",
-      ref.current,
-    );
-
     const root = document.documentElement;
 
     if (inView) {
-      console.log("[InViewTheme] IN VIEW — setting properties:", theme);
       Object.entries(theme).forEach(([key, value]) => {
         root.style.setProperty(key, value);
-        console.log(
-          `  set ${key} = ${value} | confirmed:`,
-          root.style.getPropertyValue(key),
-        );
       });
     } else {
-      console.log(
-        "[InViewTheme] OUT OF VIEW — removing properties:",
-        Object.keys(theme),
-      );
       Object.keys(theme).forEach((key) => {
         root.style.removeProperty(key);
-        console.log(
-          `removed ${key} | confirmed:`,
-          root.style.getPropertyValue(key) || "(cleared)",
-        );
       });
     }
 
     return () => {
-      console.log("[InViewTheme] cleanup — removing properties");
       Object.keys(theme).forEach((key) => {
         root.style.removeProperty(key);
       });

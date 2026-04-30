@@ -183,7 +183,7 @@ export default async function ProjectPage({ params }) {
 
         {/* --- DATA CARDS --- */}
         {page.dataOne && page.dataOne.length > 0 && (
-          <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey)] h-full">
+          <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-2 text-left pt-4 border-t border-[var(--mesm-grey-dk)] h-full">
             {/* Data One */}
             <div className="text-base leading-relaxed h2:text-lg [&>p+p]:mt-4 border-1 border-[var(--mesm-grey-dk)] p-4 rounded-md">
               <StaggeredChildren baseDelay={0} once={true}>
@@ -218,7 +218,7 @@ export default async function ProjectPage({ params }) {
         )}
 
         {/* divider row */}
-        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]" />
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey-dk)]" />
 
         {/* --- LEFT COLUMN: PROJECT META --- */}
         <div className="col-span-12 lg:col-span-6 rounded-lg flex flex-col gap-2 md:max-w-[475px]">
@@ -247,7 +247,7 @@ export default async function ProjectPage({ params }) {
           <ServiceTags items={page.serviceTags} large={false} />
         </div>
 
-        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey)]" />
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left border-t border-[var(--mesm-grey-dk)]" />
 
         {/* --- EXTENDED DESCRIPTION --- */}
         {page.extendedDescription && page.extendedDescription.length > 0 && (

@@ -125,7 +125,7 @@ export default function ServicesRail({
   const goNext = () => scrollByAmount(1);
 
   return (
-    <section className="w-full relative snap-center ">
+    <section className="w-full relative -[var(--foreground)] ">
       {heading && <h6 className="mb-2 opacity-80">{heading}</h6>}
 
       <div
@@ -145,7 +145,7 @@ export default function ServicesRail({
               <li
                 key={svc.href || svc.title}
                 ref={(el) => (cardsRef.current[i] = el)}
-                className="relative snap-center shrink-0 focus:outline-none no-list px-1 "
+                className="relative -[var(--foreground)] shrink-0 focus:outline-none no-list px-1 "
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onFocus={() => setHoveredIndex(i)}
