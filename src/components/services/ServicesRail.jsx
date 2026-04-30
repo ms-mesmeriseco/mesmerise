@@ -125,7 +125,7 @@ export default function ServicesRail({
   const goNext = () => scrollByAmount(1);
 
   return (
-    <section className="w-full relative -[var(--foreground)] ">
+    <section className="w-full min-h-[80vh] relative -[var(--foreground)] ">
       {heading && <h6 className="mb-2 opacity-80">{heading}</h6>}
 
       <div

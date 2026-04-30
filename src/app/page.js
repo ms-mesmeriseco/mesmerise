@@ -171,7 +171,7 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-white transition-colors duration-200",
+        "relative min-h-screen text-white transition-colors duration-200 flex flex-col gap-4",
       ].join(" ")}
     >
       <Splash innerRef={splashRef} />
@@ -192,6 +192,7 @@ export default function HomePage() {
       <div className="md:block  hidden ">
         <ImpactStats />
       </div>
+
       <InView>
         <div className="flex flex-col items-center justify-center">
           <CaseStudyHero narrow={false} block={caseStudyBlock} />
@@ -245,7 +246,7 @@ export default function HomePage() {
           "--foreground": "#ffffff",
         }}
       >
-        <div className="min-h-screen flex items-center ">
+        <div className=" flex items-center ">
           <TestimonialsRail />
         </div>
       </InViewTheme>

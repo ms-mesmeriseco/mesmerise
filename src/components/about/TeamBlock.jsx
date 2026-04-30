@@ -46,7 +46,7 @@ export default function TeamBlock({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="no-list snap-center "
+              className="no-list sn "
             >
               <CardWrapper
                 {...wrapperProps}

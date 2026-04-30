@@ -19,7 +19,7 @@ export default function CaseStudyHero({ block, narrow = true }) {
   return (
     <section
       className={
-        narrow ? "narrow-wrapper snap-center w-full" : "snap-center w-full"
+        narrow ? "narrow-wrapper w-full" : "w-full"
       }
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

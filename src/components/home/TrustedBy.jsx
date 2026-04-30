@@ -112,7 +112,7 @@ export default function TrustedBy() {
   };
 
   return (
-    <section className="relative py-12 md:py-16 text-[var(--foreground)] snap-center ">
+    <section className="relative py-12 md:py-16 text-[var(--foreground)] ">
       <InView>
         <SmallTitle>Trusted by</SmallTitle>
 

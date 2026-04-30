@@ -199,7 +199,7 @@ export default function TestimonialsRail({ innerRef }) {
   if (!items.length) return null;
 
   return (
-    <section className="relative overflow-hidden h-screen snap-center">
+    <section className="relative overflow-hidden h-screen ">
       <InView>
         <div className="h-screen flex flex-col items-center">
           <div className="w-full my-auto">

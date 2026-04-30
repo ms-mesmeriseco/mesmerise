@@ -6,9 +6,9 @@ import { useInView } from "framer-motion";
 export default function InViewTheme({
   children,
   theme = {},
-  transitionDuration = "0.6s",
+  transitionDuration = "0.3s",
   transitionEasing = "ease-in-out",
-  amount = 0.3,
+  amount = 0.5,
   as: Tag = "div",
   className,
   ...props

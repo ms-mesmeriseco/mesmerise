@@ -21,7 +21,7 @@ export default function CollabModel() {
   return (
     <section
       data-marker="how we work"
-      className="py-24 flex flex-col h-full snap-center h-screen justify-center items-center"
+      className="py-24 flex flex-col h-full  h-screen justify-center items-center"
     >
       <InView>
         <h6>Collaboration Models</h6>
