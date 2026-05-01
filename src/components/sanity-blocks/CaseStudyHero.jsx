@@ -37,7 +37,7 @@ export default function CaseStudyHero({ block, narrow = true }) {
 
             <div className="flex flex-wrap gap-4 mt-6 mb-16">
               {button1?.label && (
-                <Button href={button1.link} variant="primary" size="large">
+                <Button href={button1.link} variant="accent2" size="large">
                   {button1.label}
                 </Button>
               )}

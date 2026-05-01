@@ -32,7 +32,7 @@ const caseStudyBlock = {
   heading: "Closing the loop on complex sales cycles",
   logo: "https://cdn.sanity.io/images/wpr5jlmc/production/dcfd51ef54e1020d9825d6074224b34e861c3f95-220x87.webp", // or a full URL string
   heroImage:
-    "https://cdn.sanity.io/images/wpr5jlmc/production/b9475651c036061a3572eeaf48497995565a61d5-1920x2880.jpg", // or a full URL string
+    "https://cdn.sanity.io/images/wpr5jlmc/production/55f7829c681fd2d83a9b7de61c57db112dcfffe6-1920x2560.jpg", // or a full URL string
   button1: {
     label: "Read Case Study",
     link: "https://www.mesmeriseco.com/work/gondwana-landscaping-and-stone",

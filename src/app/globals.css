@@ -552,3 +552,11 @@ figcaption {
 .animate-marquee-reverse {
   animation: marquee-reverse 20s linear infinite;
 }
+
+.testimonial-text {
+  color: var(--mesm-grey);
+}
+.testimonial-text strong {
+  color: var(--foreground);
+  font-weight: 400;
+}

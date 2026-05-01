@@ -6,6 +6,7 @@ import { sanityClient } from "@/sanity/client";
 import InView from "@/hooks/InView";
 import SmallTitle from "@/components/ui/SmallTitle";
 import VideoCard from "../ui/VideoCard";
+import { PortableText } from "@portabletext/react";
 
 const railQuery = `
   *[_type == "testimonialsRail" && title == "Homepage Testimonials"][0] {
@@ -14,7 +15,7 @@ const railQuery = `
     items[]-> {
       _id,
       _type,
-      quote,
+      quoteContent,
       authorName,
       authorTitle,
       authorCompany,
@@ -31,14 +32,14 @@ const railQuery = `
 const SHORT_QUOTE_THRESHOLD = 130;
 
 function Card({
-  quote,
   authorName,
   authorTitle,
   authorCompany,
   authorPhotoUrl,
   clientLogoUrl,
+  quoteContent,
 }) {
-  const isShort = quote?.length <= SHORT_QUOTE_THRESHOLD;
+  const isShort = quoteContent?.length <= SHORT_QUOTE_THRESHOLD;
 
   return (
     <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] h-fit hover:bg-[var(--foreground)]/10 duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
@@ -54,11 +55,11 @@ function Card({
         </div>
       )}
       {isShort ? (
-        <span className="text-[var(--foreground)] text-2xl leading-snug">
-          {quote}
+        <span className="text-[var(--foreground)] text-2xl leading-snug testimonial-text">
+          <PortableText value={quoteContent} />
         </span>
       ) : (
-        <p className="text-[var(--foreground)] leading-snug">{quote}</p>
+        <PortableText value={quoteContent} />
       )}
       {authorName && (
         <div className="flex items-center gap-3">

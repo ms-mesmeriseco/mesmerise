@@ -44,7 +44,7 @@ export default function CollabToggle({ base = "/collaboration" }) {
         value={value}
         onChange={handleChange}
         aria-label="Switch collaboration mode"
-        selectedBg="var(--mesm-yellow)"
+        selectedBg="var(--mesm-red)"
         textSize="lg"
       />
     </motion.div>
