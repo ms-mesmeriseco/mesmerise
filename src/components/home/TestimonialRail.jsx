@@ -31,6 +31,7 @@ const railQuery = `
 `;
 
 const SHORT_QUOTE_THRESHOLD = 130;
+const SCROLL_AMOUNT = 460;
 
 function Card({
   authorName,
@@ -65,7 +66,7 @@ function Card({
       {authorName && (
         <div className="flex items-center gap-3">
           {authorPhotoUrl && (
-            <div className="shrink-0 w-11  rounded-full overflow-hidden border border-[var(--foreground)]/30">
+            <div className="shrink-0 w-11 rounded-full overflow-hidden border border-[var(--foreground)]/30">
               <Image
                 src={authorPhotoUrl}
                 alt={authorName}
@@ -122,11 +123,6 @@ function MediaCard({
         </div>
       )}
       {mediaType === "video" && videoUrl && <VideoCard videoUrl={videoUrl} />}
-      {/* {caption && (
-        <div className=" p-3 bg-black/40 backdrop-blur-sm">
-          <p className="text-white text-xs">{caption}</p>
-        </div>
-      )} */}
     </div>
   );
 }
@@ -155,6 +151,29 @@ export default function TestimonialsRail({ innerRef }) {
     fetchData();
   }, []);
 
+  const scrollBy = (direction) => {
+    const rail = railRef.current;
+    if (!rail) return;
+    cancelAnimationFrame(drag.current.raf);
+    const start = rail.scrollLeft;
+    const target = start + direction * SCROLL_AMOUNT;
+    const distance = target - start;
+    const duration = 420;
+    let startTime = null;
+
+    const easeInOut = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      rail.scrollLeft = start + distance * easeInOut(progress);
+      if (progress < 1) drag.current.raf = requestAnimationFrame(step);
+    };
+
+    drag.current.raf = requestAnimationFrame(step);
+  };
+
   const onMouseDown = (e) => {
     const rail = railRef.current;
     if (!rail) return;
@@ -173,8 +192,8 @@ export default function TestimonialsRail({ innerRef }) {
   const onMouseMove = (e) => {
     if (!drag.current.active) return;
     const rail = railRef.current;
-    rail.style.cursor = "none";
     if (!rail) return;
+    rail.style.cursor = "none";
     e.preventDefault();
     const x = e.pageX - rail.offsetLeft;
     const walk = x - drag.current.startX;
@@ -199,6 +218,13 @@ export default function TestimonialsRail({ innerRef }) {
     drag.current.raf = requestAnimationFrame(glide);
   };
 
+  // Distinguish a click from a drag — only fire scrollBy if the mouse barely moved
+  const onMouseUpWithClick = (e, direction) => {
+    const didDrag = Math.abs(drag.current.velX) > 2;
+    onMouseUp();
+    if (!didDrag) scrollBy(direction);
+  };
+
   if (!items.length) return null;
 
   return (
@@ -212,9 +238,24 @@ export default function TestimonialsRail({ innerRef }) {
                 ref={railRef}
                 onMouseDown={onMouseDown}
                 onMouseMove={onMouseMove}
-                onMouseUp={onMouseUp}
+                onMouseUp={(e) => {
+                  // Determine which side of the rail was released
+                  const rail = railRef.current;
+                  if (!rail) return onMouseUp();
+                  const rect = rail.getBoundingClientRect();
+                  const relX = e.clientX - rect.left;
+                  const third = rect.width / 3;
+                  if (relX < third) {
+                    onMouseUpWithClick(e, -2);
+                  } else if (relX > rect.width - third) {
+                    onMouseUpWithClick(e, 2);
+                  } else {
+                    onMouseUp();
+                  }
+                }}
                 onMouseLeave={onMouseUp}
-                className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide cursor-grab"
+                style={{ cursor: "none" }}
+                className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide"
               >
                 {items.map((item) =>
                   item._type === "mediaBlock" ? (
