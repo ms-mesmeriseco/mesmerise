@@ -2,74 +2,102 @@
 
 import { useEffect, useState, useRef } from "react";
 
-const MIN_DISPLAY_MS = 2000;
+const MIN_DISPLAY_MS = 800;
 const FADE_DURATION_MS = 600;
+const MOBILE_BREAKPOINT = 640; // Adjust to your needs
 
 export default function HeroLoader({ visible = true }) {
   const [fadeOut, setFadeOut] = useState(false);
   const [unmounted, setUnmounted] = useState(false);
 
-  const animDoneRef = useRef(false);
-  const pendingExitRef = useRef(false);
+  const timerDoneRef = useRef(false);
+  const appReadyRef = useRef(false);
+  const exitTriggeredRef = useRef(false);
 
   useEffect(() => {
+    // 1. Check for mobile immediately
+    const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+
+    if (isMobile) {
+      // If mobile, don't even start the timer, just kill the loader
+      setUnmounted(true);
+      return;
+    }
+
+    // 2. Desktop logic: Start the minimum stay timer
     const t = setTimeout(() => {
-      animDoneRef.current = true;
-      if (pendingExitRef.current) triggerExit();
+      timerDoneRef.current = true;
+      if (appReadyRef.current) triggerExit();
     }, MIN_DISPLAY_MS);
+
     return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
+    // Listen for the 'visible' prop change (only relevant for desktop)
     if (!visible) {
-      if (animDoneRef.current) {
-        triggerExit();
-      } else {
-        pendingExitRef.current = true;
-      }
+      appReadyRef.current = true;
+      if (timerDoneRef.current) triggerExit();
     }
   }, [visible]);
 
   function triggerExit() {
-    setFadeOut(true);
-    setTimeout(() => setUnmounted(true), FADE_DURATION_MS);
+    if (exitTriggeredRef.current) return;
+    exitTriggeredRef.current = true;
+
+    requestAnimationFrame(() => {
+      setFadeOut(true);
+    });
+
+    setTimeout(() => {
+      setUnmounted(true);
+    }, FADE_DURATION_MS);
   }
 
+  // If we've decided it's mobile or the animation is done, render nothing
   if (unmounted) return null;
 
   return (
     <>
       <style>{`
-        @keyframes pulse {
+        /* Double-check with CSS to prevent a flash of content before JS hydrations */
+        @media (max-width: ${MOBILE_BREAKPOINT - 1}px) {
+          .hero-loader-container { display: none !important; }
+        }
+        @keyframes pulseFade {
           0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.7; transform: scale(0.98); }
+          50% { opacity: 0.6; transform: scale(0.98); }
         }
         .animate-pulse-fade {
-          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          animation: pulseFade 2.5s ease-in-out infinite;
         }
       `}</style>
 
       <div
+        className="hero-loader-container"
         style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 9999, // High z-index to stay on top
           background: "var(--background)",
           display: "flex",
+          position: "fixed",
+          inset: 0,
+          width: "100vw",
+          height: "100vh",
           alignItems: "center",
           justifyContent: "center",
-          transition: `opacity ${FADE_DURATION_MS}ms ease-in-out, visibility ${FADE_DURATION_MS}ms`,
+          zIndex: 50,
+          transition: `opacity ${FADE_DURATION_MS}ms cubic-bezier(0.4, 0, 0.2, 1), 
+                       visibility ${FADE_DURATION_MS}ms`,
           opacity: fadeOut ? 0 : 1,
           visibility: fadeOut ? "hidden" : "visible",
-          pointerEvents: "none", // Prevent interaction issues during transition
+          pointerEvents: "none",
         }}
       >
         <div className={fadeOut ? "" : "animate-pulse-fade"}>
           <svg
             viewBox="0 0 894.74 533.35"
-            fill="currentColor" // Uses current text color for easier theme matching
+            fill="currentColor"
             style={{
-              width: 200,
+              width: 300,
               height: "auto",
               display: "block",
               color: "white",

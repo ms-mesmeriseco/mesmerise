@@ -85,41 +85,48 @@ function Splash({ innerRef }) {
   }, [inView]);
 
   return (
-    <InView once={true}>
-      <section
-        ref={innerRef}
-        id="home-scene"
-        className="fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)] mb-2"
-      >
-        <HeroLoader visible={!sceneReady} />
-        {/* Mobile: video */}
-        <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
-          <video
-            ref={videoRef}
-            className="h-auto w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-          >
-            {/* Provide both for best compatibility (webm first if you have it) */}
-
-            <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
-          </video>
-          {/* Optional subtle overlay to match your scene look */}
-          <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-        </div>
-
-        {/* Tablet/Desktop: 3D scene */}
-        <div className="hidden md:block absolute inset-0">
-          <Scene
-            onLoaded={() => {
+    <>
+      <HeroLoader visible={!sceneReady} />
+      <InView once={true}>
+        <section
+          ref={innerRef}
+          id="home-scene"
+          className="fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)] mb-2"
+        >
+          {/* Mobile: video */}
+          <div
+            onLoad={() => {
               setSceneReady(true);
             }}
-          />
-        </div>
-      </section>
-    </InView>
+            className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]"
+          >
+            <video
+              ref={videoRef}
+              className="h-auto w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+            >
+              {/* Provide both for best compatibility (webm first if you have it) */}
+
+              <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
+            </video>
+            {/* Optional subtle overlay to match your scene look */}
+            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+          </div>
+
+          {/* Tablet/Desktop: 3D scene */}
+          <div className="hidden md:block absolute inset-0">
+            <Scene
+              onLoaded={() => {
+                setSceneReady(true);
+              }}
+            />
+          </div>
+        </section>
+      </InView>
+    </>
   );
 }
 
