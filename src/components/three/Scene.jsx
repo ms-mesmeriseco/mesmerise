@@ -18,6 +18,12 @@ function SceneLoadedNotifier({ onLoaded }) {
 export default function Scene({ onLoaded }) {
   const [sceneLoaded, setSceneLoaded] = useState(false);
 
+  // Combine local state update with the parent callback
+  function handleLoaded(loaded) {
+    setSceneLoaded(loaded);
+    onLoaded?.(loaded);
+  }
+
   return (
     <Canvas
       style={{ backgroundColor: "black" }}

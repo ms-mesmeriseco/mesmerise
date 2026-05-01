@@ -7,6 +7,7 @@ import InView from "@/hooks/InView";
 import SmallTitle from "@/components/ui/SmallTitle";
 import VideoCard from "../ui/VideoCard";
 import { PortableText } from "@portabletext/react";
+import RailCursor from "@/components/ui/RailCursor";
 
 const railQuery = `
   *[_type == "testimonialsRail" && title == "Homepage Testimonials"][0] {
@@ -42,7 +43,7 @@ function Card({
   const isShort = quoteContent?.length <= SHORT_QUOTE_THRESHOLD;
 
   return (
-    <div className="hover:scale-102 my-1 shrink-0 w-[340px] md:w-[420px] h-fit hover:bg-[var(--foreground)]/10 duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
+    <div className="my-1 shrink-0 w-[340px] md:w-[420px] h-fit duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
       {clientLogoUrl && (
         <div className="h-10 flex items-start">
           <Image
@@ -166,12 +167,13 @@ export default function TestimonialsRail({ innerRef }) {
       lastX: e.pageX,
       raf: null,
     };
-    rail.style.cursor = "grabbing";
+    rail.style.cursor = "none";
   };
 
   const onMouseMove = (e) => {
     if (!drag.current.active) return;
     const rail = railRef.current;
+    rail.style.cursor = "none";
     if (!rail) return;
     e.preventDefault();
     const x = e.pageX - rail.offsetLeft;
@@ -185,7 +187,7 @@ export default function TestimonialsRail({ innerRef }) {
     const rail = railRef.current;
     if (!rail) return;
     drag.current.active = false;
-    rail.style.cursor = "grab";
+    rail.style.cursor = "none";
     let velocity = -drag.current.velX * 1.2;
     const glide = () => {
       if (!railRef.current) return;
@@ -200,28 +202,30 @@ export default function TestimonialsRail({ innerRef }) {
   if (!items.length) return null;
 
   return (
-    <section className="relative overflow-hidden h-screen ">
+    <section className="relative overflow-hidden hide-cursor">
       <InView>
-        <div className="h-screen flex flex-col items-center">
+        <div className="flex flex-col items-center">
           <div className="w-full my-auto">
             <SmallTitle>What our clients say</SmallTitle>
-            <div
-              ref={railRef}
-              onMouseDown={onMouseDown}
-              onMouseMove={onMouseMove}
-              onMouseUp={onMouseUp}
-              onMouseLeave={onMouseUp}
-              className="mt-4 flex gap-2 overflow-x-auto pb-4 scrollbar-hide cursor-grab"
-            >
-              {items.map((item) =>
-                item._type === "mediaBlock" ? (
-                  <MediaCard key={item._id} {...item} />
-                ) : (
-                  <Card key={item._id} {...item} />
-                ),
-              )}
-              <div className="shrink-0 w-4" />
-            </div>
+            <RailCursor className="mt-0 overflow-hidden">
+              <div
+                ref={railRef}
+                onMouseDown={onMouseDown}
+                onMouseMove={onMouseMove}
+                onMouseUp={onMouseUp}
+                onMouseLeave={onMouseUp}
+                className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide cursor-grab"
+              >
+                {items.map((item) =>
+                  item._type === "mediaBlock" ? (
+                    <MediaCard key={item._id} {...item} />
+                  ) : (
+                    <Card key={item._id} {...item} />
+                  ),
+                )}
+                <div className="shrink-0 w-4" />
+              </div>
+            </RailCursor>
           </div>
         </div>
       </InView>

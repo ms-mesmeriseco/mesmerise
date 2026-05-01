@@ -49,14 +49,14 @@ export default function RelatedProjects({ projects = [], currentProject }) {
       <h6>Related projects</h6>
       <div className="border-b-1 border-[var(--mesm-grey-dk)] flex justify-between items-end mb-4"></div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
         {relatedProjects.map((project) => (
           <Link
             key={project.slug}
             href={`/work/${project.slug}`}
             className="group block"
           >
-            <div className=" relative aspect-[3/2] overflow-hidden bg-[var(--mesm-grey)] mb-4 duration-200 group-hover:rounded-2xl">
+            <div className=" relative aspect-[3/2] overflow-hidden bg-[var(--mesm-grey)] mb-4 duration-200 rounded-lg">
               {project.heroMedia?.url && (
                 <Image
                   src={project.heroMedia.url}

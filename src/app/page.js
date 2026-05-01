@@ -14,6 +14,7 @@ import TestimonialsRail from "@/components/home/TestimonialRail";
 import Statement from "@/components/layout/Statement";
 import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
 import InViewTheme from "@/hooks/InViewTheme";
+import HeroLoader from "@/components/ui/HeroLoader";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -70,6 +71,7 @@ function usePageStageController(splashRef, section2Ref) {
 function Splash({ innerRef }) {
   const videoRef = useRef(null);
   const inView = useInView(innerRef, { amount: 0.35 });
+  const [sceneReady, setSceneReady] = useState(false);
 
   useEffect(() => {
     const v = videoRef.current;
@@ -87,8 +89,9 @@ function Splash({ innerRef }) {
       <section
         ref={innerRef}
         id="home-scene"
-        className=" fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)] mb-2"
+        className="fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)] mb-2"
       >
+        <HeroLoader visible={!sceneReady} />
         {/* Mobile: video */}
         <div className="md:hidden absolute inset-0 width-3/4 flex items-center justify-center h-[80vh]">
           <video
@@ -111,7 +114,7 @@ function Splash({ innerRef }) {
         <div className="hidden md:block absolute inset-0">
           <Scene
             onLoaded={() => {
-              /* keep if you still use the notifier */
+              setSceneReady(true);
             }}
           />
         </div>

@@ -560,3 +560,7 @@ figcaption {
   color: var(--foreground);
   font-weight: 400;
 }
+
+.hide-cursor {
+  cursor: none;
+}

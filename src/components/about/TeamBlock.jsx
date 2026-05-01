@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import StaggeredChildren from "@/hooks/StaggeredChildren";
 
 /**
  * TeamBlock
@@ -20,13 +21,10 @@ export default function TeamBlock({
       {/* Optional heading */}
       {heading2 ? <h2 className="">{heading2}</h2> : null}
       {heading6 ? <h6 className="">{heading6}</h6> : null}
-
-      <ul
-        className="
-          grid gap-2
-          grid-cols-2 lg:grid-cols-4
-          border-y-1 border-[var(--mesm-grey-dk)] py-4
-        "
+      <StaggeredChildren
+        // Pass the grid classes to the hook's container
+        className="grid gap-2 grid-cols-2 lg:grid-cols-4 border-y-1 border-[var(--mesm-grey-dk)] py-4"
+        perItem={0.08}
       >
         {team.map((person, idx) => {
           const key = person.id || `${person.name}-${idx}`;
@@ -40,7 +38,7 @@ export default function TeamBlock({
             : {};
 
           return (
-            <motion.li
+            <motion.div
               key={key}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -87,10 +85,10 @@ export default function TeamBlock({
                   </h5>
                 </div>
               </CardWrapper>
-            </motion.li>
+            </motion.div>
           );
         })}
-      </ul>
+      </StaggeredChildren>
     </section>
   );
 }

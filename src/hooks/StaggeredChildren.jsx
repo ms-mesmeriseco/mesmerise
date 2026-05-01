@@ -1,51 +1,53 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, Children } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, Children, isValidElement } from "react";
 
 export default function StaggeredChildren({
   children,
   as: As = "div",
   className = "",
   itemClassName = "",
-  baseDelay = 0.1,
-  perItem = 0.02,
-  duration = 0.15,
-  once = false,
-  margin = "-10% 0px",
+  baseDelay = 0,
+  perItem = 0.05, // Slightly slower for better visual rhythm
+  duration = 0.5,
+  once = true,
+  margin = "-10%",
   inline = false,
-  y = "0.1em",
+  y = 15, // Using numbers is safer for Framer than strings
 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once, margin });
+  const isInView = useInView(ref, { once, margin });
 
   const items = Children.toArray(children).filter(Boolean);
 
   return (
     <As ref={ref} className={className}>
       {items.map((child, i) => {
-        // Keep semantics for list items; otherwise choose span|div by `inline`
-        const isLi = typeof child === "object" && child?.type === "li";
-        const Wrapper = isLi ? motion.li : inline ? motion.span : motion.div;
+        // Determine the motion component type
+        let MotionComponent = motion.div;
+        if (inline) MotionComponent = motion.span;
+        if (isValidElement(child) && child.type === "li")
+          MotionComponent = motion.li;
 
         return (
-          <Wrapper
+          <MotionComponent
             key={i}
-            className={`will-change-transform ${itemClassName}`}
-            style={{
-              display: isLi ? undefined : inline ? "inline-block" : "block",
-              whiteSpace: inline ? "nowrap" : undefined,
-            }}
-            initial={{ y, opacity: 0 }}
-            animate={inView ? { y: 0, opacity: 1 } : { y, opacity: 0 }}
+            className={itemClassName}
+            initial={{ opacity: 0, y }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y }}
             transition={{
               duration,
               delay: baseDelay + i * perItem,
-              ease: [0.2, 0.65, 0.3, 0.9],
+              ease: [0.215, 0.61, 0.355, 1], // Standard "out-cubic" for smooth entry
+            }}
+            style={{
+              display: inline ? "inline-block" : undefined,
+              // If it's a grid child, we usually want it to stay 'block'
             }}
           >
             {child}
-          </Wrapper>
+          </MotionComponent>
         );
       })}
     </As>
