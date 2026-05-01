@@ -64,13 +64,7 @@ export default function HeroLoader({ visible = true }) {
         @media (max-width: ${MOBILE_BREAKPOINT - 1}px) {
           .hero-loader-container { display: none !important; }
         }
-        @keyframes pulseFade {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(0.98); }
-        }
-        .animate-pulse-fade {
-          animation: pulseFade 2.5s ease-in-out infinite;
-        }
+ 
       `}</style>
 
       <div
@@ -92,12 +86,12 @@ export default function HeroLoader({ visible = true }) {
           pointerEvents: "none",
         }}
       >
-        <div className={fadeOut ? "" : "animate-pulse-fade"}>
+        <div className={fadeOut ? "" : ""}>
           <svg
             viewBox="0 0 894.74 533.35"
             fill="currentColor"
             style={{
-              width: 300,
+              width: 120,
               height: "auto",
               display: "block",
               color: "white",
