@@ -266,6 +266,7 @@ title2,
     // ---------- CASE STUDY HERO (NEW) ----------
     _type == "caseStudyHero" => {
       heading,
+      subheading,
       "logo": logo.asset->url,
       "heroImage": heroImage.asset->url,
       "button1": mainCta {

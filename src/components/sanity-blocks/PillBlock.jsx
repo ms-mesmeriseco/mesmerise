@@ -45,7 +45,7 @@ export default function PillBlock({ pills = [], blockTitle }) {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => setActiveIndex(idx)}
-                  className={`flex-1 whitespace-nowrap px-4 py-1 text-md font-medium rounded-xl transition-colors ${
+                  className={`flex-1 whitespace-nowrap px-4 py-1 text-md rounded-xl transition-colors ${
                     idx === activeIndex
                       ? "bg-[var(--mesm-red)] text-[var(--background)]"
                       : " hover:text-[var(--foreground)] text-[var(--mesm-grey)] cursor-pointer"

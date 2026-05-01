@@ -8,15 +8,16 @@ import InView from "@/hooks/InView";
 import SmallTitle from "../ui/SmallTitle";
 
 const clientLogosQuery = `
-  *[_type == "clientLogo"] | order(order asc) {
+  *[_type == "clientLogo"] | order(coalesce(order, 50) asc) {
     _id,
     clientName,
     url,
     "logoUrl": logo.asset->url,
+ 
   }
 `;
 
-function LogoCard({ clientName, logoUrl, index }) {
+function LogoCard({ clientName, logoUrl, index, url }) {
   return (
     <motion.div
       className="relative flex flex-col p-6 md:p-8 group"
@@ -25,18 +26,41 @@ function LogoCard({ clientName, logoUrl, index }) {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.4, ease: "easeOut", delay: index * 0.05 }}
     >
-      <span className="absolute top-3 left-3 text-sm text-[var(--foreground)]/40 bg-[var(--mesm-grey-dk)]/30 border border-[var(--mesm-grey-dk)]/50 rounded-xl px-2.5 py-1 leading-relaxed group-hover:bg-[var(--mesm-blue)] group-hover:text-[var(--background)] transition-colors duration-50">
-        {clientName}
-      </span>
-      <div className="flex items-center justify-center w-full h-24 mt-4">
-        <Image
-          src={logoUrl}
-          alt={clientName}
-          width={124}
-          height={48}
-          className="object-contain max-h-14 w-auto brightness-0 invert"
-        />
-      </div>
+      {url ? (
+        <a
+          href={url}
+          target={url.includes("mesmeriseco.com") ? "_self" : "_blank"}
+          rel=" noreferrer"
+        >
+          <span className="absolute top-3 left-3 text-sm text-[var(--foreground)]/40 bg-[var(--mesm-grey-dk)]/30 border border-[var(--mesm-grey-dk)]/50 rounded-xl px-2.5 py-1 leading-relaxed group-hover:bg-[var(--mesm-blue)] group-hover:text-[var(--background)] transition-colors duration-50">
+            {clientName}
+          </span>
+          <div className="flex items-center justify-center w-full h-24 mt-4">
+            <Image
+              src={logoUrl}
+              alt={clientName}
+              width={124}
+              height={48}
+              className="object-contain max-h-14 w-auto brightness-0 invert"
+            />
+          </div>
+        </a>
+      ) : (
+        <div>
+          <span className="absolute top-3 left-3 text-sm text-[var(--foreground)]/40 bg-[var(--mesm-grey-dk)]/30 border border-[var(--mesm-grey-dk)]/50 rounded-xl px-2.5 py-1 leading-relaxed group-hover:bg-[var(--mesm-blue)] group-hover:text-[var(--background)] transition-colors duration-50">
+            {clientName}
+          </span>
+          <div className="flex items-center justify-center w-full h-24 mt-4">
+            <Image
+              src={logoUrl}
+              alt={clientName}
+              width={124}
+              height={48}
+              className="object-contain max-h-14 w-auto brightness-0 invert"
+            />
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }

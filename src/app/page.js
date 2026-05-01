@@ -28,21 +28,22 @@ const CollabModel = dynamic(() => import("@/components/home/CollabModel"), {
 });
 
 const caseStudyBlock = {
-  heading: "The Sauna Company",
-  logo: "https://cdn.sanity.io/images/wpr5jlmc/production/eccddb9def0b9cd61a9e72e70f9899723bbf3fb0-564x123.png", // or a full URL string
+  eyebrow: "Gondwana Landscaping & Stone",
+  heading: "Closing the loop on complex sales cycles",
+  logo: "https://cdn.sanity.io/images/wpr5jlmc/production/dcfd51ef54e1020d9825d6074224b34e861c3f95-220x87.webp", // or a full URL string
   heroImage:
-    "https://cdn.sanity.io/images/wpr5jlmc/production/732f9b7be4430aa864f46a98bcd6f7d6ed97a6e3-2048x1365.jpg", // or a full URL string
+    "https://cdn.sanity.io/images/wpr5jlmc/production/b9475651c036061a3572eeaf48497995565a61d5-1920x2880.jpg", // or a full URL string
   button1: {
     label: "Read Case Study",
-    link: "https://www.mesmeriseco.com/work/the-sauna-company",
+    link: "https://www.mesmeriseco.com/work/gondwana-landscaping-and-stone",
   },
   button2: {
     label: "Let's Chat",
     link: "https://www.mesmeriseco.com/connect",
   },
   stats: [
-    { _key: "stat1", value: "1670%", label: "Increase in online enquiries" },
-    { _key: "stat2", value: "50%", label: "Increase in phone call enquiries" },
+    { _key: "stat1", value: "5+", label: "New staff" },
+    { _key: "stat2", value: "6 months", label: "Booked out in advance" },
   ],
 };
 
@@ -238,18 +239,18 @@ export default function HomePage() {
           },
         ]}
       />
-
+      {/* 
       <InViewTheme
         as="section"
         theme={{
           "--background": "var(--mesm-red)",
           "--foreground": "#ffffff",
         }}
-      >
-        <div className=" flex items-center ">
-          <TestimonialsRail />
-        </div>
-      </InViewTheme>
+      > */}
+      <div className=" flex items-center ">
+        <TestimonialsRail />
+      </div>
+      {/* </InViewTheme> */}
       <ServicesRail />
       <CollabModel />
 

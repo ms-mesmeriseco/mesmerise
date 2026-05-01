@@ -7,7 +7,7 @@ import Button from "../ui/Button";
 export default function CaseStudyHero({ block, narrow = true }) {
   if (!block) return null;
 
-  const { heading, button1, button2, heroImage, stats, logo } = block;
+  const { heading, button1, button2, heroImage, stats, logo, eyebrow } = block;
 
   // Pattern matched to your SingleCaseStudy logic
   const heroSrc =
@@ -17,11 +17,7 @@ export default function CaseStudyHero({ block, narrow = true }) {
   // console.log("CaseStudyHero block data:", block);
 
   return (
-    <section
-      className={
-        narrow ? "narrow-wrapper w-full" : "w-full"
-      }
-    >
+    <section className={narrow ? "narrow-wrapper w-full" : "w-full"}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left Column: Content */}
         <div className="flex flex-col justify-between order-2 md:order-1 h-full py-2">
@@ -36,10 +32,10 @@ export default function CaseStudyHero({ block, narrow = true }) {
                 />
               </div>
             )}
+            <h5>{eyebrow}</h5>
+            <h3 className="mb-6 max-w-md">{heading}</h3>
 
-            <h3 className="mb-6">{heading}</h3>
-
-            <div className="flex flex-wrap gap-4 mb-16">
+            <div className="flex flex-wrap gap-4 mt-6 mb-16">
               {button1?.label && (
                 <Button href={button1.link} variant="primary" size="large">
                   {button1.label}
@@ -58,7 +54,7 @@ export default function CaseStudyHero({ block, narrow = true }) {
           <div className="flex flex-wrap gap-10 md:gap-20">
             {stats?.map((stat) => (
               <div key={stat._key} className="flex flex-col">
-                <span className="text-[3.2rem]/[4rem]">{stat.value}</span>
+                <span className="text-[4.2rem]/[4.6rem]">{stat.value}</span>
                 <h6 className="text-sm">{stat.label}</h6>
               </div>
             ))}
