@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 
-const MIN_DISPLAY_MS = 800;
+const MIN_DISPLAY_MS = 1400;
 const FADE_DURATION_MS = 600;
 const MOBILE_BREAKPOINT = 640; // Adjust to your needs
 
