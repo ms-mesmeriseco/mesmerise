@@ -1,35 +1,58 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register the plugin (important!)
+gsap.registerPlugin(ScrollTrigger);
 
 export default function InView({
   children,
-  variants = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  },
   once = true,
-  as: Tag = "div",
-  // NEW: root margin. Default = trigger at viewport center.
-  // Use "-40% 0px -40% 0px" for a 20% tall center "band" instead of a line.
-  margin = "-30% 0px -30% 0px",
-  amount = "some", // keep default threshold behavior
+  // Equivalent to your -30% margin:
+  // "top 70%" means when the top of the element hits 70% of viewport height
+  start = "top 70%",
+  className = "",
   ...rest
 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once, margin, amount });
+  const elementRef = useRef(null);
+
+  useEffect(() => {
+    const el = elementRef.current;
+
+    // Set initial state (Hidden)
+    gsap.set(el, {
+      opacity: 0,
+      y: 40,
+    });
+
+    // Create the trigger
+    const anim = gsap.to(el, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: start, // When to start
+        toggleActions: once
+          ? "play none none none"
+          : "play reverse play reverse",
+        // markers: true, // Uncomment this to see the trigger lines during dev!
+      },
+    });
+
+    // Cleanup on unmount
+    return () => {
+      anim.kill();
+      if (anim.scrollTrigger) anim.scrollTrigger.kill();
+    };
+  }, [once, start]);
 
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? "show" : "hidden"}
-      variants={variants}
-      {...rest}
-      as={Tag}
-    >
+    <div ref={elementRef} className={className} {...rest}>
       {children}
-    </motion.div>
+    </div>
   );
 }

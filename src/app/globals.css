@@ -554,7 +554,7 @@ figcaption {
 }
 
 .testimonial-text {
-  color: var(--mesm-grey);
+  color: var(--mesm-grey-dk);
 }
 .testimonial-text strong {
   color: var(--foreground);
@@ -563,4 +563,38 @@ figcaption {
 
 .hide-cursor {
   cursor: none;
+}
+
+.hero-m .hero-stripe-1 {
+  fill: none;
+  stroke: white;
+  stroke-width: 10;
+  animation: draw 0.8s linear forwards;
+  stroke-dashoffset: 4500;
+  stroke-dasharray: 4500;
+  animation-delay: 0s;
+}
+.hero-m .hero-stripe-2 {
+  fill: none;
+  stroke: white;
+  stroke-width: 10;
+  animation: draw 0.8s linear forwards;
+  stroke-dashoffset: 4500;
+  stroke-dasharray: 4500;
+  animation-delay: 0.8s;
+}
+.hero-m .hero-stripe-3 {
+  fill: none;
+  stroke: white;
+  stroke-width: 10;
+  animation: draw 0.8s linear forwards;
+  stroke-dashoffset: 4500;
+  stroke-dasharray: 4500;
+  animation-delay: 1.6s;
+}
+
+@keyframes draw {
+  100% {
+    stroke-dashoffset: 0;
+  }
 }

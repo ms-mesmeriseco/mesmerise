@@ -34,12 +34,7 @@ function IntroPara({ text }) {
     <section className="flex items-center justify-left text-[var(--foreground)] min-h-[70vh] md:max-w-3/4">
       <div className="text-left">
         <InView>
-          <StaggeredWords
-            as="h2"
-            text={text}
-            className="page-title-medium"
-            margin="-40% 0px"
-          />
+          <StaggeredWords as="h2" text={text} className="page-title-medium" />
         </InView>
       </div>
     </section>
@@ -51,12 +46,7 @@ function SecondPara({ text }) {
     <section className="flex items-center justify-right ml-auto text-[var(--foreground)] min-h-[70vh] md:max-w-3/4">
       <div className="text-left">
         <InView>
-          <StaggeredWords
-            as="h2"
-            text={text}
-            className="page-title-medium"
-            margin="-40% 0px"
-          />
+          <StaggeredWords as="h2" text={text} className="page-title-medium" />
         </InView>
       </div>
     </section>
@@ -68,12 +58,7 @@ function ThirdPara({ text }) {
     <section className="flex items-center justify-center text-[var(--foreground)] min-h-[70vh] md:w-3/4">
       <div className="text-left">
         <InView>
-          <StaggeredWords
-            as="h2"
-            text={text}
-            className="page-title-medium"
-            margin="-40% 0px"
-          />
+          <StaggeredWords as="h2" text={text} className="page-title-medium" />
         </InView>
       </div>
     </section>
@@ -85,12 +70,7 @@ function FinalCTA({ text }) {
     <InView>
       <section className="flex flex-col justify-left text-[var(--foreground)] pb-4">
         <div>
-          <StaggeredWords
-            as="h3"
-            text={text}
-            className="page-title-large"
-            margin="-40% 0px"
-          />
+          <StaggeredWords as="h3" text={text} className="page-title-large" />
           <br />
           <br />
           <br />

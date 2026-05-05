@@ -12,9 +12,9 @@ import TeamBlock from "@/components/about/TeamBlock";
 import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
 import Statement from "@/components/layout/Statement";
-import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
+import CaseStudyHero from "@/components/home/CaseStudyHero";
+import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
 import InViewTheme from "@/hooks/InViewTheme";
-import HeroLoader from "@/components/ui/HeroLoader";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -68,10 +68,10 @@ function usePageStageController(splashRef, section2Ref) {
 
   return { dark: activated };
 }
-function Splash({ innerRef }) {
+function ThreeScene({ innerRef, sceneReady }) {
   const videoRef = useRef(null);
   const inView = useInView(innerRef, { amount: 0.35 });
-  const [sceneReady, setSceneReady] = useState(false);
+  const { setSceneReady } = useHeroLoader();
 
   useEffect(() => {
     const v = videoRef.current;
@@ -86,7 +86,6 @@ function Splash({ innerRef }) {
 
   return (
     <>
-      <HeroLoader visible={!sceneReady} />
       <InView once={true}>
         <section
           ref={innerRef}
@@ -144,12 +143,7 @@ function SecondaryStatement({ text, cta }) {
   return (
     <section className="min-h-screen flex items-center justify-center px-6 text-[var(--foreground)] ">
       <div className="max-w-[1200px] text-center text-balance">
-        <StaggeredWords
-          as="p"
-          text={text}
-          className="page-title-large"
-          margin="-40% 0px"
-        />
+        <StaggeredWords as="p" text={text} className="page-title-large" />
         {cta ? (
           <>
             <br />
@@ -182,10 +176,10 @@ export default function HomePage() {
   return (
     <main
       className={[
-        "relative min-h-screen text-white transition-colors duration-200 flex flex-col gap-4",
+        "relative min-h-screen text-white transition-colors duration-200 flex flex-col gap-2",
       ].join(" ")}
     >
-      <Splash innerRef={splashRef} />
+      <ThreeScene innerRef={splashRef} />
 
       <Statement text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert." />
 
@@ -203,57 +197,19 @@ export default function HomePage() {
       <div className="md:block  hidden ">
         <ImpactStats />
       </div>
+      <ServicesRail />
 
       <InView>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center ">
           <CaseStudyHero narrow={false} block={caseStudyBlock} />
         </div>
       </InView>
       <TrustedBy />
 
-      <TeamBlock
-        heading6="Who we are"
-        team={[
-          {
-            id: "1",
-            name: "Petar Petrović",
-            title: "Founder",
-            photo: {
-              url: "/assets/team/Petar.jpg",
-              alt: "Petar Petrovic portrait",
-            },
-          },
-          {
-            id: "2",
-            name: "Matilda Sutherland",
-            title: "Design & Development",
-            photo: {
-              url: "/assets/team/Matilda.jpg",
-            },
-          },
-          {
-            id: "3",
-            name: "Simba Dhaliwal",
-            title: "Business Development",
-            photo: {
-              url: "/assets/team/Simba.jpg",
-            },
-          },
-          {
-            id: "4",
-            name: "Nicole Uren",
-            title: "Digital Marketing Strategist",
-            photo: {
-              url: "/assets/team/Nicole.jpg",
-            },
-          },
-        ]}
-      />
-      {/* 
-      <InViewTheme
+      {/* <InViewTheme
         as="section"
         theme={{
-          "--background": "var(--mesm-red)",
+          "--background": "#1c1c24",
           "--foreground": "#ffffff",
         }}
       > */}
@@ -261,7 +217,7 @@ export default function HomePage() {
         <TestimonialsRail />
       </div>
       {/* </InViewTheme> */}
-      <ServicesRail />
+
       <CollabModel />
 
       <SecondaryStatement

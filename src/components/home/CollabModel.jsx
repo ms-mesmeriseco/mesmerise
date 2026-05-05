@@ -1,6 +1,7 @@
 import Button from "../ui/Button";
 import InView from "@/hooks/InView";
 import Link from "next/link";
+import StaggeredWords from "@/hooks/StaggeredWords";
 
 const offerings = [
   {
@@ -31,13 +32,18 @@ export default function CollabModel() {
           {offerings.map((pkg) => (
             <Link key={pkg.title} href={pkg.cta.href}>
               <div className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-yellow)] duration-250 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] hover:bg-[var(--mesm-yellow)] text-[var(--foreground)] hover:text-[var(--background)] cursor-pointer">
-                <h3 className="page-title-medium font-bold w-1/2">
-                  {pkg.title}
-                </h3>
+                <StaggeredWords
+                  as="h3"
+                  text={pkg.title}
+                  className="page-title-medium"
+                />
+
                 <div>
-                  <p className="text-base opacity-50 hover:opacity-100 duration-200">
-                    {pkg.subheading}
-                  </p>
+                  <StaggeredWords
+                    as="p"
+                    text={pkg.subheading}
+                    className="text-base opacity-70"
+                  />
                   <br />
                   <div className="w-full flex justify-end underline">
                     {pkg.cta.label}

@@ -81,8 +81,8 @@ export default function RailCursor({ children, className, style, ...props }) {
               y, // This is now the spring value
               translateX: "-50%",
               translateY: "-50%",
-              width: 72,
-              height: 72,
+              width: 96,
+              height: 96,
               borderRadius: "50%",
               background: "var(--mesm-blue)",
               backdropFilter: "blur(8px)",
@@ -99,7 +99,7 @@ export default function RailCursor({ children, className, style, ...props }) {
                 exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.1 }}
                 style={{
-                  fontSize: 14,
+                  fontSize: 18,
                   fontWeight: 400,
                   letterSpacing: "0.12em",
                   color: "var(--background)",

@@ -109,7 +109,7 @@ function MediaCard({
 
   return (
     <div
-      className={`my-1 shrink-0 ${maxWidth} h-fit rounded-lg overflow-hidden border border-[var(--foreground)]/20 select-none relative`}
+      className={`my-1 shrink-0 ${maxWidth} h-fit rounded-lg overflow-hidden select-none relative`}
     >
       {mediaType === "image" && imageUrl && (
         <div style={{ aspectRatio: `${imageWidth} / ${imageHeight}` }}>

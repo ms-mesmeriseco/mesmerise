@@ -19,7 +19,6 @@ export default function Statement({
             as="h2"
             text={text}
             className={className ?? "page-title-large"}
-            margin="-40% 0px"
           />
           {showCTA && (
             <div className="mt-8">

@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import HeroButton from "../ui/HeroButton";
 import MobileMenu from "../ui/MobileMenu";
 
-// --- NAV ITEMS (with children for Services + Collaborate) ---
 export const NAV_ITEMS = [
   {
     label: "Services",
@@ -19,9 +18,7 @@ export const NAV_ITEMS = [
       { label: "Analytics", href: "/services/analytics" },
     ],
   },
-
   { label: "Work", href: "/work" },
-
   {
     label: "Collaboration",
     href: "/collaboration",
@@ -32,9 +29,9 @@ export const NAV_ITEMS = [
   },
   { label: "About", href: "/about" },
 ];
+
 export const MOB_NAV_ITEMS = [
   { label: "About", href: "/about" },
-
   {
     label: "Services",
     href: "/services",
@@ -46,9 +43,7 @@ export const MOB_NAV_ITEMS = [
       { label: "Analytics", href: "/services/analytics" },
     ],
   },
-
   { label: "Work", href: "/work" },
-
   {
     label: "Collaborate",
     href: "/collaboration",
@@ -58,90 +53,71 @@ export const MOB_NAV_ITEMS = [
     ],
   },
 ];
+
 function isItemActive(item, pathname) {
   const direct = pathname === item.href || pathname.startsWith(`${item.href}/`);
-
   const childHit = item.children?.some(
-    (child) => pathname === child.href || pathname.startsWith(`${child.href}/`),
+    (c) => pathname === c.href || pathname.startsWith(`${c.href}/`),
   );
-
   return direct || childHit;
 }
 
-// --- Desktop nav that mimics ToggleSwitch styling ---
 function DesktopNav({ pathname }) {
   const [openLabel, setOpenLabel] = useState(null);
 
-  const selectedBg = "var(--foreground)"; // same as you used in MenuToggle
-  const selectedTextClass = "text-black";
-  const textSizeClass = "text-lg"; // matches textSize="lg"
-
   return (
-    <div className="hidden md:flex">
-      <div
-        className={[
-          "flex items-center gap-2",
-          "bg-[var(--mesm-grey-dk)]/5",
-          "rounded-2xl p-1",
-          "border border-[var(--mesm-grey-dk)]",
-          "w-fit mx-auto",
-          "shadow-xl backdrop-blur-xs",
-          textSizeClass,
-        ].join(" ")}
-      >
+    <nav className="hidden md:flex">
+      <div className="flex items-center gap-1 rounded-2xl p-1 border border-[var(--mesm-grey-dk)]/60 backdrop-blur-sm text-lg">
         {NAV_ITEMS.map((item) => {
           const active = isItemActive(item, pathname);
-          const hasChildren =
-            Array.isArray(item.children) && item.children.length > 0;
+          const hasChildren = !!item.children?.length;
           const isOpen = openLabel === item.label;
 
           return (
             <div
               key={item.label}
-              className="relative flex-1"
+              className="relative"
               onMouseEnter={() => hasChildren && setOpenLabel(item.label)}
-              onMouseLeave={() =>
-                hasChildren &&
-                setOpenLabel((prev) => (prev === item.label ? null : prev))
-              }
+              onMouseLeave={() => hasChildren && setOpenLabel(null)}
             >
-              {/* Top-level button styled like ToggleSwitch */}
               <Link
                 href={item.href}
                 className={[
-                  "flex-1 px-3 py-1 rounded-xl transition-colors cursor-pointer",
-                  "focus:outline-none border-1 border-transparent hover:border-[var(--mesm-grey)]",
-                  "inline-flex items-center justify-center w-full",
-                  active ? selectedTextClass : "text-[var(--foreground)]",
+                  "px-3 py-1.5 rounded-xl transition-colors duration-150 inline-flex items-center",
+                  "border border-transparent hover:border-[var(--mesm-grey)]/40",
+                  active
+                    ? "bg-[var(--foreground)] text-[var(--background)]"
+                    : "text-[var(--foreground)]",
                 ].join(" ")}
-                style={active ? { backgroundColor: selectedBg } : undefined}
               >
                 {item.label}
               </Link>
 
-              {/* Dropdown children (only for Services / Collaborate) */}
-              {hasChildren && isOpen && (
+              {hasChildren && (
                 <div
-                  className="absolute left-0  top-full
-               min-w-[220px] z-[400]"
+                  className={[
+                    "absolute left-0 top-full pt-2 min-w-[200px] z-[400]",
+                    "transition-all duration-150 origin-top-left",
+                    isOpen
+                      ? "opacity-100 scale-100 pointer-events-auto"
+                      : "opacity-0 scale-95 pointer-events-none",
+                  ].join(" ")}
                 >
-                  {/* Only margin & space — no bg, no border */}
-                  <div className="mt-2 pt-1 flex flex-col gap-1">
+                  <div className="flex flex-col gap-1">
                     {item.children.map((child) => {
                       const childActive =
                         pathname === child.href ||
                         pathname.startsWith(`${child.href}/`);
-
                       return (
                         <Link
                           key={child.href}
                           href={child.href}
                           className={[
-                            "block px-3 py-2 text-sm rounded-xl transition-colors w-fit",
-                            "text-[var(--background)] bg-[var(--foreground)]",
+                            "block px-3 py-2 text-sm rounded-xl transition-colors duration-150 w-fit",
+                            "bg-[var(--foreground)] text-[var(--background)] shadow-md",
                             childActive
-                              ? "bg-[var(--mesm-l-grey)]/20 text-[var(--foreground)]/20 shadow-lg"
-                              : "hover:bg-[var(--mesm-yellow)] hover:text-[var(--background)] shadow-md",
+                              ? "opacity-50"
+                              : "hover:bg-[var(--mesm-yellow)]",
                           ].join(" ")}
                         >
                           {child.label}
@@ -155,19 +131,15 @@ function DesktopNav({ pathname }) {
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }
 
 export default function Header() {
   const pathname = usePathname() || "/";
   const headerRef = useRef(null);
-  const [hydrated, setHydrated] = useState(false);
-  const [sceneInView, setSceneInView] = useState(false);
-  const [scrolledEnough, setScrolledEnough] = useState(false);
   const [showPromo, setShowPromo] = useState(true);
-
-  const starts = (p) => pathname === p || pathname.startsWith(`${p}/`);
+  const [scrolledEnough, setScrolledEnough] = useState(false);
 
   const KNOWN_PREFIXES = [
     "/",
@@ -178,103 +150,38 @@ export default function Header() {
     "/work",
     "/blog",
   ];
+  const isLanding = !KNOWN_PREFIXES.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
 
-  const isKnownRoute = KNOWN_PREFIXES.some((p) => starts(p));
-  const isLanding = !isKnownRoute;
-  const showMobileStickyCTA = isLanding;
-
-  // measure scene
-  useLayoutEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const el = document.querySelector("#home-scene");
-    const raw = getComputedStyle(document.documentElement).getPropertyValue(
-      "--header-height",
-    );
-    const headerH = parseInt(raw) || 0;
-
-    let inView = false;
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      const vpH = window.innerHeight || document.documentElement.clientHeight;
-
-      const top = rect.top - headerH;
-      const bottom = rect.bottom;
-      inView = bottom > 0 && top < vpH;
-    }
-    setSceneInView(inView);
-    setHydrated(true);
-  }, [pathname]);
-
-  // store header height in CSS variable
-  useLayoutEffect(() => {
-    if (headerRef.current) {
-      const h = headerRef.current.offsetHeight;
-      document.documentElement.style.setProperty("--header-height", `${h}px`);
-    }
-  }, []);
-
-  // track hero in view
+  // Single scroll listener for both needs
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const el = document.querySelector("#home-scene");
-    if (!el) {
-      setSceneInView(false);
-    } else {
-      const raw = getComputedStyle(document.documentElement).getPropertyValue(
-        "--header-height",
-      );
-      const headerH = parseInt(raw) || 0;
-
-      const io = new IntersectionObserver(
-        ([entry]) => {
-          setSceneInView(entry.isIntersecting && entry.intersectionRatio > 0);
-        },
-        { root: null, rootMargin: `-${headerH}px 0px 0px 0px`, threshold: [0] },
-      );
-      io.observe(el);
-      return () => io.disconnect();
-    }
-  }, [pathname]);
-
-  // promo banner visibility (hide after user scrolls)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
     const handleScroll = () => {
-      const y = window.scrollY || window.pageYOffset || 0;
-      // hide once they scroll a bit (change 40 to taste)
+      const y = window.scrollY;
       setShowPromo(y < 40);
+      setScrolledEnough(y >= window.innerHeight);
     };
-
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // sticky CTA scroll trigger
+  // Store header height in CSS var
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const handleScroll = () => {
-      const trigger = window.innerHeight;
-      setScrolledEnough(window.scrollY >= trigger);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (headerRef.current) {
+      document.documentElement.style.setProperty(
+        "--header-height",
+        `${headerRef.current.offsetHeight}px`,
+      );
+    }
   }, []);
 
   return (
     <>
-      {/* CRO Promo Banner */}
+      {/* Promo banner */}
       <div
         className={[
-          "fixed top-0 left-0 right-0 z-[301]",
-          "transition-all duration-300 ease-out",
-
+          "fixed top-0 left-0 right-0 z-[301] transition-all duration-300",
           showPromo
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-full pointer-events-none",
@@ -283,91 +190,60 @@ export default function Header() {
         <div className="mx-auto max-w-6xl px-[var(--global-margin-sm)] py-2">
           <Link
             href="/cro-audit"
-            className="flex items-center justify-center gap-3 md:rounded-2xl rounded-xl md:px-4 px-2 py-2 
-                       bg-[var(--accent2)] text-[var(--background)] shadow-lg hover:bg-[var(--accent2-l)]  duration-200 transition-colors "
+            className="flex items-center justify-center gap-3 rounded-xl md:rounded-2xl px-3 py-2
+                       bg-[var(--accent2)] text-[var(--background)] text-xs md:text-sm
+                       hover:bg-[var(--accent2-l)] transition-colors duration-200"
           >
-            <span className="md:text-sm md:text-base text-xs">
+            <span>
               Feel like you're burning money and not seeing a return on ad
               spend?
             </span>
-
-            <span className="hidden text-sm md:inline-flex items-center gap-1 underline">
+            <span className="hidden md:inline underline">
               You could benefit from a CRO Audit
             </span>
           </Link>
         </div>
       </div>
 
+      {/* Header */}
       <header
         ref={headerRef}
-        className="site-header fixed left-0 right-0 z-300
-             flex items-center justify-between gap-2
-             pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
-             box-border pointer-events-auto bg-transparent
-             transition-all duration-300 ease-out"
         style={{ top: showPromo ? "48px" : "0px" }}
+        className="fixed left-0 right-0 z-300 flex items-center justify-between gap-2
+                   pt-[var(--global-margin-xs)] px-[var(--global-margin-sm)]
+                   transition-[top] duration-300 ease-out pointer-events-auto"
       >
-        {/* Logo */}
-        <Link
-          href="https://www.mesmeriseco.com/"
-          as="/"
-          aria-label="Go to homepage"
-          className="justify-self-start"
-        >
-          <div className="h-[48px]">
-            {/* Desktop wordmark (>=1035) */}
-            <img
-              src="/WordMark_Spaced.png"
-              alt="Mesmerise Digital"
-              className={[
-                "h-full w-auto transition-opacity duration-100 overflow-visible",
-                "items-center gap-2 bg-[var(--mesm-grey-dk)]/5",
-                "rounded-2xl px-4 py-3",
-                "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
-                "shadow-xl backdrop-blur-xs min-h-[3rem]",
-                "hidden [@media(min-width:1035px)]:flex",
-              ].join(" ")}
-            />
-
-            {/* Compact logomark (<1035) */}
-            <img
-              src="/WordMark_Spaced.png"
-              alt="Mesmerise Digital"
-              className={[
-                "h-full w-auto transition-opacity duration-100 overflow-visible",
-                "items-center gap-2 bg-[var(--mesm-grey-dk)]/5",
-                "rounded-2xl px-4 py-3",
-                "border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
-                "shadow-xl backdrop-blur-xs min-h-[3rem]",
-                "flex [@media(min-width:1035px)]:hidden",
-              ].join(" ")}
-            />
-          </div>
+        {/* Logo — single element, breakpoint swaps via CSS */}
+        <Link href="/" aria-label="Go to homepage">
+          <img
+            src="/WordMark_Spaced.png"
+            alt="Mesmerise Digital"
+            className="h-12 w-auto rounded-2xl px-4 py-3
+                       bg-[var(--mesm-grey-dk)]/5 border border-[var(--mesm-grey-dk)]/60
+                       hover:border-[var(--mesm-grey)]/60 backdrop-blur-sm
+                       transition-colors duration-250"
+          />
         </Link>
 
-        <div className="hidden [@media(min-width:1035px)]:flex ">
+        {/* Desktop nav — hidden below 1035px */}
+        <div className="hidden [@media(min-width:1035px)]:block">
           <DesktopNav pathname={pathname} />
         </div>
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          {/* Desktop nav + CTAs (>=1035) */}
-          <div className="hidden [@media(min-width:1035px)]:flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <HeroButton href="/connect">Let's connect</HeroButton>
-            </div>
+          <div className="hidden [@media(min-width:1035px)]:block">
+            <HeroButton href="/connect">Let's connect</HeroButton>
           </div>
-
-          {/* Compact header (<1035): hamburger only */}
-          <div className="flex [@media(min-width:1035px)]:hidden">
+          <div className="block [@media(min-width:1035px)]:hidden">
             <MobileMenu items={MOB_NAV_ITEMS} pathname={pathname} />
           </div>
         </div>
       </header>
 
-      {/* Mobile sticky CTA (landing pages only, after 100vh) */}
-      {showMobileStickyCTA && scrolledEnough && (
-        <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden pb-6 px-10">
+      {/* Mobile sticky CTA — landing pages only */}
+      {isLanding && scrolledEnough && (
+        <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden px-10 pb-6">
           <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
             <HeroButton size="x-large" variant="CTA" href="tel:+61477210477">
               <span className="text-2xl">Speak to Simba</span>

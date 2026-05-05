@@ -9,6 +9,8 @@ import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
+import HeroLoader from "@/components/three/HeroLoader";
+import { HeroLoaderProvider } from "@/components/three/HeroLoaderProvider";
 
 export const metadata = {
   title: "Mesmerise Digital",
@@ -42,6 +44,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+        if (history.scrollRestoration) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+      `,
+          }}
+        />
         {/* Meta Pixel Code */}
         <script
           dangerouslySetInnerHTML={{
@@ -126,17 +138,18 @@ Google Tag Manager (noscript) */}
 <!-- End Reddit Pixel --> */}
       </head>
       <body>
-        <ScrollToTop />
-        <BodyThemeWrapper />
-        <Header />
-        <Template>
-          <Inner>{children}</Inner>
-        </Template>
-        {/* <MenuToggle /> */}
-        <Footer />
-        {/* LinkedIn */}
+        <HeroLoaderProvider>
+          <HeroLoader />
+          <ScrollToTop />
+          <BodyThemeWrapper />
+          <Header />
+          <Template>
+            <Inner>{children}</Inner>
+          </Template>
 
-        {/* LinkedIn noscript fallback (must live in body) */}
+          <Footer />
+        </HeroLoaderProvider>
+
         <noscript>
           <img
             height="1"
