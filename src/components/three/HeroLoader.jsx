@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
 import gsap from "gsap";
 
-const MIN_DISPLAY_MS = 4000; // Snappier timing for better UX
+const MIN_DISPLAY_MS = 4800; // Snappier timing for better UX
 const MOBILE_BREAKPOINT = 640;
 
 export default function HeroLoader() {

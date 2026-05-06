@@ -15,6 +15,8 @@ export default function RailCursor({ children, className, style, ...props }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  const [onControls, setOnControls] = useState(false);
+
   // 2. Spring values "chase" the raw values with inertia
   const springConfig = { damping: 25, stiffness: 500, mass: 0.1 };
   const x = useSpring(mouseX, springConfig);
@@ -32,11 +34,13 @@ export default function RailCursor({ children, className, style, ...props }) {
       const cursorX = e.clientX - rect.left;
       const cursorY = e.clientY - rect.top;
 
-      // Update the raw motion values
       mouseX.set(cursorX);
       mouseY.set(cursorY);
 
-      setVisible(true);
+      const isOnControls = !!e.target.closest("#hide-cursor");
+
+      setOnControls(isOnControls);
+      setVisible(!isOnControls);
       setSide(cursorX > rect.width / 2 ? "next" : "back");
     };
 
@@ -55,7 +59,7 @@ export default function RailCursor({ children, className, style, ...props }) {
       ref={ref}
       style={{
         position: "relative",
-        cursor: "none",
+        cursor: onControls ? "auto" : "none", // 👈
         ...style,
       }}
       className={className}

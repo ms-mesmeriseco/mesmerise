@@ -68,6 +68,7 @@ function IconUnmuted() {
 function ControlButton({ onClick, children }) {
   return (
     <button
+      aria-label="data-hide-cursor"
       onClick={onClick}
       className="w-8 h-8 flex items-center justify-center rounded-full bg-[var(--accent)] hover:bg-[var(--accent)]/40 backdrop-blur-sm border border-[var(--foreground)]/20 text-[var(--foreground)] transition-all duration-200"
     >
@@ -105,7 +106,8 @@ export default function VideoCard({ videoUrl, caption }) {
 
   return (
     <div
-      className="relative w-full select-none"
+      className="relative w-full select-none cursor-pointer"
+      aria-label="data-hide-cursor"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -124,6 +126,7 @@ export default function VideoCard({ videoUrl, caption }) {
         className={`absolute bottom-3 right-3 flex gap-1.5 transition-opacity duration-200 ${
           hovered ? "opacity-100" : "opacity-0"
         }`}
+        id="hide-cursor"
       >
         <ControlButton onClick={toggleMute}>
           {muted ? <IconMuted /> : <IconUnmuted />}

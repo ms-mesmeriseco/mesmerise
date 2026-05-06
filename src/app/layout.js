@@ -139,7 +139,7 @@ Google Tag Manager (noscript) */}
       </head>
       <body>
         <HeroLoaderProvider>
-          <HeroLoader />
+          {/* <HeroLoader /> */}
           <ScrollToTop />
           <BodyThemeWrapper />
           <Header />

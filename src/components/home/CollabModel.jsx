@@ -32,18 +32,11 @@ export default function CollabModel() {
           {offerings.map((pkg) => (
             <Link key={pkg.title} href={pkg.cta.href}>
               <div className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-yellow)] duration-250 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] hover:bg-[var(--mesm-yellow)] text-[var(--foreground)] hover:text-[var(--background)] cursor-pointer">
-                <StaggeredWords
-                  as="h3"
-                  text={pkg.title}
-                  className="page-title-medium"
-                />
+                <h3 className="page-title-medium ">{pkg.title}</h3>
 
                 <div>
-                  <StaggeredWords
-                    as="p"
-                    text={pkg.subheading}
-                    className="text-base opacity-70"
-                  />
+                  <p className="text-base opacity-70">{pkg.subheading}</p>
+
                   <br />
                   <div className="w-full flex justify-end underline">
                     {pkg.cta.label}
