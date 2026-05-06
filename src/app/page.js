@@ -197,13 +197,14 @@ export default function HomePage() {
       <div className="md:block  hidden ">
         <ImpactStats />
       </div>
-      <ServicesRail />
 
-      <InView>
+      {/* <InView>
         <div className="flex flex-col items-center justify-center ">
           <CaseStudyHero narrow={false} block={caseStudyBlock} />
         </div>
-      </InView>
+      </InView> */}
+      <ServicesRail />
+
       <TrustedBy />
 
       {/* <InViewTheme

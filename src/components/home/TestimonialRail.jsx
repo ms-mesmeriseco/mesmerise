@@ -66,12 +66,12 @@ function Card({
       {authorName && (
         <div className="flex items-center gap-3">
           {authorPhotoUrl && (
-            <div className="shrink-0 w-11 rounded-full overflow-hidden border border-[var(--foreground)]/30">
+            <div className="shrink-0 w-13 rounded-full overflow-hidden border border-[var(--foreground)]/30">
               <Image
                 src={authorPhotoUrl}
                 alt={authorName}
-                width={44}
-                height={44}
+                width={56}
+                height={56}
                 className="object-cover w-full h-full pointer-events-none"
               />
             </div>
@@ -239,9 +239,12 @@ export default function TestimonialsRail({ innerRef }) {
                 onMouseDown={onMouseDown}
                 onMouseMove={onMouseMove}
                 onMouseUp={(e) => {
-                  // Determine which side of the rail was released
                   const rail = railRef.current;
                   if (!rail) return onMouseUp();
+
+                  // Don't scroll if releasing over video controls
+                  if (e.target.closest("#hide-cursor")) return onMouseUp();
+
                   const rect = rail.getBoundingClientRect();
                   const relX = e.clientX - rect.left;
                   const third = rect.width / 3;

@@ -70,7 +70,7 @@ function ControlButton({ onClick, children }) {
     <button
       aria-label="data-hide-cursor"
       onClick={onClick}
-      className="w-8 h-8 flex items-center justify-center rounded-full bg-[var(--accent)] hover:bg-[var(--accent)]/40 backdrop-blur-sm border border-[var(--foreground)]/20 text-[var(--foreground)] transition-all duration-200"
+      className="w-8 h-8 flex items-center justify-center rounded-full bg-[var(--foreground)]/30 hover:bg-[var(--foreground)]/10 backdrop-blur-sm border border-[var(--foreground)]/20 text-[var(--foreground)] transition-all duration-200"
     >
       {children}
     </button>

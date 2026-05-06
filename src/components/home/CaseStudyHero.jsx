@@ -70,7 +70,7 @@ export default function CaseStudyHero({ block, narrow = true }) {
         {/* Right Column: Hero Image */}
         <div className="order-1 md:order-2 w-[100%] md:h-[100%] h-[60vh]">
           {heroSrc && (
-            <div className="relative rounded-md overflow-hidden h-full w-full shadow-sm">
+            <div className="relative overflow-hidden h-full w-full shadow-sm">
               <Image
                 src={heroSrc}
                 alt={heading || "Case Study Hero"}

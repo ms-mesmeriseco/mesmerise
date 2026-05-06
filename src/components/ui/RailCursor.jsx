@@ -41,7 +41,11 @@ export default function RailCursor({ children, className, style, ...props }) {
 
       setOnControls(isOnControls);
       setVisible(!isOnControls);
-      setSide(cursorX > rect.width / 2 ? "next" : "back");
+      if (!isOnControls) {
+        setSide(cursorX > rect.width / 2 ? "next" : "back");
+      } else {
+        setSide(null);
+      }
     };
 
     const handleMouseLeave = () => setVisible(false);
@@ -59,7 +63,7 @@ export default function RailCursor({ children, className, style, ...props }) {
       ref={ref}
       style={{
         position: "relative",
-        cursor: onControls ? "auto" : "none", // 👈
+        cursor: onControls ? "auto" : "none",
         ...style,
       }}
       className={className}
@@ -85,10 +89,10 @@ export default function RailCursor({ children, className, style, ...props }) {
               y, // This is now the spring value
               translateX: "-50%",
               translateY: "-50%",
-              width: 96,
-              height: 96,
+              width: 85,
+              height: 85,
               borderRadius: "50%",
-              background: "var(--mesm-blue)",
+              background: "var(--mesm-red)",
               backdropFilter: "blur(8px)",
               display: "flex",
               alignItems: "center",
@@ -105,13 +109,13 @@ export default function RailCursor({ children, className, style, ...props }) {
                 style={{
                   fontSize: 18,
                   fontWeight: 400,
-                  letterSpacing: "0.12em",
-                  color: "var(--background)",
+                  letterSpacing: "0.1em",
+                  color: "var(--foreground)",
                   textTransform: "uppercase",
                   userSelect: "none",
                 }}
               >
-                {side === "next" ? "Next" : "Back"}
+                {side === "next" ? "NEXT" : "BACK"}
               </motion.span>
             </AnimatePresence>
           </motion.div>
