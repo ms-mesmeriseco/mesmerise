@@ -89,7 +89,7 @@ export default function TrustBadges({
 
 const Reel = React.forwardRef(function Reel(
   { logos, ariaHidden = false, gapPx = 128, style },
-  ref,
+  ref
 ) {
   return (
     <ul
@@ -102,14 +102,16 @@ const Reel = React.forwardRef(function Reel(
         const href = logo.href || logo.description || "#";
         return (
           <li key={`${logo.url}-${i}`} className="flex-none no-list">
-            <Image
-              src={logo.url}
-              alt={logo.title || ""}
-              width={128}
-              height={64}
-              className="object-contain w-[96px] h-[64px]"
-              priority={false}
-            />
+            <Link href={href} target="_blank" className="block">
+              <Image
+                src={logo.url}
+                alt={logo.title || ""}
+                width={128}
+                height={64}
+                className="object-contain w-[96px] h-[64px]"
+                priority={false}
+              />
+            </Link>
           </li>
         );
       })}
@@ -124,7 +126,7 @@ TrustBadges.propTypes = {
       title: PropTypes.string,
       href: PropTypes.string,
       description: PropTypes.string,
-    }),
+    })
   ),
   scroll: PropTypes.bool,
   durationDesktop: PropTypes.number,
