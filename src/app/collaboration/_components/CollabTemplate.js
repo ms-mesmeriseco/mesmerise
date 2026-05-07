@@ -22,7 +22,6 @@ function Statement({ marker, text, className }) {
             as="h2"
             text={text}
             className={className ?? "page-title-large"}
-            margin="-40% 0px"
           />
         </InView>
       </div>
@@ -38,12 +37,7 @@ function SecondaryStatement({ marker, text, cta }) {
       className="min-h-screen flex items-center justify-center px-6 text-[var(--foreground)]"
     >
       <div className="max-w-[1200px] text-center text-balance">
-        <StaggeredWords
-          as="p"
-          text={text}
-          className="page-title-large"
-          margin="-40% 0px"
-        />
+        <StaggeredWords as="p" text={text} className="page-title-large" />
         {cta ? (
           <>
             <br />
@@ -92,7 +86,6 @@ export default function CollabTemplate({ content, currentSlug }) {
               y="0.15em"
               blur={4}
               className="flex flex-col gap-2"
-              margin="-40% 0px"
             >
               {content.whoItsForItems.map((item, i) => (
                 <div className={bubble} key={i}>

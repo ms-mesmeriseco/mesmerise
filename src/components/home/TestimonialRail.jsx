@@ -105,7 +105,7 @@ function MediaCard({
   videoUrl,
   caption,
 }) {
-  const maxWidth = imageHeight > imageWidth ? "max-w-[275px]" : "max-w-[400px]";
+  const maxWidth = imageHeight > imageWidth ? "max-w-[600px]" : "max-w-[400px]";
 
   return (
     <div
@@ -116,9 +116,9 @@ function MediaCard({
           <Image
             src={imageUrl}
             alt={caption || ""}
-            width={275}
+            width={800}
             height={0}
-            className="object-cover pointer-events-none"
+            className="object-cover pointer-events-none w-full h-full"
           />
         </div>
       )}

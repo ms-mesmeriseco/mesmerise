@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
 import gsap from "gsap";
 
-const MIN_DISPLAY_MS = 4800; // Snappier timing for better UX
+const MIN_DISPLAY_MS = 3600; // Snappier timing for better UX
 const MOBILE_BREAKPOINT = 640;
 
 export default function HeroLoader() {
@@ -20,7 +20,7 @@ export default function HeroLoader() {
   const exitTriggeredRef = useRef(false);
 
   useEffect(() => {
-    if (pathname !== "/" || window.innerWidth < MOBILE_BREAKPOINT) {
+    if (pathname !== "/") {
       setUnmounted(true);
       return;
     }
@@ -39,15 +39,16 @@ export default function HeroLoader() {
     });
 
     introTl
-      // 1. Reveal the M stripes
-      .to(".hero-stripe", {
-        y: "0%",
-        opacity: 1,
-        duration: 1,
-        stagger: 0.08,
-        ease: "power4.out",
-      })
-      // 2. Slide the M to the left
+      .to(
+        ".char-inner",
+        {
+          y: "0%",
+          duration: 0.2,
+          stagger: 0,
+          ease: "expo.out",
+        },
+        "-=0.0",
+      )
       .to(
         ".hero-m",
         {
@@ -55,19 +56,15 @@ export default function HeroLoader() {
           duration: 1.2,
           ease: "expo.inOut",
         },
-        "+=0.1",
-      ) // Small pause after stripes reveal before sliding
-      // 3. Roll the text in JUST BEFORE the slide finishes
-      .to(
-        ".char-inner",
-        {
-          y: "0%",
-          duration: 0.9,
-          stagger: 0,
-          ease: "expo.out",
-        },
-        "-=0.6",
-      ); // Starts when the slide is roughly 50% complete
+        "-=0.5",
+      )
+      .to(".hero-stripe", {
+        y: "0%",
+        opacity: 1,
+        duration: 1,
+        stagger: 0.08,
+        ease: "power4.out",
+      });
 
     const t = setTimeout(() => {
       timerDoneRef.current = true;
@@ -96,6 +93,7 @@ export default function HeroLoader() {
       y: "-105%",
       rotateX: 40,
       duration: 0.8,
+
       stagger: 0, // Removed stagger for word-block exit
       ease: "expo.inOut",
     })
@@ -123,7 +121,7 @@ export default function HeroLoader() {
 
   if (unmounted || pathname !== "/") return null;
 
-  const text = "Mesmerise";
+  const text = "Future proof your business";
 
   return (
     <>

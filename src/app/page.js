@@ -8,13 +8,10 @@ import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
 import ServicesRail from "@/components/services/ServicesRail";
 import HeroButton from "@/components/ui/HeroButton";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import TeamBlock from "@/components/about/TeamBlock";
 import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
 import Statement from "@/components/layout/Statement";
-import CaseStudyHero from "@/components/home/CaseStudyHero";
 import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
-import InViewTheme from "@/hooks/InViewTheme";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
 const ProjectRail = dynamic(
@@ -93,7 +90,7 @@ function ThreeScene({ innerRef, sceneReady }) {
           className="fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)] mb-2"
         >
           {/* Mobile: video */}
-          <div
+          {/* <div
             onLoad={() => {
               setSceneReady(true);
             }}
@@ -107,22 +104,22 @@ function ThreeScene({ innerRef, sceneReady }) {
               loop
               playsInline
             >
-              {/* Provide both for best compatibility (webm first if you have it) */}
+  
 
               <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
             </video>
-            {/* Optional subtle overlay to match your scene look */}
+     
             <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-          </div>
+          </div> */}
 
           {/* Tablet/Desktop: 3D scene */}
-          <div className="hidden md:block absolute inset-0">
-            <Scene
-              onLoaded={() => {
-                setSceneReady(true);
-              }}
-            />
-          </div>
+          {/* <div className="absolute inset-0"> */}
+          <Scene
+            onLoaded={() => {
+              setSceneReady(true);
+            }}
+          />
+          {/* </div> */}
         </section>
       </InView>
     </>
@@ -179,7 +176,15 @@ export default function HomePage() {
         "relative min-h-screen text-white transition-colors duration-200 flex flex-col gap-2",
       ].join(" ")}
     >
+      {/* Scene fixed to viewport — always behind everything */}
+      {/* <div className="fixed inset-0 z-0"> */}
       <ThreeScene innerRef={splashRef} />
+      {/* </div> */}
+
+      {/* Scrollable content sits on top */}
+      {/* <div className="relative z-10 flex flex-col gap-2"> */}
+      {/* First section is transparent — "hero" viewport reveals the scene */}
+      {/* <div className="h-screen" /> */}
 
       <Statement text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert." />
 
@@ -225,6 +230,7 @@ export default function HomePage() {
         text="Let's create something that looks sexy, and converts."
         cta="Book a consultation"
       />
+      {/* </div> */}
     </main>
   );
 }

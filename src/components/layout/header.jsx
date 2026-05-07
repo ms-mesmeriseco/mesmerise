@@ -187,10 +187,10 @@ export default function Header() {
             : "opacity-0 -translate-y-full pointer-events-none",
         ].join(" ")}
       >
-        <div className="mx-auto max-w-6xl px-[var(--global-margin-sm)] py-2">
+        <div className="mx-auto max-w-6xl px-[var(--global-margin-xs)] py-2">
           <Link
             href="/cro-audit"
-            className="flex items-center justify-center gap-3 rounded-xl md:rounded-2xl px-3 py-2
+            className="flex items-center justify-center gap-3 rounded-xl md:rounded-2xl px-1 py-2
                        bg-[var(--accent2)] text-[var(--background)] text-xs md:text-sm
                        hover:bg-[var(--accent2-l)] transition-colors duration-200"
           >
