@@ -112,7 +112,8 @@ export default function CenterHero({
                 className="page-title-medium"
                 text={`${pageHeader || ""}`}
               />
-              <StaggeredWords as="p" className="p2" text={pageSubtitle} />
+
+              <p className="p2">{pageSubtitle}</p>
 
               <div className="flex flex-col gap-8 md:items-center md:justify-center justify-start items-start">
                 <PillList items={listItems} />
