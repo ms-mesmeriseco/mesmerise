@@ -126,10 +126,12 @@ export default function LeftHero({
           <GoogleBrow />
           <StaggeredWords
             as="h1"
+            delay={0}
             className="page-title-medium"
             text={`${pageHeader || ""}`}
           />
-          <StaggeredWords as="h4" className="" text={pageSubtitle} />
+
+          <h4>{pageSubtitle}</h4>
 
           <PillList items={listItems} className="justify-start" />
 

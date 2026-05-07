@@ -79,8 +79,7 @@ export async function generateMetadata({ params }) {
     (page.metaDesc && blocksToPlainText(page.metaDesc)) ||
     "We build omnipresent marketing ecosystems that unify design, data and psychology to drive predictable growth for ambitious brands.";
 
-  const rawOg = page.media?.url || null;
-  const ogImage = normalizeUrl(rawOg) || DEFAULT_OG_IMAGE;
+  const ogImage = DEFAULT_OG_IMAGE;
 
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://www.mesmeriseco.com";
