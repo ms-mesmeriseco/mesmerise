@@ -92,7 +92,7 @@ export default function HeroLoader() {
     tl.to(".char-inner", {
       y: "-105%",
       rotateX: 40,
-      duration: 0.8,
+      duration: 0.6,
 
       stagger: 0,
       ease: "expo.inOut",
@@ -106,7 +106,7 @@ export default function HeroLoader() {
           stagger: 0.02,
           ease: "expo.inOut",
         },
-        "-=0.7",
+        "-=0.8",
       )
       .to(
         containerRef.current,
@@ -126,9 +126,7 @@ export default function HeroLoader() {
   return (
     <>
       <style>{`
-        @media (max-width: ${MOBILE_BREAKPOINT - 1}px) {
-          .hero-loader-container { display: none !important; }
-        }
+       
         /* CSS to prevent FOUC (Flash of Unstyled Content) */
         .hero-stripe { opacity: 0; }
         .hero-m { transform: translateX(40px); }
