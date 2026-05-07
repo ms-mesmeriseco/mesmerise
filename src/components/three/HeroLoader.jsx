@@ -43,7 +43,7 @@ export default function HeroLoader() {
         ".char-inner",
         {
           y: "0%",
-          duration: 0.2,
+          duration: 0.6,
           stagger: 0,
           ease: "expo.out",
         },
@@ -56,7 +56,7 @@ export default function HeroLoader() {
           duration: 1.2,
           ease: "expo.inOut",
         },
-        "-=0.5",
+        "-=0.8",
       )
       .to(".hero-stripe", {
         y: "0%",
@@ -94,7 +94,7 @@ export default function HeroLoader() {
       rotateX: 40,
       duration: 0.8,
 
-      stagger: 0, // Removed stagger for word-block exit
+      stagger: 0,
       ease: "expo.inOut",
     })
       .to(
