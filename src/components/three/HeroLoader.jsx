@@ -31,6 +31,7 @@ export default function HeroLoader() {
     gsap.set(".hero-m", { x: 40 });
 
     const introTl = gsap.timeline({
+      delay: 0.2,
       onComplete: () => {
         introFinishedRef.current = true;
         if (sceneReady) triggerExit();
@@ -42,7 +43,7 @@ export default function HeroLoader() {
         ".char-inner",
         {
           y: "0%",
-          duration: 0.6,
+          duration: 0.8,
           stagger: 0,
           ease: "expo.out",
         },
@@ -55,7 +56,7 @@ export default function HeroLoader() {
           duration: 0.8,
           ease: "expo.inOut",
         },
-        "-=1",
+        "-=0.8",
       )
       .to(".hero-stripe", {
         y: "0%",
