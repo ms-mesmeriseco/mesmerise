@@ -227,7 +227,7 @@ export default function HomePage() {
       <CollabModel />
 
       <SecondaryStatement
-        text="For businesses who think exponentially."
+        text="Become impossible to ignore."
         cta="Let's connect"
       />
       {/* </div> */}
