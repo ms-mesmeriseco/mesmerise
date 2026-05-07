@@ -138,7 +138,7 @@ function ProjectsRow() {
 
 function SecondaryStatement({ text, cta }) {
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 text-[var(--foreground)] ">
+    <section className="min-h-[60vh] flex items-center justify-center px-6 text-[var(--foreground)] ">
       <div className="max-w-[1200px] text-center text-balance">
         <StaggeredWords as="p" text={text} className="page-title-large" />
         {cta ? (
@@ -227,8 +227,8 @@ export default function HomePage() {
       <CollabModel />
 
       <SecondaryStatement
-        text="Let's create something that looks sexy, and converts."
-        cta="Book a consultation"
+        text="For businesses who think exponentially."
+        cta="Let's connect"
       />
       {/* </div> */}
     </main>
