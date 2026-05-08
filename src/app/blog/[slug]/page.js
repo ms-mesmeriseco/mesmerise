@@ -393,7 +393,7 @@ export default async function BlogPost({ params }) {
           <article className="max-w-xl w-full flex flex-col gap-6 md:pt-7">
             <StaggeredWords
               as="h1"
-              className="page-title-medium"
+              className="page-title-small"
               text={page.postHeading || page.postTitle}
             />
 
