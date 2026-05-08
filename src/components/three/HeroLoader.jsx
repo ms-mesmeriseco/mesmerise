@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
 import gsap from "gsap";
 
-const MIN_DISPLAY_MS = 3600; // Snappier timing for better UX
-const MOBILE_BREAKPOINT = 640;
+const MIN_DISPLAY_MS = 3600;
 
 export default function HeroLoader() {
   const [unmounted, setUnmounted] = useState(false);
@@ -25,10 +24,9 @@ export default function HeroLoader() {
       return;
     }
 
-    // GSAP initial state matches CSS to ensure a smooth handoff
+    gsap.set(".hero-m", { x: 40, opacity: 0 });
+    gsap.set(".loader-text", { y: 80, opacity: 0 });
     gsap.set(".hero-stripe", { y: "105%", opacity: 0 });
-    gsap.set(".char-inner", { y: "105%" });
-    gsap.set(".hero-m", { x: 40 });
 
     const introTl = gsap.timeline({
       delay: 0.2,
@@ -39,32 +37,20 @@ export default function HeroLoader() {
     });
 
     introTl
+      .to(".loader-text", { y: 0, opacity: 1, duration: 0.6, ease: "expo.out" })
+      .to(".hero-m", { x: 0, opacity: 1, duration: 0.6, ease: "expo.out" })
+
       .to(
-        ".char-inner",
+        ".hero-stripe",
         {
           y: "0%",
+          opacity: 1,
           duration: 0.8,
-          stagger: 0,
-          ease: "expo.out",
+          stagger: 0.08,
+          ease: "power3.out",
         },
-        "-=0.0",
-      )
-      .to(
-        ".hero-m",
-        {
-          x: 0,
-          duration: 0.8,
-          ease: "expo.inOut",
-        },
-        "-=0.8",
-      )
-      .to(".hero-stripe", {
-        y: "0%",
-        opacity: 1,
-        duration: 1,
-        stagger: 0.08,
-        ease: "power4.out",
-      });
+        "-=0.5",
+      );
 
     const t = setTimeout(() => {
       timerDoneRef.current = true;
@@ -89,33 +75,28 @@ export default function HeroLoader() {
       onComplete: () => setUnmounted(true),
     });
 
-    tl.to(".char-inner", {
-      y: "-105%",
-      rotateX: 40,
-      duration: 0.6,
-
-      stagger: 0,
-      ease: "expo.inOut",
+    // exit
+    tl.to(".loader-text", {
+      y: "-80px",
+      opacity: 0,
+      duration: 0.5,
+      ease: "expo.in",
     })
       .to(
         ".hero-stripe",
         {
           y: "-105%",
           opacity: 0,
-          duration: 0.8,
+          duration: 0.6,
           stagger: 0.02,
-          ease: "expo.inOut",
+          ease: "expo.in",
         },
-        "-=0.8",
+        "-=0.5",
       )
       .to(
         containerRef.current,
-        {
-          opacity: 0,
-          duration: 0.6,
-          ease: "power2.inOut",
-        },
-        "-=0.4",
+        { opacity: 0, duration: 0.4, ease: "power2.inOut" },
+        "-=0.2",
       );
   }
 
@@ -126,24 +107,22 @@ export default function HeroLoader() {
   return (
     <>
       <style>{`
-       
-        /* CSS to prevent FOUC (Flash of Unstyled Content) */
         .hero-stripe { opacity: 0; }
-        .hero-m { transform: translateX(40px); }
+        .hero-m { opacity: 0; transform: translateX(40px); }
         .char-inner {
           transform: translateY(105%);
           display: inline-block;
-          transform-origin: top;
-          will-change: transform;
         }
         .loader-text {
           font-weight: 400;
-      letter-spacing: 0.1em;
+          letter-spacing: 0.1em;
           color: white;
+          opacity:0;
           margin-left: 24px;
           font-size: clamp(0.8rem, 1.5vw, 1rem);
           display: flex;
-          perspective: 1000px;
+          overflow: hidden;
+          transform: translateZ(0);
         }
         .char-mask {
           overflow: hidden;
@@ -155,7 +134,6 @@ export default function HeroLoader() {
 
       <div
         ref={containerRef}
-        className="hero-loader-container"
         style={{
           background: "var(--background)",
           display: "flex",
@@ -179,7 +157,7 @@ export default function HeroLoader() {
             }}
             className="hero-m"
           >
-            <g className="hero-stripe" style={{ overflow: "hidden" }}>
+            <g className="hero-stripe">
               <path d="M879.88,0h-18.94c-12.8,0-24.49,7.29-30.12,18.79l-125.62,256.53c-5.44,11.1-8.26,23.3-8.26,35.67v207.6h0v14.78h197.81V14.86c0-8.21-6.65-14.86-14.86-14.86Z" />
             </g>
             <g className="hero-stripe">
@@ -190,14 +168,8 @@ export default function HeroLoader() {
             </g>
           </svg>
 
-          <div className="loader-text">
-            {text.split("").map((char, i) => (
-              <span key={i} className="char-mask">
-                <span className="char-inner">
-                  {char === " " ? "\u00A0" : char}
-                </span>
-              </span>
-            ))}
+          <div className="loader-text-mask" style={{ overflow: "hidden" }}>
+            <div className="loader-text">{text}</div>
           </div>
         </div>
       </div>
