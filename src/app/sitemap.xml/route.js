@@ -3,10 +3,8 @@ export const runtime = "nodejs";
 // Rebuild roughly hourly; search engines cache aggressively anyway
 export const revalidate = 3600;
 
-import { getClient } from "@/lib/apollo-client";
-import { GET_ALL_LANDING_PAGES } from "@/lib/graphql/queries/getLandingPages";
-import { GET_ALL_BLOG_POSTS } from "@/lib/graphql/queries/getBlogPosts";
-import { GET_PROJECT_PAGES } from "@/lib/graphql/queries/getProjectPages";
+import { groq } from "next-sanity";
+import { sanityClient } from "@/sanity/client"; // same import as your /work page
 
 function iso(dateLike) {
   try {
@@ -16,38 +14,45 @@ function iso(dateLike) {
   return undefined;
 }
 
+// ── Sanity queries (light — only fields the sitemap needs) ──────────────────
+
+const landingPagesQuery = groq`
+  *[_type == "landingPage"] {
+    "slug": pageSlug.current,
+    _updatedAt
+  }
+`;
+
+const blogPostsQuery = groq`
+  *[_type == "blogPostPage" && contentfulArchived != true] | order(postDate desc) {
+    "slug": slug.current,
+    postDate,
+    _updatedAt
+  }
+`;
+
+const projectPagesQuery = groq`
+  *[_type == "projectPage"] {
+    "slug": slug.current,
+    projectDate,
+    _updatedAt
+  }
+`;
+
+// ───────────────────────────────────────────────────────────────────────────
+
 export async function GET() {
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
     "https://www.mesmeriseco.com";
 
-  const client = getClient();
+  const [landingItems, blogItems, projItems] = await Promise.all([
+    sanityClient.fetch(landingPagesQuery),
+    sanityClient.fetch(blogPostsQuery),
+    sanityClient.fetch(projectPagesQuery),
+  ]);
 
-  // Fetch collections (keep fields light)
-  const [{ data: lpData }, { data: blogData }, { data: projData }] =
-    await Promise.all([
-      client.query({
-        query: GET_ALL_LANDING_PAGES,
-        variables: { limit: 100 }, // bump if you have more
-        fetchPolicy: "no-cache",
-      }),
-      client.query({
-        query: GET_ALL_BLOG_POSTS,
-        variables: { limit: 100 },
-        fetchPolicy: "no-cache",
-      }),
-      client.query({
-        query: GET_PROJECT_PAGES,
-        variables: { limit: 100 },
-        fetchPolicy: "no-cache",
-      }),
-    ]);
-
-  // Extract routes
-  const landingItems = lpData?.landingPageCollection?.items ?? [];
-  const blogItems = blogData?.blogPostPageCollection?.items ?? [];
-  const projItems = projData?.projectPageCollection?.items ?? [];
-
+  // ── Static routes ──────────────────────────────────────────────────────────
   const staticRoutes = [
     { loc: `${baseUrl}/`, changefreq: "weekly", priority: "1.0" },
     { loc: `${baseUrl}/about`, changefreq: "monthly", priority: "0.7" },
@@ -67,40 +72,30 @@ export async function GET() {
     },
   ];
 
-  const landingRoutes = landingItems
-    .map((p) => {
-      // prefer a path field if you have it; fall back to /{slug}
-      const slug = p?.pageSlug?.replace(/^\/+/, "") || "";
-      const path =
-        (p?.path && String(p.path)) ||
-        (slug ? `/${slug}`.replace(/\/+/, "/") : "");
-      const lastmod =
-        iso(p?.updatedAt) ||
-        iso(p?.sys?.publishedAt) ||
-        iso(p?.sys?.updatedAt) ||
-        undefined;
-
-      return path
-        ? {
-            loc: `${baseUrl}${path.startsWith("/") ? "" : "/"}${path}`,
-            changefreq: "weekly",
-            priority: "0.8",
-            lastmod,
-          }
-        : null;
-    })
-    .filter(Boolean);
-
-  const blogRoutes = blogItems
+  // ── Landing pages ──────────────────────────────────────────────────────────
+  // landingBySlugQuery uses pageSlug.current, so slug here is already the clean value
+  const landingRoutes = (landingItems ?? [])
     .map((p) => {
       const slug = p?.slug?.replace(/^\/+/, "");
       if (!slug) return null;
-      const lastmod =
-        iso(p?.postDate) ||
-        iso(p?.updatedAt) ||
-        iso(p?.sys?.updatedAt) ||
-        iso(p?.sys?.publishedAt) ||
-        undefined;
+      const lastmod = iso(p?._updatedAt) || undefined;
+
+      return {
+        loc: `${baseUrl}/${slug}`,
+        changefreq: "weekly",
+        priority: "0.8",
+        lastmod,
+      };
+    })
+    .filter(Boolean);
+
+  // ── Blog posts ─────────────────────────────────────────────────────────────
+  const blogRoutes = (blogItems ?? [])
+    .map((p) => {
+      const slug = p?.slug?.replace(/^\/+/, "");
+      if (!slug) return null;
+      // postDate matches blogPostBySlugQuery; fall back to _updatedAt (Sanity native)
+      const lastmod = iso(p?.postDate) || iso(p?._updatedAt) || undefined;
 
       return {
         loc: `${baseUrl}/blog/${slug}`,
@@ -111,22 +106,16 @@ export async function GET() {
     })
     .filter(Boolean);
 
-  const PROJECT_PREFIX = "/work"; // change if your route is different (e.g. "/projects")
-
-  const projRoutes = projItems
+  // ── Project pages ──────────────────────────────────────────────────────────
+  const projRoutes = (projItems ?? [])
     .map((p) => {
       const slug = p?.slug?.replace(/^\/+/, "");
       if (!slug) return null;
-
-      const lastmod =
-        iso(p?.projectDate) || // from your fragment
-        iso(p?.updatedAt) || // in case you later add it
-        iso(p?.sys?.updatedAt) ||
-        iso(p?.sys?.publishedAt) ||
-        undefined;
+      // projectDate matches your projectsQuery on /work
+      const lastmod = iso(p?.projectDate) || iso(p?._updatedAt) || undefined;
 
       return {
-        loc: `${baseUrl}${PROJECT_PREFIX}/${slug}`,
+        loc: `${baseUrl}/work/${slug}`,
         changefreq: "monthly",
         priority: "0.6",
         lastmod,
@@ -134,13 +123,13 @@ export async function GET() {
     })
     .filter(Boolean);
 
-  // De-dupe by URL just in case
+  // ── De-dupe & build XML ────────────────────────────────────────────────────
   const seen = new Set();
   const urls = [
     ...staticRoutes,
     ...landingRoutes,
     ...blogRoutes,
-    ...projRoutes, // <— include projects!
+    ...projRoutes,
   ].filter((u) => {
     if (!u?.loc) return false;
     if (seen.has(u.loc)) return false;
@@ -154,10 +143,9 @@ export async function GET() {
 >
 ${urls
   .map((u) => {
-    const lastmodTag = u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : "";
+    const lastmodTag = u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : "";
     return `  <url>
-    <loc>${u.loc}</loc>
-    ${lastmodTag}
+    <loc>${u.loc}</loc>${lastmodTag}
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`;
@@ -168,7 +156,6 @@ ${urls
   return new Response(body, {
     headers: {
       "Content-Type": "application/xml",
-      // Cache at the edge for 1h, allow stale for a day while revalidating
       "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
     },
   });
