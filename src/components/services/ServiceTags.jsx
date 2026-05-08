@@ -48,13 +48,13 @@ export default function ServiceTags({
   ].join(" ");
 
   const HIGHLIGHT_CLASS = [
-    "font-normal whitespace-nowrap cursor-pointer transition duration-200 text-sm py-1",
-    "bg-[var(--mesm-grey)]/80 text-[var(--foreground)].80 ",
+    "font-normal whitespace-nowrap cursor-pointer transition duration-200 text-xs py-1",
+    "bg-[var(--mesm-red)]/80 text-[var(--background)] ",
   ].join(" ");
 
   const SIZE_CLASSES = large
     ? "md:rounded-2xl rounded-xl md:px-3 md:py-1 md:text-5xl px-3 py-[0.05rem] text-2xl"
-    : "rounded-xl px-3 py-0 text-md";
+    : "rounded-lg px-2 py-0 text-md";
 
   const gapSize = large ? "md:gap-2 gap-1" : "gap-1";
 

@@ -230,6 +230,7 @@ h4 strong {
 }
 h5 {
   font-size: 1rem;
+  line-height: 1.5rem;
   font-weight: 400;
 }
 h6 {
@@ -327,6 +328,7 @@ a button:hover {
   line-height: 3.23rem;
   font-weight: 400;
 }
+
 ul li {
   list-style-type: disc;
   margin-left: 1rem;
@@ -358,7 +360,7 @@ footer ul li {
   list-style-type: none;
   margin: 0;
 }
-footer u li a {
+footer ul li a {
   color: var(--foreground);
 }
 footer a {

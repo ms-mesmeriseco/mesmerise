@@ -62,7 +62,7 @@ export default function MobileMenu({ items = [], pathname }) {
                 ? item.children.some(
                     (child) =>
                       pathname === child.href ||
-                      pathname.startsWith(`${child.href}/`)
+                      pathname.startsWith(`${child.href}/`),
                   )
                 : false;
 
@@ -76,6 +76,7 @@ export default function MobileMenu({ items = [], pathname }) {
                     className={[
                       "block px-2 py-2 text-sm",
                       "transition-colors ",
+                      "mob-nav-text",
                       active
                         ? "text-[var(--mesm-l-grey)]"
                         : "text-[var(--mesm-l-grey)] hover:bg-[var(--mesm-grey-dk)]/70",
@@ -99,7 +100,7 @@ export default function MobileMenu({ items = [], pathname }) {
                               className={[
                                 // same base styles, with extra indent
                                 "block px-2 py-2 text-sm pl-5",
-                                "transition-colors ",
+                                "transition-colors mob-nav-text",
                                 childActive
                                   ? "text-[var(--mesm-l-grey)]"
                                   : "text-[var(--mesm-l-grey)] hover:bg-[var(--mesm-grey-dk)]/70",
