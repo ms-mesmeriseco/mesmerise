@@ -18,6 +18,7 @@ export default function Statement({
           <StaggeredWords
             as="h2"
             text={text}
+            delay={0.03}
             className={className ?? "page-title-large"}
           />
           {showCTA && (

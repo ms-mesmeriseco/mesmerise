@@ -18,17 +18,22 @@ const offerings = [
   },
 ];
 
-export default function CollabModel() {
+export default function CollabModel({ displayTitle = false }) {
   return (
     <section
       data-marker="how we work"
       className="flex flex-col justify-center items-center"
     >
       <InView>
-        <h6>Collaboration Models</h6>
+        {displayTitle && (
+          <h6 className="border-b border-[var(--mesm-grey-dk)]  w-full mb-4">
+            Collaboration Models
+          </h6>
+        )}
+
         {/* <PageTitleMedium text="Collaboration Models" center /> */}
 
-        <div className="grid md:grid-cols-2 justify-center items-stretch gap-[var(--global-margin-xs)]  border-t m-0 border-b border-[var(--mesm-grey-dk)] py-4">
+        <div className="grid md:grid-cols-2 justify-center items-stretch gap-[var(--global-margin-xs)]  m-0 ">
           {offerings.map((pkg) => (
             <Link key={pkg.title} href={pkg.cta.href}>
               <div className="min-h-[50vh]  flex-col flex gap-[4rem] justify-between border border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-yellow)] duration-250 p-[var(--global-margin-md)] text-left rounded-md bg-[var(--background)] hover:bg-[var(--mesm-yellow)] text-[var(--foreground)] hover:text-[var(--background)] cursor-pointer">

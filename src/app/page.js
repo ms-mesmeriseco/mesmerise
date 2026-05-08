@@ -90,7 +90,7 @@ function ThreeScene({ innerRef, sceneReady }) {
           className="fade-in relative h-[95vh] w-full overflow-hidden border-b-1 border-[var(--mesm-grey-dk)] mb-2"
         >
           {/* Mobile: video */}
-          {/* <div
+          <div
             onLoad={() => {
               setSceneReady(true);
             }}
@@ -98,28 +98,24 @@ function ThreeScene({ innerRef, sceneReady }) {
           >
             <video
               ref={videoRef}
-              className="h-auto w-full object-cover"
+              className="h-auto w-full object-cover mt-12"
               autoPlay
               muted
               loop
               playsInline
             >
-  
-
               <source src="/assets/mesm_logo_video.mp4" type="video/mp4" />
             </video>
-     
-            <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-          </div> */}
+          </div>
 
           {/* Tablet/Desktop: 3D scene */}
-          {/* <div className="absolute inset-0"> */}
-          <Scene
-            onLoaded={() => {
-              setSceneReady(true);
-            }}
-          />
-          {/* </div> */}
+          <div className="md:block hidden absolute inset-0">
+            <Scene
+              onLoaded={() => {
+                setSceneReady(true);
+              }}
+            />
+          </div>
         </section>
       </InView>
     </>
@@ -224,7 +220,7 @@ export default function HomePage() {
       </div>
       {/* </InViewTheme> */}
 
-      <CollabModel />
+      <CollabModel displayTitle={true} />
 
       <SecondaryStatement
         text="Become impossible to ignore."
