@@ -25,7 +25,7 @@ export default function BlogServiceTags({
   return (
     <div className="pointer-events-none">
       <ServiceTags
-        items={hasMore && showEllipsis ? [...items, "..."] : items}
+        items={items}
         large={false}
         clickable={clickable}
         highlight={true}

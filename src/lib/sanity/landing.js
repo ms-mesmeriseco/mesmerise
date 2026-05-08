@@ -1,4 +1,3 @@
-// lib/queries/landing.ts
 import { groq } from "next-sanity";
 
 export const landingBySlugQuery = groq`

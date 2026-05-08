@@ -7,6 +7,7 @@ export const blogPostBySlugQuery = groq`
   postTitle,
   "slug": slug.current,
   metaTitle,
+  postExcerpt,
   metaDescription[]{...,},
   postHeading,
   postDate,
@@ -235,10 +236,15 @@ export const blogRailPostsQuery = groq`
   "slug": slug.current,
   postTitle,
   postDate,
-
+  postExcerpt,
+  metaDescription,
   "heroImage": {
     "url": heroImage.asset->url,
     "alt": coalesce(heroImage.alt, postTitle)
+  },
+    "blogAuthor": blogAuthor->{   // ← ADD THIS
+    name,
+    "authorAvatar": { "url": authorAvatar.asset->url }
   },
 
 "serviceTags": serviceTags[]->{
@@ -256,6 +262,12 @@ export const blogScrollPostsQuery = groq`
   "slug": slug.current,
   postTitle,
   postDate,
+  postExcerpt,
+      metaDescription[]{...,},
+    "blogAuthor": blogAuthor->{   // ← ADD THIS
+    name,
+    "authorAvatar": { "url": authorAvatar.asset->url }
+  },
   "heroImage": {
     "url": heroImage.asset->url,
     "alt": coalesce(heroImage.alt, postTitle)
