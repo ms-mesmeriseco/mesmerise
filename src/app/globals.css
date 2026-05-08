@@ -322,6 +322,11 @@ a button:hover {
   /* max-width: 780px; */
   font-weight: 400;
 }
+.page-title-small {
+  font-size: 2.23rem;
+  line-height: 3.23rem;
+  font-weight: 400;
+}
 ul li {
   list-style-type: disc;
   margin-left: 1rem;

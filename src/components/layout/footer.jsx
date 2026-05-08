@@ -9,21 +9,14 @@ import FooterSignup from "./FooterSignup";
 import { sanityClient } from "@/sanity/client";
 import { groq } from "next-sanity";
 
-// ✅ Inline GROQ (drop-in, no extra files needed)
 const FOOTER_BLOG_POSTS_QUERY = groq`
-*[
-  _type == "blogPostPage"
-  && contentfulArchived != true
-  && defined(slug.current)
-  && $tagSlug in serviceTags[]->slug.current
-]
-| order(postDate desc)[0...$limit]{
+*[_type == "blogPostPage" && contentfulArchived != true && defined(slug.current)]
+| order(postDate desc)[0...5]{
   _id,
   "slug": slug.current,
   postTitle
 }
 `;
-
 export default function Footer() {
   useSectionMarker("footer");
   const [blogPosts, setBlogPosts] = useState([]);
@@ -33,10 +26,7 @@ export default function Footer() {
 
     (async () => {
       try {
-        const items = await sanityClient.fetch(FOOTER_BLOG_POSTS_QUERY, {
-          limit: 10,
-          tagSlug: "show-blog-in-footer", // ✅ tag slug in Sanity serviceTags
-        });
+        const items = await sanityClient.fetch(FOOTER_BLOG_POSTS_QUERY);
 
         if (!alive) return;
         setBlogPosts(Array.isArray(items) ? items : []);
