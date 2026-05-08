@@ -498,7 +498,6 @@ export default async function BlogPost({ params }) {
 
       <h6 className="pt-24">Learn more</h6>
       <div className="py-4 border-y border-[var(--mesm-grey-dk)]">
-        {/* BlogRail is still Contentful for now – we can Sanity-fy this next */}
         <BlogRail />
       </div>
     </>

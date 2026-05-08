@@ -20,7 +20,6 @@ export default function HeroLoader() {
 
   useEffect(() => {
     if (pathname !== "/" || window.innerWidth < 640) {
-      setSceneReady(true);
       setUnmounted(true);
       return;
     }
