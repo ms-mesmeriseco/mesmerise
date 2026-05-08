@@ -214,7 +214,7 @@ export default function Header() {
                    transition-[top] duration-300 ease-out pointer-events-auto"
       >
         {/* Logo — single element, breakpoint swaps via CSS */}
-        <Link href="/" aria-label="Go to homepage">
+        <Link href="https://www.mesmeriseco.com/" aria-label="Go to homepage">
           <img
             src="/WordMark_Spaced.png"
             alt="Mesmerise Digital"
