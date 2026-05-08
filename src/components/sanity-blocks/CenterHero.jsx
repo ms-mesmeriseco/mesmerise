@@ -109,6 +109,7 @@ export default function CenterHero({
               <GoogleBrow />
               <StaggeredWords
                 as="h1"
+                delay={0.01}
                 className="page-title-medium"
                 text={`${pageHeader || ""}`}
               />

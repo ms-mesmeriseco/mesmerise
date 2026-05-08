@@ -224,7 +224,7 @@ export default function HomePage() {
       </div>
       {/* </InViewTheme> */}
 
-      <CollabModel />
+      <CollabModel displayTitle={true} />
 
       <SecondaryStatement
         text="Become impossible to ignore."

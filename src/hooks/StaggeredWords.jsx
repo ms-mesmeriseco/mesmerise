@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function StaggeredWords({
   text,
   className = "",
-  delay = 0.2,
+  delay = 0.02,
   as: As = "h1",
   gradient = false,
   margin = "top 80%", // Triggers when top of text hits 85% of viewport
@@ -42,9 +42,9 @@ export default function StaggeredWords({
       // filter: "blur(0px)",
       scale: 1,
       duration: 0.2,
-      stagger: 0.04, // The 'Agency' secret: fast stagger
+      stagger: delay, // The 'Agency' secret: fast stagger
       ease: "expo.out", // High-end smoothing
-      delay: delay,
+
       scrollTrigger: {
         trigger: containerRef.current,
         start: margin,

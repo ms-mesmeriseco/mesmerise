@@ -126,7 +126,7 @@ export default function LeftHero({
           <GoogleBrow />
           <StaggeredWords
             as="h1"
-            delay={0}
+            delay={0.01}
             className="page-title-medium"
             text={`${pageHeader || ""}`}
           />
