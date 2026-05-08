@@ -19,7 +19,7 @@ export default function HeroLoader() {
   const exitTriggeredRef = useRef(false);
 
   useEffect(() => {
-    if (pathname !== "/") {
+    if (pathname !== "/" || window.innerWidth < 640) {
       setUnmounted(true);
       return;
     }
