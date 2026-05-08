@@ -26,7 +26,7 @@ export default function HeroLoader() {
 
     gsap.set(".hero-m", { x: 40, opacity: 0 });
     gsap.set(".loader-text", { y: 80, opacity: 0 });
-    gsap.set(".hero-stripe", { y: "105%", opacity: 0 });
+    gsap.set(".hero-stripe", { y: 400, opacity: 0 });
 
     const introTl = gsap.timeline({
       delay: 0.2,
@@ -43,7 +43,7 @@ export default function HeroLoader() {
       .to(
         ".hero-stripe",
         {
-          y: "0%",
+          y: "0px",
           opacity: 1,
           duration: 0.8,
           stagger: 0.08,
@@ -85,7 +85,7 @@ export default function HeroLoader() {
       .to(
         ".hero-stripe",
         {
-          y: "-105%",
+          y: "-400px",
           opacity: 0,
           duration: 0.6,
           stagger: 0.02,
@@ -110,7 +110,7 @@ export default function HeroLoader() {
         .hero-stripe { opacity: 0; }
         .hero-m { opacity: 0; transform: translateX(40px); }
         .char-inner {
-          transform: translateY(105%);
+          transform: translateY(80px);
           display: inline-block;
         }
         .loader-text {
