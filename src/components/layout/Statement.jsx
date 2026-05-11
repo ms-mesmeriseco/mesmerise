@@ -7,6 +7,7 @@ export default function Statement({
   text,
   className,
   showCTA = false,
+  tag = "h2",
 }) {
   return (
     <section
@@ -16,7 +17,7 @@ export default function Statement({
       <div className="text-left">
         <InView>
           <StaggeredWords
-            as="h2"
+            as={tag}
             text={text}
             delay={0.03}
             className={className ?? "page-title-large"}

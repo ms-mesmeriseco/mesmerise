@@ -182,7 +182,10 @@ export default function HomePage() {
       {/* First section is transparent — "hero" viewport reveals the scene */}
       {/* <div className="h-screen" /> */}
 
-      <Statement text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert." />
+      <Statement
+        tag="h1"
+        text="Mesmerise crafts brand, web, and content experiences that look sexy, and convert."
+      />
 
       <ProjectsRow />
 
