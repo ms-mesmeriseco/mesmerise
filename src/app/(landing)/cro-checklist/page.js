@@ -4,7 +4,7 @@ import TwoColumn from "@/components/sanity-blocks/TwoColumn";
 import ProjectRail from "@/components/sanity-blocks/ProjectRail";
 import IconRow from "@/components/sanity-blocks/IconRow";
 import ListCard from "@/components/ui/ListCard";
-import FAQ from "@/components/layout/FAQ.jsx";
+import FAQ from "@/components/blocks/FAQ.jsx";
 import Image from "next/image";
 
 const CRO_LOGOS = [

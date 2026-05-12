@@ -553,11 +553,11 @@ figcaption {
 }
 
 .animate-marquee {
-  animation: marquee 20s linear infinite;
+  animation: marquee 10s linear infinite;
 }
 
 .animate-marquee-reverse {
-  animation: marquee-reverse 20s linear infinite;
+  animation: marquee-reverse 10s linear infinite;
 }
 
 .testimonial-text {

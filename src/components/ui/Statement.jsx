@@ -1,6 +1,6 @@
 import InView from "@/hooks/InView";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import HeroButton from "../ui/HeroButton";
+import HeroButton from "./HeroButton";
 
 export default function Statement({
   marker,

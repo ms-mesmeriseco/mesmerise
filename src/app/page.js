@@ -10,7 +10,7 @@ import HeroButton from "@/components/ui/HeroButton";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
-import Statement from "@/components/layout/Statement";
+import Statement from "@/components/ui/Statement";
 import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });

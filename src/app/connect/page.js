@@ -1,4 +1,4 @@
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import ContactForm from "./ContactForm";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import CopyEmailButton from "@/components/ui/CopyEmailButton";
