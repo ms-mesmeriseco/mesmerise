@@ -1,6 +1,6 @@
 /** @type {import("next").Viewport} */
 import Header from "@/components/layout/header";
-import ScrollToTop from "@/components/layout/ScrollToTop";
+import ScrollToTop from "@/hooks/ScrollToTop";
 import Footer from "@/components/layout/footer";
 import Inner from "@/components/layout/Inner";
 import Template from "@/components/layout/template";

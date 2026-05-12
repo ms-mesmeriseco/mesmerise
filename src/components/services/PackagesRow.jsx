@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ToggleSwitch from "@/components/ui/ToggleSwitch";
 import SecondaryButton from "@/components/ui/SecondaryButton";
-import PageTitleMedium from "../layout/PageTitleMedium";
+import PageTitleMedium from "../ui/PageTitleMedium";
 
 const PACKAGES = {
   SMB: [

@@ -1,4 +1,4 @@
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/ui/PageTitleLarge";
 
 export async function generateMetadata() {
   const title = "Email sent | Mesmerise Digital";

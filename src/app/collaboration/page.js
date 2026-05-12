@@ -1,4 +1,4 @@
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import CollabModel from "@/components/home/CollabModel";
 
 export async function generateMetadata() {

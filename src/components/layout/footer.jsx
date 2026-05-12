@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import useSectionMarker from "@/hooks/useSectionMarker";
-import FooterSignup from "./FooterSignup";
+import FooterSignup from "@/components/blocks/FooterSignup";
 
 import { sanityClient } from "@/sanity/client";
 import { groq } from "next-sanity";

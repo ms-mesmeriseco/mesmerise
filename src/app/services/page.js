@@ -1,4 +1,4 @@
-import FAQ from "@/components/layout/FAQ";
+import FAQ from "@/components/blocks/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import ServicesRail from "@/components/services/ServicesRail";
 

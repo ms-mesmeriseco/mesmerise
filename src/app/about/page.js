@@ -1,4 +1,4 @@
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import TeamBlock from "@/components/about/TeamBlock";
 

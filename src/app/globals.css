@@ -51,13 +51,11 @@ body.page-about {
   --accent2: #fba2f0;
 }
 
-body.page-blog {
-  h3 {
-    font-size: 1.2rem;
-    line-height: 1.8rem;
-    font-weight: 600;
-    padding: 2rem 0rem;
-  }
+body.page-blog h3 {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  font-weight: 600;
+  padding: 2rem 0rem;
 }
 
 html {
@@ -518,6 +516,10 @@ figcaption {
     font-size: 2.17rem;
     line-height: 2.56rem;
   }
+  h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
 }
 @keyframes marquee-x {
   from {
@@ -536,28 +538,28 @@ figcaption {
 
 @keyframes marquee {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0px);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(var(--marquee-offset));
   }
 }
 
 @keyframes marquee-reverse {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(var(--marquee-offset));
   }
   100% {
-    transform: translateX(0%);
+    transform: translateX(0px);
   }
 }
 
 .animate-marquee {
-  animation: marquee 20s linear infinite;
+  animation: marquee 10s linear infinite;
 }
 
 .animate-marquee-reverse {
-  animation: marquee-reverse 20s linear infinite;
+  animation: marquee-reverse 10s linear infinite;
 }
 
 .testimonial-text {

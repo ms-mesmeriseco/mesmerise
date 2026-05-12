@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { groq } from "next-sanity";
 import { sanityClient } from "@/sanity/client";
 import ProjectNavList from "@/components/sanity-blocks/ProjectNavList";
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/ui/PageTitleLarge";
 
 export async function generateMetadata() {
   const title = "Work | Mesmerise Digital";

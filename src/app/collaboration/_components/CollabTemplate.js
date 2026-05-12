@@ -1,13 +1,13 @@
 "use client";
 
-import PageTitleLarge from "@/components/layout/PageTitleLarge";
+import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import Button from "@/components/ui/Button";
 import CollabToggle from "@/components/ui/CollabToggle";
-import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
+import StaticTwoColumn from "@/components/blocks/StaticTwoColumn";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import InView from "@/hooks/InView";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
-import SteppedAccordion from "@/components/layout/SteppedAccordion";
+import SteppedAccordion from "@/components/blocks/SteppedAccordion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
 function Statement({ marker, text, className }) {

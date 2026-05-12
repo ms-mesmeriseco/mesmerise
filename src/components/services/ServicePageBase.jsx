@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PageTitleLarge from "../layout/PageTitleLarge";
+import PageTitleLarge from "../ui/PageTitleLarge";
 import ProcessBubbles from "@/components/services/ProcessBubbles";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import CollabModel from "../home/CollabModel";
@@ -9,7 +9,7 @@ import InView from "@/hooks/InView";
 import Button from "@/components/ui/Button";
 import ServiceTags from "./ServiceTags";
 import ServicesRail from "./ServicesRail";
-import FAQ from "@/components/layout/FAQ.jsx";
+import FAQ from "@/components/blocks/FAQ.jsx";
 
 function isVideo(src) {
   return /\.(mp4|webm|ogg)$/i.test(src);

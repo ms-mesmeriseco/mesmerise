@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import PageTitleMedium from "./PageTitleMedium";
+import PageTitleMedium from "../ui/PageTitleMedium";
 
 export default function SteppedAccordion({
   steps = [],

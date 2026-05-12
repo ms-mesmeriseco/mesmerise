@@ -44,7 +44,7 @@ function Card({
   const isShort = quoteContent?.length <= SHORT_QUOTE_THRESHOLD;
 
   return (
-    <div className="my-1 shrink-0 w-[340px] md:w-[420px] h-fit duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
+    <div className="my-1 shrink-0 w-[300px] md:w-[420px] h-fit duration-200 border border-[var(--foreground)]/20 rounded-lg p-7 flex flex-col justify-between gap-6 select-none">
       {clientLogoUrl && (
         <div className="h-10 flex items-start">
           <Image
@@ -57,7 +57,7 @@ function Card({
         </div>
       )}
       {isShort ? (
-        <span className="text-[var(--foreground)] text-2xl leading-snug testimonial-text">
+        <span className="text-[var(--foreground)] md:text-2xl leading-snug testimonial-text testimonial-card">
           <PortableText value={quoteContent} />
         </span>
       ) : (
@@ -105,7 +105,10 @@ function MediaCard({
   videoUrl,
   caption,
 }) {
-  const maxWidth = imageHeight > imageWidth ? "max-w-[600px]" : "max-w-[400px]";
+  const maxWidth =
+    imageHeight > imageWidth
+      ? "max-w-[325px] md:max-w-[600px]"
+      : "max-w-[325px] md:max-w-[400px]";
 
   return (
     <div

@@ -10,7 +10,7 @@ import HeroButton from "@/components/ui/HeroButton";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import TrustedBy from "@/components/home/TrustedBy";
 import TestimonialsRail from "@/components/home/TestimonialRail";
-import Statement from "@/components/layout/Statement";
+import Statement from "@/components/ui/Statement";
 import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
@@ -135,7 +135,7 @@ function ProjectsRow() {
 function SecondaryStatement({ text, cta }) {
   return (
     <section className="min-h-[80vh] flex items-center justify-center px-6 text-[var(--foreground)] ">
-      <div className="max-w-[1200px] text-center text-balance">
+      <div className="text-center text-balance">
         <StaggeredWords as="p" text={text} className="page-title-large" />
         {cta ? (
           <>

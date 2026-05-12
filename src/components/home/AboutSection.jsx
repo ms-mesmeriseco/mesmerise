@@ -1,4 +1,4 @@
-import StaticTwoColumn from "@/components/layout/StaticTwoColumn";
+import StaticTwoColumn from "@/components/blocks/StaticTwoColumn";
 import PrimaryButton from "@/components/ui/PrimaryButton";
 
 export default function AboutSection() {
