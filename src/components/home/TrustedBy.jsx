@@ -68,7 +68,7 @@ function LogoCard({ clientName, logoUrl, index, url }) {
 // Marquee card — simpler, no motion stagger needed inside the ticker
 function MarqueeCard({ clientName, logoUrl }) {
   return (
-    <div className="flex flex-col items-center justify-center shrink-0 w-40 mx-3 group">
+    <div className="flex flex-col items-center justify-center shrink-0 mx-3 group">
       <div className="relative flex flex-col items-center justify-center  p-4 w-full h-24 bg-black/20">
         <Image
           src={logoUrl}
