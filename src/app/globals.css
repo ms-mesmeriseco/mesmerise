@@ -538,19 +538,19 @@ figcaption {
 
 @keyframes marquee {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0px);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(var(--marquee-offset));
   }
 }
 
 @keyframes marquee-reverse {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(var(--marquee-offset));
   }
   100% {
-    transform: translateX(0%);
+    transform: translateX(0px);
   }
 }
 

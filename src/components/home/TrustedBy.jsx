@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { sanityClient } from "@/sanity/client";
@@ -82,12 +82,38 @@ function MarqueeCard({ clientName, logoUrl }) {
   );
 }
 function MarqueeRow({ clients, reverse = false }) {
+  const trackRef = useRef(null);
+  const [trackWidth, setTrackWidth] = useState(0);
+
+  useEffect(() => {
+    if (!trackRef.current) return;
+
+    const measure = () => {
+      // Width of one "set" of cards is half the total track (since we doubled)
+      const totalWidth = trackRef.current.scrollWidth;
+      setTrackWidth(totalWidth / 2);
+    };
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [clients]);
+
   const doubled = [...clients, ...clients];
 
   return (
     <div className="overflow-hidden w-full">
       <div
-        className={`flex ${reverse ? "animate-marquee-reverse" : "animate-marquee"}`}
+        ref={trackRef}
+        style={
+          trackWidth
+            ? {
+                "--marquee-offset": `-${trackWidth}px`,
+                animation: `${reverse ? "marquee-reverse" : "marquee"} ${trackWidth / 30}s linear infinite`,
+              }
+            : { visibility: "hidden" }
+        }
+        className="flex"
       >
         {doubled.map((client, idx) => (
           <MarqueeCard key={`${client._id}-${idx}`} {...client} />
