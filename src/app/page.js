@@ -135,7 +135,7 @@ function ProjectsRow() {
 function SecondaryStatement({ text, cta }) {
   return (
     <section className="min-h-[80vh] flex items-center justify-center px-6 text-[var(--foreground)] ">
-      <div className="max-w-[1200px] text-center text-balance">
+      <div className="text-center text-balance">
         <StaggeredWords as="p" text={text} className="page-title-large" />
         {cta ? (
           <>
