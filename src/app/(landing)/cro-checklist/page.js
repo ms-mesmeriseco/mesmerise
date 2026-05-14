@@ -105,7 +105,7 @@ export function CROAudit() {
       column1={[
         <Image
           key="audit-img"
-          src="https://images.ctfassets.net/cdpwrfmjljmf/2cdJeVHIJa7bkOrd2MfV02/704fc1a3bd3f2b7b0cce1620f58ea085/Pezzie-4.jpg"
+          src="https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg"
           alt="CRO Audit"
           width={800}
           height={600}
@@ -241,7 +241,7 @@ export function Converting() {
       column1={[
         <Image
           key="brett-img"
-          src="https://images.ctfassets.net/cdpwrfmjljmf/59SBvS0YErGDYTX80hhVOT/1c4978c214188a588249a93c85b56333/Brett_Benson.png"
+          src="https://cdn.sanity.io/images/wpr5jlmc/production/7916f0b93fc98abc750a9c17d374e79cb9212495-1920x1920.png"
           alt="Brett Benson case study"
           width={800}
           height={600}
@@ -268,7 +268,7 @@ export function Converting() {
       column2={[
         <Image
           key="mitch-img"
-          src="https://images.ctfassets.net/cdpwrfmjljmf/1wMRjjHJajK5RbksU4A6uk/fd62668551dafba41e59405f6558270b/mitchj_construciton.jpg"
+          src="https://cdn.sanity.io/images/wpr5jlmc/production/a42a8723992f0bc0d3566101a96672c714882671-2880x2160.jpg"
           alt="Mitch J Construction"
           width={800}
           height={600}
@@ -319,7 +319,7 @@ export function Kerime() {
       column2={[
         <Image
           key="kerime-img"
-          src="https://images.ctfassets.net/cdpwrfmjljmf/2XCIr1eGqiUjuvCzOijCPm/6a998c6d34761a2f123a94922afc550e/Kez_Smiley.jpg"
+          src="https://cdn.sanity.io/images/wpr5jlmc/production/d45a992afce525dbbf8f9382e92898c04309945e-1188x1129.jpg"
           alt="Kerimé Abay"
           width={800}
           height={600}
