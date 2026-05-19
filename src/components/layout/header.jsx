@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import HeroButton from "../ui/HeroButton";
+import Button from "../ui/Button";
 import MobileMenu from "../ui/MobileMenu";
 
 export const NAV_ITEMS = [
@@ -245,9 +246,9 @@ export default function Header() {
       {isLanding && scrolledEnough && (
         <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden px-10 pb-6">
           <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
-            <HeroButton size="x-large" variant="CTA" href="tel:+61477210477">
+            <Button size="x-large" variant="CTA" href="tel:+61477210477">
               <span className="text-2xl">Speak to Simba</span>
-            </HeroButton>
+            </Button>
           </div>
         </div>
       )}
