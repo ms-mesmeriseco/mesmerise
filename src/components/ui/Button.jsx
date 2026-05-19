@@ -16,7 +16,7 @@ const VARIANTS = {
     "bg-[var(--accent)]/92 border-[var(--accent)]/100 text-[var(--background)]/98",
   accent2:
     "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98",
-  CTA: "bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)] shadow-lg shadow-[#686767]/30",
+  CTA: "bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)] shadow-lg shadow-[#686767]/30 w-full;",
 };
 
 export default function Button({

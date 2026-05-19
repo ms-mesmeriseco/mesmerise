@@ -69,7 +69,7 @@ function LogoCard({ clientName, logoUrl, index, url }) {
 function MarqueeCard({ clientName, logoUrl }) {
   return (
     <div className="flex flex-col items-center justify-center shrink-0 mx-3 group">
-      <div className="relative flex flex-col items-center justify-center  p-4 w-full h-24 bg-black/20">
+      <div className="relative flex flex-col items-center justify-center p-4 w-full h-24 bg-black/20">
         <Image
           src={logoUrl}
           alt={clientName}
