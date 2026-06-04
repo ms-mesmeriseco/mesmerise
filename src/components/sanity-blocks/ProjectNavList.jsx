@@ -97,6 +97,7 @@ const getTagSlug = (t) => (typeof t === "string" ? "" : t?.slug || "");
 export default function ProjectNavigationList({
   activeTag = null,
   projects = [],
+  showFilters = true,
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -248,7 +249,7 @@ export default function ProjectNavigationList({
   return (
     <section className="flex flex-col gap-[var(--global-margin-xs)] nav-list">
       {/* Raw filter chip (for non-quick-filter tags/slugs) */}
-      {selectedRaw && (
+      {showFilters && selectedRaw && (
         <div className="mb-2">
           <span className="inline-flex items-center gap-2 text-sm px-3 py-1 rounded-lg bg-[var(--mesm-grey)] text-gray-800">
             Filtering by “{displayFilterText}”
@@ -264,7 +265,7 @@ export default function ProjectNavigationList({
       )}
 
       {/* Quick filters */}
-      {availableFilterLabels.length > 0 && (
+      {showFilters && availableFilterLabels.length > 0 && (
         <motion.div
           variants={container}
           initial="hidden"
@@ -284,21 +285,22 @@ export default function ProjectNavigationList({
             All
           </motion.button>
 
-          {availableFilterLabels.map((label) => (
-            <motion.button
-              key={label}
-              variants={item}
-              className={`px-3 py-0 rounded-xl duration-100 h-full hover:bg-[var(--mesm-red)] hover:text-[var(--background)] ${
-                selectedLabel === label
-                  ? "bg-[var(--mesm-red)] text-[var(--background)]"
-                  : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
-              }`}
-              onClick={() => handleSelectLabel(label)}
-              type="button"
-            >
-              {label}
-            </motion.button>
-          ))}
+          {showFilters &&
+            availableFilterLabels.map((label) => (
+              <motion.button
+                key={label}
+                variants={item}
+                className={`px-3 py-0 rounded-xl duration-100 h-full hover:bg-[var(--mesm-red)] hover:text-[var(--background)] ${
+                  selectedLabel === label
+                    ? "bg-[var(--mesm-red)] text-[var(--background)]"
+                    : "bg-[var(--mesm-grey-dk)] text-[var(--mesm-grey)] cursor-pointer"
+                }`}
+                onClick={() => handleSelectLabel(label)}
+                type="button"
+              >
+                {label}
+              </motion.button>
+            ))}
         </motion.div>
       )}
 
