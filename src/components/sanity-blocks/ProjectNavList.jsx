@@ -98,6 +98,7 @@ export default function ProjectNavigationList({
   activeTag = null,
   projects = [],
   showFilters = true,
+  showPreview = true,
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -369,7 +370,7 @@ export default function ProjectNavigationList({
       {/* Hover preview (desktop only) */}
       <div className="hidden md:block">
         <AnimatePresence>
-          {hoveredProject?.heroMedia?.url && (
+          {showPreview && hoveredProject?.heroMedia?.url && (
             <motion.div
               key={hoveredProject._id || hoveredProject.slug}
               initial={{ opacity: 0 }}

@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import ProjectNavList from "./ProjectNavList";
 import Button from "../ui/Button";
 
 export default function RelatedProjects({ projects = [], currentProject }) {
   const [open, setOpen] = useState(false);
+  const panelRef = useRef(null);
 
   // Lock body scroll when panel is open
   useEffect(() => {
@@ -21,7 +22,7 @@ export default function RelatedProjects({ projects = [], currentProject }) {
       const scrollY = document.body.style.top;
       document.body.style.overflow = "";
       document.body.style.position = "";
-      document.body.style.top = `-${scrollY}px`;
+      document.body.style.top = "";
       document.body.style.width = "";
       window.scrollTo(0, parseInt(scrollY || "0") * -1);
     }
@@ -29,7 +30,7 @@ export default function RelatedProjects({ projects = [], currentProject }) {
     return () => {
       document.body.style.overflow = "";
       document.body.style.position = "";
-
+      document.body.style.top = "";
       document.body.style.width = "";
     };
   }, [open]);
@@ -94,8 +95,12 @@ export default function RelatedProjects({ projects = [], currentProject }) {
         <div className="p-4">
           <ProjectNavList
             projects={projects}
-            onNavigate={() => setOpen(false)}
+            onNavigate={() => {
+              setOpen(false);
+              window.scrollTo(0, 0);
+            }}
             showFilters={false}
+            showPreview={false}
           />
         </div>
       </div>
