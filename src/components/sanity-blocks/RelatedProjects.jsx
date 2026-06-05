@@ -11,9 +11,6 @@ export default function RelatedProjects({ projects = [], currentProject }) {
   // Lock body scroll when panel is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
   }, [open]);
 
   const relatedProjects = useMemo(() => {
