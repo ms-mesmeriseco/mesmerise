@@ -4,13 +4,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState, useEffect } from "react";
 import ProjectNavList from "./ProjectNavList";
+import Button from "../ui/Button";
 
 export default function RelatedProjects({ projects = [], currentProject }) {
   const [open, setOpen] = useState(false);
 
   // Lock body scroll when panel is open
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      const scrollY = window.scrollY;
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "";
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+
+      document.body.style.width = "";
+    };
   }, [open]);
 
   const relatedProjects = useMemo(() => {
@@ -83,13 +104,6 @@ export default function RelatedProjects({ projects = [], currentProject }) {
       <section className="py-20 mt-20">
         <div className="flex justify-between items-end">
           <h6>Related projects</h6>
-          <button
-            onClick={() => setOpen(true)}
-            aria-label="View all projects"
-            className="text-sm hover:opacity-50 transition-opacity duration-200 mb-1"
-          >
-            View all
-          </button>
         </div>
 
         <div className="border-b border-[var(--mesm-grey-dk)] mb-4" />
@@ -123,6 +137,15 @@ export default function RelatedProjects({ projects = [], currentProject }) {
               </div>
             </Link>
           ))}
+        </div>
+        <div className="mt-4 w-[100%] flex justify-end border-t-1 border-[var(--mesm-grey-dk)] pt-4">
+          {" "}
+          <span onClick={() => setOpen(true)} aria-label="View all projects">
+            {" "}
+            <Button size="large" variant="accent2">
+              View all projects
+            </Button>
+          </span>
         </div>
       </section>
     </>
