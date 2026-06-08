@@ -2,13 +2,42 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
+import ProjectNavList from "./ProjectNavList";
+import Button from "../ui/Button";
 
 export default function RelatedProjects({ projects = [], currentProject }) {
+  const [open, setOpen] = useState(false);
+  const panelRef = useRef(null);
+
+  // Lock body scroll when panel is open
+  useEffect(() => {
+    if (open) {
+      const scrollY = window.scrollY;
+      document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+    };
+  }, [open]);
+
   const relatedProjects = useMemo(() => {
     if (!currentProject || !projects.length) return [];
 
-    // 1. Get the tags of the current project for matching
     const currentTags = new Set(
       (currentProject.serviceTags || []).map((t) =>
         typeof t === "string"
@@ -17,68 +46,113 @@ export default function RelatedProjects({ projects = [], currentProject }) {
       ),
     );
 
-    return (
-      projects
-        // 2. Remove the current project from the list
-        .filter((p) => p.slug !== currentProject.slug)
-        // 3. Score projects based on how many tags they share
-        .map((p) => {
-          const pTags = (p.serviceTags || []).map((t) =>
-            typeof t === "string"
-              ? t.toLowerCase()
-              : t?.slug?.toLowerCase() || t?.title?.toLowerCase(),
-          );
-          const sharedCount = pTags.filter((t) => currentTags.has(t)).length;
-          return { ...p, score: sharedCount };
-        })
-        // 4. Sort by score (highest first), then by date
-        .sort(
-          (a, b) =>
-            b.score - a.score ||
-            new Date(b.projectDate) - new Date(a.projectDate),
-        )
-        // 5. Take the top 3
-        .slice(0, 3)
-    );
+    return projects
+      .filter((p) => p.slug !== currentProject.slug)
+      .map((p) => {
+        const pTags = (p.serviceTags || []).map((t) =>
+          typeof t === "string"
+            ? t.toLowerCase()
+            : t?.slug?.toLowerCase() || t?.title?.toLowerCase(),
+        );
+        const sharedCount = pTags.filter((t) => currentTags.has(t)).length;
+        return { ...p, score: sharedCount };
+      })
+      .sort(
+        (a, b) =>
+          b.score - a.score ||
+          new Date(b.projectDate) - new Date(a.projectDate),
+      )
+      .slice(0, 3);
   }, [projects, currentProject]);
 
   if (relatedProjects.length === 0) return null;
 
   return (
-    <section className="py-20 mt-20">
-      <h6>Related projects</h6>
-      <div className="border-b-1 border-[var(--mesm-grey-dk)] flex justify-between items-end mb-4"></div>
+    <>
+      {/* Side panel overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-2xs"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-        {relatedProjects.map((project) => (
-          <Link
-            key={project.slug}
-            href={`/work/${project.slug}`}
-            className="group block"
+      <div
+        className={`fixed top-0 right-0 z-999 h-full w-full max-w-[80vw] bg-[var(--background)] shadow-2xl
+          transform transition-transform duration-300 ease-in-out overflow-y-auto
+          ${open ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div className="flex justify-between items-center p-6 border-b border-[var(--mesm-grey-dk)]">
+          <h6 className="m-0">All projects</h6>
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close panel"
+            className="text-2xl leading-none hover:opacity-50 transition-opacity duration-200"
           >
-            <div className=" relative aspect-[3/2] overflow-hidden bg-[var(--mesm-grey)] mb-4 duration-200 rounded-lg">
-              {project.heroMedia?.url && (
-                <Image
-                  src={project.heroMedia.url}
-                  alt={project.projectTitle}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-101"
-                />
-              )}
-            </div>
-            <div className="flex justify-between items-start group-hover:opacity-60 duration-200">
-              <div>
-                <h4 className="text-xl group-hover:text-[var(--mesm-red)] transition-colors ">
-                  {project.projectTitle}
-                </h4>
-                <p className="text-sm ">
-                  {new Date(project.projectDate).getFullYear()}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+            ×
+          </button>
+        </div>
+        <div className="p-4">
+          <ProjectNavList
+            projects={projects}
+            onNavigate={() => {
+              setOpen(false);
+              window.scrollTo(0, 0);
+            }}
+            showFilters={false}
+            showPreview={false}
+          />
+        </div>
       </div>
-    </section>
+
+      {/* Main section */}
+      <section className="py-20 mt-20">
+        <div className="flex justify-between items-end">
+          <h6>Related projects</h6>
+        </div>
+
+        <div className="border-b border-[var(--mesm-grey-dk)] mb-4" />
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+          {relatedProjects.map((project) => (
+            <Link
+              key={project.slug}
+              href={`/work/${project.slug}`}
+              className="group block"
+            >
+              <div className="relative aspect-[3/2] overflow-hidden bg-[var(--mesm-grey)] mb-4 duration-200 rounded-lg">
+                {project.heroMedia?.url && (
+                  <Image
+                    src={project.heroMedia.url}
+                    alt={project.projectTitle}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-101"
+                  />
+                )}
+              </div>
+              <div className="flex justify-between items-start group-hover:opacity-60 duration-200">
+                <div>
+                  <h4 className="text-xl group-hover:text-[var(--mesm-red)] transition-colors">
+                    {project.projectTitle}
+                  </h4>
+                  <p className="text-sm">
+                    {new Date(project.projectDate).getFullYear()}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="mt-4 w-[100%] flex justify-end border-t-1 border-[var(--mesm-grey-dk)] pt-4">
+          {" "}
+          <span onClick={() => setOpen(true)} aria-label="View all projects">
+            {" "}
+            <Button size="large" variant="accent2">
+              View all projects
+            </Button>
+          </span>
+        </div>
+      </section>
+    </>
   );
 }
