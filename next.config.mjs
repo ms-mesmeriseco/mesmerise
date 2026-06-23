@@ -153,7 +153,7 @@ const nextConfig = {
       },
       {
         source:
-          "/simple-7-step-framework-to-get-strangers-to-buy-your-stuff-works-for-any",
+          "/simple-7-step-framework-to-get-strangers-to-buy-your-stuff-works-for-an",
         destination:
           "/simple-7-step-framework-to-get-strangers-to-buy-your-stuff",
         permanent: true,
