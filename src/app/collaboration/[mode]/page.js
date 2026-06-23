@@ -46,6 +46,16 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical },
-    openGraph: { title },
+    openGraph: {
+      title,
+      images: [
+        {
+          url: "/assets/social-default.png",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
   };
 }
