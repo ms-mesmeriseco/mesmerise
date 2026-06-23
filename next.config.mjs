@@ -151,6 +151,13 @@ const nextConfig = {
         destination: "/marketing-strategy-session",
         permanent: true,
       },
+      {
+        source:
+          "/simple-7-step-framework-to-get-strangers-to-buy-your-stuff-works-for-any",
+        destination:
+          "/simple-7-step-framework-to-get-strangers-to-buy-your-stuff",
+        permanent: true,
+      },
     ];
   },
 };
