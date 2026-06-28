@@ -8,12 +8,34 @@ export async function generateMetadata() {
   const title = "Work | Mesmerise Digital";
   const description =
     "Explore how ambitious brands scaled with Mesmerise. From booked out calendars to 25x ROAS, data backed proof not promises.";
+  const baseUrl = "https://www.mesmeriseco.com";
+  const canonicalUrl = `/work/`;
 
   return {
     title,
     description,
-    alternates: {
-      canonical: `https://www.mesmeriseco.com/work`,
+    alternates: { canonical: canonicalUrl },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Mesmerise Digital",
+      images: [
+        {
+          url: `${baseUrl}/assets/social-default.png`,
+          width: 1200,
+          height: 630,
+          alt: projectName,
+        },
+      ],
+      locale: "en_AU",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: `${baseUrl}/assets/social-default.png`,
     },
   };
 }
