@@ -2,9 +2,9 @@ import BlogNav from "@/components/sanity-blocks/BlogNav";
 import PageTitleLarge from "@/components/ui/PageTitleLarge";
 
 export async function generateMetadata() {
-  const title = "Blog | Mesmerise Digital";
+  const title = "Insights on Brand, Web & Performance | Mesmerise Digital";
   const description =
-    "When your data speaks with one voice, decisions become clear. We turn analytics into strategy that drives undeniable results.";
+    "Unique industry insights on brand, web design, and performance marketing. Discover just what actually moves the needle for growing businesses.";
   const baseUrl = "https://www.mesmeriseco.com";
   const canonicalUrl = `/blog/`;
 
