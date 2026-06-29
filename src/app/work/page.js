@@ -25,7 +25,7 @@ export async function generateMetadata() {
           url: `${baseUrl}/assets/social-default.png`,
           width: 1200,
           height: 630,
-          alt: projectName,
+          alt: title,
         },
       ],
       locale: "en_AU",
