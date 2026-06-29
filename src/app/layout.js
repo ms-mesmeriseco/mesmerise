@@ -19,16 +19,16 @@ export const metadata = {
     canonical: `https://www.mesmeriseco.com`,
   },
   openGraph: {
-    title,
-    description,
-    url: canonicalUrl,
+    title: "Mesmerise Digital",
+    description: "We don't just run ads.",
+    url: "https://www.mesmeriseco.com",
     siteName: "Mesmerise Digital",
     images: [
       {
         url: `https://www.mesmeriseco.com/assets/social-default.png`,
         width: 1200,
         height: 630,
-        alt: projectName,
+        alt: "We don't just run ads.",
       },
     ],
     locale: "en_AU",
@@ -36,8 +36,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title,
-    description,
+    title: "Mesmerise Digital",
+    description: "We don't just run ads.",
     images: `https://www.mesmeriseco.com/assets/social-default.png`,
   },
   icons: {
