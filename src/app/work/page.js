@@ -5,7 +5,7 @@ import ProjectNavList from "@/components/sanity-blocks/ProjectNavList";
 import PageTitleLarge from "@/components/ui/PageTitleLarge";
 
 export async function generateMetadata() {
-  const title = "Work | Mesmerise Digital";
+  const title = "View our work | Mesmerise Digital";
   const description =
     "Explore how ambitious brands scaled with Mesmerise. From booked out calendars to 25x ROAS, data backed proof not promises.";
   const baseUrl = "https://www.mesmeriseco.com";

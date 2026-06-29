@@ -6,12 +6,34 @@ export async function generateMetadata() {
   const title = "Full Funnel Digital Marketing Services | Mesmerise";
   const description =
     "From brand to web to performance, Mesmerise builds complete ecosystems that attract, convert and compound results over time.";
+  const baseUrl = "https://www.mesmeriseco.com";
+  const canonicalUrl = `/services/`;
 
   return {
     title,
     description,
-    alternates: {
-      canonical: `https://www.mesmeriseco.com/services`,
+    alternates: { canonical: canonicalUrl },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Mesmerise Digital",
+      images: [
+        {
+          url: `${baseUrl}/assets/social-default.png`,
+          width: 1200,
+          height: 630,
+          alt: description,
+        },
+      ],
+      locale: "en_AU",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: `${baseUrl}/assets/social-default.png`,
     },
   };
 }

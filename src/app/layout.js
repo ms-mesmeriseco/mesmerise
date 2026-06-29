@@ -18,6 +18,28 @@ export const metadata = {
   alternates: {
     canonical: `https://www.mesmeriseco.com`,
   },
+  openGraph: {
+    title,
+    description,
+    url: canonicalUrl,
+    siteName: "Mesmerise Digital",
+    images: [
+      {
+        url: `https://www.mesmeriseco.com/assets/social-default.png`,
+        width: 1200,
+        height: 630,
+        alt: projectName,
+      },
+    ],
+    locale: "en_AU",
+    type: "article",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: `https://www.mesmeriseco.com/assets/social-default.png`,
+  },
   icons: {
     // Browser tab favicons
     icon: [

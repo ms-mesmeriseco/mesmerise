@@ -16,12 +16,34 @@ export async function generateMetadata() {
   const title = "Branding | Mesmerise Digital";
   const description =
     "We craft identity systems that fuse psychology, storytelling and design to turn first impressions into lifelong brand loyalty.";
+  const baseUrl = "https://www.mesmeriseco.com";
+  const canonicalUrl = `/services/branding/`;
 
   return {
     title,
     description,
-    alternates: {
-      canonical: `https://www.mesmeriseco.com/services/branding`,
+    alternates: { canonical: canonicalUrl },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Mesmerise Digital",
+      images: [
+        {
+          url: `${baseUrl}/assets/social-default.png`,
+          width: 1200,
+          height: 630,
+          alt: description,
+        },
+      ],
+      locale: "en_AU",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: `${baseUrl}/assets/social-default.png`,
     },
   };
 }
