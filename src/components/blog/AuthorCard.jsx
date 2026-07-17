@@ -32,22 +32,22 @@ export default function AuthorCard({
       itemType="https://schema.org/Person"
     >
       {/* Top: avatar, name, date/reading time */}
-      <div className="flex items-center gap-4 pb-4 border-b border-[var(--mesm-grey-dk)]">
+      <div className="flex items-start gap-4 pb-4 border-b border-[var(--mesm-grey-dk)]">
         {avatarUrl && (
           <Image
             src={avatarUrl}
             alt={`Avatar of ${author.name ?? "author"}`}
             width={96}
             height={96}
-            className="rounded-full shrink-0 w-12 h-12 object-cover ring-1 ring-[var(--mesm-grey-dk)]"
+            className="rounded-full shrink-0 w-14 h-14 object-cover ring-1 ring-[var(--mesm-grey-dk)]"
           />
         )}
         {author?.name && (
           <div className="flex flex-col">
-            <div className="flex items-center  text-md text-[var(--mesm-l-grey)] font-400">
+            <div className="flex items-center text-md text-[var(--mesm-l-grey)] font-400">
               {author.name}
             </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--mesm-l-grey)]/60 font-400">
+            <div className="flex items-center gap-2 text-sm text-[var(--mesm-l-grey)]/80 font-400">
               {author.role}
             </div>
           </div>
@@ -82,6 +82,12 @@ export default function AuthorCard({
               {date && <span>{date}</span>}
               {date && readingTime && <span aria-hidden="true">·</span>}
               {readingTime && <span>{readingTime}</span>}
+              {date && readingTime && <span aria-hidden="true">·</span>}
+              {author?.linkedin && (
+                <span className="flex  items-center gap-2 text-sm text-[var(--mesm-blue)] font-400 underline">
+                  <a href={author.linkedin}>LinkedIn</a>
+                </span>
+              )}
             </div>
           )}
         </div>
