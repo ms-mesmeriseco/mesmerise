@@ -114,6 +114,8 @@ export default function VideoCard({ videoUrl, caption }) {
       <video
         ref={videoRef}
         src={videoUrl}
+        autoPlay
+        muted
         loop
         playsInline
         className="w-full h-auto block"

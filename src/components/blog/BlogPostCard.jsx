@@ -15,13 +15,13 @@ export default function BlogPostCard({ post }) {
   const authorName = post.blogAuthor?.name;
   const excerpt =
     post.postExcerpt || post.metaDescription?.[0]?.children?.[0]?.text || "";
-  console.log("BlogPostCard render:", {
-    title,
-    avatarUrl,
-    author,
-    authorName,
-    excerpt,
-  });
+  // console.log("BlogPostCard render:", {
+  //   title,
+  //   avatarUrl,
+  //   author,
+  //   authorName,
+  //   excerpt,
+  // });
 
   const formattedDate = post.postDate
     ? new Date(post.postDate).toLocaleString("en-AU", {

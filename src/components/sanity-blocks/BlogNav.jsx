@@ -22,32 +22,32 @@ export default function BlogNav() {
         setPosts(list);
 
         // ✅ Debug logs: confirm tag payload shape + totals
-        console.groupCollapsed("[BlogScroll] serviceTags debug");
-        console.log("posts:", list.length);
-        console.log(
-          "posts with serviceTags:",
-          list.filter((p) => (p?.serviceTags || []).length > 0).length,
-        );
-        console.log(
-          "total tag refs returned:",
-          list.reduce(
-            (acc, p) => acc + ((p?.serviceTags || []).length || 0),
-            0,
-          ),
-        );
-        console.log(
-          "sample (first 5 posts) tags:",
-          list.slice(0, 5).map((p) => ({
-            slug: p?.slug,
-            title: p?.postTitle,
-            serviceTags: (p?.serviceTags || []).map((t) => ({
-              _id: t?._id,
-              title: t?.title,
-              slug: t?.slug,
-            })),
-          })),
-        );
-        console.groupEnd();
+        // console.groupCollapsed("[BlogScroll] serviceTags debug");
+        // console.log("posts:", list.length);
+        // console.log(
+        //   "posts with serviceTags:",
+        //   list.filter((p) => (p?.serviceTags || []).length > 0).length,
+        // );
+        // console.log(
+        //   "total tag refs returned:",
+        //   list.reduce(
+        //     (acc, p) => acc + ((p?.serviceTags || []).length || 0),
+        //     0,
+        //   ),
+        // );
+        // console.log(
+        //   "sample (first 5 posts) tags:",
+        //   list.slice(0, 5).map((p) => ({
+        //     slug: p?.slug,
+        //     title: p?.postTitle,
+        //     serviceTags: (p?.serviceTags || []).map((t) => ({
+        //       _id: t?._id,
+        //       title: t?.title,
+        //       slug: t?.slug,
+        //     })),
+        //   })),
+        // );
+        // console.groupEnd();
       } catch (error) {
         console.error("Failed to fetch blog posts from Sanity:", error);
       }

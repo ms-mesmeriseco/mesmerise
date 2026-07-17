@@ -8,6 +8,7 @@ import ExpandingCard from "@/components/ui/ExpandingCard";
 import BlogTOC from "@/components/blog/BlogTOC";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import BlogRail from "@/components/sanity-blocks/BlogRail";
+import VideoCard from "@/components/ui/VideoCard";
 
 import { sanityClient } from "@/sanity/client";
 import { blogPostBySlugQuery, adjacentBlogPostsQuery } from "@/lib/sanity/blog";
@@ -172,17 +173,15 @@ const blogPortableComponents = {
         </figure>
       );
     },
-    file: ({ value }) => {
-      const href = value?.file?.url;
+    video: ({ value }) => {
+      const href = value?.videoContent?.asset?.url;
       if (!href) return null;
       return (
-        <video
-          controls
-          autoPlay
-          muted
-          className="rounded-md"
-          src={href}
-        ></video>
+        <div className="pb-4">
+          {value.entryTitle && <p className="sr-only">{value.entryTitle}</p>}
+
+          <VideoCard videoUrl={href} />
+        </div>
       );
     },
     break: ({ value }) => {
@@ -282,48 +281,74 @@ export async function generateMetadata({ params }) {
     },
   };
 }
-
+function estimateReadingTime(blocks, wordsPerMinute = 200) {
+  const text = blocksToPlainText(blocks);
+  const wordCount = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  const minutes = Math.max(1, Math.round(wordCount / wordsPerMinute));
+  return `${minutes} min read`;
+}
 // --- Author card wired to Sanity ---
-function AuthorCard({ author }) {
+function AuthorCard({ author, tags = [], date, readingTime }) {
   if (!author) return null;
   const avatarUrl = author.authorAvatar?.url;
   const authorBio = normalizePortableTextKeys(author.authorBio);
 
   return (
     <section
-      className="mt-12 border-1 border-[var(--mesm-grey-dk)] p-6 rounded-md flex gap-4"
+      className="mt-12 border border-[var(--mesm-grey-dk)] rounded-md p-6 flex flex-col gap-4"
       itemScope
       itemType="https://schema.org/Person"
     >
-      {avatarUrl && (
-        <Image
-          src={avatarUrl}
-          alt={`Avatar of ${author.name ?? "author"}`}
-          width={96}
-          height={96}
-          className="rounded-full shrink-0"
-        />
-      )}
-
-      <div className="flex-1">
+      {/* Top: avatar, name, date/reading time */}
+      <div className="flex items-center gap-4 pb-4 border-b border-[var(--mesm-grey-dk)]">
+        {avatarUrl && (
+          <Image
+            src={avatarUrl}
+            alt={`Avatar of ${author.name ?? "author"}`}
+            width={96}
+            height={96}
+            className="rounded-full shrink-0 w-16 h-16 object-cover ring-1 ring-[var(--mesm-grey-dk)]"
+          />
+        )}
         {author?.name && (
-          <h3 className="" itemProp="name">
+          <h3 className="text-base" itemProp="name">
             {author.name}
           </h3>
         )}
-        {authorBio && (
-          <div className="prose max-w-none text-[var(--foreground)]">
-            <PortableText
-              value={authorBio}
-              components={blogPortableComponents}
-            />
+      </div>
+      {/* Tags */}
+      {tags.length > 0 && (
+        <div className="flex flex-wrap items-center gap-1">
+          {tags.map((tag) => (
+            <Link
+              key={tag._id}
+              href={`/blog?tag=${tag.slug}`}
+              className="px-3 py-1 rounded-lg text-sm transition whitespace-nowrap bg-[var(--mesm-red)] text-[var(--background)] hover:bg-[var(--mesm-grey)] hover:text-[var(--background)]"
+            >
+              {tag.title}
+            </Link>
+          ))}
+        </div>
+      )}
+      {/* <div className="flex flex-col gap-1">
+        {(date || readingTime) && (
+          <div className="flex items-center gap-2 text-sm text-[var(--mesm-l-grey)] font-light">
+            {date && <span>{date}</span>}
+            {date && readingTime && <span aria-hidden="true">·</span>}
+            {readingTime && <span>{readingTime}</span>}
           </div>
         )}
-      </div>
+      </div> */}
+
+      {/* Bio */}
+      {authorBio && (
+        <div className="prose max-w-none text-[var(--foreground)]">
+          <PortableText value={authorBio} components={blogPortableComponents} />
+        </div>
+      )}
     </section>
   );
 }
-
 // --- Main blog page (Sanity) ---
 export default async function BlogPost({ params }) {
   const resolved = await params;
@@ -345,12 +370,13 @@ export default async function BlogPost({ params }) {
     // console.log("BLOG CONTENT RAW:", JSON.stringify(page.blogContent, null, 2));
     // console.log(
     //   "FIRST BLOCK MARKDEFS:",
-    //   JSON.stringify(page.blogContent?.[0]?.markDefs, null, 2)
+    //   JSON.stringify(page.blogContent?.[0]?.markDefs, null, 2),
     // );
   } catch (err) {
     console.error("BlogPost Sanity error:", err);
     return <p>Blog post not found.</p>;
   }
+  const serviceTags = page.serviceTags || [];
 
   const prev = more?.prev || null;
   const next = more?.next || null;
@@ -397,7 +423,7 @@ export default async function BlogPost({ params }) {
               text={page.postHeading || page.postTitle}
             />
 
-            <div className="flex items-center gap-8 rounded-md w-fit pb-6">
+            <div className="flex items-center gap-8 rounded-md w-fit">
               {/* Avatar */}
               <div className="relative h-10 w-10 shrink-0">
                 {avatarUrl ? (
@@ -436,9 +462,24 @@ export default async function BlogPost({ params }) {
                     {formattedDate}
                   </div>
                 )}
+                <div className="text-sm md:text-[15px] font-light text-[var(--mesm-l-grey)]">
+                  {estimateReadingTime(normBlogContent)}
+                </div>
               </div>
             </div>
-
+            {serviceTags.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1 ">
+                {serviceTags.map((tag) => (
+                  <Link
+                    key={tag._id}
+                    href={`/blog?tag=${tag.slug}`}
+                    className="px-3 py-1 rounded-lg  text-sm transition whitespace-nowrap bg-[var(--mesm-red)] text-[var(--background)] hover:bg-[var(--mesm-grey)] hover:text-[var(--background)]"
+                  >
+                    {tag.title}
+                  </Link>
+                ))}
+              </div>
+            )}
             {/* Blog Content – Portable Text */}
             {normBlogContent && (
               <div className="flex flex-col gap-4 border-t-1 pt-6 border-[var(--mesm-grey-dk)]">
@@ -459,7 +500,14 @@ export default async function BlogPost({ params }) {
               </div>
             )}
 
-            {author?.authorBio && <AuthorCard author={author} />}
+            {author?.authorBio && (
+              <AuthorCard
+                author={author}
+                tags={serviceTags}
+                date={formattedDate}
+                readingTime={estimateReadingTime(normBlogContent)}
+              />
+            )}
 
             {(prev || next) && (
               <nav

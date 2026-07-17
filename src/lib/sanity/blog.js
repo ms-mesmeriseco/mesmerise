@@ -61,7 +61,8 @@ export const blogPostBySlugQuery = groq`
                 "slug": slug.current
               },
               _type == "image" => { ..., "asset": asset->{ url, metadata } },
-              _type == "file"  => { ..., "asset": asset->{ url } }
+              _type == "file"  => { ..., "asset": asset->{ url } },
+              _type == "video"  => { ..., "asset": asset->{ url } }
             }
           }
         }
@@ -113,6 +114,18 @@ export const blogPostBySlugQuery = groq`
         "dimensions": metadata.dimensions
       }
     },
+// ---------- BLOCK-LEVEL VIDEO ----------
+_type == "video" => {
+  ...,
+  entryTitle,
+  "videoContent": {
+    "asset": videoContent.asset->{
+      url,
+      "dimensions": metadata.dimensions
+    }
+  }
+},
+
 
     // ---------- INLINE MARK DEFINITIONS (normal Portable Text marks) ----------
     markDefs[]{
