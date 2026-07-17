@@ -12,6 +12,7 @@ import VideoCard from "@/components/ui/VideoCard";
 
 import { sanityClient } from "@/sanity/client";
 import { blogPostBySlugQuery, adjacentBlogPostsQuery } from "@/lib/sanity/blog";
+import AuthorCard from "@/components/blog/AuthorCard";
 
 // --- helpers ---
 function abs(url) {
@@ -287,68 +288,7 @@ function estimateReadingTime(blocks, wordsPerMinute = 200) {
   const minutes = Math.max(1, Math.round(wordCount / wordsPerMinute));
   return `${minutes} min read`;
 }
-// --- Author card wired to Sanity ---
-function AuthorCard({ author, tags = [], date, readingTime }) {
-  if (!author) return null;
-  const avatarUrl = author.authorAvatar?.url;
-  const authorBio = normalizePortableTextKeys(author.authorBio);
 
-  return (
-    <section
-      className="mt-12 border border-[var(--mesm-grey-dk)] rounded-md p-6 flex flex-col gap-4"
-      itemScope
-      itemType="https://schema.org/Person"
-    >
-      {/* Top: avatar, name, date/reading time */}
-      <div className="flex items-center gap-4 pb-4 border-b border-[var(--mesm-grey-dk)]">
-        {avatarUrl && (
-          <Image
-            src={avatarUrl}
-            alt={`Avatar of ${author.name ?? "author"}`}
-            width={96}
-            height={96}
-            className="rounded-full shrink-0 w-16 h-16 object-cover ring-1 ring-[var(--mesm-grey-dk)]"
-          />
-        )}
-        {author?.name && (
-          <h3 className="text-base" itemProp="name">
-            {author.name}
-          </h3>
-        )}
-      </div>
-      {/* Tags */}
-      {tags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1">
-          {tags.map((tag) => (
-            <Link
-              key={tag._id}
-              href={`/blog?tag=${tag.slug}`}
-              className="px-3 py-1 rounded-lg text-sm transition whitespace-nowrap bg-[var(--mesm-red)] text-[var(--background)] hover:bg-[var(--mesm-grey)] hover:text-[var(--background)]"
-            >
-              {tag.title}
-            </Link>
-          ))}
-        </div>
-      )}
-      {/* <div className="flex flex-col gap-1">
-        {(date || readingTime) && (
-          <div className="flex items-center gap-2 text-sm text-[var(--mesm-l-grey)] font-light">
-            {date && <span>{date}</span>}
-            {date && readingTime && <span aria-hidden="true">·</span>}
-            {readingTime && <span>{readingTime}</span>}
-          </div>
-        )}
-      </div> */}
-
-      {/* Bio */}
-      {authorBio && (
-        <div className="prose max-w-none text-[var(--foreground)]">
-          <PortableText value={authorBio} components={blogPortableComponents} />
-        </div>
-      )}
-    </section>
-  );
-}
 // --- Main blog page (Sanity) ---
 export default async function BlogPost({ params }) {
   const resolved = await params;
@@ -422,64 +362,21 @@ export default async function BlogPost({ params }) {
               className="page-title-small"
               text={page.postHeading || page.postTitle}
             />
-
-            <div className="flex items-center gap-8 rounded-md w-fit">
-              {/* Avatar */}
-              <div className="relative h-10 w-10 shrink-0">
-                {avatarUrl ? (
-                  <Image
-                    src={avatarUrl}
-                    alt={`Avatar of ${author?.name ?? "author"}`}
-                    fill
-                    sizes="32px"
-                    className="rounded-full object-cover ring-1 ring-[var(--mesm-grey-dk)]"
-                  />
-                ) : (
-                  <div className="h-full w-full rounded-full grid place-items-center bg-[var(--mesm-grey-dk)] text-[var(--foreground)] text-xs font-semibold ring-1 ring-[var(--mesm-grey-dk)]">
-                    {(author?.name || "A")
-                      .split(" ")
-                      .filter(Boolean)
-                      .slice(0, 2)
-                      .map((s) => s[0])
-                      .join("")
-                      .toUpperCase()}
-                  </div>
-                )}
-              </div>
-
-              {/* Meta */}
-              <div className="flex flex-row gap-4 leading-tight">
-                {author?.name && (
-                  <div className="text-sm md:text-[15px] text-[var(--foreground)]">
-                    <span className="decoration-[var(--mesm-grey-dk)]">
-                      {author.name}
-                    </span>
-                  </div>
-                )}
-                {/* <div className="m-auto h-2 w-2 rounded-full border border-[var(--mesm-grey)] bg-[var(--background)]"></div> */}
-                {formattedDate && (
-                  <div className="text-sm md:text-[15px] font-light text-[var(--mesm-l-grey)]">
-                    {formattedDate}
-                  </div>
-                )}
-                <div className="text-sm md:text-[15px] font-light text-[var(--mesm-l-grey)]">
-                  {estimateReadingTime(normBlogContent)}
-                </div>
-              </div>
-            </div>
-            {serviceTags.length > 0 && (
-              <div className="flex flex-wrap items-center gap-1 ">
-                {serviceTags.map((tag) => (
-                  <Link
-                    key={tag._id}
-                    href={`/blog?tag=${tag.slug}`}
-                    className="px-3 py-1 rounded-lg  text-sm transition whitespace-nowrap bg-[var(--mesm-red)] text-[var(--background)] hover:bg-[var(--mesm-grey)] hover:text-[var(--background)]"
-                  >
-                    {tag.title}
-                  </Link>
-                ))}
-              </div>
+            {author?.authorBio && (
+              <AuthorCard
+                author={author}
+                tags={serviceTags}
+                date={formattedDate}
+                showBio={false}
+                showBlogDetails={true}
+                showBorder={false}
+                showPadding={false}
+                readingTime={estimateReadingTime(normBlogContent)}
+                normalizePortableTextKeys={normalizePortableTextKeys}
+                portableTextComponents={blogPortableComponents}
+              />
             )}
+
             {/* Blog Content – Portable Text */}
             {normBlogContent && (
               <div className="flex flex-col gap-4 border-t-1 pt-6 border-[var(--mesm-grey-dk)]">
@@ -505,7 +402,10 @@ export default async function BlogPost({ params }) {
                 author={author}
                 tags={serviceTags}
                 date={formattedDate}
+                showBlogDetails={false}
                 readingTime={estimateReadingTime(normBlogContent)}
+                normalizePortableTextKeys={normalizePortableTextKeys}
+                portableTextComponents={blogPortableComponents}
               />
             )}
 

@@ -25,7 +25,10 @@ export const blogPostBySlugQuery = groq`
 
   "blogAuthor": blogAuthor->{
     name,
+    role,
+    linkedin,
     "authorAvatar": { "url": authorAvatar.asset->url },
+
     authorBio[]{...,}
   },
 
