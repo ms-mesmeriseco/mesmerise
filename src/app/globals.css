@@ -247,15 +247,13 @@ p {
   font-weight: 400;
   opacity: 0.9;
 }
-p a,
-li a {
+p a {
   color: var(--mesm-blue);
   position: relative;
   text-decoration: none;
 }
 
-p a::after,
-li a::after {
+p a::after {
   content: "";
   position: absolute;
   left: 0;
@@ -281,9 +279,7 @@ li a::after {
 } */
 
 p a:hover::after,
-p a:focus::after,
-li a:hover::after,
-li a:focus::after {
+p a:focus::after {
   transform: scaleX(1);
 }
 .p2 {

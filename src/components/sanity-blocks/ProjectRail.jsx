@@ -250,7 +250,7 @@ export default function ProjectRail({
                             className="absolute inset-0 bg-black/45 backdrop-blur-[2px] text-[var(--foreground)] p-3 flex flex-col justify-between"
                           >
                             {blocks && (
-                              <div className="prose-invert prose-p:my-1 leading-relaxed lg:w-1/2">
+                              <div className="prose-invert prose-p:my-1 leading-relaxed lg:w-1/2 w-full">
                                 {renderDataOne(blocks)}
                               </div>
                             )}
