@@ -112,7 +112,7 @@ export default function ComparisonTable({
         )}
 
         {/* Two comparison columns */}
-        <div className="gap-12 md:gap-12 grid grid-cols-1 md:grid-cols-2">
+        <div className="gap-12 md:gap-12 grid grid-cols-1 md:grid-cols-2 ">
           {/* Column 1 */}
           <div className="border-1 rounded-md border-[var(--mesm-grey-dk)]/50 hover:border-[var(--mesm-grey-dk)] duration-200 bg-[var(--accent)]/20  md:p-6 p-4">
             {title1 && (

@@ -136,6 +136,8 @@ function DesktopNav({ pathname }) {
   );
 }
 
+const HIDDEN_PATHS = ["/email-signup"];
+
 export default function Header() {
   const pathname = usePathname() || "/";
   const headerRef = useRef(null);
@@ -176,6 +178,8 @@ export default function Header() {
       );
     }
   }, []);
+
+  if (HIDDEN_PATHS.includes(pathname)) return null;
 
   return (
     <>

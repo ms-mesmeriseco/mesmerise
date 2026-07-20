@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 export default function AvatarRow({
   people = [],
-  size = 38,
+  size = 48,
   scrollOnMobile = true,
   overlap = 0.28,
   reverse = false,

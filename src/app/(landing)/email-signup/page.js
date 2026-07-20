@@ -42,8 +42,8 @@ export default function EmailSignupPage() {
   return (
     <>
       <CenterHero
-        pageHeader="Sign Up to our newsletter for insights direct to your inbox"
-        pageSubtitle="Written by our expert team"
+        pageHeader="Future-proof your business"
+        pageSubtitle="I'll teach you how to turn cold strangers into loyal clients using unique mental models & 300,000+ years of evolutionary psychology"
         showCta={false}
         avatar={{
           src: "/assets/team/Pezzie_avatar.png",
