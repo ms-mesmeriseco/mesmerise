@@ -52,10 +52,13 @@ body.page-about {
 }
 
 body.page-blog h3 {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
-  font-weight: 600;
+  font-size: 1.7rem;
+  line-height: 2.1rem;
+  font-weight: 500;
   padding: 2rem 0rem;
+}
+body.page-blog h4 {
+  font-weight: 500;
 }
 
 html {
@@ -244,13 +247,15 @@ p {
   font-weight: 400;
   opacity: 0.9;
 }
-p a {
+p a,
+li a {
   color: var(--mesm-blue);
   position: relative;
   text-decoration: none;
 }
 
-p a::after {
+p a::after,
+li a::after {
   content: "";
   position: absolute;
   left: 0;
@@ -276,7 +281,9 @@ p a::after {
 } */
 
 p a:hover::after,
-p a:focus::after {
+p a:focus::after,
+li a:hover::after,
+li a:focus::after {
   transform: scaleX(1);
 }
 .p2 {
@@ -336,7 +343,7 @@ ol li {
   list-style-type: decimal;
   margin-left: 1rem;
   padding-left: 0.5rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.5rem;
   font-weight: 400;
   color: var(--mesm-l-grey, 0.8);

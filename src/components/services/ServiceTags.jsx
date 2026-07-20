@@ -32,7 +32,11 @@ export default function ServiceTags({
   highlight = false,
 }) {
   const router = useRouter();
-  const EXCLUDED_TAGS = ["Layout: Highlight Grid"];
+  const EXCLUDED_TAGS = [
+    "Layout: Highlight Grid",
+    "Show Blog In Footer",
+    "show-blog-in-footer",
+  ];
 
   const container = {
     hidden: {},

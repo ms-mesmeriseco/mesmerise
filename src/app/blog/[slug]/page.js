@@ -111,10 +111,7 @@ const blogPortableComponents = {
           .trim() || "";
       const id = slugify(text || "section");
       return (
-        <h3
-          id={id}
-          className="text-xl font-600 scroll-mt-[120px] [&>a]:text-[var(--mesm-blue)]"
-        >
+        <h3 id={id} className="scroll-mt-[120px] [&>a]:text-[var(--mesm-blue)]">
           {children}
         </h3>
       );
@@ -149,14 +146,25 @@ const blogPortableComponents = {
 
       const content = <span className="">{children}</span>;
 
+      const linkClassName =
+        "relative inline-block text-[var(--mesm-blue)] no-underline " +
+        "after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-px " +
+        "after:bg-[var(--mesm-blue)] after:scale-x-0 after:origin-left " +
+        "after:transition-transform after:duration-200 " +
+        "hover:after:scale-x-100 focus:after:scale-x-100";
+
       // Internal → use next/link
       if (isInternal) {
-        return <Link href={href}>{content}</Link>;
+        return (
+          <Link href={href} className={linkClassName}>
+            {content}
+          </Link>
+        );
       }
 
       // External → plain <a>
       return (
-        <a href={href} target={target} rel={rel}>
+        <a href={href} target={target} rel={rel} className={linkClassName}>
           {content}
         </a>
       );
@@ -317,6 +325,7 @@ export default async function BlogPost({ params }) {
     return <p>Blog post not found.</p>;
   }
   const serviceTags = page.serviceTags || [];
+  console.log(serviceTags);
 
   const prev = more?.prev || null;
   const next = more?.next || null;

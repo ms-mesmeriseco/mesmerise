@@ -5,6 +5,8 @@ import { PortableText } from "@portabletext/react";
 // --- Author card wired to Sanity ---
 // normalizePortableTextKeys and portableTextComponents are passed in from the
 // parent page so this component doesn't need its own copy of that logic.
+const EXCLUDED_TAGS = ["Show Blog In Footer"];
+
 export default function AuthorCard({
   author,
   tags = [],
@@ -20,6 +22,7 @@ export default function AuthorCard({
   if (!author) return null;
   const avatarUrl = author.authorAvatar?.url;
   const authorBio = normalizePortableTextKeys(author.authorBio);
+  const visibleTags = tags.filter((tag) => !EXCLUDED_TAGS.includes(tag.title));
 
   return (
     <section
@@ -60,9 +63,9 @@ export default function AuthorCard({
         </div>
       )}
       {/* Tags */}
-      {tags.length > 0 && (
+      {visibleTags.length > 0 && (
         <div className="flex flex-wrap items-center gap-1">
-          {tags.map((tag) => (
+          {visibleTags.map((tag) => (
             <Link
               key={tag._id}
               href={`/blog?tag=${tag.slug}`}
