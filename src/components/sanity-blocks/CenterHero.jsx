@@ -84,6 +84,7 @@ export default function CenterHero({
   ctaUrl = "/connect",
   logos,
   customContent,
+  avatar, // { src, alt } — replaces the GoogleBrow with a person's avatar
 }) {
   const listItems = useMemo(() => listFromHeroL(heroL), [heroL]);
 
@@ -107,7 +108,17 @@ export default function CenterHero({
         <div className="flex flex-col items-center">
           <div className="wrapper flex flex-col items-center justify-between min-h-[85vh] md:py-14 py-10">
             <div className="text-[var(--foreground)] flex flex-col md:gap-8 gap-4 min-h-[60vh] md:justify-center justify-start items-start md:items-center text-left md:text-center md:w-4/5">
-              <GoogleBrow />
+              {avatar?.src ? (
+                <Image
+                  src={avatar.src}
+                  alt={avatar.alt || ""}
+                  width={223}
+                  height={223}
+                  className="w-20 h-20 rounded-full object-cover ring-1 ring-[var(--mesm-grey-dk)]"
+                />
+              ) : (
+                <GoogleBrow />
+              )}
               <StaggeredWords
                 as="h1"
                 delay={0.01}

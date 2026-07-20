@@ -45,8 +45,12 @@ export default function EmailSignupPage() {
         pageHeader="Sign Up to our newsletter for insights direct to your inbox"
         pageSubtitle="Written by our expert team"
         showCta={false}
+        avatar={{
+          src: "/assets/team/Pezzie_avatar.png",
+          alt: "Petar, Mesmerise",
+        }}
         customContent={
-          <div className="md:w-[400px] w-full">
+          <div className="md:w-[480px] w-full">
             <FooterSignup
               cta="Subscribe for insights"
               successMsg="You're in! Check your inbox soon."
