@@ -136,7 +136,7 @@ function DesktopNav({ pathname }) {
   );
 }
 
-const HIDDEN_PATHS = ["/email-signup"];
+const HIDDEN_PATHS = ["/join"];
 
 export default function Header() {
   const pathname = usePathname() || "/";
