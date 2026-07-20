@@ -3,8 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import useSectionMarker from "@/hooks/useSectionMarker";
 import FooterSignup from "@/components/blocks/FooterSignup";
+import SimpleFooter from "@/components/layout/SimpleFooter";
 
 import { sanityClient } from "@/sanity/client";
 import { groq } from "next-sanity";
@@ -17,9 +19,18 @@ const FOOTER_BLOG_POSTS_QUERY = groq`
   postTitle
 }
 `;
+
+// Routes that get the simplified (wordmark + socials only) footer
+const SIMPLE_FOOTER_PATHS = ["/email-signup"];
+
 export default function Footer() {
   useSectionMarker("footer");
+  const pathname = usePathname() || "/";
   const [blogPosts, setBlogPosts] = useState([]);
+
+  const useSimpleFooter = SIMPLE_FOOTER_PATHS.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
 
   useEffect(() => {
     let alive = true;
@@ -41,6 +52,8 @@ export default function Footer() {
   }, []);
 
   const year = new Date().getFullYear();
+
+  if (useSimpleFooter) return <SimpleFooter />;
 
   return (
     <footer className="relative z-[200] bg-[var(--background)] border-t-1 border-[var(--mesm-grey-dk)] m-[var(--global-margin-sm)]">

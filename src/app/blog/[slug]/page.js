@@ -402,7 +402,6 @@ export default async function BlogPost({ params }) {
                 author={author}
                 tags={serviceTags}
                 date={formattedDate}
-                showBlogDetails={false}
                 readingTime={estimateReadingTime(normBlogContent)}
                 normalizePortableTextKeys={normalizePortableTextKeys}
                 portableTextComponents={blogPortableComponents}

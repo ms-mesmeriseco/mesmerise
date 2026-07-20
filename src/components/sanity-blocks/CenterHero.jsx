@@ -83,6 +83,7 @@ export default function CenterHero({
   ctaLabel,
   ctaUrl = "/connect",
   logos,
+  customContent,
 }) {
   const listItems = useMemo(() => listFromHeroL(heroL), [heroL]);
 
@@ -116,18 +117,20 @@ export default function CenterHero({
 
               <p className="p2">{pageSubtitle}</p>
 
-              <div className="flex flex-col gap-8 md:items-center md:justify-center justify-start items-start">
+              <div className="w-full flex flex-col gap-8 md:items-center md:justify-center justify-start items-start">
                 <PillList items={listItems} />
-                {showCta && (
-                  <Button
-                    href={ctaUrl}
-                    extraClass=""
-                    variant="accent2"
-                    size="large"
-                  >
-                    {ctaLabel || "Learn more"}
-                  </Button>
-                )}
+                {customContent
+                  ? customContent
+                  : showCta && (
+                      <Button
+                        href={ctaUrl}
+                        extraClass=""
+                        variant="accent2"
+                        size="large"
+                      >
+                        {ctaLabel || "Learn more"}
+                      </Button>
+                    )}
               </div>
 
               <AvatarRow people={customers} />
