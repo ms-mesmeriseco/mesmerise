@@ -52,7 +52,7 @@ export default function EmailSignupPage() {
         customContent={
           <div className="md:w-[480px] w-full">
             <FooterSignup
-              cta="Subscribe for insights"
+              cta="Show me how"
               successMsg="You're in! Check your inbox soon."
               highlight={true}
             />
