@@ -14,7 +14,7 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description,
-      url: "https://www.mesmeriseco.com/email-signup",
+      url: "https://www.mesmeriseco.com/join",
       type: "website",
       images: [
         {
@@ -32,7 +32,7 @@ export async function generateMetadata() {
       images: "/assets/social-default.png",
     },
     alternates: {
-      canonical: "https://www.mesmeriseco.com/email-signup",
+      canonical: "https://www.mesmeriseco.com/join",
     },
   };
 }

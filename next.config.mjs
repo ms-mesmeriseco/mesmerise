@@ -158,6 +158,11 @@ const nextConfig = {
           "/blog/simple-7-step-framework-to-get-strangers-to-buy-your-stuff",
         permanent: true,
       },
+      {
+        source: "/email-signup",
+        destination: "/join",
+        permanent: true,
+      },
     ];
   },
 };
