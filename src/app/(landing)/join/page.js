@@ -5,9 +5,8 @@ import ProjectRail from "@/components/sanity-blocks/ProjectRail";
 import TestimonialsRail from "@/components/home/TestimonialRail";
 
 export async function generateMetadata() {
-  const title = "Sign Up to Our Newsletter | Mesmerise";
-  const description =
-    "Sign up to our newsletter for insights direct to your inbox, written by our expert team.";
+  const title = "Your unfair advantage | Mesmerise";
+  const description = "";
 
   return {
     title,
@@ -19,7 +18,7 @@ export async function generateMetadata() {
       type: "website",
       images: [
         {
-          url: "/assets/social-default.png",
+          url: "/assets/social-share-purple.png",
           width: 1200,
           height: 630,
           alt: title,
