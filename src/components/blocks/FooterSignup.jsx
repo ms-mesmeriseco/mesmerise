@@ -7,6 +7,7 @@ export default function FooterSignup({
   submitPath = "/api/newsletter",
   cta = "Subscribe for insights",
   successMsg = "You're in!",
+  highlight = false,
 }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -91,7 +92,7 @@ export default function FooterSignup({
       <button
         type="submit"
         disabled={submitting}
-        className="rounded-2xl border-1 border-[var(--mesm-grey-dk)]  px-4 py-2 text-[var(--foreground)] hover:bg-[var(--accent2)] hover:text-[var(--background)] duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        className={`rounded-2xl border-1 border-[var(--mesm-grey-dk)] px-4 py-2 ${highlight ? "hover:text-[var(--foreground)] bg-[var(--accent2)] text-[var(--background)] hover:bg-[var(--background)]" : "text-[var(--foreground)] hover:bg-[var(--accent2)] hover:text-[var(--background)]"}  duration-200 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
       >
         {submitting ? "Submitting..." : cta}
       </button>

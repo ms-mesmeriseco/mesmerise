@@ -54,6 +54,7 @@ export default function EmailSignupPage() {
             <FooterSignup
               cta="Subscribe for insights"
               successMsg="You're in! Check your inbox soon."
+              highlight={true}
             />
           </div>
         }

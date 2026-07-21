@@ -13,7 +13,7 @@ export default function AuthorCard({
   date,
   readingTime,
   showBio = true,
-  showBlogDetails = true,
+  showBlogDetails = false,
   showBorder = true,
   showPadding = true,
   normalizePortableTextKeys,
@@ -50,8 +50,18 @@ export default function AuthorCard({
             <div className="flex items-center text-md text-[var(--mesm-l-grey)] font-400">
               {author.name}
             </div>
-            <div className="flex items-center gap-2 text-sm text-[var(--mesm-l-grey)]/80 font-400">
-              {author.role}
+            <div className="flex items-center gap-2 text-sm">
+              <span className="flex items-center gap-2 text-sm text-[var(--mesm-l-grey)]/80 font-400">
+                {author.role}
+              </span>
+              <span aria-hidden="true">·</span>
+              {author?.linkedin && (
+                <span className="flex  items-center gap-2 text-sm text-[var(--mesm-blue)] font-400 underline hover:opacity-60 opacity-100 duration-250">
+                  <a target="_blank" href={author.linkedin}>
+                    LinkedIn
+                  </a>
+                </span>
+              )}
             </div>
           </div>
         )}
@@ -85,12 +95,6 @@ export default function AuthorCard({
               {date && <span>{date}</span>}
               {date && readingTime && <span aria-hidden="true">·</span>}
               {readingTime && <span>{readingTime}</span>}
-              {date && readingTime && <span aria-hidden="true">·</span>}
-              {author?.linkedin && (
-                <span className="flex  items-center gap-2 text-sm text-[var(--mesm-blue)] font-400 underline">
-                  <a href={author.linkedin}>LinkedIn</a>
-                </span>
-              )}
             </div>
           )}
         </div>
