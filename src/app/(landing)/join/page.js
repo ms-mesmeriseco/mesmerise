@@ -6,7 +6,7 @@ import TestimonialsRail from "@/components/home/TestimonialRail";
 
 export async function generateMetadata() {
   const title = "Your unfair advantage | Mesmerise";
-  const description = "";
+  const description = "...";
 
   return {
     title,
