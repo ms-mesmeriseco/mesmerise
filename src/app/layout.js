@@ -78,6 +78,14 @@ export default function RootLayout({ children }) {
       `,
           }}
         />
+        {/* <!-- What converts code --> */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: ` var $wc_load=function(a){return JSON.parse(JSON.stringify(a))}, $wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL), ref:$wc_load(document.referrer), search:$wc_load(location.search), hash:$wc_load(location.hash)}};`,
+          }}
+        />
+        <script src="//s.ksrndkehqnwntyxlhgto.com/171951.js"></script>
+        {/*<!-- End What converts code --> */}
         {/* Meta Pixel Code */}
         <script
           dangerouslySetInnerHTML={{
