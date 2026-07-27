@@ -15,6 +15,7 @@ import TestimonialsCarousel from "@/components/sanity-blocks/TestimonialCarousel
 import ThreeColumnImagesBlock from "@/components/sanity-blocks/ThreeColumnImagesBlock";
 import DataRow from "@/components/sanity-blocks/DataRow";
 import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
+import ContentRail from "@/components/sanity-blocks/ContentRail";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -233,6 +234,15 @@ export default function PageBase({ blocks, metadata }) {
                 </div>
               );
             }
+            case "contentRail":
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <ContentRail block={block} />
+                </div>
+              );
 
             case "ctaBentoBox": {
               return (

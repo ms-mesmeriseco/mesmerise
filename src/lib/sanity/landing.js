@@ -284,6 +284,26 @@ title2,
       }
     },
 
+    // ---------- CONTENT RAIL (NEW) ----------
+    _type == "contentRail" => {
+      railTitle,
+      items[]{
+        _key,
+        itemTitle,
+        itemText,
+        "media": {
+          "url": media.asset->url,
+          "width": media.asset->metadata.dimensions.width,
+          "height": media.asset->metadata.dimensions.height,
+          "alt": coalesce(media.alt, itemTitle, "")
+        },
+        "link": link{
+          label,
+          url
+        }
+      }
+    },
+
   }
 
 
