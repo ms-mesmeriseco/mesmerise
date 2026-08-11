@@ -92,7 +92,7 @@ export default function CROForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-[var(--accent)] rounded-2xl border-1 border-[var(--accent)] hover:border-[var(--foreground)] duration-200 cursor-pointer hover:bg-[var(--background)] hover:text-[var(--foreground)] text-[var(--background)] py-2 font-normal disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-none rounded-2xl border-1 border-[var(--foreground)] duration-200 cursor-pointer hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] py-2 font-normal disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <p className="p2">
           {submitting ? "Submitting..." : "Get Instant Access"}
