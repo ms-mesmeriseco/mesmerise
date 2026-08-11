@@ -124,7 +124,6 @@ export default function LeftHero({
             "text-[var(--foreground)] w-[95%]",
           ].join(" ")}
         >
-          <GoogleBrow />
           {eyebrow && <h6>{eyebrow}</h6>}
           <StaggeredWords
             as="h1"
