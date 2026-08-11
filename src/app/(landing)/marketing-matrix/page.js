@@ -207,7 +207,7 @@ export function FinalCTA() {
       column2={[
         <Image
           key="final-cta-img"
-          src="/assets/team/petar-selfie.png"
+          src="/assets/omnichannel-marketing-matrix_graphic.png"
           alt="Why I created this"
           width={400}
           height={400}
@@ -229,7 +229,7 @@ export default function CROChecklistPage() {
         logos={TRUST_LOGOS}
         heroMedia={heroImg}
       />
-      <div className="flex w-full flex-col justify-between gap-64 mt-48">
+      <div className="flex w-full flex-col justify-between gap-64 my-48">
         <WhyICreatedThis />
         <WhatYouReceive />
         <ProjectRail tag="highlight" />
