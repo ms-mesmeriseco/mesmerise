@@ -124,13 +124,15 @@ export function WhyICreatedThis() {
         </div>,
       ]}
       column2={[
-        <Image
-          key="why-created-img"
-          src="https://cdn.sanity.io/images/wpr5jlmc/production/0f1c3d8e7a9b6f2e4c7d8f1e2a3b4c5d6e7f8g9h-1920x1920.png"
-          alt="Why I created this"
-          width={800}
-          height={600}
-        />,
+        <div className="relative w-xl" key="why-created-img">
+          <Image
+            key="why-created-img"
+            src="/assets/team/petar-selfie.png"
+            alt="Why I created this"
+            width={400}
+            height={400}
+          />
+        </div>,
       ]}
     />
   );
@@ -220,40 +222,6 @@ export function Converting() {
   );
 }
 
-export function Kerime() {
-  return (
-    <TwoColumn
-      column1={[
-        <div key="intro">
-          <h2>
-            &quot;Working with Mesmerise was the turning point in my
-            business.&quot;
-          </h2>
-          <br />
-          <p className="mb-3 p2">
-            &quot;They just know what to do and do it... No frills, no pointless
-            talking, straight to delivery &amp; outcomes.&quot;
-          </p>
-          <p className="mb-3">
-            My marketing services went from fluffy, basic concepts to tangible
-            and visible outcomes and profit.
-          </p>
-        </div>,
-      ]}
-      column2={[
-        <Image
-          key="kerime-img"
-          src="https://cdn.sanity.io/images/wpr5jlmc/production/d45a992afce525dbbf8f9382e92898c04309945e-1188x1129.jpg"
-          alt="Kerimé Abay"
-          width={800}
-          height={600}
-        />,
-        <h6 key="kerime-caption">Kerimé Abay, Hue Therapy</h6>,
-      ]}
-    />
-  );
-}
-
 export function FomTestimonial() {
   return (
     <TwoColumn
@@ -299,8 +267,6 @@ export default function CROChecklistPage() {
         <WhatYouReceive />
         <ProjectRail tag="highlight" />
 
-        <Converting />
-        <Kerime />
         <FomTestimonial />
         <TestimonialRail />
         <FAQ
