@@ -76,7 +76,7 @@ export async function generateMetadata() {
       type: "website",
       images: [
         {
-          url: "/assets/social-default.png",
+          url: "/assets/social-share-purple.png",
           width: 1200,
           height: 630,
           alt: title,
@@ -87,7 +87,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title,
       description,
-      images: "/assets/social-default.png",
+      images: "/assets/social-share-purple.png",
     },
     alternates: {
       canonical: `https://www.mesmeriseco.com/marketing-matrix`,
