@@ -79,6 +79,7 @@ function MediaDisplay({ media, fill = false }) {
 
 export default function LeftHero({
   heroMedia, // {url, mimeType, ...} from GROQ
+  eyebrow,
   pageHeader,
   pageSubtitle,
   heroL, // Sanity blocks or strings
@@ -124,6 +125,7 @@ export default function LeftHero({
           ].join(" ")}
         >
           <GoogleBrow />
+          {eyebrow && <h6>{eyebrow}</h6>}
           <StaggeredWords
             as="h1"
             delay={0.01}
