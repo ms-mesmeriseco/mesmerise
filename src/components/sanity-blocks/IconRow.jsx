@@ -12,6 +12,7 @@ import {
   isValidElement,
 } from "react";
 import { PortableText } from "@portabletext/react";
+import Button from "@/components/ui/Button";
 
 // --- Helpers ---
 
@@ -94,6 +95,9 @@ export default function IconRow({
   iconItems = [],
   displayTwo,
   block,
+  cta = false,
+  ctaLabel,
+  ctaLink,
 }) {
   // Prefer explicit props; fall back to Sanity block fields
   const resolvedTitle =
@@ -306,6 +310,13 @@ export default function IconRow({
           </div>
         )}
       </section>
+      {cta && ctaLabel && ctaLink && (
+        <div className="w-full flex items-center justify-center mt-2">
+          <Button href={ctaLink} variant="accent2" size="large">
+            {ctaLabel || "Learn More"}
+          </Button>
+        </div>
+      )}
     </InView>
   );
 }

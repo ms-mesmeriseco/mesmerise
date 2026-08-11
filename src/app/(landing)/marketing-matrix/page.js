@@ -142,6 +142,9 @@ export function WhatYouReceive() {
   return (
     <IconRow
       titleText="Here's what you receive"
+      cta={true}
+      ctaLabel="Get Your Free Matrix"
+      ctaLink="#cta"
       iconItems={[
         {
           icon: "https://cdn.sanity.io/images/wpr5jlmc/production/01b76f69febeea4647e01b7ffba9759c10407cc0-24x24.svg",
@@ -199,28 +202,30 @@ export function FomTestimonial() {
 
 export function FinalCTA() {
   return (
-    <TwoColumn
-      column1={[
-        <div key="final-cta" className="">
-          <h2 className="mb-3">Get Clear with Your Free Marketing Matrix</h2>
-          <p className="mb-8">
-            This matrix contains everything you need to avoid costly errors &
-            2am cortisol spikes.
-          </p>
-          <MatrixForm />
-        </div>,
-      ]}
-      column2={[
-        <Image
-          key="final-cta-img"
-          className="opacity-70"
-          src="/assets/matrix-assets/matrix-mockup.png"
-          alt="Why I created this"
-          width={600}
-          height={600}
-        />,
-      ]}
-    />
+    <section id="cta" className="mt-[-120px] pt-24">
+      <TwoColumn
+        column1={[
+          <div key="final-cta" className="">
+            <h2 className="mb-3">Get Clear with Your Free Marketing Matrix</h2>
+            <p className="mb-8">
+              This matrix contains everything you need to avoid costly errors &
+              2am cortisol spikes.
+            </p>
+            <MatrixForm />
+          </div>,
+        ]}
+        column2={[
+          <Image
+            key="final-cta-img"
+            className="opacity-70"
+            src="/assets/matrix-assets/matrix-mockup.png"
+            alt="Why I created this"
+            width={600}
+            height={600}
+          />,
+        ]}
+      />
+    </section>
   );
 }
 
@@ -240,8 +245,9 @@ export default function CROChecklistPage() {
         <WhyICreatedThis />
         <WhatYouReceive />
         <ProjectRail tag="highlight" />
-        <TestimonialRail />
         <FomTestimonial />
+        <TestimonialRail />
+
         <FAQ
           label="common questions"
           title="Frequently asked questions"
