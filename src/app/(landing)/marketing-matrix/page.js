@@ -126,10 +126,11 @@ export function WhyICreatedThis() {
       column2={[
         <Image
           key="audit-img"
+          className="w-full h-full object-cover"
           src="https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg"
           alt="CRO Audit"
           width={800}
-          height={600}
+          height={800}
         />,
         <h6 key="audit-caption">Petar Petrović, Mesmerise Founder</h6>,
       ]}
@@ -167,9 +168,10 @@ export function FomTestimonial() {
       column1={[
         <Image
           key="fom-img"
+          className="w-full h-full object-cover aspect-[1/1]"
           src="/assets/FoM_025.jpg"
           alt="Mesmerise client testimonial"
-          width={800}
+          width={600}
           height={600}
         />,
       ]}
@@ -180,11 +182,15 @@ export function FomTestimonial() {
             business we could scale
           </h2>
           <br />
-          <p className="p2">
-            &quot;We have been with Mesmerise for 3+ years now, and they have
+          <p className="p3">
+            &quot;We've been with Mesmerise for 3+ years now, and they have
             become an essential ally for us as our business continues to
             grow.&quot;
           </p>
+          <br />
+          <h5 className="text-[var(--mesm-blue)]">
+            Felix & Liam, Frame of Mind
+          </h5>
         </div>,
       ]}
     />
@@ -196,7 +202,7 @@ export function FinalCTA() {
     <TwoColumn
       column1={[
         <div key="final-cta" className="">
-          <h2 className="mb-3">Get your free Marketing Matrix</h2>
+          <h2 className="mb-3">Get Clear with Your Free Marketing Matrix</h2>
           <p className="mb-8">
             This matrix contains everything you need to avoid costly errors &
             2am cortisol spikes.
@@ -207,10 +213,11 @@ export function FinalCTA() {
       column2={[
         <Image
           key="final-cta-img"
-          src="/assets/omnichannel-marketing-matrix_graphic.png"
+          className="opacity-70"
+          src="/assets/matrix-assets/matrix-mockup.png"
           alt="Why I created this"
-          width={400}
-          height={400}
+          width={600}
+          height={600}
         />,
       ]}
     />
@@ -218,11 +225,11 @@ export function FinalCTA() {
 }
 
 export default function CROChecklistPage() {
-  const heroImg = { url: "/assets/omnichannel-marketing-matrix_graphic.png" };
+  const heroImg = { url: "/assets/matrix-assets/marketing-matrix_graphic.png" };
   return (
     <>
       <LeftHero
-        pageHeader="A Compass For Business Leaders Who Want A Clear Path"
+        pageHeader="A Compass for Business Leaders Who Want a Clear Path"
         pageSubtitle="From pre-revenue startups to 9-figure organisations, I kept seeing the same mistakes. This matrix contains everything you need to avoid costly errors & 2am cortisol spikes."
         showCta={false}
         customContent={<MatrixForm />}
