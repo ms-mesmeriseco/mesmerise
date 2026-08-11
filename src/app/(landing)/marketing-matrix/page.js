@@ -1,4 +1,4 @@
-import CenterHero from "@/components/sanity-blocks/CenterHero";
+import LeftHero from "@/components/sanity-blocks/LeftHero";
 import MatrixForm from "./MatrixForm";
 import TwoColumn from "@/components/sanity-blocks/TwoColumn";
 import IconRow from "@/components/sanity-blocks/IconRow";
@@ -124,15 +124,14 @@ export function WhyICreatedThis() {
         </div>,
       ]}
       column2={[
-        <div className="relative w-xl" key="why-created-img">
-          <Image
-            key="why-created-img"
-            src="/assets/team/petar-selfie.png"
-            alt="Why I created this"
-            width={400}
-            height={400}
-          />
-        </div>,
+        <Image
+          key="audit-img"
+          src="https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg"
+          alt="CRO Audit"
+          width={800}
+          height={600}
+        />,
+        <h6 key="audit-caption">Petar Petrović, Mesmerise Founder</h6>,
       ]}
     />
   );
@@ -157,66 +156,6 @@ export function WhatYouReceive() {
           icon: "https://cdn.sanity.io/images/wpr5jlmc/production/79a0b40d97ce158a929702c4b2eb1142193b7c09-24x24.svg",
           textContent: "The reasoning behind every task and why it's important",
         },
-      ]}
-    />
-  );
-}
-
-export function Converting() {
-  return (
-    <TwoColumn
-      h2="Converting like crazy"
-      column1={[
-        <Image
-          key="brett-img"
-          src="https://cdn.sanity.io/images/wpr5jlmc/production/7916f0b93fc98abc750a9c17d374e79cb9212495-1920x1920.png"
-          alt="Brett Benson case study"
-          width={800}
-          height={600}
-        />,
-        <h4 key="brett-heading">
-          Over $1,000,000+ of lead enquiries in 24 hours
-        </h4>,
-        <p key="brett-copy">
-          Brett was getting nowhere with his old Squarespace website. This is
-          when we entered the chat. Using our state-of-the-art Mesmerise Method,
-          we gave him the flexibility and freedom he deserved.
-        </p>,
-        <p key="brett-link">
-          <a
-            href="https://www.mesmeriseco.com/work/north-bay-building"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm mt-4 inline-block text-[var(--mesm-blue)] underline duration-200"
-          >
-            View North Bay Building Case Study
-          </a>
-        </p>,
-      ]}
-      column2={[
-        <Image
-          key="mitch-img"
-          src="https://cdn.sanity.io/images/wpr5jlmc/production/a42a8723992f0bc0d3566101a96672c714882671-2880x2160.jpg"
-          alt="Mitch J Construction"
-          width={800}
-          height={600}
-        />,
-        <h4 key="mitch-heading">1,380% increase in qualified enquiries</h4>,
-        <p key="mitch-copy">
-          Our conversion pathways resulted in a 3-month wait period, and Mitch
-          begged us to alter the acquisition strategy because it was too
-          powerful.
-        </p>,
-        <p key="mitch-link">
-          <a
-            href="https://www.mesmeriseco.com/bespoke-case-study"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm mt-4 inline-block text-[var(--mesm-blue)] underline duration-200"
-          >
-            Discover How We Booked Bespoke Landscapes Out
-          </a>
-        </p>,
       ]}
     />
   );
@@ -252,23 +191,50 @@ export function FomTestimonial() {
   );
 }
 
+export function FinalCTA() {
+  return (
+    <TwoColumn
+      column1={[
+        <div key="final-cta" className="">
+          <h2 className="mb-3">Get your free Marketing Matrix</h2>
+          <p className="mb-8">
+            This matrix contains everything you need to avoid costly errors &
+            2am cortisol spikes.
+          </p>
+          <MatrixForm />
+        </div>,
+      ]}
+      column2={[
+        <Image
+          key="final-cta-img"
+          src="/assets/team/petar-selfie.png"
+          alt="Why I created this"
+          width={400}
+          height={400}
+        />,
+      ]}
+    />
+  );
+}
+
 export default function CROChecklistPage() {
+  const heroImg = { url: "/assets/omnichannel-marketing-matrix_graphic.png" };
   return (
     <>
-      <CenterHero
+      <LeftHero
         pageHeader="A Compass For Business Leaders Who Want A Clear Path"
         pageSubtitle="From pre-revenue startups to 9-figure organisations, I kept seeing the same mistakes. This matrix contains everything you need to avoid costly errors & 2am cortisol spikes."
         showCta={false}
         customContent={<MatrixForm />}
         logos={TRUST_LOGOS}
+        heroMedia={heroImg}
       />
       <div className="flex w-full flex-col justify-between gap-64 mt-48">
         <WhyICreatedThis />
         <WhatYouReceive />
         <ProjectRail tag="highlight" />
-
-        <FomTestimonial />
         <TestimonialRail />
+        <FomTestimonial />
         <FAQ
           label="common questions"
           title="Frequently asked questions"
@@ -276,6 +242,7 @@ export default function CROChecklistPage() {
           singleOpen={false}
           defaultOpen={[0]}
         />
+        <FinalCTA />
       </div>
     </>
   );

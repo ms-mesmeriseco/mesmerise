@@ -112,7 +112,7 @@ export default function LeftHero({
         className={[
           "hero-wrapper relative overflow-hidden pt-4",
           "grid grid-cols-1 md:grid-cols-4 md:grid-rows-[1fr_auto]",
-          "md:gap-2 gap-12",
+          "md:gap-10 gap-12",
           "md:min-h-[90vh]",
         ].join(" ")}
       >
@@ -120,23 +120,25 @@ export default function LeftHero({
         <div
           className={[
             "md:row-start-1 md:col-start-1 md:col-span-2 col-span-1",
-            "flex flex-col justify-center text-left gap-4",
-            "text-[var(--foreground)] w-[95%]",
+            "flex flex-col justify-center text-left gap-5",
+            "text-[var(--foreground)]",
           ].join(" ")}
         >
-          {eyebrow && <h6>{eyebrow}</h6>}
-          <StaggeredWords
-            as="h1"
-            delay={0.01}
-            className="page-title-medium"
-            text={`${pageHeader || ""}`}
-          />
+          <div className="flex flex-col gap-2">
+            {eyebrow && <h6>{eyebrow}</h6>}
+            <StaggeredWords
+              as="h1"
+              delay={0.01}
+              className="page-title-medium"
+              text={`${pageHeader || ""}`}
+            />
+          </div>
 
           <h4>{pageSubtitle}</h4>
 
           <PillList items={listItems} className="justify-start" />
 
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-2">
             {customContent
               ? customContent
               : showCta && (
@@ -161,7 +163,7 @@ export default function LeftHero({
             "flex items-center justify-center md:max-h-[70vh]",
           ].join(" ")}
         >
-          <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden">
+          <div className="relative w-full aspect-[16/9] rounded-md overflow-hidden bg-[var(--mesm-grey-dk)]/10">
             {iframeHtml ? (
               <div
                 className="absolute inset-0 w-full h-full"
@@ -175,7 +177,7 @@ export default function LeftHero({
 
         {/* TRUST BADGES */}
         {logos?.length ? (
-          <div className="w-full md:col-span-5 col-span-1">
+          <div className="w-full md:col-span-4 col-span-1">
             <TrustBadges logos={logos} />
           </div>
         ) : null}

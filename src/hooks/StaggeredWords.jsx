@@ -69,7 +69,9 @@ export default function StaggeredWords({
         overflow: "visible",
       }}
     >
-      <span style={{ display: "block", whiteSpace: "normal" }}>
+      <span
+        style={{ display: "block", whiteSpace: "normal", textWrap: "balance" }}
+      >
         {words.map((word, i) => (
           <span key={i} style={{ display: "inline-block" }}>
             <span
