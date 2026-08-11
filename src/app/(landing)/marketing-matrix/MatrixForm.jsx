@@ -53,7 +53,7 @@ export default function MatrixForm() {
   }
 
   return (
-    <form className="space-y-6 w-xl" onSubmit={handleSubmit} noValidate>
+    <form className="space-y-6 max-w-xl " onSubmit={handleSubmit} noValidate>
       {/* Honeypot */}
       <div className="hidden" aria-hidden="true">
         <input
