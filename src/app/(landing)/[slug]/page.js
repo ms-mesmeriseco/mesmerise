@@ -5,11 +5,9 @@ import { landingBySlugQuery } from "@/lib/sanity/landing";
 import ContactForm from "@/app/connect/ContactForm";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import { notFound } from "next/navigation";
+import { DEFAULT_OG_IMAGE_URL as DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const revalidate = 60;
-
-const DEFAULT_OG_IMAGE =
-  "https://www.mesmeriseco.com/assets/social-default.png";
 
 function normalizeUrl(u) {
   if (!u) return u;

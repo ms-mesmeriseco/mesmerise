@@ -1,13 +1,13 @@
 import FAQ from "@/components/blocks/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import ServicesRail from "@/components/services/ServicesRail";
+import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 export async function generateMetadata() {
   const title = "Full Funnel Digital Marketing Services | Mesmerise";
   const description =
     "From brand to web to performance, Mesmerise builds complete ecosystems that attract, convert and compound results over time.";
-  const baseUrl = "https://www.mesmeriseco.com";
-  const canonicalUrl = `/services/`;
+  const canonicalUrl = absoluteUrl("/services/");
 
   return {
     title,
@@ -20,7 +20,7 @@ export async function generateMetadata() {
       siteName: "Mesmerise Digital",
       images: [
         {
-          url: `${baseUrl}/assets/social-default.png`,
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: description,
@@ -33,7 +33,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title,
       description,
-      images: `${baseUrl}/assets/social-default.png`,
+      images: DEFAULT_OG_IMAGE_URL,
     },
   };
 }

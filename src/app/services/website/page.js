@@ -1,5 +1,6 @@
 import ServicePageBase from "@/components/services/ServicePageBase.jsx";
 import PackagesRow from "@/components/services/PackagesRow.jsx";
+import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 import {
   heroMedia,
@@ -18,8 +19,7 @@ export async function generateMetadata() {
   const title = "Conversion Driven Web Design | Mesmerise Digital";
   const description =
     "Websites engineered for emotion and results. We design experiences that look exceptional and sell effortlessly.";
-  const baseUrl = "https://www.mesmeriseco.com";
-  const canonicalUrl = `/services/website/`;
+  const canonicalUrl = absoluteUrl("/services/website/");
 
   return {
     title,
@@ -32,7 +32,7 @@ export async function generateMetadata() {
       siteName: "Mesmerise Digital",
       images: [
         {
-          url: `${baseUrl}/assets/social-default.png`,
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: description,
@@ -45,7 +45,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title,
       description,
-      images: `${baseUrl}/assets/social-default.png`,
+      images: DEFAULT_OG_IMAGE_URL,
     },
   };
 }

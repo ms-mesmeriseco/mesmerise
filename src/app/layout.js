@@ -11,6 +11,7 @@ import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import HeroLoader from "@/components/three/HeroLoader";
 import { HeroLoaderProvider } from "@/components/three/HeroLoaderProvider";
+import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 
 export async function generateMetadata() {
   return {
@@ -26,7 +27,7 @@ export async function generateMetadata() {
       siteName: "Mesmerise Digital",
       images: [
         {
-          url: `https://www.mesmeriseco.com/assets/social-default.png`,
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: "We don't just run ads.",
@@ -39,7 +40,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title: "Mesmerise Digital",
       description: "We don't just run ads.",
-      images: `https://www.mesmeriseco.com/assets/social-default.png`,
+      images: DEFAULT_OG_IMAGE_URL,
     },
     icons: {
       // Browser tab favicons

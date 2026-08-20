@@ -7,6 +7,7 @@ import RelatedProjects from "@/components/sanity-blocks/RelatedProjects";
 import { sanityClient } from "@/sanity/client";
 import { groq } from "next-sanity";
 import { notFound } from "next/navigation";
+import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 
 // -------- GROQ QUERY (single project by slug) --------
 const PROJECT_QUERY = groq`
@@ -119,7 +120,7 @@ export async function generateMetadata({ params }) {
       siteName: "Mesmerise Digital",
       images: [
         {
-          url: page.heroMedia?.url || `${baseUrl}/assets/social-default.png`,
+          url: page.heroMedia?.url || DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: projectName,
@@ -132,7 +133,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title,
       description,
-      images: [page.heroMedia?.url || `${baseUrl}/assets/social-default.png`],
+      images: [page.heroMedia?.url || DEFAULT_OG_IMAGE_URL],
     },
   };
 }

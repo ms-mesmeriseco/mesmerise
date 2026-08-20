@@ -2,6 +2,7 @@ import CollabTemplate from "../_components/CollabTemplate";
 import { DEFINED_CONTENT } from "../content/defined";
 import { CONTINUOUS_CONTENT } from "../content/continuous";
 import { notFound } from "next/navigation";
+import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 const MAP = {
   defined: DEFINED_CONTENT,
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }) {
       ? "A structured, strategy-led model for brands needing clarity, speed and results. Defined Collaboration delivers end-to-end service from concept to launch."
       : "Our ongoing partnership model built for ambitious brands. Continuous Collaboration keeps strategy, performance and design evolving in perfect sync for sustained growth.";
 
-  const canonical = `/collaboration/${mode}`;
+  const canonical = absoluteUrl(`/collaboration/${mode}`);
 
   return {
     title,
@@ -48,9 +49,11 @@ export async function generateMetadata({ params }) {
     alternates: { canonical },
     openGraph: {
       title,
+      description,
+      url: canonical,
       images: [
         {
-          url: "/assets/social-default.png",
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: title,

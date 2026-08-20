@@ -1,5 +1,6 @@
 import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import CollabModel from "@/components/home/CollabModel";
+import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 
 export async function generateMetadata() {
   const title = "Collaboration Models | Mesmerise Digital";
@@ -18,8 +19,21 @@ export async function generateMetadata() {
       url: `${baseUrl}/collaboration`,
       siteName: "Mesmerise Digital",
       type: "website",
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE_URL,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: DEFAULT_OG_IMAGE_URL,
+    },
   };
 }
 

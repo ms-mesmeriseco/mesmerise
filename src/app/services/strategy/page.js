@@ -1,4 +1,5 @@
 import ServicePageBase from "@/components/services/ServicePageBase.jsx";
+import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 import {
   heroMedia,
@@ -17,8 +18,7 @@ export async function generateMetadata() {
     "Growth Strategy That Turns Data Into Direction | Mesmerise Digital";
   const description =
     "We craft strategic systems that unify psychology, positioning and analytics to create clarity, precision and measurable growth.";
-  const baseUrl = "https://www.mesmeriseco.com";
-  const canonicalUrl = `/services/strategy/`;
+  const canonicalUrl = absoluteUrl("/services/strategy/");
 
   return {
     title,
@@ -31,7 +31,7 @@ export async function generateMetadata() {
       siteName: "Mesmerise Digital",
       images: [
         {
-          url: `${baseUrl}/assets/social-default.png`,
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: description,
@@ -44,7 +44,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title,
       description,
-      images: `${baseUrl}/assets/social-default.png`,
+      images: DEFAULT_OG_IMAGE_URL,
     },
   };
 }

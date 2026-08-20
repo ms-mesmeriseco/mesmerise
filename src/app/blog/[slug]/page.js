@@ -13,6 +13,7 @@ import VideoCard from "@/components/ui/VideoCard";
 import { sanityClient } from "@/sanity/client";
 import { blogPostBySlugQuery, adjacentBlogPostsQuery } from "@/lib/sanity/blog";
 import AuthorCard from "@/components/blog/AuthorCard";
+import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 
 // --- helpers ---
 function abs(url) {
@@ -273,7 +274,7 @@ export async function generateMetadata({ params }) {
 
   const ogImage = page.heroImage?.url
     ? abs(page.heroImage.url)
-    : "https://www.mesmeriseco.com/assets/social-default.png";
+    : DEFAULT_OG_IMAGE_URL;
 
   const canonical = abs(`https://www.mesmeriseco.com/blog/${slug}`);
 

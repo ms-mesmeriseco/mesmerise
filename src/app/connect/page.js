@@ -3,6 +3,7 @@ import ContactForm from "./ContactForm";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import CopyEmailButton from "@/components/ui/CopyEmailButton";
 import SmallTitle from "@/components/ui/SmallTitle";
+import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 
 export async function generateMetadata() {
   const title = "Contact us | Mesmerise Digital";
@@ -23,14 +24,19 @@ export async function generateMetadata() {
       type: "website",
       images: [
         {
-          url: "/assets/social-default.png",
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: title,
         },
       ],
     },
-    twitter: { card: "summary_large_image", title, description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: DEFAULT_OG_IMAGE_URL,
+    },
   };
 }
 

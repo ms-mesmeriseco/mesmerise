@@ -6,6 +6,7 @@ import IconRow from "@/components/sanity-blocks/IconRow";
 import ListCard from "@/components/ui/ListCard";
 import FAQ from "@/components/blocks/FAQ.jsx";
 import Image from "next/image";
+import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 
 const CRO_LOGOS = [
   {
@@ -78,7 +79,7 @@ export async function generateMetadata() {
       type: "website",
       images: [
         {
-          url: "/assets/social-default.png",
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: title,
@@ -89,7 +90,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title,
       description,
-      images: "/assets/social-default.png",
+      images: DEFAULT_OG_IMAGE_URL,
     },
     alternates: {
       canonical: `https://www.mesmeriseco.com/cro-checklist`,

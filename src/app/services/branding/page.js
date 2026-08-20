@@ -1,4 +1,5 @@
 import ServicePageBase from "@/components/services/ServicePageBase.jsx";
+import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 import {
   heroMedia,
@@ -16,8 +17,7 @@ export async function generateMetadata() {
   const title = "Branding | Mesmerise Digital";
   const description =
     "We craft identity systems that fuse psychology, storytelling and design to turn first impressions into lifelong brand loyalty.";
-  const baseUrl = "https://www.mesmeriseco.com";
-  const canonicalUrl = `/services/branding/`;
+  const canonicalUrl = absoluteUrl("/services/branding/");
 
   return {
     title,
@@ -30,7 +30,7 @@ export async function generateMetadata() {
       siteName: "Mesmerise Digital",
       images: [
         {
-          url: `${baseUrl}/assets/social-default.png`,
+          url: DEFAULT_OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: description,
@@ -43,7 +43,7 @@ export async function generateMetadata() {
       card: "summary_large_image",
       title,
       description,
-      images: `${baseUrl}/assets/social-default.png`,
+      images: DEFAULT_OG_IMAGE_URL,
     },
   };
 }
