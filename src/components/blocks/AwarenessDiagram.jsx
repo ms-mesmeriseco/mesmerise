@@ -33,11 +33,18 @@ function getLineMargin(index, total, ascending) {
 
 export default function AwarenessDiagram() {
   const [flipped, setFlipped] = useState(false);
+  // Default to the static image (matches SSR) so mobile never mounts the
+  // Canvas/GLTF at all — only switch to the 3D scene once confirmed desktop.
+  const [showModel, setShowModel] = useState(false);
   const itemRefs = useRef([]);
   const topLabelRef = useRef(null);
   const bottomLabelRef = useRef(null);
 
   const items = flipped ? Small : Large;
+
+  useEffect(() => {
+    setShowModel(window.innerWidth >= 768);
+  }, []);
 
   useEffect(() => {
     const targets = [
@@ -50,22 +57,34 @@ export default function AwarenessDiagram() {
     gsap.to(targets, {
       opacity: 1,
       y: 0,
-      duration: 0.4,
+      duration: 0.1,
       stagger: 0.08,
       ease: "power2.out",
     });
   }, [flipped]);
 
   return (
-    <div className="relative max-w-[1080px] h-[600px] m-auto mb-6">
-      <FunnelScene flipped={flipped} />
+    <div
+      className="md:opacity-80 opacity-100 relative max-w-[1080px] h-[600px] m-auto mb-6"
+      style={{ perspective: "1200px" }}
+    >
+      {showModel ? (
+        <FunnelScene flipped={flipped} />
+      ) : (
+        <img
+          src="/assets/mobile-funnel.png"
+          alt="Funnel diagram"
+          className="block h-full w-full object-contain border-1 border-[var(--mesm-grey-dk)] rounded-md transition-transform duration-700 opacity-30"
+          style={{ transform: flipped ? "rotateX(180deg)" : "rotateX(0deg)" }}
+        />
+      )}
       {/* Hard to sell / Easy to sell indicator */}
-      <div className="absolute left-8 top-1/2 -translate-y-1/2 z-100 flex flex-col h-[380px] w-24">
-        <span ref={topLabelRef} className="opacity-50 text-center mb-4">
+      <div className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-100 flex flex-col h-[380px] w-24">
+        <span ref={topLabelRef} className="text-center mb-4">
           <h6>{flipped ? "Easy to sell" : "Hard to sell"}</h6>
         </span>
 
-        <div className="relative flex-1 flex items-center justify-center">
+        <div className="relative flex-1 flex items-center justify-center ">
           <svg
             className="h-full w-4"
             viewBox="0 0 20 300"
@@ -77,17 +96,15 @@ export default function AwarenessDiagram() {
               x2="10"
               y2={flipped ? "290" : "10"}
               stroke="white"
-              strokeOpacity="0.35"
               strokeWidth="1"
             />
             <polygon
               points={flipped ? "5,290 15,290 10,300" : "5,10 15,10 10,0"}
               fill="white"
-              fillOpacity="0.35"
             />
           </svg>
           <span
-            className="absolute text-white/40 text-[10px] tracking-[0.2em] uppercase pl-6"
+            className="absolute text-[10px] tracking-[0.2em] uppercase pl-6"
             style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
           >
             Market Size
@@ -99,8 +116,8 @@ export default function AwarenessDiagram() {
         </span>
       </div>
 
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 z-200 w-[70vw] md:w-[500px]">
-        <ul className="flex flex-col gap-4 md:gap-8 text-white text-sm md:text-base opacity-80">
+      <div className="absolute right-8 top-1/2 -translate-y-1/2 z-200 w-[50vw] md:w-[500px]">
+        <ul className="flex flex-col gap-4 md:gap-8 text-white justify-between text-sm md:text-base">
           {items.map((item, index) => (
             <li
               key={index}
@@ -109,10 +126,12 @@ export default function AwarenessDiagram() {
             >
               <span
                 style={{
-                  width: `${LINE_WIDTH}px`,
-                  marginLeft: `${getLineMargin(index, items.length, flipped)}px`,
+                  width: showModel ? `${LINE_WIDTH}px` : "4px",
+                  marginLeft: showModel
+                    ? `${getLineMargin(index, items.length, flipped)}px`
+                    : "0px",
                 }}
-                className="h-[1px] bg-white opacity-40"
+                className="h-[1px] bg-white"
               ></span>
               <h6 dangerouslySetInnerHTML={{ __html: item }} />
             </li>
