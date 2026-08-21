@@ -141,9 +141,9 @@ export default function AwarenessDiagram() {
 
       <ToggleSwitch
         className="absolute bottom-4 left-1/2 -translate-x-1/2 z-100"
-        options={["Upright", "Flipped"]}
-        value={flipped ? "Flipped" : "Upright"}
-        onChange={(option) => setFlipped(option === "Flipped")}
+        options={["SOA", "TAM"]}
+        value={flipped ? "TAM" : "SOA"}
+        onChange={(option) => setFlipped(option === "TAM")}
       />
     </div>
   );
