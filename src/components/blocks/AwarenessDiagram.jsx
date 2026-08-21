@@ -65,7 +65,7 @@ export default function AwarenessDiagram() {
 
   return (
     <div
-      className="md:opacity-80 opacity-100 relative max-w-[1080px] h-[600px] m-auto mb-6"
+      className="md:opacity-80 opacity-100 relative max-w-[1080px] w-full h-[600px] m-auto mb-6"
       style={{ perspective: "1200px" }}
     >
       {showModel ? (

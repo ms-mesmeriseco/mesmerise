@@ -17,6 +17,7 @@ import DataRow from "@/components/sanity-blocks/DataRow";
 import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
 import ContentRail from "@/components/sanity-blocks/ContentRail";
 import IconListColumn from "@/components/sanity-blocks/IconListColumn";
+import Pyramid from "@/components/sanity-blocks/Pyramid";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -295,6 +296,16 @@ export default function PageBase({ blocks, metadata }) {
                   key={block._id || `block-${index}`}
                 >
                   <IconListColumn block={block} />
+                </div>
+              );
+
+            case "pyramid":
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <Pyramid block={block} />
                 </div>
               );
 

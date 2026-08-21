@@ -318,6 +318,12 @@ title2,
       }
     },
 
+    // ---------- PYRAMID (NEW) ----------
+    _type == "pyramid" => {
+      eyebrow,
+      heading
+    },
+
   }
 
 
