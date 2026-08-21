@@ -304,6 +304,20 @@ title2,
       }
     },
 
+    // ---------- ICON LIST COLUMN (NEW) ----------
+    _type == "iconListColumn" => {
+      direction,
+      eyebrow,
+      heading,
+      listItems[]->{
+        _id,
+        _type,
+        entryTitle,
+        "icon": icon.asset->url,
+        textContent
+      }
+    },
+
   }
 
 
