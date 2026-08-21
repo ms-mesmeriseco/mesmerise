@@ -69,28 +69,27 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Script id="scroll-restoration" strategy="beforeInteractive">
+          {`
         if (history.scrollRestoration) {
           history.scrollRestoration = 'manual';
         }
         window.scrollTo(0, 0);
-      `,
-          }}
-        />
+      `}
+        </Script>
         {/* <!-- What converts code --> */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: ` var $wc_load=function(a){return JSON.parse(JSON.stringify(a))}, $wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL), ref:$wc_load(document.referrer), search:$wc_load(location.search), hash:$wc_load(location.hash)}};`,
-          }}
+        <Script id="what-converts-init" strategy="afterInteractive">
+          {` var $wc_load=function(a){return JSON.parse(JSON.stringify(a))}, $wc_leads=$wc_leads||{doc:{url:$wc_load(document.URL), ref:$wc_load(document.referrer), search:$wc_load(location.search), hash:$wc_load(location.hash)}};`}
+        </Script>
+        <Script
+          id="what-converts-loader"
+          src="//s.ksrndkehqnwntyxlhgto.com/171951.js"
+          strategy="afterInteractive"
         />
-        <script src="//s.ksrndkehqnwntyxlhgto.com/171951.js"></script>
         {/*<!-- End What converts code --> */}
         {/* Meta Pixel Code */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Script id="meta-pixel" strategy="afterInteractive">
+          {`
               !function(f,b,e,v,n,t,s)
               {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
               n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -101,9 +100,8 @@ export default function RootLayout({ children }) {
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '1448494526204583');
               fbq('track', 'PageView');
-            `,
-          }}
-        />
+            `}
+        </Script>
         <noscript>
           <img
             height="1"
@@ -114,31 +112,27 @@ export default function RootLayout({ children }) {
         </noscript>
         {/* End Meta Pixel Code */}
         {/* Google Tag Manager */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Script id="gtm" strategy="afterInteractive">
+          {`
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer','GTM-TCGXS36');
-            `,
-          }}
-        />
+            `}
+        </Script>
         {/* End Google Tag Manager
 Google Tag Manager (noscript) */}
         {/* Clarity */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Script id="clarity" strategy="afterInteractive">
+          {`
               (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
               t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
               y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
               })(window, document, "clarity", "script", "tjlyzh45or");
-            `,
-          }}
-        />
+            `}
+        </Script>
         {/* End Clarity */}
         {/* LinkedIn Insight Tag */}
         <Script id="linkedin-insight-init" strategy="afterInteractive">
@@ -162,11 +156,9 @@ Google Tag Manager (noscript) */}
         {/* end LinkedIn */}
 
         {/* <!-- Reddit Pixel --> */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_hspbdqsjyll0');rdt('track', 'PageVisit');`,
-          }}
-        />
+        <Script id="reddit-pixel" strategy="afterInteractive">
+          {`!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_hspbdqsjyll0');rdt('track', 'PageVisit');`}
+        </Script>
         {/* <!-- DO NOT MODIFY UNLESS TO REPLACE A USER IDENTIFIER -->
 <!-- End Reddit Pixel --> */}
       </head>
