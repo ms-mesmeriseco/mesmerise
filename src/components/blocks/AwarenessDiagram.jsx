@@ -43,7 +43,29 @@ export default function AwarenessDiagram() {
   const items = flipped ? Small : Large;
 
   useEffect(() => {
-    setShowModel(window.innerWidth >= 768);
+    const BREAKPOINT = 768;
+    const DEBOUNCE_MS = 150;
+
+    const checkViewport = () => {
+      setShowModel(window.innerWidth >= BREAKPOINT);
+    };
+
+    // Set initial value
+    checkViewport();
+
+    // Debounce so rapid resize events don't repeatedly mount/unmount the
+    // Three.js canvas mid-drag
+    let timeoutId;
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkViewport, DEBOUNCE_MS);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -75,7 +97,7 @@ export default function AwarenessDiagram() {
           src="/assets/mobile-funnel.png"
           alt="Funnel diagram"
           className="block h-full w-full object-contain border-1 border-[var(--mesm-grey-dk)] rounded-md transition-transform duration-700 opacity-30"
-          style={{ transform: flipped ? "rotateX(180deg)" : "rotateX(0deg)" }}
+          style={{ transform: flipped ? "rotateX(0deg)" : "rotateX(180deg)" }}
         />
       )}
       {/* Hard to sell / Easy to sell indicator */}
@@ -141,9 +163,9 @@ export default function AwarenessDiagram() {
 
       <ToggleSwitch
         className="absolute bottom-4 left-1/2 -translate-x-1/2 z-100"
-        options={["TAM", "SOA"]}
-        value={flipped ? "SOA" : "TAM"}
-        onChange={(option) => setFlipped(option === "SOA")}
+        options={["SOA", "TAM"]}
+        value={flipped ? "TAM" : "SOA"}
+        onChange={(option) => setFlipped(option === "TAM")}
       />
     </div>
   );
