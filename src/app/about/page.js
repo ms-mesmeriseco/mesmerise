@@ -1,7 +1,6 @@
 import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import TeamBlock from "@/components/about/TeamBlock";
-import AwarenessDiagram from "@/components/blocks/AwarenessDiagram";
 
 export async function generateMetadata() {
   const title = "About us | Mesmerise Digital Marketing";
@@ -21,7 +20,7 @@ export function OurWhy() {
   return (
     <>
       <PageTitleLarge text="Our Why" />
-      <AwarenessDiagram />
+
       <div className="md:max-w-[475px] flex flex-col gap-6 md:min-h-[40vh] items-left">
         <StaggeredWords
           as="p"
