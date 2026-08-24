@@ -74,7 +74,7 @@ export default async function Work({ searchParams }) {
   const activeTag = Array.isArray(tagParam) ? tagParam[0] : (tagParam ?? null);
 
   const projects = await fetchProjects();
-  console.log("SERVICE TAGS (raw):", projects.serviceTags);
+  // console.log("SERVICE TAGS (raw):", projects.serviceTags);
 
   return (
     <div className="flex flex-col min-h-screen mb-[4rem]">
