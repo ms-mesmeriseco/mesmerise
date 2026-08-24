@@ -1,20 +1,27 @@
 "use client";
 
 import AwarenessDiagram from "@/components/blocks/AwarenessDiagram";
+import InView from "@/hooks/InView";
+import { PortableText } from "@portabletext/react";
 
 export default function Pyramid({ block }) {
-  const eyebrow = block?.eyebrow;
-  const heading = block?.heading;
+  const text = block?.richTxt;
+  const normalizedText =
+    Array.isArray(text) && text.length > 0
+      ? text.map((node, idx) => ({
+          ...node,
+          _key: node._key ? `${node._key}-${idx}` : `pyramid-block-${idx}`,
+        }))
+      : null;
 
   return (
-    <div className="flex flex-col items-center text-center gap-6 w-full">
-      {(eyebrow || heading) && (
-        <div className="flex flex-col gap-2">
-          {eyebrow && <h5>{eyebrow}</h5>}
-          {heading && <h3>{heading}</h3>}
+    <InView>
+      <div className="flex flex-col items-center gap-6 w-full">
+        <div className="text-center">
+          {normalizedText && <PortableText value={normalizedText} />}
         </div>
-      )}
-      <AwarenessDiagram />
-    </div>
+        <AwarenessDiagram />
+      </div>
+    </InView>
   );
 }

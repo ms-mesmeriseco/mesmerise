@@ -13,11 +13,11 @@ const Large = [
   "<strong>Action Aware</strong> <br/>Prospect chooses a product and wants the best deal or offer",
 ];
 const Small = [
-  "<strong>3-4%</strong> <br/>Ready to buy",
-  "<strong>6-7%</strong> <br/>Open to buying",
-  "<strong>30%</strong> <br/>Not thinking about buying",
-  "<strong>40%</strong> <br/>They think they're not interested in buying",
-  "<strong>20%</strong> <br/>They know they don't want to buy",
+  "<strong>3-4%</strong><br/>Ready to buy",
+  "<strong>6-7%</strong><br/>Open to buying",
+  "<strong>30%</strong><br/>Not thinking about buying",
+  "<strong>40%</strong><br/>They think they're not interested in buying",
+  "<strong>20%</strong><br/>They know they don't want to buy",
 ];
 
 const LINE_WIDTH = 120;
@@ -84,7 +84,7 @@ export default function AwarenessDiagram() {
           <h6>{flipped ? "Easy to sell" : "Hard to sell"}</h6>
         </span>
 
-        <div className="relative flex-1 flex items-center justify-center ">
+        <div className="relative flex-1 flex items-center justify-center opacity-60 md:opacity-100">
           <svg
             className="h-full w-4"
             viewBox="0 0 20 300"
@@ -141,9 +141,9 @@ export default function AwarenessDiagram() {
 
       <ToggleSwitch
         className="absolute bottom-4 left-1/2 -translate-x-1/2 z-100"
-        options={["SOA", "TAM"]}
-        value={flipped ? "TAM" : "SOA"}
-        onChange={(option) => setFlipped(option === "TAM")}
+        options={["TAM", "SOA"]}
+        value={flipped ? "SOA" : "TAM"}
+        onChange={(option) => setFlipped(option === "SOA")}
       />
     </div>
   );

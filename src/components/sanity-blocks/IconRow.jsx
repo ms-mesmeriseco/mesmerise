@@ -20,7 +20,19 @@ function isPortableText(value) {
   return Array.isArray(value) && value.some((block) => block && block._type);
 }
 
-function renderTitle(titleText) {
+// Sanity content can end up with duplicate _keys across entirely different
+// documents (e.g. blocks duplicated in the Studio without regenerating
+// keys). A per-array index isn't enough to disambiguate on its own if two
+// separate instances land on the same index, so fold in a caller-supplied
+// scope (ideally the containing document's own unique _id) as well.
+function normalizePortableText(value, scope = "portable-text") {
+  return value.map((node, idx) => ({
+    ...node,
+    _key: `${scope}-${node._key || "block"}-${idx}`,
+  }));
+}
+
+function renderTitle(titleText, scope) {
   if (!titleText || (Array.isArray(titleText) && titleText.length === 0)) {
     return null;
   }
@@ -39,7 +51,7 @@ function renderTitle(titleText) {
   if (isPortableText(titleText)) {
     return (
       <div className="mb-4">
-        <PortableText value={titleText} />
+        <PortableText value={normalizePortableText(titleText, scope)} />
       </div>
     );
   }
@@ -47,7 +59,7 @@ function renderTitle(titleText) {
   return null;
 }
 
-function renderItemContent(textContent) {
+function renderItemContent(textContent, scope) {
   if (
     !textContent ||
     (Array.isArray(textContent) && textContent.length === 0)
@@ -67,7 +79,7 @@ function renderItemContent(textContent) {
 
   // Sanity Portable Text array
   if (isPortableText(textContent)) {
-    return <PortableText value={textContent} />;
+    return <PortableText value={normalizePortableText(textContent, scope)} />;
   }
 
   return null;
@@ -203,7 +215,7 @@ export default function IconRow({
         data-marker="icon row"
         className="w-full py-8 text-center relative"
       >
-        {renderTitle(resolvedTitle)}
+        {renderTitle(resolvedTitle, `${block?._id || "icon-row"}-title`)}
         <br />
 
         {showCarousel ? (
@@ -243,7 +255,10 @@ export default function IconRow({
                             <div className="p-0 md:m-0 rounded-sm">
                               <div className="min-h-[180px] flex flex-col justify-start text-left">
                                 <div className="text-sm flex flex-col gap-6">
-                                  {renderItemContent(textContent)}
+                                  {renderItemContent(
+                                    textContent,
+                                    `${block?._id || "icon-row"}-carousel-${idx}`,
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -300,7 +315,10 @@ export default function IconRow({
                   <Card icon={icon}>
                     <div className="min-h-[220px] flex flex-col justify-start text-left">
                       <div className="text-sm flex flex-col gap-6">
-                        {renderItemContent(textContent)}
+                        {renderItemContent(
+                          textContent,
+                          `${block?._id || "icon-row"}-grid-${idx}`,
+                        )}
                       </div>
                     </div>
                   </Card>

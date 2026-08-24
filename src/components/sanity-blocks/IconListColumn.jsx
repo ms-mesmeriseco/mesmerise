@@ -11,6 +11,7 @@ import {
   isValidElement,
 } from "react";
 import { PortableText } from "@portabletext/react";
+import InView from "@/hooks/InView";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -136,7 +137,6 @@ export default function IconListColumn({ block }) {
           >
             <div
               style={{
-                opacity: isFocused ? 1 : 0.5,
                 transform: isFocused ? "scale(1)" : "scale(0.98)",
                 transition: "0.3s ease-in-out",
               }}
@@ -163,9 +163,11 @@ export default function IconListColumn({ block }) {
   }
 
   return (
-    <div className="narrow-wrapper flex flex-col items-center text-center gap-6">
-      {headingBlock}
-      {listBlock}
-    </div>
+    <InView>
+      <div className="narrow-wrapper flex flex-col items-center text-center gap-6">
+        {headingBlock}
+        {listBlock}
+      </div>
+    </InView>
   );
 }

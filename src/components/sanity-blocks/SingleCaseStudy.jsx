@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { PortableText } from "@portabletext/react";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
+import InView from "@/hooks/InView";
 
 // PortableText config for body (summary/results)
 const portableComponents = {
@@ -77,149 +78,151 @@ export default function SingleCaseStudy({ study, showText = true }) {
   );
 
   return (
-    <section className="narrow-wrapper w-full col-span-full flex flex-col gap-6">
-      {/* Image */}
-      <div className="relative w-full aspect-[16/9] overflow-hidden">
-        {heroSrc && (
-          <Image
-            src={heroSrc}
-            alt={projectTitle || "Case Study Image"}
-            fill
-            className="object-cover duration-300"
-            sizes="100vw"
-            priority
-          />
+    <InView>
+      <section className="narrow-wrapper w-full col-span-full flex flex-col gap-6">
+        {/* Image */}
+        <div className="relative w-full aspect-[16/9] overflow-hidden">
+          {heroSrc && (
+            <Image
+              src={heroSrc}
+              alt={projectTitle || "Case Study Image"}
+              fill
+              className="object-cover duration-300"
+              sizes="100vw"
+              priority
+            />
+          )}
+        </div>
+
+        {/* Data points grid */}
+        {datapoints.length > 0 && (
+          <div
+            className={[
+              "grid w-full gap-2 min-h-[30vh]",
+              "grid-cols-1 sm:grid-cols-3",
+            ].join(" ")}
+          >
+            {datapoints.map((dp, index) => (
+              <div
+                key={dp.id}
+                className="border border-[var(--mesm-grey-dk)] p-4 sm:p-6 text-sm sm:text-base leading-snug rounded-md"
+              >
+                <StaggeredChildren baseDelay={0.05 * index}>
+                  <PortableText
+                    value={dp.value}
+                    components={datapointComponents}
+                  />
+                </StaggeredChildren>
+              </div>
+            ))}
+          </div>
         )}
-      </div>
 
-      {/* Data points grid */}
-      {datapoints.length > 0 && (
-        <div
-          className={[
-            "grid w-full gap-2 min-h-[30vh]",
-            "grid-cols-1 sm:grid-cols-3",
-          ].join(" ")}
-        >
-          {datapoints.map((dp, index) => (
-            <div
-              key={dp.id}
-              className="border border-[var(--mesm-grey-dk)] p-4 sm:p-6 text-sm sm:text-base leading-snug rounded-md"
-            >
-              <StaggeredChildren baseDelay={0.05 * index}>
-                <PortableText
-                  value={dp.value}
-                  components={datapointComponents}
-                />
-              </StaggeredChildren>
+        {/* Text info */}
+        {showText && (
+          <div className="flex flex-col gap-3">
+            {/* Title + meta */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-2xl md:text-3xl font-bold m-0">
+                {projectTitle}
+              </h2>
+
+              <span className="bg-[var(--mesm-yellow)] text-[var(--background)] text-sm md:text-base py-1 px-3 rounded-xl whitespace-nowrap">
+                {formattedYear}
+                {formattedYear && " \u2013 "}
+                {collaborationModel ? "Defined" : "Ongoing"}
+              </span>
             </div>
-          ))}
-        </div>
-      )}
 
-      {/* Text info */}
-      {showText && (
-        <div className="flex flex-col gap-3">
-          {/* Title + meta */}
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-2xl md:text-3xl font-bold m-0">
-              {projectTitle}
-            </h2>
-
-            <span className="bg-[var(--mesm-yellow)] text-[var(--background)] text-sm md:text-base py-1 px-3 rounded-xl whitespace-nowrap">
-              {formattedYear}
-              {formattedYear && " \u2013 "}
-              {collaborationModel ? "Defined" : "Ongoing"}
-            </span>
-          </div>
-
-          {/* Collapsibles */}
-          <div className="flex flex-col text-sm md:text-base">
-            {/* Summary */}
-            {hasSummary && (
-              <div className="border-b-1 border-b border-[var(--mesm-grey-dk)]">
-                <button
-                  className="w-full text-left px-1 py-4 flex justify-between items-center cursor-pointer"
-                  onClick={() => setShowSummary((s) => !s)}
-                  aria-expanded={showSummary}
-                  aria-controls="summary-panel"
-                >
-                  <span className="text-lg m-0">Summary</span>
-                  <motion.span
-                    className="text-lg m-0 inline-block"
-                    animate={{ rotate: showSummary ? 45 : 0 }}
-                    transition={{ type: "tween", duration: 0.2 }}
+            {/* Collapsibles */}
+            <div className="flex flex-col text-sm md:text-base">
+              {/* Summary */}
+              {hasSummary && (
+                <div className="border-b-1 border-b border-[var(--mesm-grey-dk)]">
+                  <button
+                    className="w-full text-left px-1 py-4 flex justify-between items-center cursor-pointer"
+                    onClick={() => setShowSummary((s) => !s)}
+                    aria-expanded={showSummary}
+                    aria-controls="summary-panel"
                   >
-                    +
-                  </motion.span>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {showSummary && (
-                    <motion.div
-                      id="summary-panel"
-                      key="summary"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.28, ease: "easeInOut" }}
-                      className="overflow-hidden px-1 md:px-2"
+                    <span className="text-lg m-0">Summary</span>
+                    <motion.span
+                      className="text-lg m-0 inline-block"
+                      animate={{ rotate: showSummary ? 45 : 0 }}
+                      transition={{ type: "tween", duration: 0.2 }}
                     >
-                      <div className="py-6 max-w-[475px]">
-                        <PortableText
-                          value={summary}
-                          components={portableComponents}
-                        />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
+                      +
+                    </motion.span>
+                  </button>
 
-            {/* Results */}
-            {hasResults && (
-              <div className="border-b-1 border-b border-[var(--mesm-grey-dk)]">
-                <button
-                  className="w-full text-left px-1 py-4 flex justify-between items-center cursor-pointer"
-                  onClick={() => setShowResults((s) => !s)}
-                  aria-expanded={showResults}
-                  aria-controls="results-panel"
-                >
-                  <span className="text-lg m-0">Results</span>
-                  <motion.span
-                    className="text-lg m-0 inline-block"
-                    animate={{ rotate: showResults ? 45 : 0 }}
-                    transition={{ type: "tween", duration: 0.2 }}
+                  <AnimatePresence initial={false}>
+                    {showSummary && (
+                      <motion.div
+                        id="summary-panel"
+                        key="summary"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.28, ease: "easeInOut" }}
+                        className="overflow-hidden px-1 md:px-2"
+                      >
+                        <div className="py-6 max-w-[475px]">
+                          <PortableText
+                            value={summary}
+                            components={portableComponents}
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
+
+              {/* Results */}
+              {hasResults && (
+                <div className="border-b-1 border-b border-[var(--mesm-grey-dk)]">
+                  <button
+                    className="w-full text-left px-1 py-4 flex justify-between items-center cursor-pointer"
+                    onClick={() => setShowResults((s) => !s)}
+                    aria-expanded={showResults}
+                    aria-controls="results-panel"
                   >
-                    +
-                  </motion.span>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {showResults && (
-                    <motion.div
-                      id="results-panel"
-                      key="results"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.28, ease: "easeInOut" }}
-                      className="overflow-hidden px-1 md:px-2"
+                    <span className="text-lg m-0">Results</span>
+                    <motion.span
+                      className="text-lg m-0 inline-block"
+                      animate={{ rotate: showResults ? 45 : 0 }}
+                      transition={{ type: "tween", duration: 0.2 }}
                     >
-                      <div className="py-6 max-w-[475px]">
-                        <PortableText
-                          value={results}
-                          components={portableComponents}
-                        />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
+                      +
+                    </motion.span>
+                  </button>
+
+                  <AnimatePresence initial={false}>
+                    {showResults && (
+                      <motion.div
+                        id="results-panel"
+                        key="results"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.28, ease: "easeInOut" }}
+                        className="overflow-hidden px-1 md:px-2"
+                      >
+                        <div className="py-6 max-w-[475px]">
+                          <PortableText
+                            value={results}
+                            components={portableComponents}
+                          />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </section>
+    </InView>
   );
 }
