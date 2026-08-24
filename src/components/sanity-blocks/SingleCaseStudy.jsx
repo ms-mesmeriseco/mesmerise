@@ -28,7 +28,7 @@ const portableComponents = {
 const datapointComponents = {
   block: {
     h2: ({ children }) => (
-      <h3 className="text-3xl font-semibold mb-2 leading-tight">{children}</h3>
+      <h2 className="text-3xl font-semibold mb-2 leading-tight">{children}</h2>
     ),
     normal: ({ children }) => (
       <p className="text-sm leading-snug mb-1 last:mb-0">{children}</p>
@@ -104,7 +104,7 @@ export default function SingleCaseStudy({ study, showText = true }) {
             {datapoints.map((dp, index) => (
               <div
                 key={dp.id}
-                className="border border-[var(--mesm-grey-dk)] p-4 sm:p-6 text-sm sm:text-base leading-snug rounded-md md:col-span-12 col-span-4"
+                className="md:col-span-4 col-span-12 border border-[var(--mesm-grey-dk)] p-4 sm:p-6 text-sm sm:text-base leading-snug rounded-md"
               >
                 <StaggeredChildren baseDelay={0.05 * index}>
                   <PortableText
