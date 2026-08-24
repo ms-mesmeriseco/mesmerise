@@ -35,7 +35,6 @@ export default function PageBase({ blocks, metadata }) {
     animate: { opacity: 1, transition: { duration: 0.3 } },
     exit: { opacity: 0, transition: { duration: 0.2 } },
   };
-  console.log("PageBase blocks:", blocks);
 
   return (
     <motion.div
@@ -185,13 +184,17 @@ export default function PageBase({ blocks, metadata }) {
 
             case "singleCaseStudy":
               return (
-                <SingleCaseStudy
-                  key={block._id}
-                  study={block}
-                  summary={block.summary}
-                  results={block.results}
-                  timeFrame={block.timeFrame}
-                />
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <SingleCaseStudy
+                    study={block}
+                    summary={block.summary}
+                    results={block.results}
+                    timeFrame={block.timeFrame}
+                  />
+                </div>
               );
             // 🎠 MEDIA CAROUSEL
             case "mediaCarouselWithText": {

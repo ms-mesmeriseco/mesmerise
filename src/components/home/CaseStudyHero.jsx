@@ -18,7 +18,7 @@ export default function CaseStudyHero({ block, narrow = true }) {
   // console.log("CaseStudyHero block data:", block);
 
   return (
-    <section className={narrow ? "narrow-wrapper w-full" : "w-full"}>
+    <section className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center md:h-[600px] h-fit">
         {/* Left Column: Content */}
         <div className="flex flex-col gap-2 order-2 md:order-1 h-full ">

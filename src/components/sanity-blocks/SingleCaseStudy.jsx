@@ -79,7 +79,7 @@ export default function SingleCaseStudy({ study, showText = true }) {
 
   return (
     <InView>
-      <section className="narrow-wrapper w-full col-span-full flex flex-col gap-6">
+      <section className="narrow-wrapper w-full col-span-12 flex flex-col gap-6">
         {/* Image */}
         <div className="relative w-full aspect-[16/9] overflow-hidden">
           {heroSrc && (
@@ -97,15 +97,14 @@ export default function SingleCaseStudy({ study, showText = true }) {
         {/* Data points grid */}
         {datapoints.length > 0 && (
           <div
-            className={[
-              "grid w-full gap-2 min-h-[30vh]",
-              "grid-cols-1 sm:grid-cols-3",
-            ].join(" ")}
+            className={["grid w-full gap-2 min-h-[30vh] ", "grid-cols-12"].join(
+              " ",
+            )}
           >
             {datapoints.map((dp, index) => (
               <div
                 key={dp.id}
-                className="border border-[var(--mesm-grey-dk)] p-4 sm:p-6 text-sm sm:text-base leading-snug rounded-md"
+                className="border border-[var(--mesm-grey-dk)] p-4 sm:p-6 text-sm sm:text-base leading-snug rounded-md md:col-span-12 col-span-4"
               >
                 <StaggeredChildren baseDelay={0.05 * index}>
                   <PortableText
