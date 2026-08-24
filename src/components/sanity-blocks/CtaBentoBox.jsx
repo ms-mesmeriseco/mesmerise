@@ -29,14 +29,15 @@ export default function CtaBentoBox({ block }) {
           {/* Header */}
           {heading && (
             <div className="mb-16 flex flex-col justify-center items-center gap-4">
-              <Image
-                src="/display-picture-RED-180px.png"
-                alt="Mesmerise Digital"
-                width={48}
-                height={48}
-                priority
-                className="rounded-full"
-              />
+              <div className="flex items-center justify-center w-14 h-14 p-2 rounded-full bg-[var(--mesm-red)]">
+                <Image
+                  src="/logoMark-SVG_mesm.svg"
+                  alt="Mesmerise Digital"
+                  width={36}
+                  height={36}
+                  priority
+                />
+              </div>
               <h2 className="text-center text-2xl md:text-3xl font-semibold">
                 {heading}
               </h2>

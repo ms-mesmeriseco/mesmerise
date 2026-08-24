@@ -289,15 +289,15 @@ export default function PageBase({ blocks, metadata }) {
               );
             }
 
-            case "iconListColumn":
-              return (
-                <div
-                  className="col-span-12"
-                  key={block._id || `block-${index}`}
-                >
-                  <IconListColumn block={block} />
-                </div>
-              );
+            // case "iconListColumn":
+            //   return (
+            //     <div
+            //       className="col-span-12"
+            //       key={block._id || `block-${index}`}
+            //     >
+            //       <IconListColumn block={block} />
+            //     </div>
+            //   );
 
             case "pyramid":
               return (
