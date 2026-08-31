@@ -9,7 +9,7 @@ export async function generateMetadata() {
   const title = "View our work | Mesmerise Digital";
   const description =
     "Explore how ambitious brands scaled with Mesmerise. From booked out calendars to 25x ROAS, data backed proof not promises.";
-  const canonicalUrl = absoluteUrl("/work/");
+  const canonicalUrl = absoluteUrl("/work");
 
   return {
     title,

@@ -18,7 +18,7 @@ export async function generateMetadata() {
     "Analytics and Insights for Smarter Decisions | Mesmerise Digital";
   const description =
     "When your data speaks with one voice, decisions become clear. We turn analytics into strategy that drives undeniable results.";
-  const canonicalUrl = absoluteUrl("/services/analytics/");
+  const canonicalUrl = absoluteUrl("/services/analytics");
 
   return {
     title,

@@ -187,7 +187,7 @@ export default function Footer() {
 
           {/* Column: Insights (latest 10 by tag) */}
           <div className="col-span-1">
-            <Link href="/blog/">
+            <Link href="/blog">
               <h5 className="mb-3 text-sm tracking-wide opacity-80 hover:underline">
                 Blog
               </h5>

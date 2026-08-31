@@ -19,7 +19,7 @@ export async function generateMetadata() {
   const title = "Conversion Driven Web Design | Mesmerise Digital";
   const description =
     "Websites engineered for emotion and results. We design experiences that look exceptional and sell effortlessly.";
-  const canonicalUrl = absoluteUrl("/services/website/");
+  const canonicalUrl = absoluteUrl("/services/website");
 
   return {
     title,

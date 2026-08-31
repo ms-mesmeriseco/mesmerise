@@ -17,7 +17,7 @@ export async function generateMetadata() {
   const title = "Branding | Mesmerise Digital";
   const description =
     "We craft identity systems that fuse psychology, storytelling and design to turn first impressions into lifelong brand loyalty.";
-  const canonicalUrl = absoluteUrl("/services/branding/");
+  const canonicalUrl = absoluteUrl("/services/branding");
 
   return {
     title,

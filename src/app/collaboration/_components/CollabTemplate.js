@@ -43,7 +43,7 @@ function SecondaryStatement({ marker, text, cta }) {
             <br />
             <br />
             <br />
-            <Button size="x-large" variant="accent" href="/connect/">
+            <Button size="x-large" variant="accent" href="/connect">
               {cta}
             </Button>
           </>

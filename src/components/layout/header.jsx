@@ -10,47 +10,47 @@ import MobileMenu from "../ui/MobileMenu";
 export const NAV_ITEMS = [
   {
     label: "Services",
-    href: "/services/",
+    href: "/services",
     children: [
-      { label: "Strategy", href: "/services/strategy/" },
-      { label: "Branding", href: "/services/branding/" },
-      { label: "Website", href: "/services/website/" },
-      { label: "Performance & Growth", href: "/services/performance-growth/" },
-      { label: "Analytics", href: "/services/analytics/" },
+      { label: "Strategy", href: "/services/strategy" },
+      { label: "Branding", href: "/services/branding" },
+      { label: "Website", href: "/services/website" },
+      { label: "Performance & Growth", href: "/services/performance-growth" },
+      { label: "Analytics", href: "/services/analytics" },
     ],
   },
-  { label: "Work", href: "/work/" },
+  { label: "Work", href: "/work" },
   {
     label: "Collaboration",
-    href: "/collaboration/",
+    href: "/collaboration",
     children: [
-      { label: "Defined", href: "/collaboration/defined/" },
-      { label: "Continuous", href: "/collaboration/continuous/" },
+      { label: "Defined", href: "/collaboration/defined" },
+      { label: "Continuous", href: "/collaboration/continuous" },
     ],
   },
-  { label: "About", href: "/about/" },
+  { label: "About", href: "/about" },
 ];
 
 export const MOB_NAV_ITEMS = [
-  { label: "About", href: "/about/" },
+  { label: "About", href: "/about" },
   {
     label: "Services",
-    href: "/services/",
+    href: "/services",
     children: [
-      { label: "Strategy", href: "/services/strategy/" },
-      { label: "Branding", href: "/services/branding/" },
-      { label: "Website", href: "/services/website/" },
-      { label: "Performance & Growth", href: "/services/performance-growth/" },
-      { label: "Analytics", href: "/services/analytics/" },
+      { label: "Strategy", href: "/services/strategy" },
+      { label: "Branding", href: "/services/branding" },
+      { label: "Website", href: "/services/website" },
+      { label: "Performance & Growth", href: "/services/performance-growth" },
+      { label: "Analytics", href: "/services/analytics" },
     ],
   },
-  { label: "Work", href: "/work/" },
+  { label: "Work", href: "/work" },
   {
     label: "Collaborate",
-    href: "/collaboration/",
+    href: "/collaboration",
     children: [
-      { label: "Defined", href: "/collaboration/defined/" },
-      { label: "Continuous", href: "/collaboration/continuous/" },
+      { label: "Defined", href: "/collaboration/defined" },
+      { label: "Continuous", href: "/collaboration/continuous" },
     ],
   },
 ];
@@ -146,12 +146,12 @@ export default function Header() {
 
   const KNOWN_PREFIXES = [
     "/",
-    "/about/",
-    "/connect/",
-    "/services/",
-    "/collaboration/",
-    "/work/",
-    "/blog/",
+    "/about",
+    "/connect",
+    "/services",
+    "/collaboration",
+    "/work",
+    "/blog",
   ];
   const isLanding = !KNOWN_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`),
@@ -194,7 +194,7 @@ export default function Header() {
       >
         <div className="mx-auto max-w-6xl px-[var(--global-margin-xs)] py-2">
           <Link
-            href="/cro-audit/"
+            href="/cro-audit"
             className="flex items-center justify-center gap-3 rounded-xl md:rounded-2xl px-1 py-2
                        bg-[var(--accent2)] text-[var(--background)] text-xs md:text-sm
                        hover:bg-[var(--accent2-l)] transition-colors duration-200"
@@ -238,7 +238,7 @@ export default function Header() {
         {/* Right side */}
         <div className="flex items-center gap-3">
           <div className="hidden [@media(min-width:1035px)]:block">
-            <HeroButton href="/connect/">Let's connect</HeroButton>
+            <HeroButton href="/connect">Let's connect</HeroButton>
           </div>
           <div className="block [@media(min-width:1035px)]:hidden">
             <MobileMenu items={MOB_NAV_ITEMS} pathname={pathname} />

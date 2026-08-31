@@ -18,7 +18,7 @@ export async function generateMetadata() {
     "Growth Strategy That Turns Data Into Direction | Mesmerise Digital";
   const description =
     "We craft strategic systems that unify psychology, positioning and analytics to create clarity, precision and measurable growth.";
-  const canonicalUrl = absoluteUrl("/services/strategy/");
+  const canonicalUrl = absoluteUrl("/services/strategy");
 
   return {
     title,

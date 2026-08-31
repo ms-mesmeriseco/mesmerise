@@ -17,7 +17,7 @@ export async function generateMetadata() {
   const title = "Performance & Growth Marketing | Mesmerise Digital";
   const description =
     "We blend data, psychology and strategy to generate qualified traffic, lower CPA, and scale with integrity.";
-  const canonicalUrl = absoluteUrl("/services/performance-growth/");
+  const canonicalUrl = absoluteUrl("/services/performance-growth");
 
   return {
     title,
