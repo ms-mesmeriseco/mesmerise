@@ -11,7 +11,7 @@ export async function generateMetadata() {
     title,
     description,
     alternates: {
-      canonical: `https://www.mesmeriseco.com/about`,
+      canonical: `https://www.mesmeriseco.com/about/`,
     },
   };
 }

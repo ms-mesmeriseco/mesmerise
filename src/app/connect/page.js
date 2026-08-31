@@ -15,11 +15,11 @@ export async function generateMetadata() {
   return {
     title,
     description,
-    alternates: { canonical: `${baseUrl}/connect` },
+    alternates: { canonical: `${baseUrl}/connect/` },
     openGraph: {
       title,
       description,
-      url: `${baseUrl}/connect`,
+      url: `${baseUrl}/connect/`,
       siteName: "Mesmerise Digital",
       type: "website",
       images: [
