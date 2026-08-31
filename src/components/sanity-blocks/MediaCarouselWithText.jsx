@@ -8,7 +8,10 @@ import InView from "@/hooks/InView";
 
 const TRANSITION_DURATION = 4200; // in ms
 
-export default function MediaCarouselWithText({ mediaContentCollection }) {
+export default function MediaCarouselWithText({
+  mediaContentCollection,
+  logoDisplay,
+}) {
   // Supports:
   // - array directly: mediaContentCollection = block.mediaContent
   // - or collection shape: { items: [...] }
@@ -62,6 +65,10 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
     _key: block._key ? `${block._key}-${idx}` : `pt-block-${idx}`,
   }));
 
+  // logoDisplay is set on the carousel itself, not per item — when on, the
+  // whole carousel switches to logos overlaid on the media with no progress bar.
+  const useLogoDisplay = !!logoDisplay;
+
   return (
     <InView>
       <section className="narrow-wrapper w-full justify-center">
@@ -71,9 +78,9 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             lazy="true"
-            className="relative w-full md:aspect-[16/9] aspect-[5/6] overflow-hidden bg-black"
+            className="relative w-full md:aspect-[16/9] aspect-[5/6] max-h-[70vh] overflow-hidden bg-black"
           >
             {/* Image or Video */}
             {isVideo ? (
@@ -126,74 +133,129 @@ export default function MediaCarouselWithText({ mediaContentCollection }) {
                 </motion.div>
               </AnimatePresence>
             )}
+
+            {/* --- Logo toggles, overlaid on the media --- */}
+            {useLogoDisplay && (
+              <div className="w-[100%] justify-around absolute bottom-0 left-0 w-full flex flex-row flex-0 gap-2 md:gap-4 p-3 md:p-5 z-10 bg-gradient-to-t from-black/70 to-transparent">
+                {items.map((item, idx) => {
+                  const isActive = idx === activeIndex;
+                  const showLogo = !!item.logoUrl;
+                  return (
+                    <button
+                      key={`logo-toggle-${idx}`}
+                      aria-label={item.labelText || `Slide ${idx + 1}`}
+                      onClick={() => {
+                        setActiveIndex(idx);
+                        setHasRendered(false);
+                      }}
+                      className={`relative flex-1 inline-flex items-center justify-center h-10 md:h-12 px-3 md:px-4 transition-all duration-200  ${
+                        isActive ? "opacity-100" : "opacity-30 hover:opacity-90"
+                      }`}
+                    >
+                      {showLogo ? (
+                        <Image
+                          src={item.logoUrl}
+                          alt={item.labelText || `Slide ${idx + 1}`}
+                          width={80}
+                          height={80}
+                          className="md:h-24 w-24 object-contain pb-12"
+                        />
+                      ) : (
+                        <span className="text-xs md:text-sm text-black">
+                          {item.labelText || `Slide ${idx + 1}`}
+                        </span>
+                      )}
+
+                      {isActive && hasRendered && (
+                        <div className="absolute bottom-0 left-0 h-[0.15rem] bg-white/20 w-full overflow-hidden">
+                          <div
+                            key={progressKey}
+                            className="h-full bg-[var(--mesm-yellow)] animate-progress"
+                            style={{
+                              animationDuration: `${TRANSITION_DURATION}ms`,
+                            }}
+                          />
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </motion.div>
         </AnimatePresence>
 
-        {/* --- Mobile dots --- */}
-        <div className="mt-4 flex items-center justify-center gap-3 md:hidden">
-          {items.map((item, idx) => {
-            const isActive = idx === activeIndex;
-            return (
-              <button
-                key={`dot-${idx}`}
-                aria-label={item.labelText || `Slide ${idx + 1}`}
-                onClick={() => {
-                  setActiveIndex(idx);
-                  setHasRendered(false);
-                }}
-                className={[
-                  "relative inline-flex shrink-0 rounded-full transition-transform",
-                  "w-5 h-5",
-                  "bg-[var(--mesm-yellow)]",
-                  isActive ? "" : "opacity-20 hover:opacity-100",
-                ].join(" ")}
-              />
-            );
-          })}
-        </div>
+        {!useLogoDisplay && (
+          <>
+            {/* --- Mobile dots --- */}
+            <div className="mt-4 flex items-center justify-center gap-3 md:hidden">
+              {items.map((item, idx) => {
+                const isActive = idx === activeIndex;
+                return (
+                  <button
+                    key={`dot-${idx}`}
+                    aria-label={item.labelText || `Slide ${idx + 1}`}
+                    onClick={() => {
+                      setActiveIndex(idx);
+                      setHasRendered(false);
+                    }}
+                    className={[
+                      "relative inline-flex shrink-0 rounded-full transition-transform",
+                      "w-5 h-5",
+                      "bg-[var(--mesm-yellow)]",
+                      isActive ? "" : "opacity-20 hover:opacity-100",
+                    ].join(" ")}
+                  />
+                );
+              })}
+            </div>
 
-        {/* --- Desktop labels --- */}
-        <div
-          className="hidden md:grid mt-4 gap-2"
-          style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
-        >
-          <AnimatePresence>
-            {items.map((item, idx) => (
-              <motion.div
-                key={idx}
-                className="relative flex flex-col items-start mr-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                lazy="true"
-              >
-                <button
-                  onClick={() => {
-                    setActiveIndex(idx);
-                    setHasRendered(false);
-                  }}
-                  className={`text-left text-sm cursor-pointer text-[var(--mesm-l-grey)] py-3 rounded-full transition-colors w-full ${
-                    idx === activeIndex
-                      ? "text-foreground"
-                      : "hover:bg-foreground/10"
-                  }`}
-                >
-                  {item.labelText || `Slide ${idx + 1}`}
-                </button>
+            {/* --- Desktop labels --- */}
+            <div
+              className="hidden md:grid mt-4 gap-2"
+              style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}
+            >
+              <AnimatePresence>
+                {items.map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    className="relative flex flex-col items-start mr-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    lazy="true"
+                  >
+                    <button
+                      onClick={() => {
+                        setActiveIndex(idx);
+                        setHasRendered(false);
+                      }}
+                      className={`text-left text-sm cursor-pointer text-[var(--mesm-l-grey)] py-3 rounded-full transition-colors w-full ${
+                        idx === activeIndex
+                          ? "text-foreground"
+                          : "hover:bg-foreground/10"
+                      }`}
+                    >
+                      {item.labelText || `Slide ${idx + 1}`}
+                    </button>
 
-                {idx === activeIndex && hasRendered && (
-                  <div className="absolute bottom-0 left-0 h-[0.1rem] bg-black w-full overflow-hidden">
-                    <div
-                      key={progressKey}
-                      className="h-full bg-[var(--mesm-yellow)] animate-progress"
-                      style={{ animationDuration: `${TRANSITION_DURATION}ms` }}
-                    />
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+                    {idx === activeIndex && hasRendered && (
+                      <div className="absolute bottom-0 left-0 h-[0.1rem] bg-black w-full overflow-hidden">
+                        <div
+                          key={progressKey}
+                          className="h-full bg-[var(--mesm-yellow)] animate-progress"
+                          style={{
+                            animationDuration: `${TRANSITION_DURATION}ms`,
+                          }}
+                        />
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </>
+        )}
 
         <style jsx>{`
           @keyframes progress {

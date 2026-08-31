@@ -216,12 +216,15 @@ timeFrame,
     },
 
     // ---------- MEDIA CAROUSEL WITH TEXT ----------
+    logoDisplay,
     mediaContent[]->{
       _id,
       _type,
       labelText,
       textContent,
-      "fileUrl": mediaContent.asset->url
+
+      "fileUrl": mediaContent.asset->url,
+      "logoUrl": logo.asset->url
     },
 
 // ---------- COMPARISON TABLE ----------

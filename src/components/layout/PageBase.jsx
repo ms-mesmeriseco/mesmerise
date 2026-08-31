@@ -209,6 +209,7 @@ export default function PageBase({ blocks, metadata }) {
                 >
                   <MediaCarouselWithText
                     mediaContentCollection={{ items: mediaItems }}
+                    logoDisplay={block.logoDisplay}
                   />
                 </div>
               );
