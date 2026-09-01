@@ -6,7 +6,7 @@ import { PortableText } from "@portabletext/react";
 import { AnimatePresence, motion } from "framer-motion";
 import InView from "@/hooks/InView";
 
-const TRANSITION_DURATION = 4200; // in ms
+const TRANSITION_DURATION = 5200; // in ms
 
 export default function MediaCarouselWithText({
   mediaContentCollection,
@@ -77,8 +77,8 @@ export default function MediaCarouselWithText({
             key={activeIndex}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 1 }}
+            transition={{ duration: 0.25 }}
             lazy="true"
             className="relative w-full md:aspect-[16/9] aspect-[5/6] max-h-[70vh] overflow-hidden bg-black"
           >
@@ -136,7 +136,7 @@ export default function MediaCarouselWithText({
 
             {/* --- Logo toggles, overlaid on the media --- */}
             {useLogoDisplay && (
-              <div className="w-[100%] justify-around absolute bottom-0 left-0 w-full flex flex-row flex-0 gap-2 md:gap-4 p-3 md:p-5 z-10 bg-gradient-to-t from-black/70 to-transparent">
+              <div className="w-[100%] justify-around absolute bottom-0 left-0 w-full flex flex-row flex-0 gap-2 md:gap-4 p-3 md:p-8 z-10 bg-gradient-to-t from-black/70 to-transparent">
                 {items.map((item, idx) => {
                   const isActive = idx === activeIndex;
                   const showLogo = !!item.logoUrl;
@@ -158,7 +158,7 @@ export default function MediaCarouselWithText({
                           alt={item.labelText || `Slide ${idx + 1}`}
                           width={80}
                           height={80}
-                          className="md:h-24 w-24 object-contain pb-12"
+                          className="md:h-24 w-24 object-contain pb-8"
                         />
                       ) : (
                         <span className="text-xs md:text-sm text-black">
