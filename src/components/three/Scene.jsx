@@ -6,8 +6,7 @@ import { Environment } from "@react-three/drei";
 import Model from "./Model.jsx";
 
 function SceneLoadedNotifier({ onLoaded }) {
-  // Fallback mounted => we're loading
-  // Fallback unmounted => loaded
+
   useEffect(() => {
     onLoaded?.(false);
     return () => onLoaded?.(true);

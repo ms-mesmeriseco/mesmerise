@@ -241,7 +241,7 @@ export default function CROChecklistPage() {
         logos={TRUST_LOGOS}
         heroMedia={heroImg}
       />
-      <div className="flex w-full flex-col justify-between gap-64 my-48">
+      <div className="flex w-full flex-col justify-between gap-24 my-48">
         <WhyICreatedThis />
         <WhatYouReceive />
         <ProjectRail tag="highlight" />

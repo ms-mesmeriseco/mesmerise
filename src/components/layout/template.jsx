@@ -13,7 +13,7 @@ export default function Template({ children }) {
   const paddingTop =
     pathname === "/"
       ? "pt-0"
-      : pathname === "/join"
+      : pathname === "/join" || pathname === "/growth-leak-audit"
         ? "pt-12"
         : "md:pt-30 pt-28";
   const anim = (variants) => {

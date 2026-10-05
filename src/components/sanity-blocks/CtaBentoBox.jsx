@@ -6,7 +6,7 @@ import { PortableText } from "@portabletext/react";
 import InView from "@/hooks/InView";
 import Image from "next/image";
 
-export default function CtaBentoBox({ block }) {
+export default function CtaBentoBox({ block, linkLabel = "Learn more" }) {
   if (!block) return null;
 
   const { bentoTitle, ctaBox1, ctaLink1, ctaBox2, ctaLink2 } = block;
@@ -53,7 +53,7 @@ export default function CtaBentoBox({ block }) {
                 </div>
 
                 <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
-                  Learn more
+                  {linkLabel}
                 </span>
               </Link>
             )}
@@ -65,7 +65,7 @@ export default function CtaBentoBox({ block }) {
                 </div>
 
                 <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
-                  Learn more
+                  {linkLabel}
                 </span>
               </Link>
             )}

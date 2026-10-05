@@ -136,7 +136,7 @@ function DesktopNav({ pathname }) {
   );
 }
 
-const HIDDEN_PATHS = ["/join"];
+const HIDDEN_PATHS = ["/join", "/growth-leak-audit"];
 
 export default function Header() {
   const pathname = usePathname() || "/";

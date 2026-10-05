@@ -61,7 +61,7 @@ export default function DataRow({ stats = [] }) {
   return (
     <section
       data-marker="RESULTS"
-      className="relative py-12 md:py-16 text-[var(--foreground)] w-full"
+      className="relative py-12 md:py-16 text-[var(--foreground)]"
     >
       <InView>
         <motion.div
