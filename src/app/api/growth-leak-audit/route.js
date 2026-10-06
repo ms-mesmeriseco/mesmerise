@@ -19,7 +19,8 @@ const contactTo = process.env.CONTACT_TO;
 const secondContact = process.env.SECOND_CONTACT;
 const contactFrom = process.env.CONTACT_FROM;
 const hubspotToken = process.env.HUBSPOT_ACCESS_TOKEN;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.mesmeriseco.com";
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.mesmeriseco.com";
 
 const TRACK_LABELS = { leadgen: "Lead gen", ecom: "Ecom", both: "Both" };
 
@@ -27,7 +28,10 @@ export async function POST(req) {
   try {
     const body = await req.json().catch(() => null);
     if (!body) {
-      return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid JSON body." },
+        { status: 400 },
+      );
     }
 
     const { answers, contact, hp } = body;
@@ -36,33 +40,54 @@ export async function POST(req) {
     if (hp) return NextResponse.json({ ok: true });
 
     const firstName = String(contact?.firstName || "").trim();
-    const email = String(contact?.email || "").trim().toLowerCase();
+    const email = String(contact?.email || "")
+      .trim()
+      .toLowerCase();
     const company = String(contact?.company || "").trim();
     let website = String(contact?.website || "").trim();
 
     if (!firstName || !email || !company || !website) {
       return NextResponse.json(
         { error: "First name, email, company and website are required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid email address." },
+        { status: 400 },
+      );
     }
     if (!/^https?:\/\//i.test(website)) website = `https://${website}`;
 
     if (!answers || !TRACK_LABELS[answers.H1]) {
-      return NextResponse.json({ error: "Incomplete quiz answers." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Incomplete quiz answers." },
+        { status: 400 },
+      );
     }
 
     // Scores are always recomputed server-side
     const results = computeResults(answers);
     const qualAnswers = Object.fromEntries(
-      QUALIFICATION_QUESTIONS.map((q) => [q.key, q.options[answers[q.id]]?.label || ""])
+      QUALIFICATION_QUESTIONS.map((q) => [
+        q.key,
+        q.options[answers[q.id]]?.label || "",
+      ]),
     );
-    const goalLabel = H3.options.find((o) => o.value === answers.H3)?.label || "";
+    const goalLabel =
+      H3.options.find((o) => o.value === answers.H3)?.label || "";
 
-    const lead = { firstName, email, company, website, answers, results, qualAnswers, goalLabel };
+    const lead = {
+      firstName,
+      email,
+      company,
+      website,
+      answers,
+      results,
+      qualAnswers,
+      goalLabel,
+    };
 
     // Each integration is independent: one failing shouldn't block the prospect's results
     const tasks = await Promise.allSettled([
@@ -73,7 +98,10 @@ export async function POST(req) {
     ]);
     tasks.forEach((t, i) => {
       if (t.status === "rejected") {
-        console.error(`Growth leak audit task ${i} failed:`, t.reason?.message || t.reason);
+        console.error(
+          `Growth leak audit task ${i} failed:`,
+          t.reason?.message || t.reason,
+        );
       }
     });
 
@@ -89,7 +117,15 @@ export async function POST(req) {
 
 // ── HubSpot ────────────────────────────────────────────────────────────────
 
-async function syncHubspot({ firstName, email, company, website, answers, results, qualAnswers }) {
+async function syncHubspot({
+  firstName,
+  email,
+  company,
+  website,
+  answers,
+  results,
+  qualAnswers,
+}) {
   if (!hubspotToken) return;
 
   const properties = {
@@ -126,7 +162,7 @@ async function syncHubspot({ firstName, email, company, website, answers, result
       body: JSON.stringify({
         inputs: [{ idProperty: "email", id: email, properties }],
       }),
-    }
+    },
   );
   if (!res.ok) {
     throw new Error(`HubSpot ${res.status}: ${await res.text()}`);
@@ -138,18 +174,32 @@ async function syncHubspot({ firstName, email, company, website, answers, result
 async function addToAudience({ firstName, email }) {
   if (!resend || !audienceId) return;
   try {
-    await resend.contacts.create({ email, firstName, unsubscribed: false, audienceId });
+    await resend.contacts.create({
+      email,
+      firstName,
+      unsubscribed: false,
+      audienceId,
+    });
   } catch (err) {
     const status = err?.statusCode || err?.response?.status;
     if (status !== 409) throw err;
   }
 }
 
-async function sendInternalAlert({ firstName, email, company, website, answers, results, qualAnswers, goalLabel }) {
+async function sendInternalAlert({
+  firstName,
+  email,
+  company,
+  website,
+  answers,
+  results,
+  qualAnswers,
+  goalLabel,
+}) {
   if (!resend || !contactTo || !contactFrom) return;
 
   const { overall, tier, fitScore, fitBand, hotLead, pillars, leaks } = results;
-  const prefix = hotLead ? "🔥 HOT LEAD — same-day outreach" : `${fitBand} fit`;
+  const prefix = hotLead ? "HOT LEAD" : `${fitBand} fit`;
   const subject = `${prefix}: Growth Leak Audit from ${company} (${overall}/100, fit ${fitScore})`;
 
   const row = (k, v) =>
@@ -209,7 +259,7 @@ async function sendProspectReport({ firstName, email, answers, results }) {
       <table>${pillars
         .map(
           (p) =>
-            `<tr><td style="padding:4px 16px 4px 0">${escapeHtml(p.label)}</td><td><strong>${p.score}</strong></td></tr>`
+            `<tr><td style="padding:4px 16px 4px 0">${escapeHtml(p.label)}</td><td><strong>${p.score}</strong></td></tr>`,
         )
         .join("")}</table>
       <h3 style="margin:24px 0 8px">Your top 3 leaks</h3>
@@ -218,7 +268,7 @@ async function sendProspectReport({ firstName, email, answers, results }) {
           (l, i) => `
         <p style="margin:0 0 16px"><strong>${i + 1}. ${escapeHtml(l.headline)}</strong><br/>
         <span style="color:#555">${escapeHtml(l.label)} · ${l.score}/100</span><br/>
-        ${escapeHtml(l.cost)}</p>`
+        ${escapeHtml(l.cost)}</p>`,
         )
         .join("")}
       <h3 style="margin:24px 0 8px">${escapeHtml(cta.headline)}</h3>
