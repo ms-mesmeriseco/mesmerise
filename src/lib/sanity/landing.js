@@ -321,6 +321,23 @@ title2,
       }
     },
 
+    // ---------- FOCUS LIST ----------
+    _type == "listIconsFocus" => {
+      twoColumn,
+      stickyTitle,
+      "title": title->{
+        _id,
+        _type,
+        content
+      },
+      listItems[]->{
+        _id,
+        _type,
+        title,
+        content
+      }
+    },
+
     // ---------- PYRAMID (NEW) ----------
     _type == "pyramid" => {
       richTxt,

@@ -18,6 +18,7 @@ import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
 import ContentRail from "@/components/sanity-blocks/ContentRail";
 import IconListColumn from "@/components/sanity-blocks/IconListColumn";
 import Pyramid from "@/components/sanity-blocks/Pyramid";
+import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
 import { motion } from "framer-motion";
 import useSectionMarker from "@/hooks/useSectionMarker";
 
@@ -302,6 +303,16 @@ export default function PageBase({ blocks, metadata }) {
             //       <IconListColumn block={block} />
             //     </div>
             //   );
+
+            case "listIconsFocus":
+              return (
+                <div
+                  className="col-span-12"
+                  key={block._id || `block-${index}`}
+                >
+                  <ListIconsFocus block={block} />
+                </div>
+              );
 
             case "pyramid":
               return (

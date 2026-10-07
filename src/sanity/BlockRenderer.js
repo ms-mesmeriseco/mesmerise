@@ -4,6 +4,7 @@ import ListIcons from "@/components/sanity-blocks/ListIcons";
 import IconRow from "@/components/sanity-blocks/IconRow";
 import AccordionWidget from "@/components/sanity-blocks/Accordion";
 import Image from "next/image";
+import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 
 function ensureUniqueKeys(blocks) {
