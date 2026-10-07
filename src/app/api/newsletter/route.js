@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { upsertHubspotContact, LEAD_SOURCES } from "@/lib/hubspot";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const audienceId = process.env.RESEND_AUDIENCE_ID;
@@ -48,6 +49,13 @@ export async function POST(req) {
     const parts = String(name).trim().split(/\s+/);
     const firstName = parts[0] || "";
     const lastName = parts.slice(1).join(" ") || "";
+
+    // Don't let a HubSpot outage block the signup
+    await upsertHubspotContact(email, {
+      firstname: firstName,
+      lastname: lastName,
+      mesm_lead_source: LEAD_SOURCES.newsletter,
+    }).catch((err) => console.error("HubSpot sync failed:", err.message));
 
     // Create (or upsert) contact in Resend Audience
     // If you want true upsert behavior, Resend supports `updateIfExists: true`

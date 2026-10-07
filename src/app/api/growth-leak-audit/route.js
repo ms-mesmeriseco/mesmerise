@@ -11,6 +11,7 @@ import {
   BOOKING_URL,
   GUIDE_URL,
 } from "@/lib/quiz/quizData";
+import { upsertHubspotContact, LEAD_SOURCES } from "@/lib/hubspot";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
@@ -18,7 +19,6 @@ const audienceId = process.env.RESEND_AUDIENCE_ID;
 const contactTo = process.env.CONTACT_TO;
 const secondContact = process.env.SECOND_CONTACT;
 const contactFrom = process.env.CONTACT_FROM;
-const hubspotToken = process.env.HUBSPOT_ACCESS_TOKEN;
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.mesmeriseco.com";
 
@@ -126,10 +126,7 @@ async function syncHubspot({
   results,
   qualAnswers,
 }) {
-  if (!hubspotToken) return;
-
   const properties = {
-    email,
     firstname: firstName,
     company,
     website,
@@ -147,26 +144,11 @@ async function syncHubspot({
     gla_role: qualAnswers.role,
     gla_timeline: qualAnswers.timeline,
     gla_current_setup: qualAnswers.current_setup,
+    mesm_lead_source: LEAD_SOURCES.growth_leak_audit,
   };
   for (const p of results.pillars) properties[`gla_score_${p.key}`] = p.score;
 
-  // Upsert by email
-  const res = await fetch(
-    "https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${hubspotToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        inputs: [{ idProperty: "email", id: email, properties }],
-      }),
-    },
-  );
-  if (!res.ok) {
-    throw new Error(`HubSpot ${res.status}: ${await res.text()}`);
-  }
+  await upsertHubspotContact(email, properties);
 }
 
 // ── Resend ─────────────────────────────────────────────────────────────────

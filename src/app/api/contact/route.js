@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { upsertHubspotContact, splitName, LEAD_SOURCES } from "@/lib/hubspot";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
@@ -41,6 +42,17 @@ export async function POST(req) {
         { status: 400 }
       );
     }
+
+    // Don't let a HubSpot outage block the enquiry email
+    await upsertHubspotContact(email, {
+      ...splitName(fullName),
+      phone,
+      company,
+      mesm_services: Array.isArray(services) ? services.join(", ") : "",
+      mesm_budget: Array.isArray(budgets) ? budgets.join(", ") : "",
+      mesm_enquiry_details: details,
+      mesm_lead_source: LEAD_SOURCES.contact,
+    }).catch((err) => console.error("HubSpot sync failed:", err.message));
 
     const subject = `Mesmerise Connect Submission from ${fullName}`;
     const html = `
