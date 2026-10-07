@@ -53,19 +53,22 @@ function useStackOffsets(count) {
 // Solid card: number | divider | large title + body, stacks over the previous card on scroll
 function StackCard({ number, title, content }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] w-full md:min-h-[22rem] min-h-[18rem] bg-[var(--background)] text-[var(--foreground)] border-t border-[var(--mesm-grey-dk)] md:py-8 py-6 md:px-8 px-6 ">
-      <span data-stack-head className="text-xs tracking-wide md:pb-0 pb-6">
+    <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] w-full md:min-h-[22rem] min-h-[18rem] bg-[var(--mesm-blue)] rounded-xl text-[var(--foreground)] shadow-lg shadow-black md:py-4 py-2 md:px-6 px-4 mb-2">
+      <span
+        data-stack-head
+        className=" text-[var(--background)] text-xs tracking-wide md:pb-0 pb-6"
+      >
         {number}
       </span>
 
-      <div className="flex flex-col justify-between gap-12 md:border-l md:border-[var(--mesm-grey-dk)] md:pl-8">
+      <div className="flex flex-col gap-8 bg-[var(--mesm-grey-dk)]/40 p-8 rounded-xl ">
         {title && (
-          <h3 className="lg:text-6xl md:text-5xl text-4xl leading-[1.05] tracking-tight font-normal">
+          <h3 className="tracking-tight font-normal text-[var(--background)]">
             {title}
           </h3>
         )}
         {content && (
-          <p className="text-sm leading-relaxed max-w-md whitespace-pre-line">
+          <p className="text-sm leading-relaxed max-w-md whitespace-pre-line  text-[var(--background)]">
             {content}
           </p>
         )}
@@ -91,7 +94,7 @@ export default function ListIconsFocus({ block }) {
   const listBlock = (
     <ul className="flex flex-col text-left w-full">
       {items.map((item, index) => {
-        const key = item?._id || item?._key || `list-icons-focus-${index}`;
+        const key = item?._key || `${item?._id || "list-icons-focus"}-${index}`;
         const stackOffset = offsets
           ? `${offsets[index] ?? 0}px`
           : `${index * STACK_FALLBACK_REM}rem`;
@@ -118,7 +121,7 @@ export default function ListIconsFocus({ block }) {
   if (twoColumn) {
     return (
       <InView>
-        <div className=" grid grid-cols-1 md:grid-cols-[3fr_7fr] md:gap-24 gap-6 items-start">
+        <div className="narrow-wrapper grid grid-cols-1 md:grid-cols-[3fr_7fr] md:gap-24 gap-6 items-start">
           <div
             className={
               sticky

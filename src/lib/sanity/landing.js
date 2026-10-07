@@ -330,11 +330,15 @@ title2,
         _type,
         content
       },
-      listItems[]->{
-        _id,
-        _type,
-        title,
-        content
+      // keep the reference _key so the same item can appear twice
+      listItems[]{
+        _key,
+        ...@->{
+          _id,
+          _type,
+          title,
+          content
+        }
       }
     },
 

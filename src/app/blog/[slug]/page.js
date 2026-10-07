@@ -6,6 +6,7 @@ import { PortableText } from "@portabletext/react";
 import ListCard from "@/components/ui/ListCard";
 import ExpandingCard from "@/components/ui/ExpandingCard";
 import BlogTOC from "@/components/blog/BlogTOC";
+import BlogProgressBar from "@/components/blog/BlogProgressBar";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import BlogRail from "@/components/sanity-blocks/BlogRail";
 import VideoCard from "@/components/ui/VideoCard";
@@ -366,7 +367,10 @@ export default async function BlogPost({ params }) {
             </aside>
           )}
 
-          <article className="max-w-xl w-full flex flex-col gap-6 md:pt-7">
+          <article
+            id="blog-article"
+            className="max-w-xl w-full flex flex-col gap-6 md:pt-7 mx-auto "
+          >
             <StaggeredWords
               as="h1"
               className="page-title-small"
@@ -457,6 +461,11 @@ export default async function BlogPost({ params }) {
       <div className="py-4 border-y border-[var(--mesm-grey-dk)]">
         <BlogRail />
       </div>
+
+      <BlogProgressBar
+        title={page.postHeading || page.postTitle}
+        url={`https://www.mesmeriseco.com/blog/${slug}`}
+      />
     </>
   );
 }
