@@ -337,7 +337,8 @@ title2,
           _id,
           _type,
           title,
-          content
+          content,
+          "icon": icon.asset->url
         }
       }
     },

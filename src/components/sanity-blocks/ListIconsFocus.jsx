@@ -51,7 +51,7 @@ function useStackOffsets(count) {
 }
 
 // Solid card: number | divider | large title + body, stacks over the previous card on scroll
-function StackCard({ number, title, content }) {
+function StackCard({ number, title, content, icon }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] w-full md:min-h-[22rem] min-h-[18rem] bg-[var(--mesm-blue)] rounded-xl text-[var(--foreground)] shadow-lg shadow-black md:py-4 py-2 md:px-6 px-4 mb-2">
       <span
@@ -62,11 +62,15 @@ function StackCard({ number, title, content }) {
       </span>
 
       <div className="flex flex-col gap-8 bg-[var(--mesm-grey-dk)]/40 p-8 rounded-xl ">
-        {title && (
-          <h3 className="tracking-tight font-normal text-[var(--background)]">
-            {title}
-          </h3>
-        )}
+        <div className="flex flex-row gap-4 items-center">
+          {icon && <img src={icon} alt="" className="w-10 h-10" />}
+
+          {title && (
+            <h3 className="tracking-tight font-normal text-[var(--background)]">
+              {title}
+            </h3>
+          )}
+        </div>
         {content && (
           <p className="text-sm leading-relaxed max-w-md whitespace-pre-line  text-[var(--background)]">
             {content}
@@ -111,6 +115,7 @@ export default function ListIconsFocus({ block }) {
               number={String(index + 1).padStart(2, "0")}
               title={item?.title}
               content={item?.content}
+              icon={item?.icon}
             />
           </li>
         );

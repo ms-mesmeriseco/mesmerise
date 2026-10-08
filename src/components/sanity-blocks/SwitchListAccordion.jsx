@@ -4,6 +4,18 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import InView from "@/hooks/InView";
 
+const EASE = [0.4, 0, 0.2, 1];
+const HEADER_OFFSET = 88;
+
+// Expand/collapse share the same timing so a closing item and an opening item
+// cancel each other out and the overall block height stays steady.
+const collapse = {
+  initial: { opacity: 0, height: 0 },
+  animate: { opacity: 1, height: "auto" },
+  exit: { opacity: 0, height: 0 },
+  transition: { duration: 0.35, ease: EASE },
+};
+
 function normalizeMedia(media) {
   if (!media) return null;
 
@@ -24,13 +36,12 @@ function normalizeMedia(media) {
   return null;
 }
 
-function renderMedia(media) {
-  const info = normalizeMedia(media);
+function renderMedia(info) {
   if (!info?.url) return null;
 
   const { url, mimeType, alt } = info;
   const isVideo =
-    mimeType?.startsWith?.("video") || url.match(/\.(mp4|webm|ogg)$/i) !== null;
+    mimeType?.startsWith?.("video") || /\.(mp4|webm|ogg)$/i.test(url);
 
   const commonClass = "w-full h-auto max-w-full object-cover rounded-xl";
   const commonStyle = { maxHeight: "80vh" };
@@ -63,35 +74,41 @@ function renderMedia(media) {
   );
 }
 
+const itemKey = (item, idx) => item._id || item.entryTitle || idx;
+
 export default function SwitchListAccordion({ items, title }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const mobileRowRefs = useRef([]); // for snap-to-top on mobile
+  const mobileRowRefs = useRef([]);
+  const mobileButtonRefs = useRef([]);
 
   if (!items || items.length === 0) return null;
 
-  // --- MOBILE HELPERS ONLY ---
+  const media = items.map((item) => normalizeMedia(item.media));
+  // Mobile can close every row; desktop always shows one.
+  const desktopIndex = activeIndex ?? 0;
+  const desktopMedia = media[desktopIndex];
+
   function handleMobileClick(idx) {
-    // toggle open/close
-    setActiveIndex((prev) => (prev === idx ? null : idx));
+    const prev = activeIndex;
+    setActiveIndex(prev === idx ? null : idx);
 
-    // snap only on mobile sizes
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 767px)").matches
-    ) {
-      const el = mobileRowRefs.current[idx];
-      if (!el) return;
+    const row = mobileRowRefs.current[idx];
+    if (!row) return;
 
-      const HEADER_OFFSET = 88;
-      requestAnimationFrame(() => {
-        const rect = el.getBoundingClientRect();
-        const y =
-          rect.top +
-          (window.pageYOffset || document.documentElement.scrollTop) -
-          HEADER_OFFSET;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      });
+    // If an open row above is about to collapse, the clicked row will move up
+    // by that amount — account for it so the scroll lands on the final spot.
+    let shift = 0;
+    if (prev !== null && prev < idx) {
+      const prevRow = mobileRowRefs.current[prev];
+      const prevButton = mobileButtonRefs.current[prev];
+      if (prevRow && prevButton) {
+        shift = prevRow.offsetHeight - prevButton.offsetHeight;
+      }
     }
+
+    const y =
+      row.getBoundingClientRect().top + window.scrollY - shift - HEADER_OFFSET;
+    window.scrollTo({ top: y, behavior: "smooth" });
   }
 
   return (
@@ -102,46 +119,30 @@ export default function SwitchListAccordion({ items, title }) {
         <div className="hidden md:grid md:grid-cols-2 md:gap-8 items-center justify-center">
           {/* Left (1/2): Accordion */}
           <div className="col-span-1 flex flex-col justify-center gap-6">
-            {items.map((item, idx) => (
-              <AnimatePresence key={item._id || item.entryTitle || idx}>
-                <motion.div
-                  layout
-                  className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto ease-in-out"
-                  initial={{ opacity: 0, y: 10, height: "auto" }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    height: "auto",
-                    transition: { duration: 0.2 },
-                  }}
-                  exit={{ opacity: 0, y: -10, height: "64px" }}
+            {items.map((item, idx) => {
+              const open = desktopIndex === idx;
+
+              return (
+                <div
+                  key={itemKey(item, idx)}
+                  className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto"
                 >
                   <button
                     className={`w-full text-left py-4 ${
-                      activeIndex === idx ? "font-bold" : "font-normal"
+                      open ? "font-bold" : "font-normal"
                     }`}
                     onClick={() => setActiveIndex(idx)}
+                    aria-expanded={open}
                   >
                     {item.entryTitle}
                   </button>
 
-                  <AnimatePresence>
-                    {activeIndex === idx && (
+                  <AnimatePresence initial={false}>
+                    {open && (
                       <motion.div
-                        layout
-                        key={`${item._id || item.entryTitle || idx}-content`}
-                        initial={{ opacity: 0, height: "0px" }}
-                        animate={{
-                          opacity: 1,
-                          height: "auto",
-                          transition: { duration: 0.4 },
-                        }}
-                        exit={{
-                          opacity: 0,
-                          height: "0px",
-                          transition: { duration: 0.02 },
-                        }}
-                        className="ease-in-out text-[var(--mesm-l-grey)]"
+                        key="content"
+                        {...collapse}
+                        className="overflow-hidden text-[var(--mesm-l-grey)]"
                       >
                         <div
                           dangerouslySetInnerHTML={{
@@ -151,28 +152,25 @@ export default function SwitchListAccordion({ items, title }) {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
-              </AnimatePresence>
-            ))}
+                </div>
+              );
+            })}
           </div>
 
-          {/* Right (1/2): Media */}
+          {/* Right (1/2): Media — crossfades between items */}
           <div className="col-span-1 flex items-center justify-center">
             <div className="relative w-full min-h-[60vh] max-w-full overflow-hidden rounded-xl shadow">
-              <AnimatePresence initial={false} mode="wait">
-                {items[activeIndex] && (
+              <AnimatePresence initial={false}>
+                {desktopMedia?.url && (
                   <motion.div
-                    key={
-                      normalizeMedia(items[activeIndex].media)?.url ||
-                      `media-${activeIndex}`
-                    }
+                    key={desktopMedia.url}
                     className="absolute inset-0 flex items-center justify-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    transition={{ duration: 0.4, ease: EASE }}
                   >
-                    {renderMedia(items[activeIndex].media)}
+                    {renderMedia(desktopMedia)}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -185,16 +183,17 @@ export default function SwitchListAccordion({ items, title }) {
       <section className="md:hidden flex flex-col gap-6 items-stretch justify-center mt-4">
         {items.map((item, idx) => {
           const open = activeIndex === idx;
-          const mediaInfo = normalizeMedia(item.media);
+          const mediaInfo = media[idx];
 
           return (
             <div
-              key={item._id || item.entryTitle || idx}
+              key={itemKey(item, idx)}
               ref={(el) => (mobileRowRefs.current[idx] = el)}
               className="w-full"
             >
-              <div className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto ease-in-out">
+              <div className="border-l-2 border-[var(--mesm-yellow)] px-4 h-auto">
                 <button
+                  ref={(el) => (mobileButtonRefs.current[idx] = el)}
                   className={`w-full text-left py-4 cursor-pointer ${
                     open ? "font-bold" : "font-normal"
                   }`}
@@ -208,22 +207,14 @@ export default function SwitchListAccordion({ items, title }) {
                 <AnimatePresence initial={false}>
                   {open && (
                     <motion.div
+                      key="content"
                       id={`mobile-panel-${idx}`}
-                      key={`${item._id || item.entryTitle || idx}-mobile-content`}
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: 1,
-                        height: "auto",
-                        transition: { duration: 0.35 },
-                      }}
-                      exit={{
-                        opacity: 0,
-                        height: 0,
-                        transition: { duration: 0.15 },
-                      }}
-                      className="py-2 pr-2 text-[var(--mesm-l-grey)] overflow-hidden max-h-[50vh] overflow-y-auto"
+                      {...collapse}
+                      className="overflow-hidden"
                     >
+                      {/* Padding lives inside so the height tween has no jump */}
                       <div
+                        className="py-2 pr-2 text-[var(--mesm-l-grey)] max-h-[50vh] overflow-y-auto"
                         dangerouslySetInnerHTML={{
                           __html: item.textContent || "",
                         }}
@@ -233,18 +224,17 @@ export default function SwitchListAccordion({ items, title }) {
                 </AnimatePresence>
               </div>
 
-              {/* Media: in normal flow, with spacing; no overlap */}
+              {/* Media: in normal flow, height-animated so content below glides */}
               <AnimatePresence initial={false}>
                 {open && mediaInfo?.url && (
                   <motion.div
-                    key={mediaInfo.url}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 6 }}
-                    transition={{ duration: 0.25 }}
-                    className="mt-3 h-[48vh] w-full overflow-hidden rounded-xl shadow flex items-center justify-center"
+                    key="media"
+                    {...collapse}
+                    className="overflow-hidden"
                   >
-                    {renderMedia(mediaInfo)}
+                    <div className="mt-3 h-[48vh] w-full overflow-hidden rounded-xl shadow flex items-center justify-center">
+                      {renderMedia(mediaInfo)}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
