@@ -14,7 +14,7 @@ const customers = [
 
 export default function AvatarRow({
   people = customers,
-  size = 48,
+  size = 42,
   scrollOnMobile = true,
   overlap = 0.28,
   reverse = false,

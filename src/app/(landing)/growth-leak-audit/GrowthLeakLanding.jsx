@@ -46,8 +46,8 @@ export default function GrowthLeakLanding() {
 
   return (
     <>
-      <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-[var(--global-margin-sm)] md:py-16">
-        <div className="max-w-5xl flex flex-col items-center gap-6 md:gap-8">
+      <section className="min-h-[80vh] flex flex-col items-start justify-center text-left px-[var(--global-margin-sm)] md:items-center md:text-center md:py-16">
+        <div className="max-w-5xl flex flex-col items-start gap-6 md:items-center md:gap-8">
           <StarEyebrow>
             For business owners & ambitious entrepreneurs
           </StarEyebrow>
