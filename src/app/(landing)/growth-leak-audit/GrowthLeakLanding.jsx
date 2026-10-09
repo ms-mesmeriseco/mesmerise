@@ -15,6 +15,7 @@ import {
   LANDING_FAQ,
 } from "@/lib/quiz/quizData";
 import Quiz from "./Quiz";
+import StarEyebrow from "./StarEyebrow";
 import Image from "next/image";
 import HeroButton from "@/components/ui/HeroButton";
 
@@ -51,14 +52,15 @@ export default function GrowthLeakLanding() {
 
   return (
     <>
-      <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-[var(--global-margin-sm)] md:py-16">
-        <div className="max-w-4xl flex flex-col items-center gap-6 md:gap-8">
-          <h5 className="uppercase text-[var(--mesm-blue)]">
+      <section className="min-h-[70vh] flex flex-col items-center justify-center text-center px-[var(--global-margin-sm)] md:py-16">
+        <div className="max-w-5xl flex flex-col items-center gap-6 md:gap-8">
+          <StarEyebrow>
             For business owners & ambitious entrepreneurs
-          </h5>
+          </StarEyebrow>
           <StaggeredWords
             as="h1"
             delay={0.01}
+            className="p"
             text="Find out exactly where your marketing is leaking"
           />
 
@@ -69,12 +71,14 @@ export default function GrowthLeakLanding() {
         </div>
       </section>
 
-      <div className="flex w-full flex-col gap-24 py-24">
+      <div className="flex w-full flex-col gap-24">
         <TrustedByMarquee />
         <div className="py-24">
           <ListIconsFocus block={LANDING_FOCUS} />
-          <div className="text-center flex flex-col items-center gap-6">
-            <h3>Find out which ones are costing you</h3>
+          <div className="text-center flex flex-col items-center gap-8 pt-24">
+            <h2 className="page-title-medium">
+              Find out which ones are costing you
+            </h2>
             <HeroButton onClick={() => toggle(true)}>Find my leaks</HeroButton>
           </div>
         </div>

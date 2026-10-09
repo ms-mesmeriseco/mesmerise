@@ -5,7 +5,13 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { computeResults } from "@/lib/quiz/scoring";
 import { verifyResultsToken } from "@/lib/quiz/resultsLink";
-import { upsertHubspotContact, LEAD_SOURCES } from "@/lib/hubspot";
+import { CTA } from "@/lib/quiz/quizData";
+import {
+  upsertHubspotContact,
+  updateHubspotContactBy,
+  splitName,
+  LEAD_SOURCES,
+} from "@/lib/hubspot";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
@@ -27,7 +33,7 @@ export async function POST(req) {
     }
     if (body.hp) return NextResponse.json({ ok: true });
 
-    const name = String(body.name || "").trim();
+    const name = String(body.fullName || "").trim();
     const email = String(body.email || "")
       .trim()
       .toLowerCase();
@@ -36,6 +42,10 @@ export async function POST(req) {
     const message = String(body.message || "")
       .trim()
       .slice(0, 2000);
+    const bestTime = CTA.call.form.bestTimes.includes(body.bestTime)
+      ? body.bestTime
+      : "";
+    const quizId = String(body.quizId || "").trim();
     const resultsUrl = String(body.resultsUrl || "");
 
     if (!name || !email || !phone) {
@@ -56,18 +66,13 @@ export async function POST(req) {
     const results = link?.answers ? computeResults(link.answers) : null;
 
     const tasks = await Promise.allSettled([
-      upsertHubspotContact(email, {
-        firstname: name,
-        phone,
-        company,
-        gla_wants_call: "yes",
-        mesm_lead_source: LEAD_SOURCES.growth_leak_audit,
-      }),
+      syncHubspot({ name, email, phone, company, bestTime, quizId }),
       sendRequest({
         name,
         email,
         phone,
         company,
+        bestTime,
         message,
         resultsUrl,
         results,
@@ -96,11 +101,30 @@ export async function POST(req) {
   }
 }
 
+// Lands on the quiz's HubSpot contact via its quiz ID. Without one (e.g. a
+// shared results link), or if it doesn't match, falls back to the email.
+async function syncHubspot({ name, email, phone, company, bestTime, quizId }) {
+  const review = {
+    phone,
+    gla_review_requested: "yes",
+    gla_review_best_time: bestTime,
+  };
+  const id = await updateHubspotContactBy("gla_quiz_id", quizId, review);
+  if (id) return id;
+  return upsertHubspotContact(email, {
+    ...splitName(name),
+    company,
+    ...review,
+    mesm_lead_source: LEAD_SOURCES.growth_leak_audit,
+  });
+}
+
 async function sendRequest({
   name,
   email,
   phone,
   company,
+  bestTime,
   message,
   resultsUrl,
   results,
@@ -123,6 +147,7 @@ async function sendRequest({
         ${row("Email", email)}
         ${row("Phone", phone)}
         ${row("Company", company || "-")}
+        ${row("Best time", bestTime || "-")}
         ${score ? row("Score", score) : ""}
       </table>
       <p style="margin:16px 0 4px"><strong>Message</strong></p>

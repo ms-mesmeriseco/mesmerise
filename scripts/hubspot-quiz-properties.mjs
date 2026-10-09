@@ -1,5 +1,5 @@
 // One-off: creates the Growth Leak Audit contact properties in HubSpot.
-// Usage: HUBSPOT_ACCESS_TOKEN=pat-... node scripts/hubspot-quiz-properties.mjs
+// Usage: node --env-file=.env.local scripts/hubspot-quiz-properties.mjs
 // Needs a private app token with crm.schemas.contacts.write. Safe to re-run (existing properties are skipped).
 
 import {
@@ -90,6 +90,14 @@ const properties = [
   text("gla_call_opener", "GLA Call Opener", "textarea"),
   text("gla_answers", "GLA All Answers", "textarea"),
   text("gla_results_url", "GLA Results Page"),
+  text("gla_quiz_id", "GLA Quiz ID"),
+  // Set by the Growth Leak Review form at the base of the results page
+  dropdown("gla_review_requested", "GLA Review Requested", yesNo),
+  dropdown(
+    "gla_review_best_time",
+    "GLA Review Best Time",
+    fromLabels(["Morning", "Afternoon", "Either"])
+  ),
 ];
 
 const groupRes = await api("/groups", { name: GROUP, label: "Growth Leak Audit" });

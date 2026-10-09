@@ -68,6 +68,7 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
   const [share, setShare] = useState(null);
+  const [quizId, setQuizId] = useState(null);
   const advanceTimer = useRef(null);
   const topRef = useRef(null);
 
@@ -153,6 +154,7 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
 
       const computed = computeResults(answers);
       setResults(computed);
+      setQuizId(data.quizId || null);
       setShare(
         data.shareUrl
           ? { url: data.shareUrl, expires: data.shareExpires }
@@ -388,6 +390,7 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
               goal={answers.H3}
               share={share}
               contact={contact}
+              quizId={quizId}
             />
           )}
         </motion.div>

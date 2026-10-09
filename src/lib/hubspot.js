@@ -45,6 +45,48 @@ export async function upsertHubspotContact(email, properties) {
   return data?.results?.[0]?.id ?? null;
 }
 
+const dropEmpty = (properties) =>
+  Object.fromEntries(
+    Object.entries(properties).filter(
+      ([, v]) => v !== undefined && v !== null && v !== ""
+    )
+  );
+
+async function hubspotFetch(path, method, body) {
+  const res = await fetch(`https://api.hubapi.com${path}`, {
+    method,
+    headers: {
+      Authorization: `Bearer ${hubspotToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    throw new Error(`HubSpot ${res.status}: ${await res.text()}`);
+  }
+  return res.json().catch(() => null);
+}
+
+/**
+ * Update the contact whose `property` equals `value` (e.g. gla_quiz_id).
+ * Returns the contact ID, or null when no contact matches or HubSpot isn't set up.
+ */
+export async function updateHubspotContactBy(property, value, properties) {
+  if (!hubspotToken || !value) return null;
+  const found = await hubspotFetch("/crm/v3/objects/contacts/search", "POST", {
+    filterGroups: [
+      { filters: [{ propertyName: property, operator: "EQ", value }] },
+    ],
+    limit: 1,
+  });
+  const id = found?.results?.[0]?.id;
+  if (!id) return null;
+  await hubspotFetch(`/crm/v3/objects/contacts/${id}`, "PATCH", {
+    properties: dropEmpty(properties),
+  });
+  return id;
+}
+
 // Link to a contact record in the HubSpot app. Uses HUBSPOT_PORTAL_ID, or looks
 // the portal up once from the token.
 let portalId = process.env.HUBSPOT_PORTAL_ID || null;

@@ -592,3 +592,14 @@ figcaption {
     stroke-dashoffset: 0;
   }
 }
+
+/* Uppercase has no descenders, so trim the line box to cap height + baseline
+   to keep the eyebrow's padding visually even top and bottom */
+.star-eyebrow-label {
+  line-height: 1;
+}
+@supports (text-box: trim-both cap alphabetic) {
+  .star-eyebrow-label {
+    text-box: trim-both cap alphabetic;
+  }
+}

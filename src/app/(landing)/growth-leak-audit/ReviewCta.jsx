@@ -21,14 +21,25 @@ const btnPrimary = `${btnBase} bg-[var(--mesm-blue)] border-[var(--mesm-blue)] t
 const inputClass =
   "w-full border-b-1 border-[var(--mesm-grey-dk)] focus:border-[var(--mesm-blue)] p-[var(--global-margin-sm)] bg-transparent duration-200";
 
+const FIELDS = [
+  { key: "fullName", label: "Full name", type: "text", auto: "name" },
+  { key: "email", label: "Email", type: "email", auto: "email" },
+  { key: "phone", label: "Phone", type: "tel", auto: "tel" },
+  { key: "company", label: "Company", type: "text", auto: "organization" },
+];
+
 // Two-column Growth Leak Review CTA: founder photo left, copy right. The button
-// expands into a short request form. contact pre-fills it from the gate.
-export default function ReviewCta({ contact, resultsUrl }) {
+// expands into a short request form; once sent, the thank-you message replaces
+// the right column. contact pre-fills name, email & company from the gate (empty
+// on a shared results link); quizId ties the request to the quiz's HubSpot contact.
+export default function ReviewCta({ contact, resultsUrl, quizId }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
-    name: contact?.firstName || "",
+    fullName: contact?.firstName || "",
     email: contact?.email || "",
     phone: "",
+    company: contact?.company || "",
+    bestTime: "",
     message: "",
   });
   const [hp, setHp] = useState(""); // honeypot
@@ -43,7 +54,7 @@ export default function ReviewCta({ contact, resultsUrl }) {
     setError(null);
     if (hp) return;
 
-    if (!form.name.trim() || !form.email.trim() || !form.phone.trim()) {
+    if (!form.fullName.trim() || !form.email.trim() || !form.phone.trim()) {
       setError("Please add your name, email and phone.");
       return;
     }
@@ -57,12 +68,7 @@ export default function ReviewCta({ contact, resultsUrl }) {
       const res = await fetch("/api/growth-leak-audit/review", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          company: contact?.company || "",
-          resultsUrl,
-          hp,
-        }),
+        body: JSON.stringify({ ...form, resultsUrl, quizId, hp }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
@@ -100,111 +106,139 @@ export default function ReviewCta({ contact, resultsUrl }) {
         </figcaption>
       </figure>
 
-      <div className="flex flex-col gap-6">
-        <h5 className="uppercase">{COPY.eyebrow}</h5>
-        <h2>{COPY.headline}</h2>
-        {COPY.body.map((p) => (
-          <p key={p}>{p}</p>
-        ))}
+      {sent ? (
+        <motion.div
+          className="flex flex-col gap-6"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          role="status"
+        >
+          <h5 className="uppercase">{COPY.eyebrow}</h5>
+          <h2>{COPY.thanks.headline(form.fullName.trim().split(/\s+/)[0])}</h2>
+          <p>{COPY.thanks.body}</p>
+        </motion.div>
+      ) : (
+        <div className="flex flex-col gap-6">
+          <h5 className="uppercase">{COPY.eyebrow}</h5>
+          <h2>{COPY.headline}</h2>
+          {COPY.body.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
 
-        <AnimatePresence initial={false} mode="wait">
-          {!open ? (
-            <motion.div
-              key="button"
-              className="flex flex-col items-start gap-3 mt-6"
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <button
-                type="button"
-                className={btnAccent}
-                onClick={() => setOpen(true)}
-                aria-expanded={open}
+          <AnimatePresence initial={false} mode="wait">
+            {!open ? (
+              <motion.div
+                key="button"
+                className="flex flex-col items-start gap-3 mt-6"
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
               >
-                {COPY.button}
-              </button>
-              <p className="text-sm text-[var(--mesm-l-grey)]">
-                <em>{COPY.microcopy}</em>
-              </p>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="overflow-hidden"
-            >
-              {sent ? (
-                <p role="status" className="p2 mt-2">
-                  {COPY.form.success}
-                </p>
-              ) : (
-                <form
-                  onSubmit={submit}
-                  noValidate
-                  className="flex flex-col gap-3 mt-2"
+                <button
+                  type="button"
+                  className={btnAccent}
+                  onClick={() => setOpen(true)}
+                  aria-expanded={open}
                 >
-                  <div className="hidden" aria-hidden="true">
-                    <input
-                      type="text"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={hp}
-                      onChange={(e) => setHp(e.target.value)}
-                    />
-                  </div>
-                  {[
-                    { key: "name", label: "Name", type: "text", auto: "name" },
-                    {
-                      key: "email",
-                      label: "Email",
-                      type: "email",
-                      auto: "email",
-                    },
-                    { key: "phone", label: "Phone", type: "tel", auto: "tel" },
-                  ].map((f) => (
-                    <input
-                      key={f.key}
-                      type={f.type}
-                      required
-                      autoComplete={f.auto}
-                      placeholder={f.label}
-                      aria-label={f.label}
-                      value={form[f.key]}
-                      onChange={set(f.key)}
-                      className={inputClass}
-                    />
-                  ))}
-                  <textarea
-                    rows={3}
-                    placeholder={COPY.form.messagePlaceholder}
-                    aria-label="Message"
-                    value={form.message}
-                    onChange={set("message")}
-                    className={`${inputClass} resize-none`}
+                  {COPY.button}
+                </button>
+                <p className="text-sm text-[var(--mesm-l-grey)]">
+                  <em>{COPY.microcopy}</em>
+                </p>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="form"
+                onSubmit={submit}
+                noValidate
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-hidden flex flex-col gap-3 mt-6"
+              >
+                <h4 className="!mb-2">{COPY.form.heading}</h4>
+                <div className="hidden" aria-hidden="true">
+                  <input
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={hp}
+                    onChange={(e) => setHp(e.target.value)}
                   />
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className={`${btnPrimary} w-full mt-4`}
-                  >
-                    {submitting ? "Sending..." : COPY.form.submit}
-                  </button>
-                  <p className="text-sm text-[var(--mesm-l-grey)] text-center">
-                    <em>{COPY.microcopy}</em>
+                </div>
+                {FIELDS.map((f) => (
+                  <input
+                    key={f.key}
+                    type={f.type}
+                    required={f.key !== "company"}
+                    autoComplete={f.auto}
+                    placeholder={f.label}
+                    aria-label={f.label}
+                    value={form[f.key]}
+                    onChange={set(f.key)}
+                    className={inputClass}
+                  />
+                ))}
+
+                <fieldset className="flex flex-col gap-3 mt-4">
+                  <legend className="text-[var(--mesm-l-grey)] mb-3">
+                    {COPY.form.bestTimeLabel}
+                  </legend>
+                  <div className="flex flex-wrap gap-2" role="radiogroup">
+                    {COPY.form.bestTimes.map((t) => {
+                      const isOn = form.bestTime === t;
+                      return (
+                        <button
+                          key={t}
+                          type="button"
+                          role="radio"
+                          aria-checked={isOn}
+                          onClick={() =>
+                            setForm((f) => ({ ...f, bestTime: t }))
+                          }
+                          className={[
+                            "rounded-2xl border px-4 py-1 duration-200",
+                            isOn
+                              ? "bg-[var(--mesm-blue)] border-[var(--mesm-blue)] text-[var(--background)]"
+                              : "border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)]",
+                          ].join(" ")}
+                        >
+                          {t}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+
+                <input
+                  type="text"
+                  maxLength={300}
+                  placeholder={COPY.form.messagePlaceholder}
+                  aria-label="Anything we should know before the call?"
+                  value={form.message}
+                  onChange={set("message")}
+                  className={`${inputClass} mt-2`}
+                />
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className={`${btnPrimary} w-full mt-4`}
+                >
+                  {submitting ? "Sending..." : COPY.form.submit}
+                </button>
+                <p className="text-sm text-[var(--mesm-l-grey)] text-center">
+                  <em>{COPY.form.microcopy}</em>
+                </p>
+                {error && (
+                  <p role="status" className="text-red-600">
+                    {error}
                   </p>
-                  {error && (
-                    <p role="status" className="text-red-600">
-                      {error}
-                    </p>
-                  )}
-                </form>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+                )}
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </div>
+      )}
     </section>
   );
 }

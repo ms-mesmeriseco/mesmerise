@@ -2,24 +2,13 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { upsertHubspotContact, LEAD_SOURCES } from "@/lib/hubspot";
-
-const resendApiKey = process.env.RESEND_API_KEY;
-const audienceId = process.env.RESEND_AUDIENCE_ID;
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export async function POST(req) {
   try {
-    if (!resendApiKey) {
+    if (!process.env.HUBSPOT_ACCESS_TOKEN) {
       return NextResponse.json(
-        { error: "Server misconfig: RESEND_API_KEY is not set." },
-        { status: 500 }
-      );
-    }
-    if (!audienceId) {
-      return NextResponse.json(
-        { error: "Server misconfig: RESEND_AUDIENCE_ID is not set." },
+        { error: "Server misconfig: HUBSPOT_ACCESS_TOKEN is not set." },
         { status: 500 }
       );
     }
@@ -50,34 +39,12 @@ export async function POST(req) {
     const firstName = parts[0] || "";
     const lastName = parts.slice(1).join(" ") || "";
 
-    // Don't let a HubSpot outage block the signup
+    // HubSpot is the mailing list, so a failed sync fails the signup
     await upsertHubspotContact(email, {
       firstname: firstName,
       lastname: lastName,
       mesm_lead_source: LEAD_SOURCES.newsletter,
-    }).catch((err) => console.error("HubSpot sync failed:", err.message));
-
-    // Create (or upsert) contact in Resend Audience
-    // If you want true upsert behavior, Resend supports `updateIfExists: true`
-    // on some SDK versions. If not available, catching 409 works fine.
-    try {
-      await resend.contacts.create({
-        email,
-        firstName,
-        lastName,
-        unsubscribed: false,
-        audienceId,
-      });
-    } catch (err) {
-      // If already exists, treat as success so the UI can thank the user
-      const status = err?.statusCode || err?.response?.status;
-      const code = err?.code || err?.response?.data?.name;
-      if (status === 409 || code === "duplicate_contact") {
-        return NextResponse.json({ ok: true, duplicate: true });
-      }
-      // Otherwise bubble up
-      throw err;
-    }
+    });
 
     return NextResponse.json({ ok: true });
   } catch (err) {
@@ -89,7 +56,7 @@ export async function POST(req) {
       stack: err?.stack?.split("\n").slice(0, 3).join("\n"),
     });
     return NextResponse.json(
-      { error: err?.message || "Failed to subscribe." },
+      { error: "Failed to subscribe. Please try again." },
       { status: 500 }
     );
   }

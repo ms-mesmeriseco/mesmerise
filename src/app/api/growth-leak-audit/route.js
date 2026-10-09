@@ -1,6 +1,7 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { computeResults, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
@@ -26,11 +27,8 @@ import {
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
-const audienceId = process.env.RESEND_AUDIENCE_ID;
 const contactTo = process.env.CONTACT_TO;
 const secondContact = process.env.SECOND_CONTACT;
-// Extra recipient on the internal lead email while debugging the quiz
-const DEBUG_CONTACT = "matilda@mesmeriseco.com";
 const contactFrom = process.env.CONTACT_FROM;
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.mesmeriseco.com";
@@ -92,6 +90,9 @@ export async function POST(req) {
       H3.options.find((o) => o.value === answers.H3)?.label || "";
     const marketingOptin = contact?.marketingOptin === true;
     const wantsCall = contact?.wantsCall === true;
+    // Ties a later review request back to this HubSpot contact
+    const quizId = randomUUID();
+
     // 30-day link for the prospect, 90-day link for us
     const share = resultsLink(answers, SHARE_LINK_DAYS);
     const shareUrl = share && absolute(share.path);
@@ -111,6 +112,7 @@ export async function POST(req) {
       wantsCall,
       resultsUrl,
       shareUrl,
+      quizId,
     };
 
     // Each integration is independent: one failing shouldn't block the prospect's
@@ -123,8 +125,6 @@ export async function POST(req) {
           return sendInternalAlert(lead, null);
         },
       ),
-      // Nurture only with explicit opt-in
-      marketingOptin ? addToAudience(lead) : null,
       sendProspectReport(lead),
     ]);
     tasks.forEach((t, i) => {
@@ -140,6 +140,7 @@ export async function POST(req) {
       ok: true,
       shareUrl,
       shareExpires: share?.expires ?? null,
+      quizId,
     });
   } catch (err) {
     console.error("Growth leak audit route error:", {
@@ -163,6 +164,7 @@ async function syncHubspot({
   marketingOptin,
   wantsCall,
   resultsUrl,
+  quizId,
 }) {
   const properties = {
     firstname: firstName,
@@ -186,9 +188,13 @@ async function syncHubspot({
     gla_wants_call: wantsCall ? "yes" : "no",
     gla_call_opener: results.callOpener || "",
     gla_answers: results.answers
-      .map((a) => `${a.answerId || `${a.questionId}_-`} ${a.symbol} ${a.label}: ${a.answer || "-"} (${a.points})`)
+      .map(
+        (a) =>
+          `${a.answerId || `${a.questionId}_-`} ${a.symbol} ${a.label}: ${a.answer || "-"} (${a.points})`,
+      )
       .join("\n"),
     gla_results_url: resultsUrl,
+    gla_quiz_id: quizId,
     mesm_lead_source: LEAD_SOURCES.growth_leak_audit,
   };
   for (const p of results.pillars) properties[`gla_score_${p.key}`] = p.score;
@@ -197,21 +203,6 @@ async function syncHubspot({
 }
 
 // ── Resend ─────────────────────────────────────────────────────────────────
-
-async function addToAudience({ firstName, email }) {
-  if (!resend || !audienceId) return;
-  try {
-    await resend.contacts.create({
-      email,
-      firstName,
-      unsubscribed: false,
-      audienceId,
-    });
-  } catch (err) {
-    const status = err?.statusCode || err?.response?.status;
-    if (status !== 409) throw err;
-  }
-}
 
 async function sendInternalAlert(
   {
@@ -352,7 +343,7 @@ async function sendInternalAlert(
       ${
         results.unsure.length
           ? `<ul style="margin:0;padding-left:18px">${results.unsure.map(answerLine).join("")}</ul>`
-          : "<p style=\"margin:0\">None</p>"
+          : '<p style="margin:0">None</p>'
       }
 
       ${h("ALL ANSWERS")}
@@ -369,7 +360,7 @@ async function sendInternalAlert(
   `;
 
   const result = await resend.emails.send({
-    to: [contactTo, secondContact, DEBUG_CONTACT].filter(Boolean),
+    to: [contactTo, secondContact].filter(Boolean),
     from: contactFrom,
     replyTo: email,
     subject,
@@ -387,7 +378,9 @@ async function sendProspectReport({ firstName, email, results, shareUrl }) {
   const ctaHref =
     fitBand === "Low"
       ? absolute(GUIDE_URL)
-      : shareUrl ? `${shareUrl}#review` : absolute(BOOKING_URL);
+      : shareUrl
+        ? `${shareUrl}#review`
+        : absolute(BOOKING_URL);
 
   const html = `
     <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 600px;">

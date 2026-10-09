@@ -289,7 +289,8 @@ export function ShareLink({ url, expires }) {
 
 // share: { url, expires } for the results link, when there is one.
 // contact: the gate details, to pre-fill the review request form.
-export default function QuizResults({ results, goal, share, contact }) {
+// quizId: links a review request to the quiz's HubSpot contact.
+export default function QuizResults({ results, goal, share, contact, quizId }) {
   const { overall, pillars, leaks, fitBand } = results;
   const tier = tierFor(overall);
   const headline = GOAL_HEADLINES[goal];
@@ -427,7 +428,7 @@ export default function QuizResults({ results, goal, share, contact }) {
 
       {/* CTA by fit band: low fit gets the guide, everyone else the review */}
       {fitBand !== "Low" ? (
-        <ReviewCta contact={contact} resultsUrl={share?.url} />
+        <ReviewCta contact={contact} resultsUrl={share?.url} quizId={quizId} />
       ) : (
         <section className="w-full bg-[var(--mesm-grey)]/20 border border-[var(--mesm-grey)]/20 py-12 md:py-16 px-6 md:px-12 rounded-2xl flex flex-col items-center text-center gap-6">
           <div className="flex items-center justify-center w-14 h-14 p-2 rounded-full bg-[var(--mesm-red)]">

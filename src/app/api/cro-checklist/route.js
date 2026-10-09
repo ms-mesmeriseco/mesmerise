@@ -2,24 +2,13 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { upsertHubspotContact, LEAD_SOURCES } from "@/lib/hubspot";
-
-const resendApiKey = process.env.RESEND_API_KEY;
-const audienceId = process.env.RESEND_AUDIENCE_ID;
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 export async function POST(req) {
   try {
-    if (!resendApiKey) {
+    if (!process.env.HUBSPOT_ACCESS_TOKEN) {
       return NextResponse.json(
-        { error: "Server misconfig: RESEND_API_KEY is not set." },
-        { status: 500 }
-      );
-    }
-    if (!audienceId) {
-      return NextResponse.json(
-        { error: "Server misconfig: RESEND_AUDIENCE_ID is not set." },
+        { error: "Server misconfig: HUBSPOT_ACCESS_TOKEN is not set." },
         { status: 500 }
       );
     }
@@ -51,7 +40,7 @@ export async function POST(req) {
     const firstName = parts[0] || "";
     const lastName = parts.slice(1).join(" ") || "";
 
-    // Don't let a HubSpot outage block the signup
+    // HubSpot is the mailing list, so a failed sync fails the signup
     await upsertHubspotContact(email, {
       firstname: firstName,
       lastname: lastName,
@@ -59,26 +48,7 @@ export async function POST(req) {
         source === "marketing-matrix"
           ? LEAD_SOURCES.marketing_matrix
           : LEAD_SOURCES.cro_checklist,
-    }).catch((err) => console.error("HubSpot sync failed:", err.message));
-
-    try {
-      await resend.contacts.create({
-        email,
-        firstName,
-        lastName,
-        unsubscribed: false,
-        audienceId,
-        // If Resend later supports metadata/tags, you could pass `source` here.
-      });
-    } catch (err) {
-      const status = err?.statusCode || err?.response?.status;
-      const code = err?.code || err?.response?.data?.name;
-      if (status === 409 || code === "duplicate_contact") {
-        // Still treat as success so the user gets redirected
-        return NextResponse.json({ ok: true, duplicate: true });
-      }
-      throw err;
-    }
+    });
 
     return NextResponse.json({ ok: true, source: source || "cro-checklist" });
   } catch (err) {
@@ -90,7 +60,7 @@ export async function POST(req) {
       stack: err?.stack?.split("\n").slice(0, 3).join("\n"),
     });
     return NextResponse.json(
-      { error: err?.message || "Failed to submit." },
+      { error: "Failed to submit. Please try again." },
       { status: 500 }
     );
   }

@@ -1358,11 +1358,20 @@ export const CTA = {
     image:
       "https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg",
     caption: "Petar Petrovic - Founder",
+    // Expands inline under the copy; name, email & company pre-fill from the gate
     form: {
+      heading: "Book your Growth Leak Review",
+      bestTimeLabel: "Best time to reach you",
+      bestTimes: ["Morning", "Afternoon", "Either"],
       messagePlaceholder: "Anything we should know before the call? (optional)",
-      submit: "Request my review",
-      success:
-        "Thanks, your request is in. We’ll be in touch shortly to lock in a time.",
+      submit: "Book my review",
+      microcopy: "We’ll be in touch within one business day to lock in a time.",
+    },
+    // Replaces the right column once the form is sent
+    thanks: {
+      headline: (firstName) =>
+        firstName ? `You’re booked in, ${firstName}` : "You’re booked in",
+      body: "We’re already reviewing your results. Expect a call or email from us within one business day to confirm a time.",
     },
   },
   resource: {
