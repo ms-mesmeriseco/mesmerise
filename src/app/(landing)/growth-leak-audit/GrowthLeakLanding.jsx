@@ -4,20 +4,14 @@ import { useEffect, useState } from "react";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import TrustedByMarquee from "@/components/home/TrustedByMarquee";
 import TestimonialsRail from "@/components/home/TestimonialRail";
-import Button from "@/components/ui/Button";
 import CtaBentoBox from "@/components/sanity-blocks/CtaBentoBox";
 import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
 import FAQ from "@/components/blocks/FAQ";
-import {
-  LANDING,
-  LANDING_BENTO,
-  LANDING_FOCUS,
-  LANDING_FAQ,
-} from "@/lib/quiz/quizData";
+import { LANDING_BENTO, LANDING_FOCUS, LANDING_FAQ } from "@/lib/quiz/quizData";
 import Quiz from "./Quiz";
 import StarEyebrow from "./StarEyebrow";
-import Image from "next/image";
 import HeroButton from "@/components/ui/HeroButton";
+import AvatarRow from "@/components/ui/AvatarRow";
 
 const START_HASH = "#start-quiz";
 
@@ -52,7 +46,7 @@ export default function GrowthLeakLanding() {
 
   return (
     <>
-      <section className="min-h-[70vh] flex flex-col items-center justify-center text-center px-[var(--global-margin-sm)] md:py-16">
+      <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-[var(--global-margin-sm)] md:py-16">
         <div className="max-w-5xl flex flex-col items-center gap-6 md:gap-8">
           <StarEyebrow>
             For business owners & ambitious entrepreneurs
@@ -68,6 +62,7 @@ export default function GrowthLeakLanding() {
           <h5 className="">
             <em>4 minutes &nbsp;· &nbsp;Free</em>
           </h5>
+          <AvatarRow />
         </div>
       </section>
 

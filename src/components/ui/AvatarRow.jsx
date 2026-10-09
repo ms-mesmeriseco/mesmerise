@@ -3,8 +3,17 @@
 import Image from "next/image";
 import { useMemo } from "react";
 
+const customers = [
+  { id: 1, src: "/assets/customers/Tony.png" },
+  { id: 2, src: "/assets/customers/Mitch.png" },
+  { id: 3, src: "/assets/customers/Misty.png" },
+  { id: 4, src: "/assets/customers/Lani_love.png" },
+  { id: 5, src: "/assets/customers/Kirpy.png" },
+  { id: 6, src: "/assets/customers/Kez.png" },
+];
+
 export default function AvatarRow({
-  people = [],
+  people = customers,
   size = 48,
   scrollOnMobile = true,
   overlap = 0.28,
@@ -79,11 +88,8 @@ export default function AvatarRow({
           return (
             <li
               key={p.id ?? i}
-              className={[
-                "no-list",
-                `z-[${10 + i}]`,
-                reverse ? `z-[${10 + (people.length - i)}]` : "",
-              ].join(" ")}
+              className="no-list relative"
+              style={{ zIndex: reverse ? 10 + (people.length - i) : 10 + i }}
             >
               <Wrapper {...commonProps}>
                 <span

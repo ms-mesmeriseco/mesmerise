@@ -75,6 +75,7 @@ function MarqueeCard({ clientName, logoUrl }) {
           alt={clientName}
           width={100}
           height={40}
+          loading="eager"
           className="object-contain max-h-10 w-auto brightness-0 invert mt-3"
         />
       </div>
