@@ -1345,15 +1345,31 @@ export function pillarStatus(score) {
 }
 
 export const CTA = {
+  // Two-column CTA at the base of the results page; the button opens a short form
   call: {
-    headline: "Want us to plug these leaks?",
-    body: "Book a 30 minute Growth Leak Review. We'll go through your results, look at your site and ads, and show you the first three fixes we'd make.",
+    eyebrow: "Next steps",
+    headline: "Want help to plug these leaks?",
+    body: [
+      "Book a free 30-minute Growth Leak Review. I will go through your results, look at your website & acquisition strategy, and I’ll show you the first three fixes that will move the needle.",
+      "No pressure. You’ll leave with a clear plan and confidence in your next steps.",
+    ],
     button: "Book my review",
-    microcopy: "Free · 30 minutes · No obligation",
+    microcopy: "30 minutes · No obligation",
+    image:
+      "https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg",
+    caption: "Petar Petrovic - Founder",
+    form: {
+      messagePlaceholder: "Anything we should know before the call? (optional)",
+      submit: "Request my review",
+      success:
+        "Thanks, your request is in. We’ll be in touch shortly to lock in a time.",
+    },
   },
   resource: {
     headline: "Start with your biggest leak",
-    body: "We've sent you a step-by-step guide to fixing your lowest-scoring pillar. More playbooks are on the way.",
+    body: [
+      "We've sent you a step-by-step guide to fixing your lowest-scoring pillar. More playbooks are on the way.",
+    ],
     button: "Get the guide",
   },
 };

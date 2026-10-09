@@ -383,7 +383,11 @@ async function sendProspectReport({ firstName, email, results, shareUrl }) {
 
   const { overall, tier, pillars, leaks, fitBand } = results;
   const cta = fitBand === "Low" ? CTA.resource : CTA.call;
-  const ctaHref = absolute(fitBand === "Low" ? GUIDE_URL : BOOKING_URL);
+  // The review form sits at the base of their results page
+  const ctaHref =
+    fitBand === "Low"
+      ? absolute(GUIDE_URL)
+      : shareUrl ? `${shareUrl}#review` : absolute(BOOKING_URL);
 
   const html = `
     <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 600px;">
@@ -426,7 +430,7 @@ async function sendProspectReport({ firstName, email, results, shareUrl }) {
           : ""
       }
       <h3 style="margin:24px 0 8px">${escapeHtml(cta.headline)}</h3>
-      <p>${escapeHtml(cta.body)}</p>
+      ${cta.body.map((b) => `<p>${escapeHtml(b)}</p>`).join("")}
       <p><a href="${escapeHtml(ctaHref)}" style="display:inline-block;background:#000;color:#c1d2fc;padding:10px 20px;border-radius:16px;text-decoration:none">${escapeHtml(cta.button)}</a></p>
       <p style="color:#888;font-size:12px;margin-top:32px">Mesmerise Digital · You’re receiving this because you completed the Growth Leak Audit.</p>
     </div>

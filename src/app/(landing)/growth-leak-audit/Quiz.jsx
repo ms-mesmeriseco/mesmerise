@@ -387,6 +387,7 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
               results={results}
               goal={answers.H3}
               share={share}
+              contact={contact}
             />
           )}
         </motion.div>

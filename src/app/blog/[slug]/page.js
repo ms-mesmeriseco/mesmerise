@@ -369,7 +369,7 @@ export default async function BlogPost({ params }) {
 
           <article
             id="blog-article"
-            className="max-w-xl w-full flex flex-col gap-6 md:pt-7 mx-auto "
+            className="max-w-3xl w-full flex flex-col gap-6 md:pt-7 "
           >
             <StaggeredWords
               as="h1"

@@ -11,11 +11,11 @@ import {
   tierRange,
   pillarStatus,
   CTA,
-  BOOKING_URL,
   GUIDE_URL,
   SHARE_LINK_DAYS,
 } from "@/lib/quiz/quizData";
 import { tierFor, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
+import ReviewCta from "./ReviewCta";
 
 // Top of the scale is the lowest tier; the marker travels down towards Category of One
 const SCALE = TIERS;
@@ -287,12 +287,11 @@ export function ShareLink({ url, expires }) {
   );
 }
 
-// share: { url, expires } for the results link, when there is one
-export default function QuizResults({ results, goal, share }) {
+// share: { url, expires } for the results link, when there is one.
+// contact: the gate details, to pre-fill the review request form.
+export default function QuizResults({ results, goal, share, contact }) {
   const { overall, pillars, leaks, fitBand } = results;
   const tier = tierFor(overall);
-  const cta = fitBand === "Low" ? CTA.resource : CTA.call;
-  const ctaHref = fitBand === "Low" ? GUIDE_URL : BOOKING_URL;
   const headline = GOAL_HEADLINES[goal];
 
   return (
@@ -347,8 +346,8 @@ export default function QuizResults({ results, goal, share }) {
                   style={{ background: pillarStatus(leak.score).color }}
                 />
                 <h6 className="text-[var(--mesm-l-grey)] tabular-nums">
-                  {String(i + 1).padStart(2, "0")} · {leak.label} ·{" "}
-                  {leak.score}/100
+                  {String(i + 1).padStart(2, "0")} · {leak.label} · {leak.score}
+                  /100
                 </h6>
               </div>
               <h4 className="!mb-0">{leak.headline}</h4>
@@ -426,25 +425,30 @@ export default function QuizResults({ results, goal, share }) {
         </div>
       </section>
 
-      {/* CTA by fit band, styled like CtaBentoBox */}
-      <section className="w-full bg-[var(--mesm-grey)]/20 border border-[var(--mesm-grey)]/20 py-12 md:py-16 px-6 md:px-12 rounded-2xl flex flex-col items-center text-center gap-6">
-        <div className="flex items-center justify-center w-14 h-14 p-2 rounded-full bg-[var(--mesm-red)]">
-          <Image
-            src="/logoMark-SVG_mesm.svg"
-            alt="Mesmerise Digital"
-            width={36}
-            height={36}
-          />
-        </div>
-        <h2 className="text-2xl md:text-3xl">{cta.headline}</h2>
-        <p className="max-w-xl text-[var(--mesm-l-grey)]">{cta.body}</p>
-        <Button href={ctaHref} size="large" extraClass="mt-2">
-          {cta.button}
-        </Button>
-        {cta.microcopy && (
-          <p className="text-sm text-[var(--mesm-l-grey)]">{cta.microcopy}</p>
-        )}
-      </section>
+      {/* CTA by fit band: low fit gets the guide, everyone else the review */}
+      {fitBand !== "Low" ? (
+        <ReviewCta contact={contact} resultsUrl={share?.url} />
+      ) : (
+        <section className="w-full bg-[var(--mesm-grey)]/20 border border-[var(--mesm-grey)]/20 py-12 md:py-16 px-6 md:px-12 rounded-2xl flex flex-col items-center text-center gap-6">
+          <div className="flex items-center justify-center w-14 h-14 p-2 rounded-full bg-[var(--mesm-red)]">
+            <Image
+              src="/logoMark-SVG_mesm.svg"
+              alt="Mesmerise Digital"
+              width={36}
+              height={36}
+            />
+          </div>
+          <h2 className="text-2xl md:text-3xl">{CTA.resource.headline}</h2>
+          {CTA.resource.body.map((p) => (
+            <p key={p} className="max-w-xl text-[var(--mesm-l-grey)]">
+              {p}
+            </p>
+          ))}
+          <Button href={GUIDE_URL} size="large" extraClass="mt-2">
+            {CTA.resource.button}
+          </Button>
+        </section>
+      )}
     </div>
   );
 }
