@@ -50,7 +50,7 @@ export default function LazyLandingBlocks({ slug }) {
         root: null,
         rootMargin: "200px", // pre-load a bit before visible
         threshold: 0.1,
-      }
+      },
     );
 
     observer.observe(el);
@@ -107,21 +107,18 @@ export default function LazyLandingBlocks({ slug }) {
       {!shouldLoad && (
         <div className="w-full py-16 text-center text-sm text-[var(--mesm-grey)]" />
       )}
-
       {/* After load triggered, while fetching */}
       {shouldLoad && loading && (
         <div className="w-full py-16 text-center text-sm text-[var(--mesm-grey)]">
           ...
         </div>
       )}
-
       {/* Error state */}
       {error && (
         <div className="w-full py-16 text-center text-sm text-red-500">
           Something went wrong loading this section.
         </div>
       )}
-
       {/* Render blocks */}
       {blocks.length > 0 && !loading && !error && <PageBase blocks={blocks} />}
     </section>

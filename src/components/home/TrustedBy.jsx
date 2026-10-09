@@ -81,17 +81,23 @@ function MarqueeCard({ clientName, logoUrl }) {
     </div>
   );
 }
-function MarqueeRow({ clients, reverse = false }) {
-  const trackRef = useRef(null);
-  const [trackWidth, setTrackWidth] = useState(0);
+// Repeats the logo set until it overfills the row, then slides by one set
+// width so the loop is seamless on any screen size
+export function MarqueeRow({ clients, reverse = false }) {
+  const rowRef = useRef(null);
+  const setRef = useRef(null);
+  const [setWidth, setSetWidth] = useState(0);
+  const [copies, setCopies] = useState(2);
 
   useEffect(() => {
-    if (!trackRef.current) return;
+    if (!rowRef.current || !setRef.current) return;
 
     const measure = () => {
-      // Width of one "set" of cards is half the total track (since we doubled)
-      const totalWidth = trackRef.current.scrollWidth;
-      setTrackWidth(totalWidth / 2);
+      const width = setRef.current.offsetWidth;
+      setSetWidth(width);
+      if (width) {
+        setCopies(Math.max(2, Math.ceil(rowRef.current.offsetWidth / width) + 1));
+      }
     };
 
     measure();
@@ -99,31 +105,37 @@ function MarqueeRow({ clients, reverse = false }) {
     return () => window.removeEventListener("resize", measure);
   }, [clients]);
 
-  const doubled = [...clients, ...clients];
-
   return (
-    <div className="overflow-hidden w-full">
+    <div ref={rowRef} className="overflow-hidden w-full">
       <div
-        ref={trackRef}
         style={
-          trackWidth
+          setWidth
             ? {
-                "--marquee-offset": `-${trackWidth}px`,
-                animation: `${reverse ? "marquee-reverse" : "marquee"} ${trackWidth / 30}s linear infinite`,
+                "--marquee-offset": `-${setWidth}px`,
+                animation: `${reverse ? "marquee-reverse" : "marquee"} ${setWidth / 30}s linear infinite`,
               }
             : { visibility: "hidden" }
         }
-        className="flex"
+        className="flex w-max"
       >
-        {doubled.map((client, idx) => (
-          <MarqueeCard key={`${client._id}-${idx}`} {...client} />
+        {Array.from({ length: copies }, (_, copy) => (
+          <div
+            key={copy}
+            ref={copy === 0 ? setRef : undefined}
+            className="flex shrink-0"
+            aria-hidden={copy > 0 || undefined}
+          >
+            {clients.map((client) => (
+              <MarqueeCard key={`${client._id}-${copy}`} {...client} />
+            ))}
+          </div>
         ))}
       </div>
     </div>
   );
 }
 
-function Marquee({ clients }) {
+export function Marquee({ clients }) {
   const mid = Math.ceil(clients.length / 2);
   const rowOne = clients.slice(0, mid);
   const rowTwo = clients.slice(mid);
@@ -136,7 +148,7 @@ function Marquee({ clients }) {
   );
 }
 
-export default function TrustedBy() {
+export function useClientLogos() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
@@ -150,6 +162,12 @@ export default function TrustedBy() {
     }
     fetchClients();
   }, []);
+
+  return clients;
+}
+
+export default function TrustedBy() {
+  const clients = useClientLogos();
 
   if (!clients.length) return null;
 

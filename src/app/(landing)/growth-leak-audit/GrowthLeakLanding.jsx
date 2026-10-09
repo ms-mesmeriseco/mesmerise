@@ -2,11 +2,18 @@
 
 import { useEffect, useState } from "react";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import TrustedBy from "@/components/home/TrustedBy";
+import TrustedByMarquee from "@/components/home/TrustedByMarquee";
 import TestimonialsRail from "@/components/home/TestimonialRail";
-import SmallTitle from "@/components/ui/SmallTitle";
+import Button from "@/components/ui/Button";
 import CtaBentoBox from "@/components/sanity-blocks/CtaBentoBox";
-import { LANDING, LANDING_BENTO } from "@/lib/quiz/quizData";
+import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
+import FAQ from "@/components/blocks/FAQ";
+import {
+  LANDING,
+  LANDING_BENTO,
+  LANDING_FOCUS,
+  LANDING_FAQ,
+} from "@/lib/quiz/quizData";
 import Quiz from "./Quiz";
 import Image from "next/image";
 import HeroButton from "@/components/ui/HeroButton";
@@ -46,26 +53,42 @@ export default function GrowthLeakLanding() {
     <>
       <section className="min-h-[80vh] flex flex-col items-center justify-center text-center px-[var(--global-margin-sm)] md:py-16">
         <div className="max-w-4xl flex flex-col items-center gap-6 md:gap-8">
-          <div className="flex items-center justify-center w-16 h-16 p-0 rounded-full bg-white/10 border-1 border-[var(--mesm-grey)]/20">
-            <Image
-              src="/logoMark-SVG_mesm.svg"
-              alt="Mesmerise Digital"
-              width={36}
-              height={36}
-              priority
-            />
-          </div>
-          <StaggeredWords as="h1" delay={0.01} text={LANDING.header} />
-          <p className="p2 max-w-2xl text-[var(--mesm-l-grey)]">
-            {LANDING.subtitle}
-          </p>
-          <HeroButton onClick={() => toggle(true)}>{LANDING.button}</HeroButton>
+          <h5 className="uppercase text-[var(--mesm-blue)]">
+            For business owners & ambitious entrepreneurs
+          </h5>
+          <StaggeredWords
+            as="h1"
+            delay={0.01}
+            text="Find out exactly where your marketing is leaking"
+          />
+
+          <HeroButton onClick={() => toggle(true)}>Find my leaks</HeroButton>
+          <h5 className="">
+            <em>4 minutes &nbsp;· &nbsp;Free</em>
+          </h5>
         </div>
       </section>
-      <div className="flex w-full flex-col">
-        <TrustedBy />
+
+      <div className="flex w-full flex-col gap-24 py-24">
+        <TrustedByMarquee />
+        <div className="py-24">
+          <ListIconsFocus block={LANDING_FOCUS} />
+          <div className="text-center flex flex-col items-center gap-6">
+            <h3>Find out which ones are costing you</h3>
+            <HeroButton onClick={() => toggle(true)}>Find my leaks</HeroButton>
+          </div>
+        </div>
         <TestimonialsRail />
+        <div className="px-[var(--global-margin-sm)]">
+          <FAQ
+            label="common questions"
+            title="Frequently asked questions"
+            items={LANDING_FAQ}
+            defaultOpen={[0]}
+          />
+        </div>
       </div>
+
       <div
         className="px-[var(--global-margin-sm)] pb-24"
         onClickCapture={startFromLink}

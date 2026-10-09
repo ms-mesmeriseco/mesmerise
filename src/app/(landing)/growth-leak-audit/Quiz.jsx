@@ -60,11 +60,14 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
     email: "",
     company: "",
     website: "",
+    marketingOptin: false,
+    wantsCall: false,
   });
   const [hp, setHp] = useState(""); // honeypot
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [results, setResults] = useState(null);
+  const [share, setShare] = useState(null);
   const advanceTimer = useRef(null);
   const topRef = useRef(null);
 
@@ -150,6 +153,11 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
 
       const computed = computeResults(answers);
       setResults(computed);
+      setShare(
+        data.shareUrl
+          ? { url: data.shareUrl, expires: data.shareExpires }
+          : null,
+      );
 
       if (typeof window !== "undefined") {
         window.dataLayer = window.dataLayer || [];
@@ -319,6 +327,43 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
                 ))}
               </div>
 
+              <div className="flex flex-col gap-3 mt-4">
+                {GATE.checkboxes.map((c) => (
+                  <label
+                    key={c.key}
+                    className="flex gap-3 items-start cursor-pointer text-base leading-snug"
+                  >
+                    <input
+                      type="checkbox"
+                      className="peer sr-only"
+                      checked={contact[c.key]}
+                      onChange={(e) =>
+                        setContact((s) => ({ ...s, [c.key]: e.target.checked }))
+                      }
+                    />
+                    <span
+                      aria-hidden="true"
+                      className={[
+                        "shrink-0 mt-0.5 w-5 h-5 flex items-center justify-center rounded-[3px] border duration-200",
+                        "peer-focus-visible:outline peer-focus-visible:outline-[var(--mesm-blue)]",
+                        contact[c.key]
+                          ? "bg-[var(--mesm-blue)] border-[var(--mesm-blue)]"
+                          : "border-[var(--mesm-grey)]",
+                      ].join(" ")}
+                    >
+                      {contact[c.key] && (
+                        <img
+                          src="/icons/check-black.png"
+                          alt=""
+                          className="w-3 h-3"
+                        />
+                      )}
+                    </span>
+                    <span>{c.label}</span>
+                  </label>
+                ))}
+              </div>
+
               <button
                 type="submit"
                 disabled={submitting}
@@ -338,7 +383,11 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
           )}
 
           {step.type === "results" && results && (
-            <QuizResults results={results} goal={answers.H3} />
+            <QuizResults
+              results={results}
+              goal={answers.H3}
+              share={share}
+            />
           )}
         </motion.div>
       </AnimatePresence>

@@ -44,6 +44,15 @@ const number = (name, label) => ({
   groupName: GROUP,
 });
 
+const text = (name, label, fieldType = "text") => ({
+  name,
+  label,
+  type: "string",
+  fieldType,
+  groupName: GROUP,
+});
+const yesNo = opts([["yes", "Yes"], ["no", "No"]]);
+
 const qual = Object.fromEntries(
   QUALIFICATION_QUESTIONS.map((q) => [q.key, fromLabels(q.options.map((o) => o.label))])
 );
@@ -75,6 +84,12 @@ const properties = [
   dropdown("gla_role", "GLA Role", qual.role),
   dropdown("gla_timeline", "GLA Timeline", qual.timeline),
   dropdown("gla_current_setup", "GLA Who Runs Marketing", qual.current_setup),
+  // Nurture sequences should only enrol contacts where this is "yes"
+  dropdown("gla_marketing_optin", "GLA Marketing Opt-in", yesNo),
+  dropdown("gla_wants_call", "GLA Wants Growth Leak Review", yesNo),
+  text("gla_call_opener", "GLA Call Opener", "textarea"),
+  text("gla_answers", "GLA All Answers", "textarea"),
+  text("gla_results_url", "GLA Results Page"),
 ];
 
 const groupRes = await api("/groups", { name: GROUP, label: "Growth Leak Audit" });

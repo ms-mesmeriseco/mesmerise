@@ -62,7 +62,7 @@ function StackCard({ number, title, content, icon }) {
       </span>
 
       <div className="flex flex-col gap-8 bg-[var(--mesm-grey-dk)]/40 p-8 rounded-xl ">
-        <div className="flex flex-row gap-4 items-center">
+        <div className="flex flex-row gap-4 items-center max-w-md text-pretty">
           {icon && <img src={icon} alt="" className="w-10 h-10" />}
 
           {title && (
@@ -72,7 +72,7 @@ function StackCard({ number, title, content, icon }) {
           )}
         </div>
         {content && (
-          <p className="text-sm leading-relaxed max-w-md whitespace-pre-line  text-[var(--background)]">
+          <p className="text-sm leading-relaxed whitespace-pre-line  text-[var(--background)] max-w-md text-pretty">
             {content}
           </p>
         )}
