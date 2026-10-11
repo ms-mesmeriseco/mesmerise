@@ -50,6 +50,14 @@ function useStackOffsets(count) {
   return { itemRefs, offsets };
 }
 
+// Splits body copy into paragraphs on line breaks (\n or <br>)
+function toParagraphs(text) {
+  return String(text)
+    .split(/\n|<\/?br\s*\/?>/i)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 // Solid card: number | divider | large title + body, stacks over the previous card on scroll
 function StackCard({ number, title, content, icon }) {
   return (
@@ -72,9 +80,11 @@ function StackCard({ number, title, content, icon }) {
           )}
         </div>
         {content && (
-          <p className="text-sm leading-relaxed whitespace-pre-line  text-[var(--background)] max-w-md text-pretty">
-            {content}
-          </p>
+          <div className="flex flex-col gap-3 text-sm leading-relaxed text-[var(--background)] max-w-md text-pretty">
+            {toParagraphs(content).map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
         )}
       </div>
     </div>

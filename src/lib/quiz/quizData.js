@@ -84,17 +84,17 @@ export const LANDING_FAQ = [
   {
     question: "Who is it built for?",
     textContent:
-      "Two kinds of business. Lead gen businesses that sell through enquiries, bookings & quotes, and ecommerce brands that sell online.",
+      "Lead gen businesses that sell through enquiries, bookings & quotes, and ecommerce brands that sell online.",
   },
   {
     question: "What is a growth leak?",
     textContent:
-      "It's anywhere money goes in & doesn't come back out as revenue. Ads sending traffic to a homepage. Leads waiting a day for a reply. A brand that looks like everyone else, so buyers default to price.<br /><br />Most businesses don't have a traffic problem. They have three or four leaks quietly draining the traffic they already pay for.",
+      "It's anywhere money goes in & doesn't come back out as revenue. Ads sending traffic to a homepage is a common one, for instance. Leads sitting dormant and waiting days for a reply are another. </br>Most businesses have three or four leaks quietly draining the bank account and pipeline.",
   },
   {
     question: "Why not just spend more on ads?",
     textContent:
-      "Because more spend through a broken system creates waste and anxiety. Most businesses aim almost everything at people ready to buy today with the wrong conversion tracking.<br /><br />There are unique ways to open up market share and create demand even when interest rates are through the roof, and consumer sentiment is the lowest it’s been in decades.",
+      "Because more ad spend exposes a broken system, creating waste and anxiety. Most businesses aim almost everything at people ready to buy today, but their conversion tracking is wrong.</br>There are unique ways to open up market share and create demand even when interest rates are through the roof, and consumer sentiment is the lowest it’s been in decades. ",
   },
   {
     question: "How long does it take?",
@@ -103,32 +103,32 @@ export const LANDING_FAQ = [
   {
     question: "What if I don't know the answer to a question?",
     textContent:
-      "Choose “Not sure”. It's a legit answer and tells us everything we need to know.<br /><br />If you can't say what your conversion rate is or where your sales come from, that blind spot is a leak in itself.",
+      "Choose “Not sure”. It's a legit answer and tells us everything we need to know. If you can't say what your conversion rate is or where your sales come from, that blind spot is a leak in itself.",
   },
   {
     question: "What do I get at the end?",
     textContent:
-      "<ul class='list-disc pl-5 space-y-1'><li>An overall score</li><li>Your tier: Invisible, Commodity, Contender or Category of One</li><li>A breakdown by pillar</li><li>Your three biggest leaks, with what each one is costing you</li></ul><br />Your results show on screen straight away & a copy goes to your inbox.",
+      "<ul class='list-disc pl-5 space-y-1'><li>Your overall score out of 100</li><li>Your tier: Invisible, Commodity, Contender or Category of One</li><li>A breakdown across all six pillars</li><li>Your biggest leaks, what each one is costing you & the first fix for each</li></ul> </br>Your results appear on screen as soon as you finish, & a copy goes to your inbox.",
   },
   {
     question: "Is it free? What's the catch?",
     textContent:
-      "It's free.<br /><br />We built it because the same mistakes and pitfalls show up in nearly every business we audit, and a 5 minute diagnostic finds them in less time than a discovery call. If your results show something we can fix, we'll offer to walk you through it.",
+      "It's free.<br /><br />We built it because the same mistakes and pitfalls show up in nearly every business we audit, and a 4-minute diagnostic finds them faster than a discovery call. If your results show something we can fix, we can walk you through it and show you how we could help. ",
   },
   {
     question: "Will someone call me?",
     textContent:
-      "Only if you ask. If your results suggest we can help, you'll be offered a 30-minute Growth Leak Review where we go through your results, look at your site & ads, and show you the first three fixes we'd make.<br /><br />Book in for a chat if you feel up for it, it's your decision.",
+      "Only if you ask. </br>If your results suggest we can help, you'll be offered a 30-minute Growth Leak Review where we go through your results, look at your website & ads, and show you the fixes that will have the biggest impact. </br>Book in for a chat if you feel up for it; it's your decision.",
   },
   {
     question: "I already have an agency. Is this still worth doing?",
     textContent:
-      "Yes. Think of it as a second opinion that takes 5 minutes. If your current setup is working, your score will say so. If it isn't, you'll know exactly where to look & what to ask.",
+      "Yeah, what difference does it make?</br>Think of it as a second opinion that takes 4 minutes. If your current setup is working, your score will say so. If it isn't, you'll know exactly where to look & what to ask.",
   },
   {
     question: "What does a low score mean?",
     textContent:
-      "It means the future is bright and the opportunity is there. Businesses in the Invisible & Commodity tiers usually see the biggest returns because there’s so much headroom to grow.",
+      "It means the future is bright and the opportunity is there. Businesses in the Invisible & Commodity tiers usually see the biggest returns because there's so much headroom to grow.",
   },
 ];
 
@@ -137,27 +137,27 @@ export const LANDING_FOCUS = {
   title: {
     _type: "richText",
     content: [
-      pt("fh", "You’re probably making at least one of these mistakes", "h2"),
+      pt("fh", "You might be making at least one of these mistakes", "h2"),
     ],
   },
   listItems: [
     {
       _key: "focus1",
-      title: "You’re fishing in the pond instead of the ocean",
+      title: "You're fishing in the pond instead of the ocean",
       content:
-        "Most marketing is aimed at people ready to buy today. That’s the smallest & most expensive part of your market, and every competitor is bidding on the same audience. Costs rise every quarter while the much bigger group who’ll buy next month never knows your name.\nThe secret to deep scale and market penetration is unlocking your customers' stage of awareness.",
+        "Most marketing is aimed at people ready to buy today. That's the smallest & most expensive part of your market, and every competitor is bidding on the same audience. Costs rise every quarter while the much bigger group who'll buy next month never knows your name.\nThe secret to deep scale and market penetration comes from reaching people before they're ready to buy, with a message that meets them at their level of awareness.",
     },
     {
       _key: "focus2",
       title: "Your tracking is wrong",
       content:
-        "Ad platforms report on themselves, and every one of them takes credit for the same sale. Without proper conversion tracking, you’re scaling what looks like it works & cutting what actually does. The platforms then optimise for the wrong signal and find you more of the wrong customer.",
+        "Ad platforms pamper the metrics so you spend more money. Without proper conversion tracking, you're scaling what looks like it works & cutting what actually does. The platforms then optimise for the wrong signal and find you more of the wrong customer.",
     },
     {
       _key: "focus3",
-      title: "Buyers can’t tell you apart",
+      title: "Buyers can't tell you apart",
       content:
-        "When your brand looks & sounds like everyone else, buyers turn sceptical, you become commoditised, and they compare you on price. Every discount, every “can you do better?” and every lost quote traces back to the same issue.\nSpending more on ads won’t solve this problem. You have to utilise 300,000 year-old evolutionary mating psychology to carve out a premium position.",
+        "When your brand looks & sounds like everyone else, buyers turn sceptical, you become commoditised, and they compare you on price. Every discount, every “can you do better?” and every lost quote traces back to the same issue.\nSpending more on ads won't solve this problem. You need positioning built on how people actually choose: status, identity, emotional clarity & trust.",
     },
   ],
 };
@@ -648,7 +648,8 @@ export const QUESTION_META = {
   },
   LG5: {
     label: "Risk reversal / guarantees",
-    opener: "What's the biggest fear a new client has before they sign with you?",
+    opener:
+      "What's the biggest fear a new client has before they sign with you?",
   },
   LG6: {
     label: "Lead channels",
@@ -732,8 +733,7 @@ export const QUESTION_META = {
   },
   EC8: {
     label: "Creatives tested per month",
-    opener:
-      "How many new creatives went live last month, and who briefs them?",
+    opener: "How many new creatives went live last month, and who briefs them?",
   },
   EC9: {
     label: "Store CVR",
@@ -762,8 +762,7 @@ export const QUESTION_META = {
   },
   EC14: {
     label: "Email & SMS flows",
-    opener:
-      "What happens to someone who adds to cart and doesn't check out?",
+    opener: "What happens to someone who adds to cart and doesn't check out?",
   },
   EC15: {
     label: "Returning customer revenue",
@@ -1170,7 +1169,10 @@ export const QUALIFICATION_QUESTIONS = [
 ];
 
 // Any other role gets "Not the decision-maker" in the internal lead email
-export const DECISION_MAKER_ROLES = ["Founder / owner / CEO", "Marketing lead / CMO"];
+export const DECISION_MAKER_ROLES = [
+  "Founder / owner / CEO",
+  "Marketing lead / CMO",
+];
 
 // ── Stage 4: Gate ──────────────────────────────────────────────────────────
 
@@ -1187,11 +1189,11 @@ export const GATE = {
     },
     {
       key: "wantsCall",
-      label: "I’d like a free 30-minute Growth Leak Review of my results.",
+      label: "I'd like a free 30-minute Growth Leak Review of my results.",
     },
   ],
   microcopy:
-    "Your results appear on the next screen & a copy goes to your inbox. We’ll never share your details.",
+    "Your results appear on the next screen & a copy goes to your inbox. We'll never share your details.",
 };
 
 // ── Stage 5: Results ───────────────────────────────────────────────────────
@@ -1350,8 +1352,8 @@ export const CTA = {
     eyebrow: "Next steps",
     headline: "Want help to plug these leaks?",
     body: [
-      "Book a free 30-minute Growth Leak Review. I will go through your results, look at your website & acquisition strategy, and I’ll show you the first three fixes that will move the needle.",
-      "No pressure. You’ll leave with a clear plan and confidence in your next steps.",
+      "Book a free 30-minute Growth Leak Review. I will go through your results, look at your website & acquisition strategy, and I'll show you the first three fixes that will move the needle.",
+      "No pressure. You'll leave with a clear plan and confidence in your next steps.",
     ],
     button: "Book my review",
     microcopy: "30 minutes · No obligation",
@@ -1365,13 +1367,13 @@ export const CTA = {
       bestTimes: ["Morning", "Afternoon", "Either"],
       messagePlaceholder: "Anything we should know before the call? (optional)",
       submit: "Book my review",
-      microcopy: "We’ll be in touch within one business day to lock in a time.",
+      microcopy: "We'll be in touch within one business day to lock in a time.",
     },
     // Replaces the right column once the form is sent
     thanks: {
       headline: (firstName) =>
-        firstName ? `You’re booked in, ${firstName}` : "You’re booked in",
-      body: "We’re already reviewing your results. Expect a call or email from us within one business day to confirm a time.",
+        firstName ? `You're booked in, ${firstName}` : "You're booked in",
+      body: "We're already reviewing your results. Expect a call or email from us within one business day to confirm a time.",
     },
   },
   resource: {

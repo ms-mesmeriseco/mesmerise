@@ -89,7 +89,7 @@ export default function GrowthLeakLanding() {
       </div>
 
       <div
-        className="px-[var(--global-margin-sm)] pb-24"
+        className="px-[var(--global-margin-sm)] py-24"
         onClickCapture={startFromLink}
       >
         <CtaBentoBox
