@@ -171,7 +171,10 @@ export function computeResults(answers) {
     priorities,
     weakestPillar: ranked[0],
     topPillar,
-    working: topPillar.score >= WORKING_MIN_SCORE ? topPillar : null,
+    working:
+      topPillar.score >= WORKING_MIN_SCORE
+        ? { ...topPillar, working: PRIORITIES[topPillar.key].working }
+        : null,
     answers: records,
     adPlatforms,
     unsure: records.filter((r) => r.flag === "unsure"),

@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import SmallTitle from "@/components/ui/SmallTitle";
@@ -13,8 +12,9 @@ import {
   NO_PRIORITIES_MESSAGE,
 } from "@/lib/cmo-benchmark/quizData";
 import { tierFor, leadershipSummary } from "@/lib/cmo-benchmark/scoring";
-import { TierScale, ShareLink } from "../growth-leak-audit/QuizResults";
+import { TierScale } from "../growth-leak-audit/QuizResults";
 import ReviewCta from "../growth-leak-audit/ReviewCta";
+import ReportPdf, { exportReportPdf } from "./ReportPdf";
 
 // Same as the Growth Leak results: "You're not sure..." + "Sales push back..."
 // → "you're not sure..., and sales push back..."
@@ -28,11 +28,41 @@ function joinTold(lines) {
 const btnOutline =
   "inline-flex items-center justify-center rounded-2xl border border-[var(--mesm-grey)] px-4 py-1.5 text-sm hover:border-[var(--mesm-blue)] hover:text-[var(--mesm-blue)] duration-200";
 
-const printReport = () => window.print();
+// "Acme Pty Ltd" → "acme-pty-ltd-marketing-benchmark.pdf"
+const pdfName = (company) =>
+  `${[company, "marketing benchmark"]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}.pdf`;
+
+// Builds the PDF from the off-screen report. Returns [export, exporting, error].
+function usePdfExport(reportRef, company) {
+  const [exporting, setExporting] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function run() {
+    if (exporting || !reportRef.current) return;
+    setExporting(true);
+    setError(null);
+    try {
+      await exportReportPdf(reportRef.current, pdfName(company));
+      window.dataLayer?.push({ event: "cmo_benchmark_pdf_export" });
+    } catch (err) {
+      console.error("PDF export failed:", err);
+      setError("Sorry, the PDF couldn't be created. Please try again.");
+    } finally {
+      setExporting(false);
+    }
+  }
+  return [run, exporting, error];
+}
 
 // results: computeResults() output. pressure: the H3 value.
 // firstName, company: from the gate (or the shared link's token).
-// share: { url, expires } for the results link, when there is one.
+// share: { url } for the results link, sent with a session request so the
+// team can open their results.
 // contact: the gate details, to pre-fill the session request form.
 // quizId: links a session request to the quiz's HubSpot contact.
 export default function CmoResults({
@@ -48,6 +78,25 @@ export default function CmoResults({
   const tier = tierFor(overall);
   const subhead = PRESSURE_HEADLINES[pressure]?.(results.term);
   const summary = leadershipSummary(results, { company, pressure });
+  const reportRef = useRef(null);
+  const [exportPdf, exporting, exportError] = usePdfExport(reportRef, company);
+  const exportButton = (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <button
+        type="button"
+        onClick={exportPdf}
+        disabled={exporting}
+        className={`${btnOutline} disabled:opacity-50 disabled:cursor-wait`}
+      >
+        {exporting ? "Creating PDF..." : "Export as PDF"}
+      </button>
+      {exportError && (
+        <span role="status" className="text-sm text-red-600">
+          {exportError}
+        </span>
+      )}
+    </div>
+  );
 
   return (
     <div className="flex flex-col gap-32">
@@ -60,7 +109,7 @@ export default function CmoResults({
           </h2>
           {subhead && <p className="p2 text-[var(--mesm-l-grey)]">{subhead}</p>}
         </div>
-        {share?.url && <ShareLink url={share.url} expires={share.expires} />}
+        {exportButton}
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <div className="flex items-baseline gap-2">
             <span className="page-title-large tabular-nums">{overall}</span>
@@ -198,10 +247,12 @@ export default function CmoResults({
             <h4 className="text-[var(--mesm-l-grey)] tabular-nums">
               {working.label}
             </h4>
-
             <h4 className="text-[var(--mesm-l-grey)] tabular-nums">
               {working.score}/100
             </h4>
+            <p className="text-base leading-snug text-[var(--mesm-l-grey)]">
+              {working.working}
+            </p>
           </article>
         </section>
       )}
@@ -211,11 +262,7 @@ export default function CmoResults({
         <SmallTitle>Leadership summary</SmallTitle>
         <div className="flex flex-col gap-6 rounded-lg border border-[var(--mesm-blue)]/40 p-6 md:p-8 mt-6">
           <p className="p2 leading-snug">{summary}</p>
-          <div className="flex flex-wrap items-center gap-3">
-            <button type="button" onClick={printReport} className={btnOutline}>
-              Download PDF
-            </button>
-          </div>
+          {exportButton}
         </div>
       </section>
 
@@ -230,21 +277,34 @@ export default function CmoResults({
           event="cmo_benchmark_session_request"
         />
       ) : (
-        <ReportCta />
+        <ReportCta onExport={exportPdf} exporting={exporting} />
       )}
 
-      <PrintReport
-        results={results}
-        company={company}
-        subhead={subhead}
-        summary={summary}
-      />
+      {/* The PDF's pages, laid out off-screen for the export to capture */}
+      <div
+        aria-hidden="true"
+        className="fixed top-0 left-[-20000px] pointer-events-none"
+      >
+        <ReportPdf
+          ref={reportRef}
+          results={results}
+          company={company}
+          firstName={firstName}
+          subhead={subhead}
+          summary={summary}
+          date={new Date().toLocaleDateString("en-AU", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        />
+      </div>
     </div>
   );
 }
 
-// Low-fit CTA: photo left, text right, with the report download
-function ReportCta() {
+// Low-fit CTA: photo left, text right, with the PDF export
+function ReportCta({ onExport, exporting }) {
   const copy = CTA.report;
   return (
     <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24 items-start">
@@ -270,163 +330,13 @@ function ReportCta() {
         ))}
         <button
           type="button"
-          onClick={printReport}
-          className="w-fit mt-6 inline-flex items-center justify-center select-none border whitespace-nowrap duration-150 ease-out rounded-2xl hover:rounded-xl text-xl leading-tight px-4 py-2 bg-[var(--accent2)]/98 border-[var(--accent2)] text-[var(--background)]/98 hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]"
+          onClick={onExport}
+          disabled={exporting}
+          className="w-fit mt-6 disabled:opacity-50 disabled:cursor-wait inline-flex items-center justify-center select-none border whitespace-nowrap duration-150 ease-out rounded-2xl hover:rounded-xl text-xl leading-tight px-4 py-2 bg-[var(--accent2)]/98 border-[var(--accent2)] text-[var(--background)]/98 hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]"
         >
-          {copy.button}
+          {exporting ? "Creating PDF..." : copy.button}
         </button>
       </div>
     </section>
-  );
-}
-
-// Light, print-only copy of the report, rendered straight into <body> so the
-// print stylesheet can hide the rest of the site. "Download PDF" opens the
-// browser's print dialog, where it saves as a PDF. Inline styles keep the
-// site's global type styles out of it.
-const PRINT_CSS = `
-#cmo-print { display: none; }
-@media print {
-  body > *:not(#cmo-print) { display: none !important; }
-  body { background: #fff !important; }
-  #cmo-print { display: block; }
-  @page { margin: 16mm; }
-}`;
-
-const ink = "#111";
-const muted = "#666";
-const rule = "1px solid #ddd";
-const h = {
-  fontSize: 11,
-  letterSpacing: ".08em",
-  textTransform: "uppercase",
-  color: muted,
-  margin: "28px 0 10px",
-};
-
-function PrintReport({ results, company, subhead, summary }) {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
-
-  const { overall, tier, pillars, priorities, working } = results;
-  const date = new Date().toLocaleDateString("en-AU", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
-  return createPortal(
-    <div
-      id="cmo-print"
-      style={{
-        color: ink,
-        background: "#fff",
-        fontFamily:
-          "system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
-        fontSize: 13,
-        lineHeight: 1.5,
-      }}
-    >
-      <style>{PRINT_CSS}</style>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-          borderBottom: rule,
-          paddingBottom: 12,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 12,
-            letterSpacing: ".08em",
-            textTransform: "uppercase",
-          }}
-        >
-          Mesmerise · Marketing benchmark
-        </div>
-        <div style={{ fontSize: 12, color: muted }}>
-          {company ? `${company} · ` : ""}
-          {date}
-        </div>
-      </div>
-
-      <div style={{ fontSize: 40, fontWeight: 300, margin: "24px 0 4px" }}>
-        {overall}/100 · {tier.name}
-      </div>
-      {subhead && <div style={{ fontSize: 15, color: muted }}>{subhead}</div>}
-
-      <div style={h}>Leadership summary</div>
-      <div style={{ fontSize: 15 }}>{summary}</div>
-
-      <div style={h}>Priorities</div>
-      {priorities.length === 0 && <div>{NO_PRIORITIES_MESSAGE}</div>}
-      {priorities.map((p, i) => (
-        <div key={p.key} style={{ margin: "0 0 14px", breakInside: "avoid" }}>
-          <div style={{ fontSize: 15, fontWeight: 600 }}>
-            {i + 1}. {p.headline}
-          </div>
-          <div style={{ color: muted, fontSize: 12 }}>
-            {p.label} · {p.score}/100
-          </div>
-          {p.told?.length > 0 && (
-            <div>
-              <strong>You told us:</strong> {joinTold(p.told.slice(0, 2))}
-            </div>
-          )}
-          <div>
-            <strong>The business case:</strong> {p.businessCase}
-          </div>
-          {p.firstMove && (
-            <div>
-              <strong>First move:</strong> {p.firstMove}
-            </div>
-          )}
-        </div>
-      ))}
-
-      <div style={h}>Pillar scores</div>
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <tbody>
-          {pillars.map((p) => (
-            <tr key={p.key} style={{ borderBottom: rule }}>
-              <td style={{ padding: "6px 0" }}>{p.label}</td>
-              <td style={{ padding: "6px 0", textAlign: "right", width: 70 }}>
-                <strong>{p.score}</strong>/100
-              </td>
-              <td
-                style={{ padding: "6px 0 6px 16px", color: muted, width: 100 }}
-              >
-                {pillarStatus(p.score).name}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {working && (
-        <>
-          <div style={h}>What&apos;s working</div>
-          <div>
-            <strong>{working.label}:</strong> {working.working}
-          </div>
-        </>
-      )}
-
-      <div
-        style={{
-          marginTop: 32,
-          paddingTop: 12,
-          borderTop: rule,
-          fontSize: 11,
-          color: muted,
-        }}
-      >
-        Confidential · Prepared by Mesmerise Digital · mesmeriseco.com
-      </div>
-    </div>,
-    document.body,
   );
 }

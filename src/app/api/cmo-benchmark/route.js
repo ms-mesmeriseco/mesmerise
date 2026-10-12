@@ -7,7 +7,6 @@ import { Resend } from "resend";
 import {
   computeResults,
   isHotLead,
-  leadershipSummary,
   industryLabel,
   businessTypeLabel,
   pressureLabel,
@@ -20,7 +19,6 @@ import {
   H3,
   PILLARS,
   QUALIFICATION_QUESTIONS,
-  PRESSURE_HEADLINES,
   NO_PRIORITIES_MESSAGE,
   CTA,
   BOOKING_URL,
@@ -132,6 +130,7 @@ export async function POST(req) {
       hotLead,
       resultsUrl,
       shareUrl,
+      shareExpires: share?.expires ?? null,
       quizId,
     };
 
@@ -431,99 +430,61 @@ async function sendLeadEmail(
   if (result?.error) throw new Error(result.error.message || "Resend error");
 }
 
-// The shareable report: score, priorities with the business case, pillar
-// scores and the leadership summary
+// Short and to the point: thanks, their score, a link to the full results
+// (where the PDF export and session form live), then the CTA
 async function sendProspectReport({
   firstName,
   email,
-  company,
-  answers,
   results,
   shareUrl,
+  shareExpires,
 }) {
   if (!resend || !contactFrom) return;
 
-  const { overall, tier, pillars, priorities, working, fitBand } = results;
-  const subhead = PRESSURE_HEADLINES[answers.H3]?.(results.term);
-  const summary = leadershipSummary(results, {
-    company,
-    pressure: answers.H3,
-  });
-  // High and mid fit get the session; the request form sits at the base of
-  // their results page. Low fit gets the results page itself, to download.
+  const { overall, tier, fitBand } = results;
+  const expiresOn =
+    shareExpires &&
+    new Date(shareExpires).toLocaleDateString("en-AU", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "Australia/Sydney",
+    });
+  // High and mid fit get the session (the request form sits at the base of
+  // their results page). Low fit just gets the results link.
   const cta =
-    fitBand === "Low"
-      ? shareUrl && { ...CTA.report, href: shareUrl }
-      : {
-          ...CTA.session,
-          href: shareUrl ? `${shareUrl}#review` : absolute(BOOKING_URL),
-        };
+    fitBand !== "Low" && {
+      ...CTA.session,
+      href: shareUrl ? `${shareUrl}#review` : absolute(BOOKING_URL),
+    };
 
-  const h3 = (text) =>
-    `<h3 style="margin:28px 0 8px">${escapeHtml(text)}</h3>`;
+  const button = (href, text, primary) =>
+    `<a href="${escapeHtml(href)}" style="display:inline-block;padding:10px 20px;border-radius:16px;text-decoration:none;${
+      primary
+        ? "background:#000;color:#c1d2fc"
+        : "border:1px solid #000;color:#000"
+    }">${escapeHtml(text)}</a>`;
 
   const html = `
-    <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 600px;">
+    <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 560px;">
       <p>Hi ${escapeHtml(firstName)},</p>
-      <p>Here’s your marketing benchmark.</p>
-      <h1 style="margin:16px 0 0;font-weight:400">${overall}/100 · ${escapeHtml(tier.name)}</h1>
-      ${subhead ? `<p style="color:#555">${escapeHtml(subhead)}</p>` : ""}
-      <p>${escapeHtml(tier.bullets.join(" "))}</p>
-
-      ${h3("Leadership summary")}
-      <p style="border-left:3px solid #c1d2fc;padding-left:12px">${escapeHtml(summary)}</p>
-
-      ${h3(
-        priorities.length === 0
-          ? "Your priorities"
-          : priorities.length === 1
-            ? "Your top priority"
-            : `Your ${priorities.length} priorities`,
-      )}
-      ${
-        priorities.length === 0
-          ? `<p>${escapeHtml(NO_PRIORITIES_MESSAGE)}</p>`
-          : priorities
-              .map(
-                (p, i) => `
-        <p style="margin:0 0 20px"><strong>${i + 1}. ${escapeHtml(p.headline)}</strong><br/>
-        <span style="color:#555">${escapeHtml(p.label)} · ${p.score}/100</span><br/>
-        ${p.told.length ? `<strong>You told us:</strong> ${p.told.slice(0, 2).map(escapeHtml).join(" ")}<br/>` : ""}
-        <strong>The business case:</strong> ${escapeHtml(p.businessCase)}
-        ${p.firstMove ? `<br/><strong>First move:</strong> ${escapeHtml(p.firstMove)}` : ""}</p>`,
-              )
-              .join("")
-      }
-
-      ${h3("All eight pillars")}
-      <table>${pillars
-        .map(
-          (p) =>
-            `<tr><td style="padding:4px 16px 4px 0">${escapeHtml(p.label)}</td><td style="padding:4px 16px 4px 0"><strong>${p.score}</strong></td><td style="color:#555">${escapeHtml(pillarStatus(p.score).name)}</td></tr>`,
-        )
-        .join("")}</table>
-
-      ${
-        working
-          ? `${h3("What’s working")}<p><strong>${escapeHtml(working.label)}:</strong> ${escapeHtml(working.working)}</p>`
-          : ""
-      }
-
+      <p>Thanks for completing the marketing benchmark. Your marketing function scored <strong>${overall}/100 (${escapeHtml(tier.name)})</strong>.</p>
       ${
         shareUrl
-          ? `<p style="margin-top:24px"><a href="${escapeHtml(shareUrl)}" style="color:#000">View, share or download your report</a><br/>
-      <span style="color:#888;font-size:12px">This link works for ${SHARE_LINK_DAYS} days. Anyone you send it to can view it.</span></p>`
+          ? `<p>Your full results, with your priorities and the business case for each, are ready to view. You can export them as a PDF to share with your leadership team.</p>
+      <p style="margin:24px 0 4px">${button(shareUrl, "View my results", true)}</p>
+      ${expiresOn ? `<p style="color:#888;font-size:12px;margin:0">This link expires on ${escapeHtml(expiresOn)}.</p>` : ""}`
           : ""
       }
       ${
         cta
-          ? `${h3(cta.headline)}
-      ${cta.body.map((b) => `<p>${escapeHtml(b)}</p>`).join("")}
-      <p><a href="${escapeHtml(cta.href)}" style="display:inline-block;background:#000;color:#c1d2fc;padding:10px 20px;border-radius:16px;text-decoration:none">${escapeHtml(cta.button)}</a></p>
-      ${cta.microcopy ? `<p style="color:#888;font-size:12px">${escapeHtml(cta.microcopy)}</p>` : ""}`
+          ? `<p style="margin:32px 0 4px"><strong>${escapeHtml(cta.headline)}</strong></p>
+      ${cta.body.map((b) => `<p style="margin:0 0 16px">${escapeHtml(b)}</p>`).join("")}
+      <p style="margin:0 0 4px">${button(cta.href, cta.button, !shareUrl)}</p>
+      <p style="color:#888;font-size:12px;margin:0">${escapeHtml(cta.microcopy)}</p>`
           : ""
       }
-      <p style="color:#888;font-size:12px;margin-top:32px">Mesmerise Digital · Confidential · You’re receiving this because you completed the marketing benchmark.</p>
+      <p style="color:#888;font-size:12px;margin-top:40px">Mesmerise Digital · Confidential · You’re receiving this because you completed the marketing benchmark.</p>
     </div>
   `;
 
