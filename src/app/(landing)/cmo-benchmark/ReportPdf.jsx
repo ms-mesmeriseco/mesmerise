@@ -16,9 +16,16 @@ import {
 // Everything is styled inline in px (no global type classes), so the site's
 // responsive breakpoints can't resize the pages to fit the viewer's screen.
 
-const PAGE_W = 1123; // 297mm at 96dpi
-const PAGE_H = 794; // 210mm at 96dpi
-const PAD = 56;
+// Layout size: A4 landscape in CSS px (96dpi)
+const PAGE_W = 1123; // 297mm
+const PAGE_H = 794; // 210mm
+// Output size: A4 landscape at 150dpi
+const OUT_W = 1754;
+const OUT_H = 1240;
+// Page text size, set on every page so 1em is fixed (matches the site's body)
+const BASE = 18;
+// 1em of page padding; also used to inset the title page's M
+const PAD = BASE;
 
 const C = {
   fg: "#ffffff",
@@ -32,7 +39,7 @@ const C = {
 const label = {
   fontSize: 11,
   letterSpacing: "0.08em",
-  textTransform: "uppercase",
+
   color: C.dim,
 };
 
@@ -70,27 +77,126 @@ const SectionTitle = ({ children }) => (
   </div>
 );
 
-// One A4 page: header (wordmark, report name, section), body, footer (who,
-// date, confidential, page number)
+// Every page: A4 landscape in the site's type
+const sheet = {
+  position: "relative",
+  overflow: "hidden",
+  width: PAGE_W,
+  height: PAGE_H,
+  fontSize: BASE,
+  padding: "1em",
+  boxSizing: "border-box",
+  background: "#000",
+  color: C.fg,
+  fontFamily: '"Neue Haas", Helvetica, Arial, sans-serif',
+  fontWeight: 400,
+  lineHeight: 1.4,
+  display: "flex",
+  flexDirection: "column",
+  WebkitFontSmoothing: "antialiased",
+};
+
+// The Mesmerise M, anchored to the bottom right and bleeding off the edge
+const Mark = ({ width, right, bottom, opacity }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img
+    src="/logoMark-SVG_mesm.svg"
+    alt=""
+    style={{ position: "absolute", width, right, bottom, opacity }}
+  />
+);
+
+// Title page: company + report name top left, Mesmerise and the year bottom
+// left, the M at 40% filling the bottom right corner
+function TitlePage({ company, year }) {
+  return (
+    <div data-pdf-page style={{ ...sheet, background: "var(--mesm-red)" }}>
+      <div style={{ fontSize: 96, lineHeight: 1.04, letterSpacing: "-0.01em" }}>
+        {company && <div>{company}</div>}
+        <div>Marketing Benchmark</div>
+      </div>
+      {/* Sizes match the site's h4 and .page-title-medium at desktop size, set
+          in px so the viewer's screen width can't change them. Sits above the M. */}
+      <div
+        style={{
+          marginTop: "auto",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <div style={{ fontSize: 24, lineHeight: 1.33 }}>Mesmerise</div>
+        <div style={{ fontSize: 52, lineHeight: 1 }}>{year}</div>
+      </div>
+      <Mark width={600} right={PAD} bottom={-70} opacity={0.4} />
+    </div>
+  );
+}
+
+// Closing page: thanks and contact details, the M in dark grey
+function ClosingPage({ year, company }) {
+  const muted = { color: "rgba(255,255,255,0.5)" };
+  return (
+    <div data-pdf-page style={{ ...sheet, fontWeight: 500 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/wordmark.svg"
+          alt="Mesmerise"
+          style={{ height: 14, opacity: 0.45 }}
+        />
+        <span
+          style={{
+            fontSize: 12,
+            fontWeight: 400,
+            color: "rgba(255,255,255,0.45)",
+          }}
+        >
+          {year}
+        </span>
+      </div>
+      <div
+        style={{
+          marginTop: 150,
+          paddingTop: 22,
+          borderTop: `1px solid ${C.rule}`,
+          maxWidth: 560,
+        }}
+      >
+        <div style={{ fontSize: 24, lineHeight: 1.3 }}>
+          This report was created
+          {company ? ` for ${company}` : ""} by Mesmerise Digital.
+        </div>
+        <div style={{ fontSize: 14, lineHeight: 1.45, marginTop: 24 }}>
+          <div style={muted}>To continue the conversation:</div>
+          <div>hello@mesmeriseco.com</div>
+          <div>petar@mesmeriseco.com</div>
+        </div>
+        <div style={{ fontSize: 14, lineHeight: 1.45, marginTop: 20 }}>
+          <div style={muted}>
+            We look forward to building something purposeful together.
+          </div>
+          <div>— Petar Petrović, Founder</div>
+        </div>
+      </div>
+      <Mark width={470} right={110} bottom={-14} opacity={0.11} />
+    </div>
+  );
+}
+
+// One A4 content page: header (wordmark, report name, section), body, footer
+// (who, date, confidential, page number). Page numbers count the title page.
 function Page({ number, total, section, meta, children }) {
   return (
-    <div
-      data-pdf-page
-      style={{
-        width: PAGE_W,
-        height: PAGE_H,
-        padding: PAD,
-        boxSizing: "border-box",
-        background: "#000",
-        color: C.fg,
-        fontFamily: '"Neue Haas", Helvetica, Arial, sans-serif',
-        fontWeight: 400,
-        lineHeight: 1.4,
-        display: "flex",
-        flexDirection: "column",
-        WebkitFontSmoothing: "antialiased",
-      }}
-    >
+    <div data-pdf-page style={sheet}>
       <div
         style={{
           display: "flex",
@@ -103,7 +209,13 @@ function Page({ number, total, section, meta, children }) {
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/wordmark.svg" alt="Mesmerise" style={{ height: 14 }} />
-          <span style={{ ...label, borderLeft: `1px solid ${C.rule}`, paddingLeft: 16 }}>
+          <span
+            style={{
+              ...label,
+              borderLeft: `1px solid ${C.rule}`,
+              paddingLeft: 16,
+            }}
+          >
             Marketing benchmark
           </span>
         </div>
@@ -112,7 +224,15 @@ function Page({ number, total, section, meta, children }) {
         </span>
       </div>
 
-      <div style={{ flex: 1, minHeight: 0, paddingTop: 32, display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          paddingTop: 32,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {children}
       </div>
 
@@ -129,7 +249,7 @@ function Page({ number, total, section, meta, children }) {
         <span>{meta}</span>
         <span>Confidential</span>
         <span>
-          Page {number} of {total}
+          Page {number + 1} of {total}
         </span>
       </div>
     </div>
@@ -152,7 +272,14 @@ function TierLadder({ tier }) {
               opacity: current ? 1 : 0.5,
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 12,
+              }}
+            >
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <Dot color={t.color} />
                 <span style={{ fontSize: 18, color: t.color }}>{t.name}</span>
@@ -173,7 +300,14 @@ function TierLadder({ tier }) {
               )}
             </div>
             {current && (
-              <div style={{ marginTop: 10, fontSize: 14, color: C.muted, lineHeight: 1.45 }}>
+              <div
+                style={{
+                  marginTop: 10,
+                  fontSize: 14,
+                  color: C.muted,
+                  lineHeight: 1.45,
+                }}
+              >
                 {t.bullets.join(" ")}
               </div>
             )}
@@ -190,29 +324,63 @@ const ReportPdf = forwardRef(function ReportPdf(
   ref,
 ) {
   const { overall, tier, pillars, priorities, working } = results;
-  const total = 3;
+  // Title, three content pages, closing
+  const total = 5;
+  const year = new Date().getFullYear();
   const meta = [company && `Prepared for ${company}`, date]
     .filter(Boolean)
     .join(" · ");
   const page = { total, meta };
 
   return (
-    <div ref={ref} style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+    <div
+      ref={ref}
+      style={{ display: "flex", flexDirection: "column", gap: 40 }}
+    >
+      <TitlePage company={company} year={year} />
+
       {/* 1. Overview: score, tier, leadership summary */}
       <Page number={1} section="Overview" {...page}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 56, flex: 1 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.1fr 1fr",
+            gap: 56,
+            flex: 1,
+          }}
+        >
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 30, lineHeight: 1.3, maxWidth: 520 }}>
               {firstName ? `${firstName}, your` : "Your"} marketing function
               scored {overall}/100.
             </div>
             {subhead && (
-              <div style={{ fontSize: 17, color: C.muted, marginTop: 12, maxWidth: 520 }}>
+              <div
+                style={{
+                  fontSize: 17,
+                  color: C.muted,
+                  marginTop: 12,
+                  maxWidth: 520,
+                }}
+              >
                 {subhead}
               </div>
             )}
-            <div style={{ display: "flex", alignItems: "baseline", gap: 20, marginTop: 28 }}>
-              <span style={{ fontSize: 128, lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 20,
+                marginTop: 28,
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 128,
+                  lineHeight: 1,
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
                 {overall}
               </span>
               <span style={{ fontSize: 22, color: C.muted }}>/ 100</span>
@@ -264,9 +432,17 @@ const ReportPdf = forwardRef(function ReportPdf(
               : `Your ${priorities.length} priorities`}
         </div>
         {priorities.length === 0 ? (
-          <div style={{ fontSize: 18, color: C.muted }}>{NO_PRIORITIES_MESSAGE}</div>
+          <div style={{ fontSize: 18, color: C.muted }}>
+            {NO_PRIORITIES_MESSAGE}
+          </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 16,
+            }}
+          >
             {priorities.map((p, i) => (
               <div
                 key={p.key}
@@ -280,14 +456,32 @@ const ReportPdf = forwardRef(function ReportPdf(
                   gap: 14,
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 10, ...label }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    ...label,
+                  }}
+                >
                   <Dot color={pillarStatus(p.score).color} />
                   <span>
                     {String(i + 1).padStart(2, "0")} · {p.label} · {p.score}/100
                   </span>
                 </div>
-                <div style={{ fontSize: 22, lineHeight: 1.25 }}>{p.headline}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 14, color: C.muted, lineHeight: 1.45 }}>
+                <div style={{ fontSize: 22, lineHeight: 1.25 }}>
+                  {p.headline}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                    fontSize: 14,
+                    color: C.muted,
+                    lineHeight: 1.45,
+                  }}
+                >
                   {p.told?.length > 0 && (
                     <div>
                       <span style={{ color: C.fg }}>You told us:</span>{" "}
@@ -313,7 +507,13 @@ const ReportPdf = forwardRef(function ReportPdf(
 
       {/* 3. Pillar breakdown, what's working, next step */}
       <Page number={3} section="Pillar breakdown" {...page}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: 14,
+          }}
+        >
           {pillars.map((p) => {
             const status = pillarStatus(p.score);
             return (
@@ -330,17 +530,44 @@ const ReportPdf = forwardRef(function ReportPdf(
                   justifyContent: "space-between",
                 }}
               >
-                <div style={{ fontSize: 15, color: C.muted, lineHeight: 1.3 }}>{p.label}</div>
+                <div style={{ fontSize: 15, color: C.muted, lineHeight: 1.3 }}>
+                  {p.label}
+                </div>
                 <div>
-                  <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <span>
-                      <span style={{ fontSize: 36, fontVariantNumeric: "tabular-nums" }}>{p.score}</span>
-                      <span style={{ fontSize: 13, color: C.muted, marginLeft: 4 }}>/100</span>
+                      <span
+                        style={{
+                          fontSize: 36,
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      >
+                        {p.score}
+                      </span>
+                      <span
+                        style={{ fontSize: 13, color: C.muted, marginLeft: 4 }}
+                      >
+                        /100
+                      </span>
                     </span>
-                    <span style={{ fontSize: 13, color: status.color }}>{status.name}</span>
+                    <span style={{ fontSize: 13, color: status.color }}>
+                      {status.name}
+                    </span>
                   </div>
                   <div style={{ height: 2, background: C.rule, marginTop: 12 }}>
-                    <div style={{ height: 2, width: `${Math.max(p.score, 2)}%`, background: status.color }} />
+                    <div
+                      style={{
+                        height: 2,
+                        width: `${Math.max(p.score, 2)}%`,
+                        background: status.color,
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -348,23 +575,68 @@ const ReportPdf = forwardRef(function ReportPdf(
           })}
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: working ? "1fr 1fr" : "1fr", gap: 14, marginTop: "auto" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: working ? "1fr 1fr" : "1fr",
+            gap: 14,
+            marginTop: "auto",
+          }}
+        >
           {working && (
-            <div style={{ border: `1px solid ${C.rule}`, background: C.card, borderRadius: 8, padding: "20px 24px" }}>
-              <div style={{ ...label, marginBottom: 10 }}>What&apos;s working</div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 18 }}>
+            <div
+              style={{
+                border: `1px solid ${C.rule}`,
+                background: C.card,
+                borderRadius: 8,
+                padding: "20px 24px",
+              }}
+            >
+              <div style={{ ...label, marginBottom: 10 }}>
+                What&apos;s working
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  fontSize: 18,
+                }}
+              >
                 <Dot color={pillarStatus(working.score).color} />
                 {working.label} · {working.score}/100
               </div>
-              <div style={{ fontSize: 14, color: C.muted, marginTop: 8, lineHeight: 1.45 }}>
+              <div
+                style={{
+                  fontSize: 14,
+                  color: C.muted,
+                  marginTop: 8,
+                  lineHeight: 1.45,
+                }}
+              >
                 {working.working}
               </div>
             </div>
           )}
-          <div style={{ border: "1px solid rgba(193,210,252,0.4)", borderRadius: 8, padding: "20px 24px" }}>
-            <div style={{ ...label, color: C.blue, marginBottom: 10 }}>{CTA.session.eyebrow}</div>
+          <div
+            style={{
+              border: "1px solid rgba(193,210,252,0.4)",
+              borderRadius: 8,
+              padding: "20px 24px",
+            }}
+          >
+            <div style={{ ...label, color: C.blue, marginBottom: 10 }}>
+              {CTA.session.eyebrow}
+            </div>
             <div style={{ fontSize: 18 }}>{CTA.session.headline}</div>
-            <div style={{ fontSize: 14, color: C.muted, marginTop: 8, lineHeight: 1.45 }}>
+            <div
+              style={{
+                fontSize: 14,
+                color: C.muted,
+                marginTop: 8,
+                lineHeight: 1.45,
+              }}
+            >
               {CTA.session.body[0]}
             </div>
             <div style={{ fontSize: 14, color: C.blue, marginTop: 10 }}>
@@ -373,6 +645,8 @@ const ReportPdf = forwardRef(function ReportPdf(
           </div>
         </div>
       </Page>
+
+      <ClosingPage year={year} company={company} />
     </div>
   );
 });
@@ -397,9 +671,12 @@ export async function exportReportPdf(node, filename) {
     const image = await toJpeg(page, {
       width: PAGE_W,
       height: PAGE_H,
-      pixelRatio: 2,
+      // Scales the layout to exactly 1754 × 1240 (150dpi)
+      canvasWidth: OUT_W,
+      canvasHeight: OUT_H,
+      pixelRatio: 1,
       quality: 0.92,
-      backgroundColor: "#000",
+      // No backgroundColor: it would override each page's own (the red title)
       fontEmbedCSS,
     });
     if (i > 0) pdf.addPage("a4", "landscape");
