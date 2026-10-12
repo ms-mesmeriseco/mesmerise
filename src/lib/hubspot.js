@@ -7,6 +7,8 @@ export const LEAD_SOURCES = {
   cro_checklist: "CRO checklist",
   marketing_matrix: "Marketing matrix",
   growth_leak_audit: "Growth Leak Audit",
+  // Option added by scripts/hubspot-cmo-properties.mjs
+  cmo_benchmark: "CMO Benchmark",
 };
 
 /**

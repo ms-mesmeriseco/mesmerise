@@ -5,8 +5,6 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { CTA } from "@/lib/quiz/quizData";
 
-const COPY = CTA.call;
-
 // Mirrors <Button size="large"> (which renders a link, not a button):
 // accent2 (pink) like the TwoColumn CTA for the opener, primary for submit
 const btnBase = [
@@ -32,7 +30,16 @@ const FIELDS = [
 // expands into a short request form; once sent, the thank-you message replaces
 // the right column. contact pre-fills name, email & company from the gate (empty
 // on a shared results link); quizId ties the request to the quiz's HubSpot contact.
-export default function ReviewCta({ contact, resultsUrl, quizId }) {
+// copy, endpoint and event default to the Growth Leak Review; other quizzes pass
+// their own (copy has the same shape as CTA.call).
+export default function ReviewCta({
+  contact,
+  resultsUrl,
+  quizId,
+  copy: COPY = CTA.call,
+  endpoint = "/api/growth-leak-audit/review",
+  event = "growth_leak_review_request",
+}) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
     fullName: contact?.firstName || "",
@@ -65,7 +72,7 @@ export default function ReviewCta({ contact, resultsUrl, quizId }) {
 
     setSubmitting(true);
     try {
-      const res = await fetch("/api/growth-leak-audit/review", {
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, resultsUrl, quizId, hp }),
@@ -77,7 +84,7 @@ export default function ReviewCta({ contact, resultsUrl, quizId }) {
         );
       }
       setSent(true);
-      window.dataLayer?.push({ event: "growth_leak_review_request" });
+      window.dataLayer?.push({ event });
     } catch (err) {
       setError(err.message);
     } finally {

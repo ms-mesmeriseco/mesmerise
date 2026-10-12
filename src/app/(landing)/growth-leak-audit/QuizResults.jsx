@@ -8,7 +8,6 @@ import SmallTitle from "@/components/ui/SmallTitle";
 import {
   GOAL_HEADLINES,
   TIERS,
-  tierRange,
   pillarStatus,
   CTA,
   GUIDE_URL,
@@ -17,25 +16,36 @@ import {
 import { tierFor, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
 import ReviewCta from "./ReviewCta";
 
-// Top of the scale is the lowest tier; the marker travels down towards Category of One
-const SCALE = TIERS;
+// Top of the scale is the lowest tier; the marker travels down towards the top tier
 const EASE = [0.22, 1, 0.36, 1];
-const EQUAL_BANDS = SCALE.map((_, i) => ({
-  top: (100 / SCALE.length) * i,
-  height: 100 / SCALE.length,
-}));
+const equalBands = (count) =>
+  Array.from({ length: count }, (_, i) => ({
+    top: (100 / count) * i,
+    height: 100 / count,
+  }));
 
 // Look tiers up by name, never by object identity: results held in state can
 // outlive a module reload and carry stale tier objects.
-const scaleIndex = (tier) => SCALE.findIndex((t) => t.name === tier.name);
+const scaleIndex = (scale, tier) =>
+  scale.findIndex((t) => t.name === tier.name);
+
+const tierIn = (scale, score) =>
+  [...scale].reverse().find((t) => score >= t.min) || scale[0];
+
+// Score range label for a tier, e.g. "40 to 59"
+const rangeIn = (scale, tier) => {
+  const i = scaleIndex(scale, tier);
+  const max = i < scale.length - 1 ? scale[i + 1].min - 1 : 100;
+  return `${tier.min} to ${max}`;
+};
 
 // Vertical position (0 = top, 100 = bottom) of a score on the scale, inside
 // its tier's row so the marker lines up with the card
-function scalePosition(score, bands) {
-  const tier = tierFor(score);
-  const band = bands[scaleIndex(tier)];
-  const i = TIERS.indexOf(tier);
-  const max = i < TIERS.length - 1 ? TIERS[i + 1].min : 101;
+function scalePosition(scale, score, bands) {
+  const tier = tierIn(scale, score);
+  const i = scaleIndex(scale, tier);
+  const band = bands[i];
+  const max = i < scale.length - 1 ? scale[i + 1].min : 101;
   const within = (score - tier.min) / (max - tier.min); // 0 at the top of the band
   return band.top + within * band.height * 0.6 + band.height * 0.2;
 }
@@ -48,16 +58,17 @@ function joinTold(lines) {
   return `${parts.join(", and ")}.`;
 }
 
-function TierScale({ overall }) {
-  const tier = tierFor(overall);
-  const row = scaleIndex(tier);
+// tiers: [{ min, name, color, bullets }], lowest first (defaults to the Growth Leak tiers)
+export function TierScale({ overall, tiers: SCALE = TIERS }) {
+  const tier = tierIn(SCALE, overall);
+  const row = scaleIndex(SCALE, tier);
   const next = SCALE[row + 1] || null;
 
   // Rows have different heights (only the current tier is expanded), so the
   // track is laid out from each card's measured position
   const gridRef = useRef(null);
   const rowRefs = useRef([]);
-  const [bands, setBands] = useState(EQUAL_BANDS);
+  const [bands, setBands] = useState(() => equalBands(SCALE.length));
 
   useLayoutEffect(() => {
     const grid = gridRef.current;
@@ -80,7 +91,7 @@ function TierScale({ overall }) {
 
   const center = (i) => bands[i].top + bands[i].height / 2;
   const gradient = `linear-gradient(to bottom, ${SCALE.map((t, i) => `${t.color} ${center(i)}%`).join(", ")})`;
-  const markerTop = scalePosition(overall, bands);
+  const markerTop = scalePosition(SCALE, overall, bands);
   const targetTop = next ? center(row + 1) : null;
 
   return (
@@ -177,7 +188,7 @@ function TierScale({ overall }) {
                   <span className="md:hidden mr-2" style={{ color: t.color }}>
                     {t.name} ·
                   </span>
-                  {tierRange(t)}
+                  {rangeIn(SCALE, t)}
                 </h6>
                 {isCurrent && (
                   <span

@@ -21,7 +21,7 @@ const FOOTER_BLOG_POSTS_QUERY = groq`
 `;
 
 // Routes that get the simplified (wordmark + socials only) footer
-const SIMPLE_FOOTER_PATHS = ["/join", "/growth-leak-audit"];
+const SIMPLE_FOOTER_PATHS = ["/join", "/growth-leak-audit", "/cmo-benchmark"];
 
 export default function Footer() {
   useSectionMarker("footer");
