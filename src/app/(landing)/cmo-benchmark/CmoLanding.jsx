@@ -83,7 +83,7 @@ export default function CmoLanding() {
         </h5>
         <AvatarRow />
       </div>
-      <div className="flex w-full flex-col gap-24">
+      <div className="flex w-full flex-col gap-24 text-left">
         <TrustedByMarquee />
         <TestimonialsRail />
       </div>
