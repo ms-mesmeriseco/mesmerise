@@ -6,8 +6,8 @@ import { sanityClient } from "@/sanity/client";
 import { blogScrollPostsQuery } from "@/lib/sanity/blog";
 import BlogPostCard from "@/components/blog/BlogPostCard"; // ✅ new reusable card
 
-export default function BlogNav() {
-  const [posts, setPosts] = useState([]);
+export default function BlogNav({ initialPosts }) {
+  const [posts, setPosts] = useState(initialPosts || []);
   const [selectedTagId, setSelectedTagId] = useState(null); // kept for future tags
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
@@ -15,6 +15,7 @@ export default function BlogNav() {
 
   // Fetch posts (Sanity)
   useEffect(() => {
+    if (initialPosts) return; // already rendered from the server
     (async () => {
       try {
         const items = await sanityClient.fetch(blogScrollPostsQuery);
@@ -52,7 +53,7 @@ export default function BlogNav() {
         console.error("Failed to fetch blog posts from Sanity:", error);
       }
     })();
-  }, []);
+  }, [initialPosts]);
 
   // Tags disabled for now (until tags exist)
   const allTags = useMemo(() => [], []);

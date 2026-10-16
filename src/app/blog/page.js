@@ -1,12 +1,16 @@
 import BlogNav from "@/components/sanity-blocks/BlogNav";
 import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
+import { sanityClient } from "@/sanity/client";
+import { blogScrollPostsQuery } from "@/lib/sanity/blog";
+
+export const revalidate = 60;
 
 export async function generateMetadata() {
   const title = "Insights on Brand, Web & Performance | Mesmerise Digital";
   const description =
     "Unique industry insights on brand, web design, and performance marketing. Discover just what actually moves the needle for growing businesses.";
-  const canonicalUrl = absoluteUrl("/blog/");
+  const canonicalUrl = absoluteUrl("/blog");
 
   return {
     title,
@@ -37,11 +41,14 @@ export async function generateMetadata() {
   };
 }
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  // Fetch on the server so posts are in the initial HTML (crawlers see real content)
+  const posts = (await sanityClient.fetch(blogScrollPostsQuery)) || [];
+
   return (
     <>
       <PageTitleLarge text={"Blog"} />
-      <BlogNav />
+      <BlogNav initialPosts={posts} />
     </>
   );
 }
