@@ -30,6 +30,49 @@ export const INTRO = {
   meta: ["7 minutes", "Confidential", "Shareable report"],
 };
 
+// Landing 3-problem section (ListIconsFocus block shape)
+export const LANDING_FOCUS = {
+  title: {
+    _type: "richText",
+    content: [
+      {
+        _type: "block",
+        _key: "fh",
+        style: "h2",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "fhs",
+            text: "The pressures many marketing leaders are experiencing",
+            marks: [],
+          },
+        ],
+      },
+    ],
+  },
+  listItems: [
+    {
+      _key: "focus1",
+      title: "Fragmented strategy",
+      content:
+        "Brand, performance, content and sales each run their own isolated strategy without talking to one another, often with a different agency behind each deliverable. Every channel can be busy and still not add up to growth, because nobody is accountable.\nLeadership sees the spend, but the outcome just isn’t there.",
+    },
+    {
+      _key: "focus2",
+      title: "Dated campaign structures bleeding money",
+      content:
+        "Most ad accounts are set up to capture buyers who are already searching, with budgets split across too many campaigns for the algorithms to learn properly. Many accounts are overextending and paying for traffic they already own.\nCosts climb every quarter, results plateau, and the people who’ll buy next year never see you or know your name.\n90% of accounts audited have poor structure.",
+    },
+    {
+      _key: "focus3",
+      title: "Data nobody fully trusts",
+      content:
+        "Duplicate records, half-updated deal stages and tracking that stops at the form fill. When sales, finance and marketing each pull a different number, every report starts a debate, and the ad platforms optimise toward the wrong audience.\nPristine data hygiene is key to enterprise success.",
+    },
+  ],
+};
+
 export const H1 = {
   id: "H1",
   question: "Which best describes your business?",
@@ -71,13 +114,13 @@ export const H2 = {
 
 export const H3 = {
   id: "H3",
-  question: "What's the biggest pressure on you in the next 12 months?",
+  question: "What's your highest priority in the next 12 months?",
   options: [
     { value: "grow", label: "Grow pipeline or revenue on the same budget" },
     { value: "prove", label: "Prove marketing's return to the CEO or board" },
     { value: "cac", label: "Bring acquisition costs down" },
     { value: "markets", label: "Enter new markets or segments" },
-    { value: "budget", label: "Defend or grow my budget" },
+    { value: "budget", label: "Defend or increase my budget" },
   ],
 };
 
@@ -131,11 +174,11 @@ export const QUESTIONS = [
     id: "CM3",
     pillar: "measurement",
     question:
-      "If your budget were cut 30% tomorrow, could you show what revenue it would cost?",
+      "If your budget were cut by 30% tomorrow, could you show leadership exactly what revenue you'd lose?",
     options: [
       o("Roughly, at a total level", 2),
-      o("No", 0),
-      o("Yes, modelled by channel", 3),
+      o("We've never modelled it", 0),
+      o("Yes, modelled channel by channel", 3),
       o("We'd struggle to put a number on it", 1),
     ],
   },
@@ -145,34 +188,53 @@ export const QUESTIONS = [
     id: "CM4",
     pillar: "acquisition",
     question:
-      "Roughly what share of your budget reaches buyers who aren't in market yet?",
+      "How much of your spend is raising awareness, building interest & creating demand, rather than chasing prospects who are ready to buy today?",
     options: [
-      o("Under 10%", 0),
-      o("25 to 40%", 2),
-      o("10 to 25%", 1),
-      o("Over 40%, with a defined way of measuring it", 3),
+      o(
+        "Almost all of it chases ready-to-buy prospects: search, retargeting and bottom-of-funnel",
+        0,
+      ),
+      o("A deliberate split, roughly 30 to 40% building demand", 2),
+      o("Mostly chasing ready-to-buy, with a little brand activity", 1),
+      o(
+        "A planned split with over 40% building demand, measured on pipeline impact",
+        3,
+      ),
     ],
   },
   {
     id: "CM5",
     pillar: "acquisition",
-    question: "What happens to your acquisition cost when you scale spend?",
+    question:
+      "What happens to your cost per acquisition when you increase spend?",
     options: [
       o("It holds or falls, because demand we built earlier is converting", 3),
       o("It rises steadily every quarter", 1),
       o("It jumps quickly. We hit a ceiling", 0),
       o("It stays fairly stable", 2),
+      o("We haven't tracked it closely", 0),
     ],
   },
   {
     id: "CM6",
     pillar: "acquisition",
-    question: "How do you measure the impact of brand and awareness activity?",
+    question:
+      "When you invest in brand or awareness, how do you know it's working?",
     options: [
-      o("We don't run it, or don't measure it", 0),
-      o("Branded search, direct traffic and share of voice trends", 2),
-      o("Reach and engagement", 1),
-      o("Lift or incrementality testing tied to pipeline or revenue", 3),
+      o("We don't really measure it, or we don't run brand activity", 0),
+      o("Reach, impressions and engagement", 0),
+      o(
+        "We look at whether enquiries or sales lift while campaigns are running",
+        1,
+      ),
+      o(
+        "We track whether branded searches, direct traffic and inbound enquiries go up over time",
+        2,
+      ),
+      o(
+        "We test it, e.g. comparing regions or audiences that saw it against those that didn't, tied to pipeline or revenue",
+        3,
+      ),
     ],
   },
   {
@@ -182,9 +244,11 @@ export const QUESTIONS = [
       "What share of new pipeline or revenue comes from your single biggest channel?",
     options: [
       o("Under 25%", 3),
-      o("Over 60%", 0),
+      o("60 to 80%", 0),
       o("40 to 60%", 1),
+      o("Over 80%", 0),
       o("25 to 40%", 2),
+      o("Not sure", 0),
     ],
   },
   {
@@ -207,34 +271,49 @@ export const QUESTIONS = [
     pillar: "acquisition",
     multi: true,
     scored: false,
+    // Two columns even though some labels are long
+    columns: 2,
     question: "Which platforms are you currently advertising on?",
     options: [
       { value: "google_search", label: "Google Search" },
       { value: "pmax_shopping", label: "Performance Max / Shopping" },
-      { value: "meta", label: "Meta" },
-      { value: "linkedin", label: "LinkedIn" },
       { value: "youtube", label: "YouTube" },
-      { value: "tiktok", label: "TikTok" },
-      { value: "microsoft", label: "Microsoft Ads" },
-      { value: "programmatic", label: "Programmatic / display" },
-      { value: "reddit", label: "Reddit" },
+      { value: "demand_gen", label: "Demand Gen" },
+      { value: "microsoft", label: "Microsoft Ads (Bing)" },
       { value: "amazon", label: "Amazon Ads" },
+      {
+        value: "retail_media",
+        label: "Retail media (Woolworths Cartology, Coles 360, etc.)",
+      },
+      { value: "apple_search", label: "Apple Search Ads" },
+      { value: "meta", label: "Meta (Facebook & Instagram)" },
+      { value: "linkedin", label: "LinkedIn" },
+      { value: "tiktok", label: "TikTok" },
+      { value: "pinterest", label: "Pinterest" },
+      { value: "snapchat", label: "Snapchat" },
+      { value: "reddit", label: "Reddit" },
+      { value: "x", label: "X (Twitter)" },
+      { value: "programmatic", label: "Programmatic / display" },
+      { value: "native", label: "Native (Taboola, Outbrain)" },
+      { value: "audio", label: "Audio & podcasts (Spotify, LiSTNR)" },
       { value: "offline", label: "TV / radio / out-of-home" },
-      // Clears the others when picked, and is cleared by them
-      { value: "none", label: "None currently", exclusive: true },
+      // Opens an optional text field, saved as CM9_other
+      { value: "other", label: "Other", other: true },
     ],
+    otherPlaceholder: "Other platforms (optional)",
   },
 
   // Pillar 3: Website & conversion
   {
     id: "CM10",
     pillar: "conversion",
-    question: "Do you know your conversion rate by channel and landing page?",
+    question:
+      "Do you know your website conversion rate, broken down by channel and landing page?",
     options: [
-      o("Roughly, at a site-wide level", 1),
-      o("Yes, by channel and page, reviewed monthly", 3),
-      o("No", 0),
-      o("Site-wide only, tracked accurately", 2),
+      o("Roughly. We check it occasionally", 1),
+      o("Yes, by channel and landing page, reviewed monthly", 3),
+      o("No, or I'm not sure", 0),
+      o("Yes, but only site-wide", 2),
     ],
   },
   {
@@ -257,6 +336,7 @@ export const QUESTIONS = [
       o("A redesign every few years", 0),
       o("Regular updates based on analytics, with little formal testing", 2),
       o("The occasional test or tweak", 1),
+      o("We don't actively work on improving website conversion", 0),
     ],
   },
 
@@ -314,12 +394,15 @@ export const QUESTIONS = [
   {
     id: "CM17",
     pillar: "content",
-    question: "What role does content play in your pipeline?",
+    question: "How does content help you win customers?",
     options: [
-      o("Mostly social posts and blogs to stay visible", 1),
-      o("Mapped to buyer stages and awareness levels, and measured on pipeline", 3),
+      o("Mostly social posts, blogs & ad creative to stay visible", 1),
+      o(
+        "Planned around how people decide to buy, from first hearing about us to purchase, and measured on sales or pipeline",
+        3,
+      ),
       o("Ad hoc, when the team has time", 0),
-      o("Supports sales with case studies and collateral", 2),
+      o("Mainly proof that helps people buy, like case studies, reviews & UGC", 2),
     ],
   },
   {
@@ -439,7 +522,7 @@ export const QUESTION_META = {
   CM1: { label: "Headline number to leadership" },
   CM2: { label: "Leadership trust in the numbers" },
   CM3: { label: "Impact of a 30% budget cut" },
-  CM4: { label: "Budget reaching out-of-market buyers" },
+  CM4: { label: "Spend building demand" },
   CM5: { label: "Acquisition cost at scale" },
   CM6: { label: "Measuring brand impact" },
   CM7: { label: "Share from biggest channel" },
@@ -452,7 +535,7 @@ export const QUESTION_META = {
   CM14: { label: "Sales CRM updates" },
   CM15: { label: "CRM integration" },
   CM16: { label: "Single customer view" },
-  CM17: { label: "Content's role in pipeline" },
+  CM17: { label: "How content wins customers" },
   CM18: { label: "Leaders as market voices" },
   CM19: { label: "AI search visibility" },
   CM20: { label: "Team on what makes you different" },
@@ -478,7 +561,7 @@ export function insightFor(question, answer, points) {
 // ── Stage 3: Qualification (fit score, hidden) ─────────────────────────────
 
 export const QUALIFICATION_INTRO =
-  "Last step. Five quick questions so we can benchmark you against organisations your size.";
+  "Last step. Five quick questions so we can tailor your results to your organisation’s size.";
 
 export const QUALIFICATION_QUESTIONS = [
   {
@@ -549,12 +632,12 @@ export const GATE = {
   headline: "Your benchmark is ready.",
   subhead:
     "We've scored your marketing function across eight pillars and identified your three priorities, each with the business case behind it. Where should we send your report?",
-  button: "See my benchmark",
+  button: "See my results",
   // Both unticked by default. Only marketingOptin adds people to nurture.
   checkboxes: [
     {
       key: "marketingOptin",
-      label: "Send me quarterly benchmarks & playbooks for marketing leaders.",
+      label: "Send me industry insights & unique strategies I won't find online.",
     },
     {
       key: "sessionRequested",
@@ -588,7 +671,7 @@ export const TIERS = [
   },
   {
     min: 40,
-    name: "Operational",
+    name: "Established",
     color: "var(--mesm-yellow)",
     bullets: [
       "The engine runs, but it's built to capture demand rather than create it.",
@@ -600,13 +683,13 @@ export const TIERS = [
     name: "Strategic",
     color: "#86ef7d",
     bullets: [
-      "You're ahead of most functions we benchmark.",
+      "Your foundations are stronger than most.",
       "Two or three gaps are capping what marketing can prove and deliver.",
     ],
   },
   {
     min: 80,
-    name: "Commercial",
+    name: "Leader",
     color: "var(--accent)",
     bullets: [
       "Leadership sees marketing as a growth driver.",

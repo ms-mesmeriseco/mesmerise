@@ -199,6 +199,7 @@ async function syncHubspot({
     cmo_weakest_pillar: results.weakestPillar.key,
     // Multi-checkbox values are separated by semicolons
     cmo_ad_platforms: results.adPlatforms.map((p) => p.value).join(";"),
+    cmo_ad_platforms_other: answers.CM9_other || "",
     cmo_fit_score: results.fitScore,
     cmo_fit_band: results.fitBand,
     cmo_hot_lead: hotLead ? "true" : "false",

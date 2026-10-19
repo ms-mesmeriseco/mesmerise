@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-// Fixed bottom bar: reading progress fill + post title + share links.
+// Sticky bottom bar (rests at the end of the page content, above the footer): reading progress fill + post title + share links.
 // Progress is measured against the element with id `targetId` (the article).
 export default function BlogProgressBar({
   title,
@@ -91,7 +91,7 @@ export default function BlogProgressBar({
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 md:h-8 md:pb-0 h-12 pb-4  bg-[var(--mesm-l-grey)]/10 backdrop-blur-sm text-white text-sm overflow-hidden"
+      className="sticky bottom-0 -mx-[var(--global-margin-sm)] z-50 md:h-8 md:pb-0 h-12 pb-4  bg-[var(--mesm-l-grey)]/10 backdrop-blur-sm text-white text-sm overflow-hidden"
       role="region"
       aria-label="Reading progress"
     >

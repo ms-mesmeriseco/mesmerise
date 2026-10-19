@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import HeroButton from "@/components/ui/HeroButton";
 import AvatarRow from "@/components/ui/AvatarRow";
-import { INTRO } from "@/lib/cmo-benchmark/quizData";
+import { INTRO, LANDING_FOCUS } from "@/lib/cmo-benchmark/quizData";
+import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
 import StarEyebrow from "../growth-leak-audit/StarEyebrow";
 import CmoQuiz from "./CmoQuiz";
 import { loadProgress, clearProgress } from "./progress";
@@ -85,6 +86,9 @@ export default function CmoLanding() {
       </div>
       <div className="flex w-full flex-col gap-24 text-left">
         <TrustedByMarquee />
+        <div className="py-24">
+          <ListIconsFocus block={LANDING_FOCUS} />
+        </div>
         <TestimonialsRail />
       </div>
     </section>

@@ -27,7 +27,8 @@ export const FLAGS = {
   unscored: "·",
 };
 
-const UNSURE = /not sure|i don['’]t know|no idea/i;
+const UNSURE =
+  /not sure|i don['’]t know|no idea|haven['’]t tracked it closely|never modelled it/i;
 const letter = (i) => String.fromCharCode(65 + i);
 
 function flagFor(points, text) {
@@ -92,7 +93,7 @@ export function fitBandFor(fit) {
 }
 
 /**
- * answers: { H1, H2, H2_other, H3, [CM id]: optionIndex | optionIndex[],
+ * answers: { H1, H2, H2_other, H3, [CM id]: optionIndex | optionIndex[], CM9_other,
  *            Q1..Q5: optionIndex, Q3_other }
  */
 export function computeResults(answers) {
@@ -150,7 +151,13 @@ export function computeResults(answers) {
   const platformQuestion = questions.find((q) => q.id === "CM9");
   const adPlatforms = (Array.isArray(answers.CM9) ? answers.CM9 : [])
     .map((i) => platformQuestion.options[i])
-    .filter(Boolean);
+    .filter(Boolean)
+    // The typed "Other" text, when there is one
+    .map((o) =>
+      o.other && answers.CM9_other
+        ? { ...o, label: `Other: ${answers.CM9_other}` }
+        : o,
+    );
 
   const fitScore = QUALIFICATION_QUESTIONS.reduce(
     (sum, q) => sum + (q.options[answers[q.id]]?.points ?? 0),
@@ -258,11 +265,12 @@ export function pickAnswers(answers) {
     ...questionsFor(answers.H1).map((q) => q.id),
     ...QUALIFICATION_QUESTIONS.map((q) => q.id),
     "Q3_other",
+    "CM9_other",
   ];
   const picked = Object.fromEntries(
     keys.filter((k) => answers[k] !== undefined).map((k) => [k, answers[k]]),
   );
-  for (const k of ["H2_other", "Q3_other"]) {
+  for (const k of ["H2_other", "Q3_other", "CM9_other"]) {
     if (picked[k] === undefined) continue;
     const text = String(picked[k]).trim().slice(0, OTHER_MAX_LENGTH);
     if (text) picked[k] = text;

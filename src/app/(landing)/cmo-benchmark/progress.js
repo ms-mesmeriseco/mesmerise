@@ -1,7 +1,8 @@
 // Saved quiz progress, so someone who leaves partway picks up where they
 // stopped in the same browser. Storage can be missing or blocked (private
 // windows, cleared site data), so every call fails quietly.
-const KEY = "mesm-cmo-benchmark-v1";
+// Bump the version when options are reordered, so old saved indexes are dropped
+const KEY = "mesm-cmo-benchmark-v2";
 
 // { stepIndex, answers } or null
 export function loadProgress() {

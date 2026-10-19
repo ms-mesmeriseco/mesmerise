@@ -1,7 +1,7 @@
 // One-off: creates the CMO Benchmark contact properties in HubSpot, and adds
 // "CMO Benchmark" to the mesm_lead_source dropdown (contact updates fail without it).
 // Usage: node --env-file=.env.local scripts/hubspot-cmo-properties.mjs
-// Needs a private app token with crm.schemas.contacts.write. Safe to re-run (existing properties are skipped).
+// Needs a private app token with crm.schemas.contacts.write. Safe to re-run (existing properties are skipped, but dropdown options are synced).
 
 import {
   PILLARS,
@@ -78,6 +78,7 @@ const properties = [
     groupName: GROUP,
     options: opts(platforms.map((o) => [o.value, o.label])),
   },
+  text("cmo_ad_platforms_other", "CMO Ad Platforms (Other)"),
   number("cmo_fit_score", "CMO Fit Score"),
   dropdown("cmo_fit_band", "CMO Fit Band", fromLabels(["High", "Mid", "Low"])),
   {
@@ -112,7 +113,12 @@ console.log(groupRes.ok ? "Created group" : `Group: ${groupRes.status} (likely e
 for (const p of properties) {
   const res = await api("", p);
   if (res.ok) console.log(`✓ ${p.name}`);
-  else if (res.status === 409) console.log(`- ${p.name} (exists)`);
+  else if (res.status === 409 && p.options) {
+    // Exists: sync its options, since HubSpot rejects values it doesn't know
+    const patch = await api(`/${p.name}`, { label: p.label, options: p.options }, "PATCH");
+    if (patch.ok) console.log(`↻ ${p.name} (options synced)`);
+    else console.error(`✗ ${p.name}: ${patch.status} ${await patch.text()}`);
+  } else if (res.status === 409) console.log(`- ${p.name} (exists)`);
   else console.error(`✗ ${p.name}: ${res.status} ${await res.text()}`);
 }
 

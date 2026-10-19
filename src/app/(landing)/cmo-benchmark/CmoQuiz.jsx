@@ -17,6 +17,7 @@ import {
 import { computeResults } from "@/lib/cmo-benchmark/scoring";
 import { saveProgress, clearProgress } from "./progress";
 import CmoResults from "./CmoResults";
+import Button from "@/components/ui/Button";
 
 // 3 hook + 25 benchmark + 5 qualification
 const TOTAL_QUESTIONS = 33;
@@ -373,7 +374,7 @@ export default function CmoQuiz({ initial, onExit } = {}) {
               >
                 {submitting ? "Scoring..." : GATE.button}
               </button>
-              <p className="text-sm text-[var(--mesm-l-grey)] text-center">
+              <p className="text-sm text-[var(--mesm-l-grey)] text-left">
                 {GATE.microcopy}
               </p>
               {error && (
@@ -397,6 +398,15 @@ export default function CmoQuiz({ initial, onExit } = {}) {
           )}
         </motion.div>
       </AnimatePresence>
+
+      {/* Outside the animated wrapper: its transform would stop `fixed` sticking */}
+      {step.type === "results" && results && (
+        <div className="fixed z-50 p-4 bottom-2 right-0 w-full md:w-fit items-center flex justify-center">
+          <Button href="/connect" size="large" variant="CTA" arrow>
+            Book a Strategy Session
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
@@ -418,7 +428,8 @@ function QuestionScreen({
         : answer === i;
   const otherOn = q.options.some((o, i) => o.other && selected(o, i));
   // Short option lists (industries, platforms) sit in two columns
-  const compact = q.options.every((o) => o.label.length <= 34);
+  const compact =
+    q.columns === 2 || q.options.every((o) => o.label.length <= 34);
 
   return (
     <fieldset className="flex flex-col gap-6">

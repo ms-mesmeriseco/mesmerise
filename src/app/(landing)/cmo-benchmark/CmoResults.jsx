@@ -28,6 +28,10 @@ function joinTold(lines) {
 const btnOutline =
   "inline-flex items-center justify-center rounded-2xl border border-[var(--mesm-grey)] px-4 py-1.5 text-sm hover:border-[var(--mesm-blue)] hover:text-[var(--mesm-blue)] duration-200";
 
+// "Get Instant Access" sizing (CROForm), filled white as the primary action
+const btnSolid =
+  "w-full rounded-2xl border-1 border-[var(--foreground)] bg-[var(--foreground)] text-[var(--background)] py-2 font-normal cursor-pointer hover:opacity-85 duration-200";
+
 // "Acme Pty Ltd" → "acme-pty-ltd-marketing-benchmark.pdf"
 const pdfName = (company) =>
   `${[company, "marketing benchmark"]
@@ -80,6 +84,11 @@ export default function CmoResults({
   const summary = leadershipSummary(results, { company, pressure });
   const reportRef = useRef(null);
   const [exportPdf, exporting, exportError] = usePdfExport(reportRef, company);
+  const exportStatus = exportError && (
+    <span role="status" className="text-sm text-red-600">
+      {exportError}
+    </span>
+  );
   const exportButton = (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <button
@@ -90,11 +99,7 @@ export default function CmoResults({
       >
         {exporting ? "Creating PDF..." : "Export as PDF"}
       </button>
-      {exportError && (
-        <span role="status" className="text-sm text-red-600">
-          {exportError}
-        </span>
-      )}
+      {exportStatus}
     </div>
   );
 
@@ -257,12 +262,24 @@ export default function CmoResults({
         </section>
       )}
 
-      {/* 5. Leadership summary: the shareable piece */}
+      {/* 5. Summary: the shareable piece */}
       <section>
-        <SmallTitle>Leadership summary</SmallTitle>
+        <SmallTitle>Your summary</SmallTitle>
         <div className="flex flex-col gap-6 rounded-lg border border-[var(--mesm-blue)]/40 p-6 md:p-8 mt-6">
           <p className="p2 leading-snug">{summary}</p>
-          {exportButton}
+          <div className="flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={exportPdf}
+              disabled={exporting}
+              className={`${btnSolid} disabled:opacity-50 disabled:cursor-wait`}
+            >
+              <span className="p2">
+                {exporting ? "Creating PDF..." : "Download summary (PDF)"}
+              </span>
+            </button>
+            {exportStatus}
+          </div>
         </div>
       </section>
 
