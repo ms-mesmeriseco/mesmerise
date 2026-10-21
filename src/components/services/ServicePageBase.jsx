@@ -7,6 +7,7 @@ import StaggeredWords from "@/hooks/StaggeredWords";
 import CollabModel from "../home/CollabModel";
 import InView from "@/hooks/InView";
 import Button from "@/components/ui/Button";
+import HeroButton from "@/components/ui/HeroButton";
 import ServiceTags from "./ServiceTags";
 import ServicesRail from "./ServicesRail";
 import FAQ from "@/components/blocks/FAQ.jsx";
@@ -68,19 +69,16 @@ function ThirdPara({ text }) {
 function FinalCTA({ text }) {
   return (
     <InView>
-      <section className="flex flex-col justify-left text-[var(--foreground)] pb-4">
-        <div>
-          <StaggeredWords as="h3" text={text} className="page-title-large" />
-          <br />
-          <br />
-          <br />
-        </div>
+      <section className="flex flex-col justify-center text-[var(--foreground)] py-24 text-center items-center gap-12">
+        <StaggeredWords
+          as="h3"
+          text={text}
+          className="page-title-large max-w-5xl"
+        />
 
-        <div className="text-right pt-6">
-          <Button size="x-large" variant="accent2" href="/connect">
-            Let's Talk
-          </Button>
-        </div>
+        <HeroButton size="lg" href="/connect">
+          <span className="page-title-small">Let's Talk</span>
+        </HeroButton>
       </section>
     </InView>
   );

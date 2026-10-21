@@ -80,11 +80,10 @@ export default function Services() {
 
   return (
     <div className="flex flex-col min-h-screen gap-[8rem]">
-      <div>
+      <div className="py-6">
         <StaggeredWords
           key="h1"
-          text="Premium full service solutions, engineered with insight. Delivered
-            with intent."
+          text="Premium full service solutions, engineered with insight. Delivered with intent."
           className="page-title-large text-2xl md:text-4xl leading-tight"
           center
         />

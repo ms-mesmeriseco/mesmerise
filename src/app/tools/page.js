@@ -47,14 +47,14 @@ function ToolCard({ href, title, image, meta }) {
   return (
     <Link
       href={href}
-      className="group relative flex flex-col justify-end md:aspect-[16/9] aspect-[5/4] overflow-hidden rounded-lg border-1 border-[var(--mesm-grey-dk)] hover:border-[var(--mesm-grey)] duration-200 bg-[var(--accent2)]"
+      className="group relative flex flex-col justify-end md:aspect-[16/9] aspect-[5/4] overflow-hidden rounded-lg border-1 border-[var(--mesm-grey)] hover:border-[var(--mesm-grey)] duration-200 bg-[var(--accent2)]/20"
     >
       <Image
         src={image}
         alt=""
         fill
         sizes="(min-width: 768px) 50vw, 100vw"
-        className="object-cover opacity-80 group-hover:scale-[1.03] duration-500"
+        className="object-cover opacity-40 group-hover:scale-[1.03] duration-500"
       />
 
       {/* Shade the bottom so the meta text stays readable on any image */}
@@ -67,7 +67,7 @@ function ToolCard({ href, title, image, meta }) {
           </span>
           <ul className="flex flex-wrap gap-x-6 py-4 no-list">
             {meta.map((item) => (
-              <li key={item} className="text-xs text-white/80 no-list px-2">
+              <li key={item} className="text-sm text-white/80 no-list px-2">
                 {item}
               </li>
             ))}
