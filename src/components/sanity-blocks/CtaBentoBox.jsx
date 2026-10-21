@@ -10,6 +10,9 @@ export default function CtaBentoBox({ block, linkLabel = "Learn more" }) {
   if (!block) return null;
 
   const { bentoTitle, ctaBox1, ctaLink1, ctaBox2, ctaLink2 } = block;
+  // Optional per-box labels, falling back to the shared one
+  const label1 = block.linkLabel1 ?? linkLabel;
+  const label2 = block.linkLabel2 ?? linkLabel;
 
   const heading = bentoTitle;
 
@@ -53,7 +56,7 @@ export default function CtaBentoBox({ block, linkLabel = "Learn more" }) {
                 </div>
 
                 <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
-                  {linkLabel}
+                  {label1}
                 </span>
               </Link>
             )}
@@ -65,7 +68,7 @@ export default function CtaBentoBox({ block, linkLabel = "Learn more" }) {
                 </div>
 
                 <span className="mt-4 inline-flex items-center gap-2 text-sm text-[var(--mesm-blue)] group-hover:gap-3 transition-all">
-                  {linkLabel}
+                  {label2}
                 </span>
               </Link>
             )}

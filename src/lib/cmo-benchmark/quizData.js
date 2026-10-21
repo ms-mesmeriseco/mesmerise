@@ -3,7 +3,11 @@
 // `points: null` marks an answer that isn't scored (the question drops out of its pillar).
 
 export const PILLARS = [
-  { key: "measurement", weight: 0.15, label: "Measurement & leadership confidence" },
+  {
+    key: "measurement",
+    weight: 0.15,
+    label: "Measurement & leadership confidence",
+  },
   { key: "acquisition", weight: 0.15, label: "Acquisition strategy" },
   { key: "conversion", weight: 0.15, label: "Website & conversion" },
   { key: "data", weight: 0.15, label: "Data, CRM & martech" },
@@ -73,6 +77,65 @@ export const LANDING_FOCUS = {
   ],
 };
 
+// Landing FAQ (answers render as HTML)
+export const LANDING_FAQ = [
+  {
+    question: "What is this?",
+    textContent:
+      "A 7-minute diagnostic for marketing leaders. It looks at how your strategy, channels, data, budget & measurement hold up, then shows you the three moves most likely to lift pipeline & revenue.",
+  },
+  {
+    question: "Who is it for?",
+    textContent:
+      "CEOs, CMOs, Marketing Directors & Heads of Marketing who own a number and have to defend a budget. It works for B2B, services & ecommerce.",
+  },
+  {
+    question: "What do I get at the end?",
+    textContent:
+      "<ul class='list-disc pl-5 space-y-1'><li>An overall score out of 100 & your tier: Reactive, Established, Strategic or Leader</li><li>A score for each of the eight areas</li><li>Your three priorities, with the commercial case for each</li><li>A one-page summary you can download as a PDF and take to your board</li></ul> </br>Your results show on screen as soon as you finish, and a copy goes to your inbox.",
+  },
+  {
+    question: "How is it scored?",
+    textContent:
+      "Against what we see in teams that grow pipeline predictably and can prove what their spend returns. Your score shows how close you are to that standard. It's not a ranking against other companies.",
+  },
+  {
+    question: "What if I don't know an answer?",
+    textContent:
+      "Pick “Not sure”. If a number is hard to pull, that's worth knowing, and it's usually where the quickest wins are located.",
+  },
+  {
+    question: "Is my information confidential?",
+    textContent:
+      "Yes. Your answers are only used to build your results and to prepare for a session if you book one.",
+  },
+  {
+    question: "My team already performs well. Is it worth 7 minutes?",
+    textContent:
+      "Yes. A strong score gives you evidence to back your strategy in front of leadership. Most high-performing teams still have one or two constraints capping growth, usually where attribution, budget & channel mix meet.",
+  },
+  {
+    question: "We already have an agency. Does that matter?",
+    textContent:
+      "Not at all. Treat it as a second opinion. It doesn't replace anyone. It shows you where to point your team & partners next.",
+  },
+  {
+    question: "Will someone call me?",
+    textContent:
+      "Only if you ask.</br></br>At the end you can tick a box to book a strategy session, where we go through your results, review your site & ads, and map out the first moves. If you don't tick it, you just get your results.",
+  },
+  {
+    question: "Is it free? What's the catch?",
+    textContent:
+      "It's free. We built it because the same constraints show up in almost every marketing team we work with, and this surfaces them faster than a discovery call. If we can help, we'll tell you. If not, you still leave with a clear plan.",
+  },
+  {
+    question: "What does a low score mean?",
+    textContent:
+      "Nothing about your ability. Most marketing leaders inherit budgets, tech & structures they didn't choose.</br></br>A lower score points to the biggest upside, and gives you the business case to fix it.",
+  },
+];
+
 export const H1 = {
   id: "H1",
   question: "Which best describes your business?",
@@ -126,11 +189,16 @@ export const H3 = {
 
 // Results subheadline, personalised by H3
 export const PRESSURE_HEADLINES = {
-  grow: (t) => `You need to grow ${t} on the same budget. Here's where the headroom is.`,
-  prove: () => "You need to prove marketing's return. Here's where the case is weakest.",
-  cac: () => "You need to bring acquisition costs down. Here's what's holding them up.",
-  markets: () => "You're entering new markets. Here's what needs to be ready first.",
-  budget: () => "You need to defend your budget. Here's where the case needs work.",
+  grow: (t) =>
+    `You need to grow ${t} on the same budget. Here's where the headroom is.`,
+  prove: () =>
+    "You need to prove marketing's return. Here's where the case is weakest.",
+  cac: () =>
+    "You need to bring acquisition costs down. Here's what's holding them up.",
+  markets: () =>
+    "You're entering new markets. Here's what needs to be ready first.",
+  budget: () =>
+    "You need to defend your budget. Here's where the case needs work.",
 };
 
 // Ends the leadership summary: "Addressing them would {outcome}."
@@ -151,10 +219,14 @@ export const QUESTIONS = [
   {
     id: "CM1",
     pillar: "measurement",
-    question: "When you report to the CEO or board, what's the headline number?",
+    question:
+      "When you report to the CEO or board, what's the headline number?",
     options: [
       o("Leads, traffic or engagement", 1),
-      o("Pipeline or revenue contribution, on an attribution model leadership accepts", 3),
+      o(
+        "Pipeline or revenue contribution, on an attribution model leadership accepts",
+        3,
+      ),
       o("Cost per lead and ROAS by channel", 2),
       o("It changes. We don't have one consistent number", 0),
     ],
@@ -324,7 +396,10 @@ export const QUESTIONS = [
       o("Homepage or general pages", 0),
       o("Relevant product or service pages", 2),
       o("One landing page for most campaigns", 1),
-      o("Dedicated pages per campaign and audience, matched to the ad's message", 3),
+      o(
+        "Dedicated pages per campaign and audience, matched to the ad's message",
+        3,
+      ),
     ],
   },
   {
@@ -346,7 +421,10 @@ export const QUESTIONS = [
     pillar: "data",
     question: "How would you rate your CRM hygiene?",
     options: [
-      o("Clean. Required fields, deduplication and ownership rules are enforced", 3),
+      o(
+        "Clean. Required fields, deduplication and ownership rules are enforced",
+        3,
+      ),
       o("Patchy. We clean it before every major report", 1),
       o("Mostly reliable, with known gaps", 2),
       o("We don't trust it, or I'm not sure", 0),
@@ -383,7 +461,10 @@ export const QUESTIONS = [
     question: "How do you bring customer data together across touchpoints?",
     options: [
       o("It's siloed. There's no single view of the customer", 0),
-      o("A CDP or data warehouse, used for segmentation and personalisation", 3),
+      o(
+        "A CDP or data warehouse, used for segmentation and personalisation",
+        3,
+      ),
       o("Spread across tools and joined manually when needed", 1),
       // A mid-size business doesn't need a CDP, so this still scores 2
       o("Mostly in the CRM, connected to our key tools", 2),
@@ -402,7 +483,10 @@ export const QUESTIONS = [
         3,
       ),
       o("Ad hoc, when the team has time", 0),
-      o("Mainly proof that helps people buy, like case studies, reviews & UGC", 2),
+      o(
+        "Mainly proof that helps people buy, like case studies, reviews & UGC",
+        2,
+      ),
     ],
   },
   {
@@ -502,7 +586,11 @@ export const QUESTIONS = [
       o("They report on activity rather than outcomes", 1),
       o("Solid, but we drive most of the thinking", 2),
       // Scores 0 but flags "Agency under review" in the lead email
-      { label: "We're reviewing or replacing at least one", points: 0, agencyReview: true },
+      {
+        label: "We're reviewing or replacing at least one",
+        points: 0,
+        agencyReview: true,
+      },
       // Not scored, so the pillar is scored on CM24 alone
       o("We don't use external partners", null),
     ],
@@ -604,7 +692,11 @@ export const QUALIFICATION_QUESTIONS = [
     key: "partners",
     question: "Where are you with external partners?",
     options: [
-      { label: "Reviewing or replacing an agency", points: 15, agencyReview: true },
+      {
+        label: "Reviewing or replacing an agency",
+        points: 15,
+        agencyReview: true,
+      },
       o("Looking to add a specialist partner", 15),
       o("Building capability in-house", 5),
       o("Happy with current partners", 5),
@@ -624,7 +716,10 @@ export const QUALIFICATION_QUESTIONS = [
 ];
 
 // Any other role gets "Not the decision-maker" in the lead email
-export const DECISION_MAKER_ROLES = ["CMO / Head of Marketing", "Founder / CEO"];
+export const DECISION_MAKER_ROLES = [
+  "CMO / Head of Marketing",
+  "Founder / CEO",
+];
 
 // ── Stage 4: Gate ──────────────────────────────────────────────────────────
 
@@ -637,7 +732,8 @@ export const GATE = {
   checkboxes: [
     {
       key: "marketingOptin",
-      label: "Send me industry insights & unique strategies I won't find online.",
+      label:
+        "Send me industry insights & unique strategies I won't find online.",
     },
     {
       key: "sessionRequested",
@@ -798,7 +894,8 @@ export const CTA = {
       heading: "Book your strategy session",
       bestTimeLabel: "Best time to reach you",
       bestTimes: ["Morning", "Afternoon", "Either"],
-      messagePlaceholder: "Anything we should know before the session? (optional)",
+      messagePlaceholder:
+        "Anything we should know before the session? (optional)",
       submit: "Book a strategy session",
       microcopy: "We'll be in touch within one business day to lock in a time.",
     },

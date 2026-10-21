@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import HeroButton from "@/components/ui/HeroButton";
 import AvatarRow from "@/components/ui/AvatarRow";
-import { INTRO, LANDING_FOCUS } from "@/lib/cmo-benchmark/quizData";
+import {
+  INTRO,
+  LANDING_FOCUS,
+  LANDING_FAQ,
+} from "@/lib/cmo-benchmark/quizData";
+import FAQ from "@/components/blocks/FAQ";
 import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
 import StarEyebrow from "../growth-leak-audit/StarEyebrow";
 import CmoQuiz from "./CmoQuiz";
@@ -90,6 +95,14 @@ export default function CmoLanding() {
           <ListIconsFocus block={LANDING_FOCUS} />
         </div>
         <TestimonialsRail />
+        <div className="pb-24">
+          <FAQ
+            label="common questions"
+            title="Frequently asked questions"
+            items={LANDING_FAQ}
+            defaultOpen={[0]}
+          />
+        </div>
       </div>
     </section>
   );

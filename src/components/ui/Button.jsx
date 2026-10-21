@@ -37,7 +37,7 @@ const ArrowIcon = ({ className }) => (
 
 // On hover the arrow leaves through the top right while a copy enters from
 // the bottom left
-const AnimatedArrow = () => (
+export const AnimatedArrow = () => (
   <span className="relative inline-block w-[0.8em] h-[0.8em] ml-2 overflow-hidden shrink-0">
     <ArrowIcon className="group-hover:translate-x-full group-hover:-translate-y-full" />
     <ArrowIcon className="-translate-x-full translate-y-full group-hover:translate-x-0 group-hover:translate-y-0" />
