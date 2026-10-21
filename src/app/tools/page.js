@@ -118,7 +118,7 @@ function GatewayBanner() {
       <Link
         href="/tools/start"
         className="group flex items-center justify-center gap-3 rounded-t-xl md:rounded-t-2xl px-3 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
-                   bg-[var(--accent)] text-[var(--background)] text-sm md:text-md
+                   bg-[var(--accent)] text-[var(--background)] text-sm md:text-lg
                    hover:bg-[var(--accent-l)] transition-colors duration-200"
       >
         <span>Not sure which tool fits?</span>
