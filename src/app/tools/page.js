@@ -2,6 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import PageTitleLarge from "@/components/ui/PageTitleLarge";
 import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
+import InView from "@/hooks/InView";
+import StaggeredWords from "@/hooks/StaggeredWords";
+import HeroButton from "@/components/ui/HeroButton";
 
 // Draft: kept out of search until the page is signed off
 export async function generateMetadata() {
@@ -78,6 +81,20 @@ function ToolCard({ href, title, image, meta }) {
   );
 }
 
+function FinalCTA({ text }) {
+  return (
+    <InView>
+      <section className="flex flex-col justify-center text-[var(--foreground)] min-h-screen py-24 text-center items-center gap-12">
+        <StaggeredWords as="h3" text={text} className="page-title-large" />
+
+        <HeroButton size="lg" href="/connect">
+          <span className="page-title-small">Let's Talk</span>
+        </HeroButton>
+      </section>
+    </InView>
+  );
+}
+
 export default function Tools() {
   return (
     <section className="pb-32">
@@ -88,6 +105,8 @@ export default function Tools() {
           <ToolCard key={tool.href} {...tool} />
         ))}
       </div>
+
+      <FinalCTA text="Premium full service solutions, engineered with insight. Delivered with intent."></FinalCTA>
     </section>
   );
 }
