@@ -88,6 +88,7 @@ const properties = [
   dropdown("gla_marketing_optin", "GLA Marketing Opt-in", yesNo),
   dropdown("gla_wants_call", "GLA Wants Growth Leak Review", yesNo),
   text("gla_call_opener", "GLA Call Opener", "textarea"),
+  text("gla_channels_other", "GLA Channels (Other)"),
   text("gla_answers", "GLA All Answers", "textarea"),
   text("gla_results_url", "GLA Results Page"),
   text("gla_quiz_id", "GLA Quiz ID"),

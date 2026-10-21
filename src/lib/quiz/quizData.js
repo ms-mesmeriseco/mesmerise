@@ -296,15 +296,15 @@ export const LEADGEN_QUESTIONS = [
   {
     id: "LG5",
     pillar: "offer",
-    question: "How do you reduce the risk of someone saying yes?",
+    question: "What do you do to make buying from you feel low-risk?",
     options: [
-      o("We don't, really", 0),
-      o("Testimonials and case studies on the website", 1),
+      o("Nothing specific", 0),
+      o("Reviews, testimonials or case studies on the website", 1),
       o(
-        "A guarantee, a clear process and proof matched to each type of buyer",
+        "A guarantee, a clear process, and proof that speaks to each type of customer",
         3,
       ),
-      o("A clear explanation of our process and what to expect", 2),
+      o("A clear explanation of how it works & what to expect", 2),
     ],
   },
   {
@@ -314,17 +314,29 @@ export const LEADGEN_QUESTIONS = [
     question: "Which channels currently bring you new leads?",
     options: [
       { label: "Google Ads", kind: "paid" },
+      { label: "Microsoft Ads (Bing)", kind: "paid" },
       { label: "Meta Ads", kind: "paid" },
       { label: "LinkedIn (organic or paid)", kind: "both" },
+      { label: "TikTok", kind: "paid" },
+      { label: "YouTube", kind: "paid" },
       { label: "SEO / organic search", kind: "organic" },
+      { label: "Google Business Profile / Maps", kind: "organic" },
       {
         label: "AI search (ChatGPT, Perplexity, Google AI Overviews)",
         kind: "organic",
       },
+      {
+        label: "Directories & marketplaces (hipages, Oneflare, etc.)",
+        kind: "paid",
+      },
       { label: "Referrals & word of mouth", kind: "organic" },
       { label: "Email", kind: "organic" },
       { label: "Events & networking", kind: "organic" },
+      // Counts towards the channel total but isn't paid or organic.
+      // Opens an optional text field, saved as LG6_other
+      { label: "Other", other: true },
     ],
+    otherPlaceholder: "Other channels (optional)",
   },
   {
     id: "LG7",
@@ -358,6 +370,7 @@ export const LEADGEN_QUESTIONS = [
       o("A dedicated landing page for each campaign or audience", 3),
       o("A relevant service page", 1),
       o("One general landing page for all campaigns", 2),
+      o("Not sure", 0),
     ],
   },
   {
@@ -504,6 +517,7 @@ export const ECOM_QUESTIONS = [
       { label: "Meta Ads", kind: "paid" },
       { label: "Google Shopping / Performance Max", kind: "paid" },
       { label: "Google Search", kind: "paid" },
+      { label: "Microsoft Ads (Bing)", kind: "paid" },
       { label: "Google Demand Gen", kind: "paid" },
       { label: "TikTok", kind: "paid" },
       { label: "SEO / organic search", kind: "organic" },
@@ -511,7 +525,10 @@ export const ECOM_QUESTIONS = [
       { label: "Email & SMS", kind: "organic", emailSms: true },
       { label: "Influencers & affiliates", kind: "paid" },
       { label: "Marketplaces (Amazon, eBay)", kind: "paid" },
+      // Counts towards the channel total. Opens an optional text field, saved as EC6_other
+      { label: "Other", other: true },
     ],
+    otherPlaceholder: "Other channels (optional)",
   },
   {
     id: "EC7",
@@ -647,7 +664,7 @@ export const QUESTION_META = {
       "When someone lands on your site cold, what's the first thing you offer?",
   },
   LG5: {
-    label: "Risk reversal / guarantees",
+    label: "Making it low-risk to buy",
     opener:
       "What's the biggest fear a new client has before they sign with you?",
   },
@@ -770,6 +787,9 @@ export const QUESTION_META = {
   },
 };
 
+// Typed "Other" channels (LG6_other / EC6_other), trimmed to this length
+export const OTHER_MAX_LENGTH = 50;
+
 // Lines for every answer worth 0 or 1 point. Keys match the library: question
 // ID + option letter (A = first option). Multi-select channel questions are
 // keyed by points instead (LG6_0 = 0 to 1 channels, LG6_1 = 2 channels).
@@ -819,12 +839,12 @@ export const INSIGHTS = {
   ),
   LG5_A: ins(
     "No risk reversal. Buyers carry all the risk of saying yes.",
-    "You don't offer risk reversal or guarantees.",
+    "You don't do anything specific to make buying from you feel low-risk.",
     "Buyers hesitate when the risk sits with them. If you don't remove it, they delay, or they choose someone who does.",
   ),
   LG5_B: ins(
     "Generic social proof, not matched to the buyer's specific doubts.",
-    "You rely on testimonials and case studies on the website.",
+    "You rely on reviews, testimonials or case studies on the website.",
     "Generic proof gets skimmed. Proof that answers a buyer's specific doubt is what moves them to act.",
   ),
   LG6_0: ins(
@@ -866,6 +886,11 @@ export const INSIGHTS = {
     "Relevant, but not built to convert campaign traffic.",
     "Your ads send people to a service page.",
     "Service pages inform. They're rarely built to turn a click into an enquiry.",
+  ),
+  LG9_E: ins(
+    "Doesn't know where ad traffic lands. Nobody owns what happens after the click.",
+    "You're not sure where your paid and social traffic lands.",
+    "If you don't know where people land, you can't tell whether the ad or the page is losing them.",
   ),
   LG10_D: ins(
     "No capture mechanism. Leads get lost and can't be tracked.",

@@ -11,6 +11,7 @@ import {
   QUALIFICATION_INTRO,
   QUALIFICATION_QUESTIONS,
   GATE,
+  OTHER_MAX_LENGTH,
 } from "@/lib/quiz/quizData";
 import { computeResults } from "@/lib/quiz/scoring";
 import QuizResults from "./QuizResults";
@@ -114,6 +115,10 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
         : [...current, index];
       return { ...a, [q.id]: next };
     });
+  }
+
+  function setOther(q, text) {
+    setAnswers((a) => ({ ...a, [`${q.id}_other`]: text }));
   }
 
   async function submitGate(e) {
@@ -247,8 +252,10 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
             <QuestionScreen
               q={step.q}
               answer={answers[step.q.id]}
+              otherText={answers[`${step.q.id}_other`] || ""}
               onSelect={selectSingle}
               onToggle={toggleMulti}
+              onOther={setOther}
               onContinue={() => go(1)}
             />
           )}
@@ -409,13 +416,22 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
   );
 }
 
-function QuestionScreen({ q, answer, onSelect, onToggle, onContinue }) {
+function QuestionScreen({
+  q,
+  answer,
+  otherText,
+  onSelect,
+  onToggle,
+  onOther,
+  onContinue,
+}) {
   const selected = (option, i) =>
     q.multi
       ? (answer || []).includes(i)
       : isHook(q)
         ? answer === option.value
         : answer === i;
+  const otherOn = q.options.some((o, i) => o.other && selected(o, i));
   // Short option lists (industries, channels) sit in two columns
   const compact = q.options.every((o) => o.label.length <= 34);
 
@@ -475,6 +491,20 @@ function QuestionScreen({ q, answer, onSelect, onToggle, onContinue }) {
           );
         })}
       </div>
+
+      {otherOn && (
+        <input
+          type="text"
+          autoFocus
+          maxLength={OTHER_MAX_LENGTH}
+          placeholder={q.otherPlaceholder}
+          aria-label={q.otherPlaceholder}
+          value={otherText}
+          onChange={(e) => onOther(q, e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && onContinue()}
+          className={inputClass}
+        />
+      )}
 
       {q.multi && (
         <button

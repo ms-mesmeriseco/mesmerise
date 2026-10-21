@@ -8,6 +8,7 @@ import {
   DECISION_MAKER_ROLES,
   leakFor,
   insightFor,
+  OTHER_MAX_LENGTH,
 } from "./quizData.js";
 
 // Diagnostic scores below this, combined with high fit, are flagged for same-day outreach
@@ -39,14 +40,18 @@ const byWeakest = (a, b) =>
   a.points - b.points || (b.flag === "unsure") - (a.flag === "unsure");
 
 // One record per scored question: IDs, text and points, plus the library lines
-function recordAnswer(question, answer, track) {
+function recordAnswer(question, answer, track, otherText) {
   const picks = question.multi
     ? (answer || []).filter((i) => question.options[i])
     : question.options[answer]
       ? [answer]
       : [];
   const points = scoreQuestion(question, answer);
-  const text = picks.map((i) => question.options[i].label).join(", ");
+  const text = picks
+    .map((i) => question.options[i])
+    // The typed "Other" text, when there is one
+    .map((o) => (o.other && otherText ? `Other: ${otherText}` : o.label))
+    .join(", ");
   const flag = flagFor(points, text);
   const insight = insightFor(question, answer, points);
 
@@ -104,14 +109,17 @@ export function fitBandFor(fit) {
 }
 
 /**
- * answers: { H1, H2, H3, [questionId]: optionIndex | optionIndex[], Q1..Q5: optionIndex }
+ * answers: { H1, H2, H3, [questionId]: optionIndex | optionIndex[], LG6_other,
+ *            EC6_other, Q1..Q5: optionIndex }
  */
 export function computeResults(answers) {
   const track = answers.H1;
   const questions = questionsForTrack(track);
   const labels = PILLAR_LABELS[track] || PILLAR_LABELS.ecom;
 
-  const records = questions.map((q) => recordAnswer(q, answers[q.id], track));
+  const records = questions.map((q) =>
+    recordAnswer(q, answers[q.id], track, answers[`${q.id}_other`]),
+  );
 
   const pillars = PILLARS.map((p, order) => {
     const own = records.filter((r) => r.pillar === p.key);
@@ -182,16 +190,32 @@ export function computeResults(answers) {
   };
 }
 
-// Only the answer keys the quiz uses (drops anything else the client sent)
+// Typed "Other" channels: LG6_other or EC6_other, depending on the track
+export const channelsOther = (answers) =>
+  answers.LG6_other || answers.EC6_other || "";
+
+// Only the answer keys the quiz uses (drops anything else the client sent),
+// with the free-text fields trimmed to length
 export function pickAnswers(answers) {
+  const otherKeys = questionsForTrack(answers.H1)
+    .filter((q) => q.options.some((o) => o.other))
+    .map((q) => `${q.id}_other`);
   const keys = [
     "H1",
     "H2",
     "H3",
     ...questionsForTrack(answers.H1).map((q) => q.id),
+    ...otherKeys,
     ...QUALIFICATION_QUESTIONS.map((q) => q.id),
   ];
-  return Object.fromEntries(
+  const picked = Object.fromEntries(
     keys.filter((k) => answers[k] !== undefined).map((k) => [k, answers[k]]),
   );
+  for (const k of otherKeys) {
+    if (picked[k] === undefined) continue;
+    const text = String(picked[k]).trim().slice(0, OTHER_MAX_LENGTH);
+    if (text) picked[k] = text;
+    else delete picked[k];
+  }
+  return picked;
 }

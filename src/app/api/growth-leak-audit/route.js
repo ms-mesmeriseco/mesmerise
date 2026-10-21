@@ -4,7 +4,12 @@ export const dynamic = "force-dynamic";
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { computeResults, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
+import {
+  computeResults,
+  pickAnswers,
+  channelsOther,
+  NO_LEAKS_MESSAGE,
+} from "@/lib/quiz/scoring";
 import { resultsLink } from "@/lib/quiz/resultsLink";
 import {
   H1,
@@ -45,7 +50,7 @@ export async function POST(req) {
       );
     }
 
-    const { answers, contact, hp } = body;
+    const { contact, hp } = body;
 
     // Honeypot
     if (hp) return NextResponse.json({ ok: true });
@@ -71,12 +76,13 @@ export async function POST(req) {
     }
     if (!/^https?:\/\//i.test(website)) website = `https://${website}`;
 
-    if (!answers || !TRACK_LABELS[answers.H1]) {
+    if (!body.answers || !TRACK_LABELS[body.answers.H1]) {
       return NextResponse.json(
         { error: "Incomplete quiz answers." },
         { status: 400 },
       );
     }
+    const answers = pickAnswers(body.answers);
 
     // Scores are always recomputed server-side
     const results = computeResults(answers);
@@ -187,6 +193,7 @@ async function syncHubspot({
     gla_marketing_optin: marketingOptin ? "yes" : "no",
     gla_wants_call: wantsCall ? "yes" : "no",
     gla_call_opener: results.callOpener || "",
+    gla_channels_other: channelsOther(answers),
     gla_answers: results.answers
       .map(
         (a) =>
