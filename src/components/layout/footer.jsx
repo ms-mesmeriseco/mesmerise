@@ -56,9 +56,9 @@ export default function Footer() {
   if (useSimpleFooter) return <SimpleFooter />;
 
   return (
-    <footer className="relative z-[200] bg-[var(--background)] border-t-1 border-[var(--mesm-grey-dk)] m-[var(--global-margin-sm)]">
+    <footer className="relative z-[200] bg-[var(--background)] border-t-1 border-[var(--mesm-grey-dk)] m-[var(--global-margin-sm)] pt-6">
       {/* Top strip: brand + newsletter */}
-      <section data-marker=" " className="mx-auto w-full pb-12 md:pb-16 pt-6">
+      <section className="mx-auto w-full pb-12 md:pb-16 pt-6">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           {/* Brand / wordmark */}
           <div className="flex flex-col gap-4">
