@@ -82,10 +82,6 @@ export default function Tools() {
   return (
     <section className="pb-32">
       <PageTitleLarge text="Tools" />
-      <p className="p2 max-w-[475px] text-[var(--mesm-l-grey)] mb-12">
-        Free diagnostics built from hundreds of audits. Pick one, answer a few
-        questions, and get a clear read on where to focus next.
-      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {TOOLS.map((tool) => (

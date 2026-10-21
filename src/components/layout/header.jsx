@@ -20,6 +20,7 @@ export const NAV_ITEMS = [
     ],
   },
   { label: "Work", href: "/work" },
+  { label: "Tools", href: "/tools" },
   {
     label: "Collaboration",
     href: "/collaboration",
