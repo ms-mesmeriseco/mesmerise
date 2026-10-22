@@ -61,7 +61,10 @@ export default function ToolsBanner() {
     const publish = () => {
       const h = visible ? barRef.current?.offsetHeight || 0 : 0;
       root.setProperty("--tools-banner-h", `${h}px`);
-      root.setProperty("--tools-banner-space", h ? `${h + FOOTER_GAP}px` : "0px");
+      root.setProperty(
+        "--tools-banner-space",
+        h ? `${h + FOOTER_GAP}px` : "0px",
+      );
     };
     publish();
     if (!visible || !barRef.current) return;
@@ -100,7 +103,7 @@ export default function ToolsBanner() {
         href="/tools/start"
         tabIndex={visible ? undefined : -1}
         className="group flex items-center justify-center gap-3 rounded-t-xl md:rounded-t-2xl pl-3 pr-11 md:px-14 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
-                   bg-[var(--accent)] text-[var(--background)] text-sm md:text-lg
+                   bg-[var(--accent)] text-[var(--background)] text-xs md:text-lg
                    hover:bg-[var(--accent-l)] transition-colors duration-200"
       >
         <span>Not sure if your marketing is working?</span>
