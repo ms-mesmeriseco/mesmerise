@@ -178,6 +178,7 @@ async function syncHubspot({
     website,
     gla_track: answers.H1,
     gla_industry: answers.H2 || "",
+    gla_industry_other: answers.H2_other || "",
     gla_goal: answers.H3 || "",
     gla_score_overall: results.overall,
     gla_tier: results.tier.name,
@@ -230,7 +231,9 @@ async function sendInternalAlert(
 
   const { overall, tier, fitScore, fitBand, hotLead, pillars, leaks } = results;
   const band = hotLead ? "HOT LEAD" : `${fitBand} fit`;
-  const industry = answers.H2 || "-";
+  const industry = answers.H2_other
+    ? `Other: ${answers.H2_other}`
+    : answers.H2 || "-";
   const subject = `${band}: ${company} · ${industry} · ${overall}/100 ${tier.name} · Fit ${fitScore}`;
   const hubspotUrl = await hubspotContactUrl(contactId).catch(() => null);
 
@@ -267,7 +270,7 @@ async function sendInternalAlert(
   const FIT_LABELS = {
     revenue: "Annual revenue",
     spend: "Monthly marketing & ad spend",
-    timeline: "Looking to make changes",
+    timeline: "Trigger",
     current_setup: "Marketing run by",
   };
   const fitRows = QUALIFICATION_QUESTIONS.filter((q) => FIT_LABELS[q.key]).map(
@@ -293,7 +296,7 @@ async function sendInternalAlert(
   const allAnswersHtml = [
     group("About them", [
       qa(null, H1.question, hookLabel(H1)),
-      qa(null, industryQuestion(answers.H1).question, answers.H2),
+      qa(null, industryQuestion(answers.H1).question, industry),
       qa(null, H3.question, hookLabel(H3)),
     ]),
     ...PILLARS.map((p) =>

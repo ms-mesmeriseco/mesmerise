@@ -100,6 +100,8 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
     const value = isHook(q) ? option.value : index;
     setAnswers((a) => ({ ...a, [q.id]: value }));
     clearTimeout(advanceTimer.current);
+    // "Other" waits on its text field and the Continue button
+    if (option.other) return;
     // H1 changes the step list, so advance by index rather than relative to stale steps
     advanceTimer.current = setTimeout(() => {
       setStepIndex((i) => i + 1);
@@ -424,6 +426,7 @@ function QuestionScreen({
         ? answer === option.value
         : answer === i;
   const otherOn = q.options.some((o, i) => o.other && selected(o, i));
+  const canContinue = !(otherOn && q.otherRequired && !otherText.trim());
   // Short option lists (industries, channels) sit in two columns
   const compact = q.options.every((o) => o.label.length <= 34);
 
@@ -493,15 +496,16 @@ function QuestionScreen({
           aria-label={q.otherPlaceholder}
           value={otherText}
           onChange={(e) => onOther(q, e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && onContinue()}
+          onKeyDown={(e) => e.key === "Enter" && canContinue && onContinue()}
           className={inputClass}
         />
       )}
 
-      {q.multi && (
+      {(q.multi || otherOn) && (
         <button
           type="button"
           onClick={onContinue}
+          disabled={!canContinue}
           className={`${btnPrimary} w-fit mt-6`}
         >
           Continue

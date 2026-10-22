@@ -6,14 +6,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CTA } from "@/lib/quiz/quizData";
 
 // Mirrors <Button size="large"> (which renders a link, not a button):
-// accent2 (pink) like the TwoColumn CTA for the opener, primary for submit
+// fluoro green for the opener (matches the floating pill), primary for submit
 const btnBase = [
   "inline-flex items-center justify-center select-none border whitespace-nowrap",
   "duration-150 ease-out rounded-2xl hover:rounded-xl text-xl leading-tight px-4 py-2",
   "hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-grey)] hover:text-[var(--mesm-l-grey)]",
   "disabled:opacity-40 disabled:cursor-not-allowed",
 ].join(" ");
-const btnAccent = `${btnBase} bg-[var(--accent2)]/98 border-[var(--accent2)] text-[var(--background)]/98`;
+const btnAccent = `${btnBase} bg-[var(--mesm-fluoro)] border-[var(--mesm-fluoro)] text-[var(--background)]`;
 const btnPrimary = `${btnBase} bg-[var(--mesm-blue)] border-[var(--mesm-blue)] text-[var(--background)]`;
 
 const inputClass =
