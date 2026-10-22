@@ -143,10 +143,14 @@ export default function ReviewCta({
               <h2>{COPY.form.headline}</h2>
               <ul className="flex flex-col gap-2 !m-0">
                 {COPY.form.ticks?.map((t) => (
-                  <li key={t} className="flex items-baseline gap-3">
-                    <span aria-hidden="true" className="text-[#86ef7d]">
-                      ✓
-                    </span>
+                  <li key={t} className="flex items-center gap-3">
+                    <Image
+                      src="/icons/check_32dp_FFFFFF_FILL0_wght300_GRAD0_opsz40.png"
+                      alt=""
+                      width={32}
+                      height={32}
+                      className="w-6 h-6 shrink-0"
+                    />
                     {t}
                   </li>
                 ))}
