@@ -263,22 +263,23 @@ async function sendInternalAlert(
         .join("")
     : `<p>${escapeHtml(NO_LEAKS_MESSAGE)}</p>`;
 
-  // Each qualification answer with the fit points it earned
+  // Each qualification answer with the fit points it earned. Role sits in WHO.
   const FIT_LABELS = {
     revenue: "Annual revenue",
     spend: "Monthly marketing & ad spend",
-    role: "Role",
     timeline: "Looking to make changes",
     current_setup: "Marketing run by",
   };
-  const fitRows = QUALIFICATION_QUESTIONS.map((q) => {
-    const picked = q.options[answers[q.id]];
-    const max = Math.max(...q.options.map((o) => o.points));
-    return row(
-      FIT_LABELS[q.key] || q.question,
-      picked ? `${picked.label} (${picked.points}/${max} pts)` : "-",
-    );
-  });
+  const fitRows = QUALIFICATION_QUESTIONS.filter((q) => FIT_LABELS[q.key]).map(
+    (q) => {
+      const picked = q.options[answers[q.id]];
+      const max = Math.max(...q.options.map((o) => o.points));
+      return row(
+        FIT_LABELS[q.key] || q.question,
+        picked ? `${picked.label} (${picked.points}/${max} pts)` : "-",
+      );
+    },
+  );
 
   // Every question in the quiz, in order: question text, then their answer
   const qa = (symbol, question, answer) =>

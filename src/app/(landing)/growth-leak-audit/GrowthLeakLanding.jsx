@@ -57,6 +57,12 @@ export default function GrowthLeakLanding() {
             className="p"
             text="Find out exactly where your marketing is leaking"
           />
+          <StaggeredWords
+            as="h4"
+
+            className="p text-[var(--foreground)]/80"
+            text="Spending on marketing but not sure what's working? Answer a few quick questions & discover what's holding you back"
+          />
 
           <HeroButton onClick={() => toggle(true)}>Find my leaks</HeroButton>
           <h5 className="">

@@ -70,13 +70,13 @@ export default function StaggeredWords({
       }}
     >
       <span
-        style={{ display: "block", whiteSpace: "normal", textWrap: "pretty" }}
+        style={{ display: "block", whiteSpace: "normal", textWrap: "balance" }}
       >
         {words.map((word, i) => (
           <span key={i} style={{ display: "inline-block" }}>
             <span
               ref={(el) => (wordsRef.current[i] = el)}
-              className={`inline-block align-baseline will-change-[transform,filter,opacity] ${wordClass}`}
+              className={`inline-blockalign-baseline will-change-[transform,filter,opacity] ${wordClass}`}
               style={{ whiteSpace: "normal" }}
             >
               {word}

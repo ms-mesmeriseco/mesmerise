@@ -240,6 +240,9 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* Keeps the copyright and socials clear of the sticky tools banner */}
+      <div aria-hidden="true" className="h-[var(--tools-banner-space,0px)]" />
+
       {/* Minimal link styling for consistency */}
       <style jsx global>{`
         .footer-link {

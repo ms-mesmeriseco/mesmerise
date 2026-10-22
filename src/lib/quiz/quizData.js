@@ -1210,11 +1210,12 @@ export const GATE = {
   checkboxes: [
     {
       key: "marketingOptin",
-      label: "Send me growth insights & playbooks. Unsubscribe anytime.",
+      label:
+        "Send me industry insights & unique strategies I won't find online.",
     },
     {
       key: "wantsCall",
-      label: "I'd like a free 30-minute Growth Leak Review of my results.",
+      label: "I'd like a strategy session to review my results.",
     },
   ],
   microcopy:
@@ -1381,12 +1382,21 @@ export const CTA = {
       "No pressure. You'll leave with a clear plan and confidence in your next steps.",
     ],
     button: "Book my review",
-    microcopy: "30 minutes · No obligation",
+    microcopy: "Free · 30 minutes · No obligation",
+    // Pinned to the bottom of the results page until the CTA scrolls into view
+    floatingButton: "Book my strategy session",
     image:
       "https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg",
     caption: "Petar Petrovic - Founder",
     // Expands inline under the copy; name, email & company pre-fill from the gate
     form: {
+      // Replace the headline & body once the form is open
+      headline: "Let's fix your leaks and unlock deep scale",
+      ticks: [
+        "Your results, explained",
+        "Your site & ads, reviewed",
+        "Clarity & confidence in your strategy",
+      ],
       heading: "Book your Growth Leak Review",
       bestTimeLabel: "Best time to reach you",
       bestTimes: ["Morning", "Afternoon", "Either"],

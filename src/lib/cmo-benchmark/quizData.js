@@ -993,15 +993,15 @@ export const CTA = {
       heading: "Book your strategy session",
       bestTimeLabel: "Best time to reach you",
       bestTimes: ["Morning", "Afternoon", "Either"],
-      messagePlaceholder:
-        "Anything we should know before the session? (optional)",
+      messagePlaceholder: "Anything we should know before the session?",
       submit: "Book a strategy session",
-      microcopy: "We'll be in touch within one business day to lock in a time.",
+      microcopy: "We'll be in touch shortly.",
+      microcopyAlign: "left",
     },
     thanks: {
       headline: (firstName) =>
         firstName ? `You're booked in, ${firstName}` : "You're booked in",
-      body: "We're already reviewing your benchmark. Expect a call or email from us within one business day to confirm a time.",
+      body: "We'll review your results shortly. Expect a call or email from us within 24 hours to confirm a time.",
     },
   },
   // Low fit: the full report download

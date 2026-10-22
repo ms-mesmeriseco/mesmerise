@@ -404,14 +404,6 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Outside the animated wrapper: its transform would stop `fixed` sticking */}
-      {step.type === "results" && results && (
-        <div className="fixed z-50 p-4 bottom-2 right-0 w-full md:w-fit items-center flex justify-center">
-          <Button href="/connect" size="large" variant="CTA" arrow>
-            Book a Strategy Session
-          </Button>
-        </div>
-      )}
     </div>
   );
 }

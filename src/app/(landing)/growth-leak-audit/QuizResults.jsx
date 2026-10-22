@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Button from "@/components/ui/Button";
+import Button, { AnimatedArrow } from "@/components/ui/Button";
 import SmallTitle from "@/components/ui/SmallTitle";
 import {
   GOAL_HEADLINES,
@@ -11,6 +12,7 @@ import {
   pillarStatus,
   CTA,
   GUIDE_URL,
+  BOOKING_URL,
   SHARE_LINK_DAYS,
 } from "@/lib/quiz/quizData";
 import { tierFor, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
@@ -298,6 +300,53 @@ export function ShareLink({ url, expires }) {
   );
 }
 
+// Green pill pinned to the bottom centre while the visitor scrolls. Hidden
+// once the CTA section (targetId) is on screen so there's never two buttons.
+// Portalled to <body>: the quiz's animated wrapper has a transform, which
+// would stop `fixed` sticking.
+function FloatingCta({ targetId, href, label }) {
+  const [mounted, setMounted] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const observer = new IntersectionObserver(([entry]) =>
+      setHidden(entry.isIntersecting),
+    );
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [targetId]);
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <motion.div
+      className="fixed z-50 bottom-4 inset-x-4 md:inset-x-0 flex justify-center pointer-events-none"
+      initial={false}
+      animate={{ opacity: hidden ? 0 : 1, y: hidden ? 16 : 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+    >
+      <a
+        href={href}
+        tabIndex={hidden ? -1 : undefined}
+        aria-hidden={hidden || undefined}
+        className={[
+          "group inline-flex items-center justify-center w-full md:w-auto h-[52px] px-7 rounded-full",
+          "bg-[#86ef7d] text-black text-xl leading-tight whitespace-nowrap shadow-lg shadow-black/30",
+          "hover:brightness-95 duration-200",
+          hidden ? "pointer-events-none" : "pointer-events-auto",
+        ].join(" ")}
+      >
+        {label}
+        <AnimatedArrow />
+      </a>
+    </motion.div>,
+    document.body,
+  );
+}
+
 // share: { url, expires } for the results link, when there is one.
 // contact: the gate details, to pre-fill the review request form.
 // quizId: links a review request to the quiz's HubSpot contact.
@@ -437,11 +486,21 @@ export default function QuizResults({ results, goal, share, contact, quizId }) {
         </div>
       </section>
 
+      {/* Opens the review form (#review); low fit has no form, so it books directly */}
+      <FloatingCta
+        targetId={fitBand !== "Low" ? "review" : "guide"}
+        href={fitBand !== "Low" ? "#review" : BOOKING_URL}
+        label={CTA.call.floatingButton}
+      />
+
       {/* CTA by fit band: low fit gets the guide, everyone else the review */}
       {fitBand !== "Low" ? (
         <ReviewCta contact={contact} resultsUrl={share?.url} quizId={quizId} />
       ) : (
-        <section className="w-full bg-[var(--mesm-grey)]/20 border border-[var(--mesm-grey)]/20 py-12 md:py-16 px-6 md:px-12 rounded-2xl flex flex-col items-center text-center gap-6">
+        <section
+          id="guide"
+          className="w-full bg-[var(--mesm-grey)]/20 border border-[var(--mesm-grey)]/20 py-12 md:py-16 px-6 md:px-12 rounded-2xl flex flex-col items-center text-center gap-6"
+        >
           <div className="flex items-center justify-center w-14 h-14 p-2 rounded-full bg-[var(--mesm-red)]">
             <Image
               src="/logoMark-SVG_mesm.svg"

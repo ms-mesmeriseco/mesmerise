@@ -42,7 +42,7 @@ export default function BlogTOC({ anchors }) {
   }, [anchors]);
 
   // Fade anchors out at the top/bottom edges when there's more to scroll
-  const fadeSize = "48px";
+  const fadeSize = "72px";
   const maskImage = `linear-gradient(to bottom, ${
     atTop ? "black" : "transparent"
   } 0, black ${fadeSize}, black calc(100% - ${fadeSize}), ${
@@ -59,7 +59,7 @@ export default function BlogTOC({ anchors }) {
       <div className="relative w-fit self-start mb-8">
         <nav
           ref={scrollRef}
-          className="flex flex-col gap-4 p-4 w-fit max-h-[70vh] overflow-y-scroll pr-6"
+          className="flex flex-col gap-4 p-4 w-fit max-h-[65vh] min-h-[400px] overflow-y-scroll pr-6"
           style={{ maskImage, WebkitMaskImage: maskImage }}
         >
           {anchors.map((anchor) => (
@@ -79,25 +79,6 @@ export default function BlogTOC({ anchors }) {
             </div>
           ))}
         </nav>
-
-        {/* Scroll hint arrow */}
-        {!atBottom && (
-          <div className="absolute bottom-2 left-0 -translate-x-1/2 pointer-events-none opacity-70">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="var(--mesm-grey)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-chevron-down"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-        )}
       </div>
     </>
   );

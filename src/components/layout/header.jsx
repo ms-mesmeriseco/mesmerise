@@ -258,9 +258,7 @@ export default function Header() {
       {/* Mobile sticky CTA — landing pages only */}
       {isLanding && scrolledEnough && (
         <div
-          className={`fixed left-0 right-0 z-[299] md:hidden px-10 pb-6 ${
-            showToolsBanner ? "bottom-10" : "bottom-0"
-          }`}
+          className="fixed left-0 right-0 z-[299] md:hidden px-10 pb-6 bottom-[var(--tools-banner-h,0px)] transition-[bottom] duration-500 ease-out"
         >
           <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
             <Button size="x-large" variant="CTA" href="tel:0477210477">

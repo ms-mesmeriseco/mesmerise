@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { CTA } from "@/lib/quiz/quizData";
@@ -53,6 +53,16 @@ export default function ReviewCta({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [sent, setSent] = useState(false);
+
+  // The floating "Book my strategy session" button links to #review: open the form too
+  useEffect(() => {
+    const openOnHash = () => {
+      if (window.location.hash === "#review") setOpen(true);
+    };
+    openOnHash();
+    window.addEventListener("hashchange", openOnHash);
+    return () => window.removeEventListener("hashchange", openOnHash);
+  }, []);
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
@@ -128,10 +138,28 @@ export default function ReviewCta({
       ) : (
         <div className="flex flex-col gap-6">
           <h5 className="uppercase">{COPY.eyebrow}</h5>
-          <h2>{COPY.headline}</h2>
-          {COPY.body.map((p) => (
-            <p key={p}>{p}</p>
-          ))}
+          {open && COPY.form.headline ? (
+            <>
+              <h2>{COPY.form.headline}</h2>
+              <ul className="flex flex-col gap-2 !m-0">
+                {COPY.form.ticks?.map((t) => (
+                  <li key={t} className="flex items-baseline gap-3">
+                    <span aria-hidden="true" className="text-[#86ef7d]">
+                      ✓
+                    </span>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <>
+              <h2>{COPY.headline}</h2>
+              {COPY.body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </>
+          )}
 
           <AnimatePresence initial={false} mode="wait">
             {!open ? (
@@ -233,7 +261,13 @@ export default function ReviewCta({
                 >
                   {submitting ? "Sending..." : COPY.form.submit}
                 </button>
-                <p className="text-sm text-[var(--mesm-l-grey)] text-center">
+                <p
+                  className={`text-sm text-[var(--mesm-l-grey)] ${
+                    COPY.form.microcopyAlign === "left"
+                      ? "text-left"
+                      : "text-center"
+                  }`}
+                >
                   <em>{COPY.form.microcopy}</em>
                 </p>
                 {error && (

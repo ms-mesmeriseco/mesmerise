@@ -44,6 +44,9 @@ export default function SimpleFooter() {
         </ul>
       </div>
 
+      {/* Keeps the socials clear of the sticky tools banner */}
+      <div aria-hidden="true" className="h-[var(--tools-banner-space,0px)]" />
+
       <style jsx global>{`
         .footer-link {
           position: relative;
