@@ -140,9 +140,11 @@ function DesktopNav({ pathname }) {
 
 const HIDDEN_PATHS = ["/join", "/growth-leak-audit", "/cmo-benchmark"];
 
-// The tools bar is skipped on the gateway itself and on the quizzes, whose
-// results pages have their own floating CTA
+// The tools bar is skipped on the gateway itself, on the quizzes, whose
+// results pages have their own floating CTA, and on blog posts, where it
+// would clash with the reading progress bar
 const NO_TOOLS_BANNER = ["/tools/start", "/growth-leak-audit", "/cmo-benchmark"];
+const isBlogPost = (pathname) => pathname.startsWith("/blog/");
 
 export default function Header() {
   const pathname = usePathname() || "/";
@@ -186,9 +188,9 @@ export default function Header() {
   }, []);
 
   if (HIDDEN_PATHS.includes(pathname)) return null;
-  const showToolsBanner = !NO_TOOLS_BANNER.some(
-    (p) => pathname === p || pathname.startsWith(`${p}/`),
-  );
+  const showToolsBanner =
+    !isBlogPost(pathname) &&
+    !NO_TOOLS_BANNER.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 
   return (
     <>
