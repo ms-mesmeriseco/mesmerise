@@ -41,13 +41,13 @@ const GATEWAY_BENTO = {
     pt("g1h", "C-suite, executives & chief marketing officers", "h3"),
     pt(
       "g1p",
-      "Benchmark your marketing function across eight areas and leave with three priorities, plus the business case for each.",
+      "Benchmark your marketing across eight areas and leave with three priorities, plus the business case for each.",
     ),
   ],
   ctaLink1: "/cmo-benchmark",
   linkLabel1: "Marketing Leadership Benchmark · 7 minutes",
   ctaBox2: [
-    pt("g2h", "Small to medium business owners", "h3"),
+    pt("g2h", "Small to medium-sized business owners", "h3"),
     pt(
       "g2p",
       "Find out exactly where your marketing is leaking and which fixes will win back the most revenue.",

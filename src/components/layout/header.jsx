@@ -6,6 +6,7 @@ import Link from "next/link";
 import HeroButton from "../ui/HeroButton";
 import Button from "../ui/Button";
 import MobileMenu from "../ui/MobileMenu";
+import ToolsBanner from "./ToolsBanner";
 
 export const NAV_ITEMS = [
   {
@@ -139,6 +140,10 @@ function DesktopNav({ pathname }) {
 
 const HIDDEN_PATHS = ["/join", "/growth-leak-audit", "/cmo-benchmark"];
 
+// The tools bar is skipped on the gateway itself and on the quizzes, whose
+// results pages have their own floating CTA
+const NO_TOOLS_BANNER = ["/tools/start", "/growth-leak-audit", "/cmo-benchmark"];
+
 export default function Header() {
   const pathname = usePathname() || "/";
   const headerRef = useRef(null);
@@ -181,6 +186,9 @@ export default function Header() {
   }, []);
 
   if (HIDDEN_PATHS.includes(pathname)) return null;
+  const showToolsBanner = !NO_TOOLS_BANNER.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
 
   return (
     <>
@@ -249,7 +257,11 @@ export default function Header() {
 
       {/* Mobile sticky CTA — landing pages only */}
       {isLanding && scrolledEnough && (
-        <div className="fixed bottom-0 left-0 right-0 z-[299] md:hidden px-10 pb-6">
+        <div
+          className={`fixed left-0 right-0 z-[299] md:hidden px-10 pb-6 ${
+            showToolsBanner ? "bottom-10" : "bottom-0"
+          }`}
+        >
           <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
             <Button size="x-large" variant="CTA" href="tel:0477210477">
               <span className="text-2xl">Speak to Simba</span>
@@ -257,6 +269,8 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {showToolsBanner && <ToolsBanner />}
     </>
   );
 }

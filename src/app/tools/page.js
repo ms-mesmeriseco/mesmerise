@@ -4,7 +4,6 @@ import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 import InView from "@/hooks/InView";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import HeroButton from "@/components/ui/HeroButton";
-import { AnimatedArrow } from "@/components/ui/Button";
 
 // Draft: kept out of search until the page is signed off
 export async function generateMetadata() {
@@ -32,13 +31,6 @@ export async function generateMetadata() {
 
 // Drop a background image into /public/assets/tools and set `image` to its path
 const TOOLS = [
-  // No cover yet: add /assets/tools-covers/cro-checklist.png and set `image`
-  {
-    href: "/cro-checklist",
-    title: "CRO Checklist",
-    image: "/assets/cro-checklist_1.png",
-    meta: ["15 minutes", "For anyone running paid ads"],
-  },
   {
     href: "/growth-leak-audit",
     title: "Growth Leak Audit",
@@ -51,12 +43,17 @@ const TOOLS = [
     image: "/assets/tools-covers/cmo-benchmark.png",
     meta: ["7 minutes", "For marketing leaders"],
   },
-  // No cover yet: add /assets/tools-covers/marketing-matrix.png and set `image`
   {
     href: "/marketing-matrix",
     title: "Marketing Matrix",
     image: "/assets/matrix-assets/marketing-matrix_graphic.png",
     meta: ["20-30 minutes", "For founders & leadership teams"],
+  },
+  {
+    href: "/cro-checklist",
+    title: "CRO Checklist",
+    image: "/assets/cro-checklist_1.png",
+    meta: ["15 minutes", "For anyone running paid ads"],
   },
 ];
 
@@ -64,7 +61,7 @@ function ToolCard({ href, title, image, meta }) {
   return (
     <Link
       href={href}
-      className="group relative flex flex-col justify-end md:aspect-[16/9] aspect-[5/4] overflow-hidden rounded-lg border-1 border-[var(--mesm-grey)] hover:border-[var(--mesm-grey)] duration-200 bg-[var(--accent2)]/20"
+      className="group relative flex flex-col justify-end md:aspect-[16/9] aspect-[5/4] overflow-hidden rounded-lg border-1 border-[var(--mesm-grey)] hover:border-[var(--mesm-grey)] duration-200 bg-[var(--accent2)]/10"
     >
       {image && (
         <Image
@@ -77,7 +74,7 @@ function ToolCard({ href, title, image, meta }) {
       )}
 
       {/* Shade the bottom so the meta text stays readable on any image */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-black/0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 via-35% to-black/0 to-70%" />
 
       <div className="relative flex items-end justify-between gap-4 p-4 md:p-6">
         <div className="flex flex-col items-start gap-2">
@@ -100,34 +97,14 @@ function ToolCard({ href, title, image, meta }) {
 function FinalCTA({ text }) {
   return (
     <InView>
-      <section className="flex flex-col justify-center text-[var(--foreground)] min-h-screen py-24 text-center items-center gap-12">
+      <section className="flex flex-col justify-center text-[var(--foreground)] min-h-[80vh] py-24 text-center items-center gap-12">
         <StaggeredWords as="h3" text={text} className="page-title-large" />
 
         <HeroButton size="lg" href="/connect">
-          <span className="page-title-small">Let's Talk</span>
+          <span className="page-title-small">Let's connect</span>
         </HeroButton>
       </section>
     </InView>
-  );
-}
-
-// Banner pinned to the bottom of the screen, styled like the header promo
-function GatewayBanner() {
-  return (
-    <div className="fixed bottom-0 left-0 right-0 z-[298]">
-      <Link
-        href="/tools/start"
-        className="group flex items-center justify-center gap-3 rounded-t-xl md:rounded-t-2xl px-3 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]
-                   bg-[var(--accent)] text-[var(--background)] text-sm md:text-lg
-                   hover:bg-[var(--accent-l)] transition-colors duration-200"
-      >
-        <span>Not sure which tool fits?</span>
-        <span className="inline-flex items-center underline">
-          Find the right one for you
-          <AnimatedArrow />
-        </span>
-      </Link>
-    </div>
   );
 }
 
@@ -149,9 +126,7 @@ export default function Tools() {
         ))}
       </div>
 
-      <FinalCTA text="Premium full service solutions, engineered with insight. Delivered with intent."></FinalCTA>
-
-      <GatewayBanner />
+      <FinalCTA text="Become undeniable"></FinalCTA>
     </section>
   );
 }
