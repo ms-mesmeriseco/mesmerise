@@ -74,7 +74,7 @@ export default function BlogPostCard({ post }) {
           )}
         </div>
         <div className="flex items-end justify-between gap-2">
-          <div className="pointer-events-none">
+          <div className="pointer-events-none tracking-wider">
             <BlogServiceTags tags={post.serviceTags} max={2} />
           </div>
           {/* Date */}

@@ -74,7 +74,7 @@ function ToolCard({ href, title, image, meta }) {
       )}
 
       {/* Shade the bottom so the meta text stays readable on any image */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 via-35% to-black/0 to-70%" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/100 via-black/70 via-35% to-black/0 to-70%" />
 
       <div className="relative flex items-end justify-between gap-4 p-4 md:p-6">
         <div className="flex flex-col items-start gap-2">
@@ -83,7 +83,10 @@ function ToolCard({ href, title, image, meta }) {
           </span>
           <ul className="flex flex-wrap gap-x-6 py-4 no-list">
             {meta.map((item) => (
-              <li key={item} className="text-sm text-white/80 no-list px-2">
+              <li
+                key={item}
+                className="text-sm text-white/60 no-list px-2  group-hover:text-white/100 duration-200 tracking-wider"
+              >
                 {item}
               </li>
             ))}

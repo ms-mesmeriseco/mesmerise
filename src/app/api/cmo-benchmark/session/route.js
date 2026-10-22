@@ -168,7 +168,7 @@ async function sendRequest({
     to: [contactTo, secondContact, debugContact].filter(Boolean),
     from: contactFrom,
     replyTo: email,
-    subject: `${hot ? "HOTTEST LEAD · " : ""}CMO Benchmark session request: ${name}${company ? ` (${company})` : ""}${score ? ` · ${score}` : ""}`,
+    subject: `${hot ? "🌶️ HOTTEST LEAD · " : ""}CMO Benchmark session request: ${name}${company ? ` (${company})` : ""}${score ? ` · ${score}` : ""}`,
     html,
   });
   if (result?.error) throw new Error(result.error.message || "Resend error");

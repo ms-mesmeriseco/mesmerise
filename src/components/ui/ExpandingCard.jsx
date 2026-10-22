@@ -37,7 +37,7 @@ export default function ExpandingCard({
               className="object-contain"
             />
           )}
-          <span className="">{title}</span>
+          <span className="tracking-wider">{title}</span>
         </div>
         {expansionIcon?.url ? (
           <Image

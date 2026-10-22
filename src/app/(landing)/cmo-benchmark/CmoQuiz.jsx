@@ -3,9 +3,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  PILLARS,
+  pillarsFor,
   H1,
-  H2,
+  h2For,
+  industriesFor,
   H3,
   questionsFor,
   QUALIFICATION_INTRO,
@@ -31,16 +32,17 @@ const isHook = (q) => q.id.startsWith("H");
 
 // A section marker on every screen in place of a bare count
 function buildSteps(track) {
+  const pillars = pillarsFor(track);
   const question = (q, section) => ({ type: "question", q, section });
   return [
     question(H1, HOOK_SECTION),
-    question(H2, HOOK_SECTION),
+    question(h2For(track), HOOK_SECTION),
     question(H3, HOOK_SECTION),
     ...questionsFor(track).map((q) => {
-      const i = PILLARS.findIndex((p) => p.key === q.pillar);
+      const i = pillars.findIndex((p) => p.key === q.pillar);
       return question(
         q,
-        `Section ${i + 1} of ${PILLARS.length}: ${PILLARS[i].label}`,
+        `Section ${i + 1} of ${pillars.length}: ${pillars[i].label}`,
       );
     }),
     { type: "transition", section: QUAL_SECTION },
@@ -124,7 +126,15 @@ export default function CmoQuiz({ initial, onExit } = {}) {
 
   function selectSingle(q, option, index) {
     const value = isHook(q) ? option.value : index;
-    setAnswers((a) => ({ ...a, [q.id]: value }));
+    setAnswers((a) => {
+      const next = { ...a, [q.id]: value };
+      // The industry list changes with H1, so drop an industry that isn't on the new list
+      if (q.id === "H1" && a.H2 && !industriesFor(value).includes(a.H2)) {
+        delete next.H2;
+        delete next.H2_other;
+      }
+      return next;
+    });
     clearTimeout(advanceTimer.current);
     // "Other" waits for the optional text field and Continue
     if (option.other) return;

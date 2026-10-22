@@ -10,12 +10,24 @@ export const PILLARS = [
   },
   { key: "acquisition", weight: 0.15, label: "Acquisition strategy" },
   { key: "conversion", weight: 0.15, label: "Website & conversion" },
-  { key: "data", weight: 0.15, label: "Data, CRM & martech" },
+  {
+    key: "data",
+    weight: 0.15,
+    label: "Data, CRM & martech",
+    ecomLabel: "Customer data & martech",
+  },
   { key: "content", weight: 0.1, label: "Content strategy" },
   { key: "positioning", weight: 0.1, label: "Positioning & brand" },
   { key: "budget", weight: 0.1, label: "Budget allocation" },
   { key: "team", weight: 0.1, label: "Team & partners" },
 ];
+
+// Pillar labels for the business type (only the data pillar changes for ecom)
+export function pillarsFor(track) {
+  return PILLARS.map((p) =>
+    p.ecomLabel && track === "ecom" ? { ...p, label: p.ecomLabel } : p,
+  );
+}
 
 export const PILLAR_LABELS = Object.fromEntries(
   PILLARS.map((p) => [p.key, p.label]),
@@ -161,19 +173,48 @@ export const INDUSTRIES = [
   "Other",
 ];
 
+export const ECOM_INDUSTRIES = [
+  "Fashion & apparel",
+  "Beauty & skincare",
+  "Health & supplements",
+  "Home & living",
+  "Food & beverage",
+  "Sports & fitness",
+  "Jewellery & accessories",
+  "Pets",
+  "Kids & baby",
+  "Other",
+];
+
+// Industry list for the business type: ecom gets its own list, a mix gets the
+// services list with "Ecommerce / retail" in place of "Retail & consumer"
+export function industriesFor(track) {
+  if (track === "ecom") return ECOM_INDUSTRIES;
+  if (track === "mix") {
+    return INDUSTRIES.map((i) =>
+      i === "Retail & consumer" ? "Ecommerce / retail" : i,
+    );
+  }
+  return INDUSTRIES;
+}
+
 export const OTHER_MAX_LENGTH = 50;
 
 export const H2 = {
   id: "H2",
   question: "What industry are you in?",
-  // "Other" opens an optional text field, saved as H2_other
-  options: INDUSTRIES.map((label) => ({
+  otherPlaceholder: "Type your industry (optional)",
+};
+
+// "Other" opens an optional text field, saved as H2_other
+export const h2For = (track) => ({
+  ...H2,
+  options: industriesFor(track).map((label) => ({
     value: label,
     label,
     other: label === "Other",
   })),
-  otherPlaceholder: "Type your industry (optional)",
-};
+});
 
 export const H3 = {
   id: "H3",
@@ -429,6 +470,18 @@ export const QUESTIONS = [
       o("Mostly reliable, with known gaps", 2),
       o("We don't trust it, or I'm not sure", 0),
     ],
+    ecom: {
+      question: "How do you use customer data to drive repeat purchases?",
+      options: [
+        o("Mostly the same emails to everyone", 0),
+        o(
+          "Flows built on purchase history, e.g. post-purchase, replenishment, win-back",
+          3,
+        ),
+        o("The basics, like welcome & abandoned cart", 1),
+        o("Some segmentation, but mostly one-off campaign sends", 2),
+      ],
+    },
   },
   {
     id: "CM14",
@@ -440,6 +493,18 @@ export const QUESTIONS = [
       o("Stages get updated, but loss reasons are hit and miss", 2),
       o("Only when we chase them", 1),
     ],
+    ecom: {
+      question: "Do you know your customer lifetime value by acquisition channel?",
+      options: [
+        o(
+          "Yes, by channel & cohort, and it shapes how we allocate budget",
+          3,
+        ),
+        o("No, or I'm not sure", 0),
+        o("Only a single overall figure", 1),
+        o("Roughly, by channel, but we don't act on it much", 2),
+      ],
+    },
   },
   {
     id: "CM15",
@@ -454,6 +519,22 @@ export const QUESTIONS = [
       o("Some integrations, plenty of manual exports", 1),
       o("Mostly manual, or not sure", 0),
     ],
+    ecom: {
+      question:
+        "How well are your store, email platform & ad platforms connected?",
+      options: [
+        o(
+          "Fully. Purchase data, including new vs returning customers, feeds back to the ad platforms server-side",
+          3,
+        ),
+        o(
+          "Store and email are synced, ad platforms run on the standard pixel",
+          2,
+        ),
+        o("Some integrations, plenty of manual exports", 1),
+        o("Mostly manual, or not sure", 0),
+      ],
+    },
   },
   {
     id: "CM16",
@@ -539,6 +620,15 @@ export const QUESTIONS = [
       o("Most of the time", 0),
       o("Often, in competitive deals", 1),
     ],
+    ecom: {
+      question: "How much of your revenue relies on discounts or sale events?",
+      options: [
+        o("Very little. Most customers buy at full price", 3),
+        o("Most of it. Sales drop when we're not running a promo", 0),
+        o("A big chunk. We run promos most months", 1),
+        o("Some, mostly around key moments like Black Friday & EOFY", 2),
+      ],
+    },
   },
 
   // Pillar 7: Budget allocation
@@ -597,11 +687,15 @@ export const QUESTIONS = [
   },
 ];
 
-// Question text for the business type (only CM20 changes)
+// Question text for the business type: CM20 changes for everyone but B2B, and
+// ecom swaps CM13 to CM15 and CM21. IDs stay the same, so scoring and HubSpot
+// properties are shared across tracks.
 export function questionsFor(track) {
-  return QUESTIONS.map((q) =>
-    q.questionAlt && track !== "b2b" ? { ...q, question: q.questionAlt } : q,
-  );
+  return QUESTIONS.map(({ ecom, ...q }) => {
+    if (ecom && track === "ecom") return { ...q, ...ecom, variant: "ecom" };
+    if (q.questionAlt && track !== "b2b") return { ...q, question: q.questionAlt };
+    return q;
+  });
 }
 
 // Short labels for the lead email and HubSpot answer summary. Call openers
@@ -619,15 +713,18 @@ export const QUESTION_META = {
   CM10: { label: "Conversion rate visibility" },
   CM11: { label: "Campaign landing pages" },
   CM12: { label: "Improving conversion" },
-  CM13: { label: "CRM hygiene" },
-  CM14: { label: "Sales CRM updates" },
-  CM15: { label: "CRM integration" },
+  CM13: { label: "CRM hygiene", ecomLabel: "Repeat purchase flows" },
+  CM14: { label: "Sales CRM updates", ecomLabel: "LTV by channel" },
+  CM15: { label: "CRM integration", ecomLabel: "Store, email & ad integration" },
   CM16: { label: "Single customer view" },
   CM17: { label: "How content wins customers" },
   CM18: { label: "Leaders as market voices" },
   CM19: { label: "AI search visibility" },
   CM20: { label: "Team on what makes you different" },
-  CM21: { label: "Deals coming down to price" },
+  CM21: {
+    label: "Deals coming down to price",
+    ecomLabel: "Reliance on discounts",
+  },
   CM22: { label: "How budget is set" },
   CM23: { label: "Number governing paid spend" },
   CM24: { label: "Team capacity" },
@@ -635,7 +732,8 @@ export const QUESTION_META = {
 };
 
 // Insight library, keyed by question ID + option letter (A = first option), for
-// every answer worth 0 or 1 point: { read, told, firstMove, opener }. `read` goes
+// every answer worth 0 or 1 point: { read, told, firstMove, opener }. Ecom swaps
+// have their own answers, so they're keyed e.g. CM13_ecom_A. `read` goes
 // in the lead email; `told` and `firstMove` on the priority card (the first move
 // comes from the pillar's weakest answer). To be written once the draft is signed
 // off; cards and emails skip any line that's missing.
@@ -643,7 +741,8 @@ export const INSIGHTS = {};
 
 export function insightFor(question, answer, points) {
   if (points === null || points > 1) return null;
-  return INSIGHTS[`${question.id}_${String.fromCharCode(65 + answer)}`] || null;
+  const id = question.variant ? `${question.id}_${question.variant}` : question.id;
+  return INSIGHTS[`${id}_${String.fromCharCode(65 + answer)}`] || null;
 }
 
 // ── Stage 3: Qualification (fit score, hidden) ─────────────────────────────

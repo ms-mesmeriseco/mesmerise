@@ -17,7 +17,6 @@ import {
   H1,
   H2,
   H3,
-  PILLARS,
   QUALIFICATION_QUESTIONS,
   NO_PRIORITIES_MESSAGE,
   CTA,
@@ -266,7 +265,7 @@ async function sendLeadEmail(
   const { overall, tier, fitScore, fitBand, pillars, priorities } = results;
   const band = hotLead ? "HOTTEST LEAD" : `${fitBand} fit`;
   const industry = industryLabel(answers) || "-";
-  const subject = `CMO Benchmark · ${band}: ${company} · ${industry} · ${overall}/100 ${tier.name} · Fit ${fitScore}`;
+  const subject = `${hotLead ? "🌶️ " : ""}CMO Benchmark · ${band}: ${company} · ${industry} · ${overall}/100 ${tier.name} · Fit ${fitScore}`;
   const hubspotUrl = await hubspotContactUrl(contactId).catch(() => null);
 
   const h = (title) =>
@@ -344,7 +343,7 @@ async function sendLeadEmail(
       qa(null, H2.question, industryLabel(answers)),
       qa(null, H3.question, pressureLabel(answers)),
     ]),
-    ...PILLARS.map((p) =>
+    ...results.pillars.map((p) =>
       group(
         p.label,
         results.answers

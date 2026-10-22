@@ -46,7 +46,7 @@ export default function AuthorCard({
           />
         )}
         {author?.name && (
-          <div className="flex flex-col">
+          <div className="flex flex-col tracking-wide">
             <div className="flex items-center text-md text-[var(--mesm-l-grey)] font-400">
               {author.name}
             </div>
@@ -74,7 +74,7 @@ export default function AuthorCard({
       )}
       {/* Tags */}
       {visibleTags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex flex-wrap items-center gap-1 tracking-wider">
           {visibleTags.map((tag) => (
             <Link
               key={tag._id}
@@ -89,7 +89,7 @@ export default function AuthorCard({
 
       {/* Date / reading time (currently unused — left commented in original) */}
       {showBlogDetails && (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 tracking-wider">
           {(date || readingTime) && (
             <div className="flex items-center gap-2 text-sm text-[var(--mesm-l-grey)] font-light">
               {date && <span>{date}</span>}

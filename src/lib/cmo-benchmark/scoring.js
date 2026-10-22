@@ -1,5 +1,5 @@
 import {
-  PILLARS,
+  pillarsFor,
   TIERS,
   H1,
   H3,
@@ -51,7 +51,7 @@ export function scoreQuestion(question, answer) {
 }
 
 // One record per benchmark question: IDs, text and points, plus the library lines
-function recordAnswer(question, answer) {
+function recordAnswer(question, answer, track) {
   const picks = question.multi
     ? (Array.isArray(answer) ? answer : []).filter((i) => question.options[i])
     : question.options[answer]
@@ -66,7 +66,10 @@ function recordAnswer(question, answer) {
     questionId: question.id,
     pillar: question.pillar,
     question: question.question,
-    label: QUESTION_META[question.id]?.label || question.question,
+    label:
+      (track === "ecom" && QUESTION_META[question.id]?.ecomLabel) ||
+      QUESTION_META[question.id]?.label ||
+      question.question,
     answerId: picks.length
       ? `${question.id}_${picks.map(letter).join("+")}`
       : null,
@@ -99,10 +102,10 @@ export function fitBandFor(fit) {
 export function computeResults(answers) {
   const track = answers.H1;
   const questions = questionsFor(track);
-  const records = questions.map((q) => recordAnswer(q, answers[q.id]));
+  const records = questions.map((q) => recordAnswer(q, answers[q.id], track));
   const scored = records.filter((r) => r.points !== null);
 
-  const pillars = PILLARS.map((p, order) => {
+  const pillars = pillarsFor(track).map((p, order) => {
     const own = scored.filter((r) => r.pillar === p.key);
     const earned = own.reduce((sum, r) => sum + r.points, 0);
     const available = own.length * 3;
