@@ -47,6 +47,7 @@ export const MOB_NAV_ITEMS = [
     ],
   },
   { label: "Work", href: "/work" },
+  { label: "Tools", href: "/tools" },
   {
     label: "Collaborate",
     href: "/collaboration",
@@ -142,7 +143,16 @@ const HIDDEN_PATHS = ["/join", "/growth-leak-audit", "/cmo-benchmark"];
 
 // The tools bar is skipped on the gateway itself and on the quizzes, whose
 // results pages have their own floating CTA
-const NO_TOOLS_BANNER = ["/tools/start", "/growth-leak-audit", "/cmo-benchmark"];
+const NO_TOOLS_BANNER = [
+  "/tools/start",
+  "/growth-leak-audit",
+  "/cmo-benchmark",
+];
+
+const QUIZ_RESULTS_PREFIXES = [
+  "/growth-leak-audit/results",
+  "/cmo-benchmark/results",
+];
 
 export default function Header() {
   const pathname = usePathname() || "/";
@@ -161,6 +171,10 @@ export default function Header() {
   ];
   const isLanding = !KNOWN_PREFIXES.some(
     (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
+  // Quiz results pages have their own floating CTA, so skip "Speak to Simba"
+  const isQuizResults = QUIZ_RESULTS_PREFIXES.some((p) =>
+    pathname.startsWith(p),
   );
 
   // Single scroll listener for both needs
@@ -256,10 +270,8 @@ export default function Header() {
       </header>
 
       {/* Mobile sticky CTA — landing pages only */}
-      {isLanding && scrolledEnough && (
-        <div
-          className="fixed left-0 right-0 z-[299] md:hidden px-10 pb-6 bottom-[var(--tools-banner-h,0px)] transition-[bottom] duration-500 ease-out"
-        >
+      {isLanding && !isQuizResults && scrolledEnough && (
+        <div className="fixed left-0 right-0 z-[299] md:hidden px-10 pb-6 bottom-[var(--tools-banner-h,0px)] transition-[bottom] duration-500 ease-out">
           <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
             <Button size="x-large" variant="CTA" href="tel:0477210477">
               <span className="text-2xl">Speak to Simba</span>

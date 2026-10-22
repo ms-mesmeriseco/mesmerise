@@ -109,8 +109,8 @@ export function fitBandFor(fit) {
 }
 
 /**
- * answers: { H1, H2, H3, [questionId]: optionIndex | optionIndex[], LG6_other,
- *            EC6_other, Q1..Q5: optionIndex }
+ * answers: { H1, H2, H2_other, H3, [questionId]: optionIndex | optionIndex[],
+ *            LG6_other, EC6_other, Q1..Q5: optionIndex }
  */
 export function computeResults(answers) {
   const track = answers.H1;
@@ -197,9 +197,13 @@ export const channelsOther = (answers) =>
 // Only the answer keys the quiz uses (drops anything else the client sent),
 // with the free-text fields trimmed to length
 export function pickAnswers(answers) {
-  const otherKeys = questionsForTrack(answers.H1)
-    .filter((q) => q.options.some((o) => o.other))
-    .map((q) => `${q.id}_other`);
+  const otherKeys = [
+    // Typed industry only counts while "Other" is still the pick
+    ...(answers.H2 === "Other" ? ["H2_other"] : []),
+    ...questionsForTrack(answers.H1)
+      .filter((q) => q.options.some((o) => o.other))
+      .map((q) => `${q.id}_other`),
+  ];
   const keys = [
     "H1",
     "H2",

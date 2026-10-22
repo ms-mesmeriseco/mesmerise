@@ -204,12 +204,19 @@ const ECOM_INDUSTRIES = [
   "Other",
 ];
 
+// "Other" opens a required text field, saved as H2_other
 export function industryQuestion(track) {
   const list = track === "leadgen" ? LEADGEN_INDUSTRIES : ECOM_INDUSTRIES;
   return {
     id: "H2",
     question: "What industry are you in?",
-    options: list.map((label) => ({ value: label, label })),
+    options: list.map((label) =>
+      label === "Other"
+        ? { value: label, label, other: true }
+        : { value: label, label },
+    ),
+    otherPlaceholder: "Type your industry",
+    otherRequired: true,
   };
 }
 
@@ -787,7 +794,8 @@ export const QUESTION_META = {
   },
 };
 
-// Typed "Other" channels (LG6_other / EC6_other), trimmed to this length
+// Typed "Other" channels (LG6_other / EC6_other) and industry (H2_other),
+// trimmed to this length
 export const OTHER_MAX_LENGTH = 50;
 
 // Lines for every answer worth 0 or 1 point. Keys match the library: question
@@ -1171,7 +1179,7 @@ export const QUALIFICATION_QUESTIONS = [
   {
     id: "Q4",
     key: "timeline",
-    question: "When are you looking to make changes?",
+    question: "What's made you look at your marketing now?",
     options: [
       o("Now, it's a priority", 15),
       o("In the next 3 months", 10),

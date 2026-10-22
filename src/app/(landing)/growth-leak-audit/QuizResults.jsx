@@ -334,7 +334,7 @@ function FloatingCta({ targetId, href, label }) {
         aria-hidden={hidden || undefined}
         className={[
           "group inline-flex items-center justify-center w-full md:w-auto h-[52px] px-7 rounded-full",
-          "bg-[#86ef7d] text-black text-xl leading-tight whitespace-nowrap shadow-lg shadow-black/30",
+          "bg-[var(--mesm-fluoro)] text-black text-xl leading-tight whitespace-nowrap shadow-lg shadow-black/30",
           "hover:brightness-95 duration-200",
           hidden ? "pointer-events-none" : "pointer-events-auto",
         ].join(" ")}

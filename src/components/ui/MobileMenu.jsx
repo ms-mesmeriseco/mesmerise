@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Button from "./Button";
+import HeroButton from "./HeroButton";
 
 export default function MobileMenu({ items = [], pathname }) {
   const [open, setOpen] = useState(false);
@@ -118,9 +118,9 @@ export default function MobileMenu({ items = [], pathname }) {
             })}
           </ul>
 
-          <Button href="/connect" variant="CTA" size="large">
-            Connect
-          </Button>
+          <HeroButton extraClass="min-w-[100%]" href="/connect">
+            Let's connect
+          </HeroButton>
         </nav>
       )}
     </div>

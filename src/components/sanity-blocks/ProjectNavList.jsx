@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import ServiceTags from "../services/ServiceTags";
@@ -106,6 +106,7 @@ export default function ProjectNavigationList({
   const [selectedLabel, setSelectedLabel] = useState(null); // one of FILTER_MAP keys
   const [selectedRaw, setSelectedRaw] = useState(null); // a real tag slug/title
   const [hoveredProject, setHoveredProject] = useState(null);
+  const previewRef = useRef(null);
 
   // alias/title -> label (for quick filters)
   const aliasToLabel = useMemo(() => {
@@ -240,6 +241,44 @@ export default function ProjectNavigationList({
     router.push(`/work?tag=${encodeURIComponent(slug)}`);
   };
 
+  // The preview is pinned to the bottom of the screen, above the tools banner
+  // when it's showing; once the footer scrolls up past the banner, lift it by
+  // the footer's visible height so it rides up above it
+  useEffect(() => {
+    if (!showPreview) return;
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+
+    let frame = null;
+    function update() {
+      frame = null;
+      const banner =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--tools-banner-h",
+          ),
+        ) || 0;
+      const overlap = Math.max(
+        0,
+        window.innerHeight - banner - footer.getBoundingClientRect().top,
+      );
+      if (previewRef.current)
+        previewRef.current.style.transform = `translateY(${-overlap}px)`;
+    }
+    function onScroll() {
+      if (frame === null) frame = requestAnimationFrame(update);
+    }
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame !== null) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [showPreview]);
+
   // Framer Motion variants
   const container = {
     hidden: { opacity: 0 },
@@ -368,7 +407,10 @@ export default function ProjectNavigationList({
       </AnimatePresence>
 
       {/* Hover preview (desktop only) */}
-      <div className="hidden md:block">
+      <div
+        ref={previewRef}
+        className="hidden md:block fixed bottom-[calc(1.5rem+var(--tools-banner-h,0px))] right-6 z-50 transition-[bottom] duration-500 ease-out motion-reduce:transition-none"
+      >
         <AnimatePresence>
           {showPreview && hoveredProject?.heroMedia?.url && (
             <motion.div
@@ -377,7 +419,8 @@ export default function ProjectNavigationList({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
-              className="fixed bottom-6 right-6 z-50 w-[360px] overflow-hidden bg-[var(--background)] shadow-lg"
+              // Absolute so outgoing and incoming previews overlap while they cross-fade
+              className="absolute bottom-0 right-0 w-[360px] overflow-hidden bg-[var(--background)] shadow-lg"
               style={{ aspectRatio: "3 / 2" }}
             >
               <div className="relative h-full w-full">
