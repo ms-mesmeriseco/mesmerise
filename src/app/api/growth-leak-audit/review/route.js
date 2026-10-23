@@ -18,8 +18,6 @@ const resend = resendApiKey ? new Resend(resendApiKey) : null;
 const contactTo = process.env.CONTACT_TO;
 const secondContact = process.env.SECOND_CONTACT;
 const contactFrom = process.env.CONTACT_FROM;
-// Extra recipient while debugging the quiz (matches the lead email)
-const DEBUG_CONTACT = "matilda@mesmeriseco.com";
 
 // Growth Leak Review request from the CTA at the base of the results page
 export async function POST(req) {
@@ -161,7 +159,7 @@ async function sendRequest({
   `;
 
   const result = await resend.emails.send({
-    to: [contactTo, secondContact, DEBUG_CONTACT].filter(Boolean),
+    to: [contactTo, secondContact].filter(Boolean),
     from: contactFrom,
     replyTo: email,
     subject: `Growth Leak Review request: ${name}${company ? ` (${company})` : ""}${score ? ` · ${score}` : ""}`,
