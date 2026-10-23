@@ -1181,10 +1181,10 @@ export const QUALIFICATION_QUESTIONS = [
     key: "timeline",
     question: "What's made you look at your marketing now?",
     options: [
-      o("Now, it's a priority", 15),
-      o("In the next 3 months", 10),
-      o("Later this year", 5),
-      o("Just exploring", 0),
+      o("Results have dropped or stalled", 15),
+      o("We're planning a growth push or launch", 10),
+      o("Budget or planning season is coming up", 10),
+      o("Just curious", 0),
     ],
   },
   {
