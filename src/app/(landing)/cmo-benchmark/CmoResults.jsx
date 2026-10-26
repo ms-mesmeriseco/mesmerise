@@ -173,6 +173,14 @@ export default function CmoResults({
                     {joinTold(p.told.slice(0, 2))}
                   </p>
                 )}
+                {p.why && (
+                  <p>
+                    <span className="text-[var(--foreground)]">
+                      Why it matters:
+                    </span>{" "}
+                    {p.why}
+                  </p>
+                )}
                 <p>
                   <span className="text-[var(--foreground)]">
                     The business case:

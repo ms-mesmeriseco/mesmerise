@@ -488,6 +488,12 @@ const ReportPdf = forwardRef(function ReportPdf(
                       {joinTold(p.told.slice(0, 2))}
                     </div>
                   )}
+                  {p.why && (
+                    <div>
+                      <span style={{ color: C.fg }}>Why it matters:</span>{" "}
+                      {p.why}
+                    </div>
+                  )}
                   <div>
                     <span style={{ color: C.fg }}>The business case:</span>{" "}
                     {p.businessCase}

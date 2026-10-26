@@ -494,12 +494,10 @@ export const QUESTIONS = [
       o("Only when we chase them", 1),
     ],
     ecom: {
-      question: "Do you know your customer lifetime value by acquisition channel?",
+      question:
+        "Do you know your customer lifetime value by acquisition channel?",
       options: [
-        o(
-          "Yes, by channel & cohort, and it shapes how we allocate budget",
-          3,
-        ),
+        o("Yes, by channel & cohort, and it shapes how we allocate budget", 3),
         o("No, or I'm not sure", 0),
         o("Only a single overall figure", 1),
         o("Roughly, by channel, but we don't act on it much", 2),
@@ -693,55 +691,485 @@ export const QUESTIONS = [
 export function questionsFor(track) {
   return QUESTIONS.map(({ ecom, ...q }) => {
     if (ecom && track === "ecom") return { ...q, ...ecom, variant: "ecom" };
-    if (q.questionAlt && track !== "b2b") return { ...q, question: q.questionAlt };
+    if (q.questionAlt && track !== "b2b")
+      return { ...q, question: q.questionAlt };
     return q;
   });
 }
 
-// Short labels for the lead email and HubSpot answer summary. Call openers
-// (from the lowest answer) are added here once the insight library is written.
+// Short labels for the lead email and HubSpot answer summary, and the call
+// opener used when the question holds the lead's lowest-scoring answer. Ecom
+// swaps have their own label and opener.
 export const QUESTION_META = {
-  CM1: { label: "Headline number to leadership" },
-  CM2: { label: "Leadership trust in the numbers" },
-  CM3: { label: "Impact of a 30% budget cut" },
-  CM4: { label: "Spend building demand" },
-  CM5: { label: "Acquisition cost at scale" },
-  CM6: { label: "Measuring brand impact" },
-  CM7: { label: "Share from biggest channel" },
-  CM8: { label: "Creative & messaging testing" },
+  CM1: {
+    label: "Headline number to leadership",
+    opener:
+      "When you walk into a board meeting, what's the one number you lead with, and does the CFO agree with it?",
+  },
+  CM2: {
+    label: "Leadership trust in the numbers",
+    opener:
+      "When marketing and finance each pull revenue numbers, how far apart are they?",
+  },
+  CM3: {
+    label: "Impact of a 30% budget cut",
+    opener:
+      "If the CFO asked tomorrow what a 30% cut would cost in revenue, what would you tell them?",
+  },
+  CM4: {
+    label: "Spend building demand",
+    opener:
+      "How much of next quarter's pipeline do you think already knows your name today?",
+  },
+  CM5: {
+    label: "Acquisition cost at scale",
+    opener:
+      "The last time you pushed more budget in, what happened to cost per acquisition in the first month?",
+  },
+  CM6: {
+    label: "Measuring brand impact",
+    opener:
+      "When brand activity runs, what's the first number you check to see if it worked?",
+  },
+  CM7: {
+    label: "Share from biggest channel",
+    opener:
+      "If your biggest channel doubled its costs next month, what would you do?",
+  },
+  CM8: {
+    label: "Creative & messaging testing",
+    opener:
+      "Which message has done the most for you this year, and how do you know?",
+  },
   CM9: { label: "Ad platforms" },
-  CM10: { label: "Conversion rate visibility" },
-  CM11: { label: "Campaign landing pages" },
-  CM12: { label: "Improving conversion" },
-  CM13: { label: "CRM hygiene", ecomLabel: "Repeat purchase flows" },
-  CM14: { label: "Sales CRM updates", ecomLabel: "LTV by channel" },
-  CM15: { label: "CRM integration", ecomLabel: "Store, email & ad integration" },
-  CM16: { label: "Single customer view" },
-  CM17: { label: "How content wins customers" },
-  CM18: { label: "Leaders as market voices" },
-  CM19: { label: "AI search visibility" },
-  CM20: { label: "Team on what makes you different" },
+  CM10: {
+    label: "Conversion rate visibility",
+    opener:
+      "Which landing page converts best for you right now, and which converts worst?",
+  },
+  CM11: {
+    label: "Campaign landing pages",
+    opener:
+      "Walk me through what someone sees after they click your best-performing ad.",
+  },
+  CM12: {
+    label: "Improving conversion",
+    opener:
+      "What's the last change you made to the website, and what did it do to conversion?",
+  },
+  CM13: {
+    label: "CRM hygiene",
+    ecomLabel: "Repeat purchase flows",
+    opener:
+      "If I pulled a report from your CRM right now, how much would you trust it?",
+    ecomOpener:
+      "What happens to a customer in the 30 days after their first order?",
+  },
+  CM14: {
+    label: "Sales CRM updates",
+    ecomLabel: "LTV by channel",
+    opener:
+      "When a deal is lost, where does the reason get recorded, and who reads it?",
+    ecomOpener: "Which channel brings you the customers who come back most?",
+  },
+  CM15: {
+    label: "CRM integration",
+    ecomLabel: "Store, email & ad integration",
+    opener:
+      "Do the ad platforms ever find out which leads turned into revenue?",
+    ecomOpener:
+      "Can the ad platforms tell a new customer from a returning one?",
+  },
+  CM16: {
+    label: "Single customer view",
+    opener:
+      "If you wanted to see everything a customer has done with you, how many tools would you open?",
+  },
+  CM17: {
+    label: "How content wins customers",
+    opener:
+      "Which piece of content has actually helped close a deal or a sale this year?",
+  },
+  CM18: {
+    label: "Leaders as market voices",
+    opener:
+      "Who in your leadership team has the strongest point of view, and where do people hear it?",
+  },
+  CM19: {
+    label: "AI search visibility",
+    opener:
+      "If someone asked ChatGPT for the best option in your category, would you be named?",
+  },
+  CM20: {
+    label: "Team on what makes you different",
+    opener:
+      "If I asked your newest salesperson why a customer should choose you, what would they say?",
+  },
   CM21: {
     label: "Deals coming down to price",
     ecomLabel: "Reliance on discounts",
+    opener:
+      "When you lose a deal on price, what do you think the buyer didn't see?",
+    ecomOpener:
+      "How many months last year did you hit target without a sale running?",
   },
-  CM22: { label: "How budget is set" },
-  CM23: { label: "Number governing paid spend" },
-  CM24: { label: "Team capacity" },
-  CM25: { label: "Agencies & partners" },
+  CM22: {
+    label: "How budget is set",
+    opener:
+      "How was this year's marketing budget decided, and who signed off on the number?",
+  },
+  CM23: {
+    label: "Number governing paid spend",
+    opener:
+      "What number would make you move budget from one channel to another tomorrow?",
+  },
+  CM24: {
+    label: "Team capacity",
+    opener:
+      "When did your team last have a week to work on strategy instead of execution?",
+  },
+  CM25: {
+    label: "Agencies & partners",
+    opener:
+      "What did your agency bring you last quarter that you didn't ask for?",
+  },
 };
 
 // Insight library, keyed by question ID + option letter (A = first option), for
-// every answer worth 0 or 1 point: { read, told, firstMove, opener }. Ecom swaps
-// have their own answers, so they're keyed e.g. CM13_ecom_A. `read` goes
-// in the lead email; `told` and `firstMove` on the priority card (the first move
-// comes from the pillar's weakest answer). To be written once the draft is signed
-// off; cards and emails skip any line that's missing.
-export const INSIGHTS = {};
+// every answer worth 0 or 1 point. Ecom swaps have their own answers, so they're
+// keyed e.g. CM13_ecom_A. CM9 isn't scored, so it has none.
+// read goes in the lead email; told and why go on the priority card.
+const ins = (read, told, why) => ({ read, told, why });
+
+export const INSIGHTS = {
+  // Pillar 1: Measurement & leadership confidence
+  CM1_A: ins(
+    "Reports activity, not revenue. Leadership can't connect spend to growth.",
+    "You report leads, traffic or engagement to leadership.",
+    "Activity numbers don't tell a CEO what marketing returns, so the budget is judged on cost alone.",
+  ),
+  CM1_D: ins(
+    "No consistent headline metric. Every report starts from scratch, and trust erodes.",
+    "Your headline number to leadership changes from report to report.",
+    "Without one consistent number, leadership can't track progress, and every meeting becomes a debate about the data.",
+  ),
+  CM2_B: ins(
+    "Sales and marketing numbers don't match. Credibility is leaking upward.",
+    "Sales and marketing tell different stories about results.",
+    "When the numbers don't line up, leadership believes neither, and marketing's budget is the easiest to question.",
+  ),
+  CM2_D: ins(
+    "Marketing seen as a cost centre. Budget is exposed in every downturn.",
+    "Leadership still sees marketing as a cost centre.",
+    "Cost centres get cut first. Until marketing is linked to revenue, the budget is always on the table.",
+  ),
+  CM3_B: ins(
+    "Can't model what a budget cut would cost. Will struggle to defend spend.",
+    "You've never modelled what revenue you'd lose if your budget were cut.",
+    "If you can't show what the budget earns, you can't protect your position.",
+  ),
+  CM3_D: ins(
+    "Knows it matters but can't quantify it. Defending budget on instinct.",
+    "You'd struggle to put a number on what a 30% cut would cost.",
+    "Budget conversations are won with numbers. Without one, the decision gets made on cost alone.",
+  ),
+
+  // Pillar 2: Acquisition strategy
+  CM4_A: ins(
+    "Nearly all spend on bottom of funnel. Fighting competitors for the same small pool.",
+    "Almost all your spend goes to people who are ready to buy today.",
+    "Ready-to-buy buyers are the smallest and most expensive part of the market. Acquisition costs skyrocket when bidding on the same audience as everyone else.",
+  ),
+  CM4_C: ins(
+    "Token brand spend. Not enough to build future demand.",
+    "Most of your spend chases ready-to-buy prospects, with a little brand activity.",
+    "A small brand budget rarely builds enough demand to lower acquisition costs. The pipeline stays capped at today's demand.",
+  ),
+  CM5_B: ins(
+    "CAC climbing every quarter. Demand isn't being replenished.",
+    "Your cost per acquisition rises steadily every quarter.",
+    "Rising costs usually mean you're running out of people who already know you. More spend speeds it up, not slows it down.",
+  ),
+  CM5_C: ins(
+    "Hits a ceiling fast. In-market audience is exhausted.",
+    "Your cost per acquisition jumps quickly when you scale.",
+    "A quick jump means the in-market audience is used up. Growth needs new demand, not more budget on the same buyers.",
+  ),
+  CM5_E: ins(
+    "Doesn't track how CAC responds to spend. Scaling blind.",
+    "You haven't tracked what happens to acquisition cost when you increase spend.",
+    "Without it, you can't tell whether more budget will grow revenue or just raise costs.",
+  ),
+  CM6_A: ins(
+    "No brand activity or no measurement. Brand budget will be the first to go.",
+    "You don't measure brand activity, or you don't run any.",
+    "Unmeasured brand spend is the first line cut in a review, and without it, future demand dries up.",
+  ),
+  CM6_B: ins(
+    "Measuring brand on reach and engagement. Can't show commercial impact.",
+    "You measure brand on reach, impressions and engagement.",
+    "Reach and engagement don't show leadership what brand returns, so it looks like a cost rather than an investment.",
+  ),
+  CM6_C: ins(
+    "Measures short-term lift only. Misses the long-term effect of brand.",
+    "You judge brand by whether enquiries or sales lift while campaigns run.",
+    "Most brand impact shows up months down the line. Short-term lift undervalues it and doesn't paint the whole picture.",
+  ),
+  CM7_B: ins(
+    "Heavy reliance on one channel. One platform change puts the number at risk.",
+    "60 to 80% of new pipeline or revenue comes from one channel.",
+    "One algorithm or pricing change on that platform puts most of your number at risk.",
+  ),
+  CM7_C: ins(
+    "Concentrated in one channel. Exposed to platform changes and rising costs.",
+    "40 to 60% of new pipeline or revenue comes from one channel.",
+    "When one channel carries half the number, its bad month becomes your bad quarter.",
+  ),
+  CM7_D: ins(
+    "Single-channel business. Extreme concentration risk.",
+    "Over 80% of new pipeline or revenue comes from one channel.",
+    "Your growth depends on a platform you don't control. Any change there flows straight through to revenue.",
+  ),
+  CM7_F: ins(
+    "Doesn't know channel mix. Attribution gap.",
+    "You're not sure how much comes from your biggest channel.",
+    "If you can't see where revenue comes from, you can't tell where to put the next dollar.",
+  ),
+  CM8_A: ins(
+    "No creative testing. Messaging is opinion, not evidence.",
+    "Creative is produced as needed, with little structured testing.",
+    "Creative is the biggest lever left in paid media. Without testing, you can't find the messages that lower costs.",
+  ),
+  CM8_C: ins(
+    "Ad hoc tests. Learnings don't compound.",
+    "You run occasional A/B tests.",
+    "Occasional tests rarely build on each other, so the winning message never gets found or rolled out everywhere.",
+  ),
+
+  // Pillar 3: Website & conversion
+  CM10_A: ins(
+    "Rough view of conversion only. Can't pinpoint where traffic is lost.",
+    "You only roughly know your conversion rate, and check it occasionally.",
+    "A rough number hides which channels and pages are losing people. Trying to optimise your campaigns is like finding a needle in a haystack.",
+  ),
+  CM10_C: ins(
+    "Doesn't know conversion rate. Can't separate a media problem from a website problem.",
+    "You don't know your conversion rate by channel and landing page.",
+    "Without it, you can't tell whether the ads or the website are underperforming, so you can't fix either.",
+  ),
+  CM11_A: ins(
+    "Campaign traffic to the homepage. Message match broken, paid clicks wasted.",
+    "Your campaign traffic lands on the homepage or general pages.",
+    "A homepage tries to speak to everyone. Paid traffic converts when the page continues the ad's exact message.",
+  ),
+  CM11_C: ins(
+    "One page for every campaign. Relevance drops as audiences differ.",
+    "Most campaigns send traffic to one landing page.",
+    "Different audiences need different reasons to act. One page for everyone speaks to no one.",
+  ),
+  CM12_B: ins(
+    "Relies on redesigns. Long gaps where nothing improves.",
+    "You improve conversion through a redesign every few years.",
+    "Redesigns reset everything at once and rarely prove what worked. Small, constant tests are more effective and work faster.",
+  ),
+  CM12_D: ins(
+    "Tweaks without a program. Gains don't compound.",
+    "You make the occasional test or tweak.",
+    "Without a testing roadmap, wins are one-offs. A steady program turns them into a lasting lift.",
+  ),
+  CM12_E: ins(
+    "No conversion work at all. Every media dollar is working harder than it should.",
+    "You don't actively work on improving website conversion.",
+    "Lifting conversion makes every channel more efficient at once. It's usually the cheapest growth available.",
+  ),
+
+  // Pillar 4: Data, CRM & martech
+  CM13_B: ins(
+    "CRM cleaned manually before reporting. Time lost, numbers questioned.",
+    "Your CRM is patchy, and gets cleaned before every major report.",
+    "If the data needs cleaning before anyone sees it, every report costs time and still invites questions.",
+  ),
+  CM13_D: ins(
+    "Doesn't trust the CRM. Reporting and targeting both compromised.",
+    "You don't trust your CRM data, or you're not sure how reliable it is.",
+    "If the CRM can't be trusted, neither can the reports, the targeting or the ad platform optimisation built on it.",
+  ),
+  CM13_ecom_A: ins(
+    "No segmentation. Leaving repeat revenue on the table.",
+    "You mostly send the same emails to everyone.",
+    "Generic emails get ignored. Messages based on what someone bought drive the second order, where the margin is.",
+  ),
+  CM13_ecom_C: ins(
+    "Basic flows only. Post-purchase and win-back missing.",
+    "You run the basics, like welcome and abandoned cart.",
+    "Most repeat revenue comes from post-purchase and win-back flows, and those aren't running yet.",
+  ),
+  CM14_A: ins(
+    "Deals outside the CRM. No closed-loop reporting possible.",
+    "Deals mostly live in inboxes and spreadsheets, not the CRM.",
+    "If deals aren't in the CRM, marketing can't see which leads turn into revenue, and neither can the ad platforms.",
+  ),
+  CM14_D: ins(
+    "CRM updated under pressure. Data is always out of date.",
+    "Sales only updates the CRM when chased.",
+    "Late updates mean pipeline reports are always behind, and marketing gets judged on incomplete numbers.",
+  ),
+  CM14_ecom_B: ins(
+    "Doesn't know LTV by channel. Acquisition targets are guesses.",
+    "You don't know customer lifetime value by acquisition channel.",
+    "Without it, you can't tell which channels bring customers worth paying more for, so budget goes to the cheapest first order.",
+  ),
+  CM14_ecom_C: ins(
+    "One blended LTV. Can't separate good channels from bad.",
+    "You only know a single overall lifetime value figure.",
+    "A blended number hides which channels bring loyal customers and which bring one-off buyers.",
+  ),
+  CM15_C: ins(
+    "Manual exports between systems. Slow, error-prone and no feedback to ads.",
+    "Your stack has some integrations, with plenty of manual exports.",
+    "Manual exports are slow and error-prone, and the ad platforms never learn which leads became revenue.",
+  ),
+  CM15_D: ins(
+    "Stack not connected. Ad platforms optimising on form fills, not revenue.",
+    "Your CRM is mostly manual, or you're not sure how it's connected.",
+    "If revenue data doesn't flow back to the ad platforms, they keep finding people who fill in forms but never buy.",
+  ),
+  CM15_ecom_C: ins(
+    "Partly connected. Purchase data not feeding the ad platforms properly.",
+    "Your store, email and ad platforms are partly connected, with plenty of manual exports.",
+    "When purchase data doesn't flow cleanly, the ad platforms optimise on incomplete signals and find fewer of the right buyers.",
+  ),
+  CM15_ecom_D: ins(
+    "Not connected. Ad platforms can't see real purchase data.",
+    "Your store, email and ad platforms are mostly manual, or you're not sure how they connect.",
+    "If the ad platforms can't see who bought, they can't find more people like them.",
+  ),
+  CM16_A: ins(
+    "Data siloed. No single customer view, so no personalisation or accurate attribution.",
+    "Your customer data is siloed, with no single view of the customer.",
+    "Siloed data means every team sees a different customer, and nobody sees the full journey that led to revenue.",
+  ),
+  CM16_C: ins(
+    "Data joined by hand. Slow insight, inconsistent answers.",
+    "Your customer data is spread across tools and joined manually when needed.",
+    "Manual joins take time and rarely match, so decisions wait on data or get made without it.",
+  ),
+
+  // Pillar 5: Content strategy
+  CM17_A: ins(
+    "Content for visibility only. Not tied to how buyers decide.",
+    "Your content is mostly social posts, blogs and ad creative to stay visible.",
+    "Content made to stay visible gets scrolled past. Content built around how people decide shortens the path to purchase.",
+  ),
+  CM17_C: ins(
+    "No content plan. Output depends on spare time.",
+    "Content gets made ad hoc, when the team has time.",
+    "Ad hoc content can't build momentum, and buyers researching you find gaps instead of reasons to trust you.",
+  ),
+  CM18_B: ins(
+    "Leaders invisible in market. Trust has to be built from zero every time.",
+    "Your leaders don't show up as voices in your market.",
+    "People buy from people, not organisations. Front-facing leadership differentiates you in today's hyper-saturated market.",
+  ),
+  CM18_C: ins(
+    "Leaders share announcements only. No point of view, no pull.",
+    "Your leaders mostly post company announcements and reshares.",
+    "Announcements don't build authority. A clear point of view draws like-minded buyers to your business.",
+  ),
+  CM19_C: ins(
+    "Assumes Google rankings carry into AI search. Untested.",
+    "You rank in Google and assume AI search follows.",
+    "AI search draws on different signals than Google rankings. Assuming you're visible is risky as search habits are shifting rapidly.",
+  ),
+  CM19_D: ins(
+    "No view on AI search. Competitors may be getting recommended instead.",
+    "You haven't looked at your visibility in AI search yet.",
+    "More buyers start research in AI tools. Showing up at the research phase allows you to lower your acquisition costs.",
+  ),
+
+  // Pillar 6: Positioning & brand
+  CM20_A: ins(
+    "No shared positioning. Every team member sells a different company.",
+    "Five people in your team would give five different answers about what makes you different.",
+    "If your own team can't agree on the difference, buyers won't see one, and they'll compare you on price.",
+  ),
+  CM20_C: ins(
+    "Positioning loosely shared. Message dilutes across touchpoints.",
+    "Your team shares similar themes, but in different words.",
+    "Different words for the same idea weaken it. One clear line is what buyers remember and repeat.",
+  ),
+  CM21_C: ins(
+    "Most deals decided on price. Value isn't landing before the conversation.",
+    "Most of your deals come down to price.",
+    "When deals come down to price, value wasn't established early enough. Your margins take a hit. This might compound across deals and can quietly bleed your bottom line.",
+  ),
+  CM21_D: ins(
+    "Loses on price in competitive deals. Differentiation is weak when compared side by side.",
+    "Deals often come down to price when you're up against competitors.",
+    "Side-by-side comparisons expose weak differentiation. More trust needs to be built via education. A clear reason to choose you takes price off the table.",
+  ),
+  CM21_ecom_B: ins(
+    "Discount-dependent. Customers trained to wait for sales.",
+    "Most of your revenue relies on discounts, and sales drop without a promo.",
+    "Constant promos train customers to wait for the next sale, and every discount comes straight off margin.",
+  ),
+  CM21_ecom_C: ins(
+    "Regular promos propping up revenue. Margin eroding.",
+    "A big chunk of revenue relies on discounts, with promos most months.",
+    "Monthly promos make full price feel optional. Heavy discounting is usually a positioning problem.",
+  ),
+
+  // Pillar 7: Budget allocation
+  CM22_A: ins(
+    "Budget rolled forward from last year. Not tied to targets.",
+    "Next year's budget is last year's figure, plus or minus a percentage.",
+    "Rolling last year's budget forward funds last year's plan, not this year's targets. Furthermore, it doesn't factor in geopolitical factors and macroeconomic changes today.",
+  ),
+  CM22_C: ins(
+    "Marketing has no input into budget. Spend isn't linked to revenue goals.",
+    "Your budget is whatever finance allocates.",
+    "If marketing doesn't build the case, finance sets the number on cost, and growth targets aren't funded properly.",
+  ),
+  CM23_A: ins(
+    "Optimising on platform-reported numbers. Likely over-credited.",
+    "Your paid spend is governed by in-platform ROAS or cost per lead.",
+    "Every platform takes credit for the same sale. Platform numbers alone can push budget to the wrong channels.",
+  ),
+  CM23_B: ins(
+    "Paid media managed to budget, not return. No efficiency target.",
+    "Your paid spend is governed by spend against budget.",
+    "Spending the budget isn't the same as getting a return on it. Without a target, there's no signal to scale or cut.",
+  ),
+
+  // Pillar 8: Team & partners
+  CM24_A: ins(
+    "Team at capacity. No room for strategy or testing.",
+    "Your team is stretched, and execution squeezes out strategy.",
+    "When the team is always delivering, nobody has time to test; this can lead to poor performance.",
+  ),
+  CM24_C: ins(
+    "Basics covered, nothing more. Growth relies on doing the same things harder.",
+    "Your team covers the basics, with no room to test.",
+    "Without room to test, growth depends on doing more of the same, and costs may escalate as the competitive landscape evolves.",
+  ),
+  CM25_B: ins(
+    "Partners reporting activity, not outcomes. Accountability gap.",
+    "Your partners report on activity rather than outcomes.",
+    "Activity reports don't show what the spend returned, so you carry the accountability without the evidence.",
+  ),
+  // The read line also goes at the top of the lead email, with the agency flag
+  CM25_D: ins(
+    "AGENCY UNDER REVIEW. Strongest buying signal in the quiz. Same-day outreach.",
+    "You're reviewing or replacing at least one partner.",
+    "A partner change is the best moment to reset what you measure them on, so the next one is accountable to revenue from day one.",
+  ),
+};
 
 export function insightFor(question, answer, points) {
   if (points === null || points > 1) return null;
-  const id = question.variant ? `${question.id}_${question.variant}` : question.id;
+  const id = question.variant
+    ? `${question.id}_${question.variant}`
+    : question.id;
   return INSIGHTS[`${id}_${String.fromCharCode(65 + answer)}`] || null;
 }
 
@@ -893,67 +1321,100 @@ export const TIERS = [
   },
 ];
 
-// Priority cards: pillars under 60, lowest first, max 3. `firstMove` comes from
-// the insight library once it's written. `working` is the "What's working" line
-// when the pillar is their strongest.
+// Priority cards: pillars under 60, lowest first, max 3. `firstMove` shows on
+// the card under "Why it matters". `working` is the "What's working" line when
+// the pillar is their strongest. `ecom` overrides both for the ecom track.
 export const PRIORITIES = {
   measurement: {
     headline: "Make marketing's return undeniable",
     businessCase:
       "When leadership can't see what marketing returns, it's treated as a cost, and costs get cut first.",
+    firstMove:
+      "Agree one revenue-linked headline number with finance, and report it the same way every month.",
     working:
-      "Leadership can see what marketing returns. That makes every budget conversation easier, and it's the base the other pillars build on.",
+      "Your numbers are trusted. Leadership sees marketing as a driver of revenue, which keeps the budget protected.",
   },
   acquisition: {
     headline: "Build demand before you need it",
     businessCase:
       "Spending mostly on in-market buyers caps growth at the size of today's demand, and costs rise as competitors bid for the same people.",
+    firstMove:
+      "Move a set share of budget into reaching buyers before they're in market, and measure it on branded search and pipeline over 90 days.",
     working:
-      "You're building demand, not just capturing it. That keeps acquisition costs in check as you scale.",
+      "You build demand as well as capture it, so acquisition costs hold as you scale.",
   },
   conversion: {
     headline: "Turn more of your traffic into revenue",
     businessCase:
       "Every point of conversion you lift makes all your media spend more efficient at once. It's usually the cheapest growth available.",
+    firstMove:
+      "Give your top 3 campaigns their own landing pages that continue the ad's message, then test one change a fortnight.",
     working:
-      "Your website turns traffic into results, so every dollar of media works harder.",
+      "Your website turns traffic into revenue efficiently, so every channel works harder.",
   },
   data: {
     headline: "Make your data something people trust",
     businessCase:
       "If sales and finance don't trust the CRM, every report starts an argument instead of a decision.",
+    firstMove:
+      "Lock down required fields and deal stages in the CRM, then feed closed revenue back to the ad platforms.",
     working:
-      "Your data is trusted. Reports lead to decisions, not debates about whose numbers are right.",
+      "Your data is trusted and connected, so reporting leads to decisions instead of debates.",
+    ecom: {
+      firstMove:
+        "Build post-purchase and win-back flows based on what people bought, and send purchase data back to the ad platforms server-side.",
+      working:
+        "Your customer data drives repeat revenue and feeds the ad platforms the right signals.",
+    },
   },
   content: {
     headline: "Make content a pipeline asset",
     businessCase:
       "Content built for visibility gets ignored. Content mapped to how buyers decide shortens sales cycles and lowers acquisition costs.",
+    firstMove:
+      "Map your content to the questions buyers ask at each stage, and track which pieces show up in won deals.",
     working:
-      "Your content earns its place in the pipeline. It moves buyers forward instead of just keeping you visible.",
+      "Your content works as a sales asset, shortening the path from first touch to purchase.",
   },
   positioning: {
     headline: "Give the market one reason to choose you",
     businessCase:
       "When your own team can't say what makes you different, buyers default to price, and margin pays for it.",
+    firstMove:
+      "Write the one sentence that makes you different, and make sure every team member and every ad uses it.",
     working:
-      "Your team and your market know why you're different, which protects price and margin.",
+      "Your market knows why you're different, so you win on value, not price.",
+    ecom: {
+      firstMove:
+        "Write the one sentence that makes you different, and plan sale events around it instead of discounting whenever sales dip.",
+      working:
+        "Customers buy at full price because they know why you're different.",
+    },
   },
   budget: {
     headline: "Move money to where it returns",
     businessCase:
       "Budgets set by last year's figure fund last year's plan. Reallocating on performance is growth you've already paid for.",
-    working:
-      "Your budget follows performance, so money moves to where it returns.",
+    firstMove:
+      "Build next year's budget bottom-up from revenue targets and what each channel costs to acquire a customer.",
+    working: "Your budget follows performance, so money moves to what returns.",
   },
   team: {
     headline: "Free your team to think",
     businessCase:
       "A team buried in execution has no time to test, and without testing, performance flatlines.",
+    firstMove:
+      "Free one day a fortnight for testing, and hold partners to revenue outcomes rather than activity.",
     working:
-      "Your team has room to think and test, and your partners are pulling their weight.",
+      "Your team and partners have room to think and are accountable to results.",
   },
 };
+
+// Priority copy for the business type, with the ecom overrides applied
+export function priorityFor(pillar, track) {
+  const { ecom, ...copy } = PRIORITIES[pillar];
+  return ecom && track === "ecom" ? { ...copy, ...ecom } : copy;
+}
 
 export const NO_PRIORITIES_MESSAGE =
   "Every pillar scored 60 or above. Your priorities are about widening the gap, not closing it.";

@@ -6,7 +6,7 @@ import {
   QUALIFICATION_QUESTIONS,
   QUESTION_META,
   DECISION_MAKER_ROLES,
-  PRIORITIES,
+  priorityFor,
   PRESSURE_OUTCOMES,
   OTHER_MAX_LENGTH,
   questionsFor,
@@ -61,15 +61,15 @@ function recordAnswer(question, answer, track) {
   const text = picks.map((i) => question.options[i].label).join(", ");
   const flag = flagFor(points, text);
   const insight = insightFor(question, answer, points);
+  const meta = QUESTION_META[question.id] || {};
+  const isEcom = question.variant === "ecom";
 
   return {
     questionId: question.id,
     pillar: question.pillar,
     question: question.question,
     label:
-      (track === "ecom" && QUESTION_META[question.id]?.ecomLabel) ||
-      QUESTION_META[question.id]?.label ||
-      question.question,
+      (track === "ecom" && meta.ecomLabel) || meta.label || question.question,
     answerId: picks.length
       ? `${question.id}_${picks.map(letter).join("+")}`
       : null,
@@ -78,10 +78,10 @@ function recordAnswer(question, answer, track) {
     flag,
     symbol: FLAGS[flag],
     agencyReview: picks.some((i) => question.options[i].agencyReview),
-    opener: insight?.opener || null,
+    opener: (isEcom && meta.ecomOpener) || meta.opener || null,
     read: insight?.read || null,
     told: insight?.told || null,
-    firstMove: insight?.firstMove || null,
+    why: insight?.why || null,
   };
 }
 
@@ -140,15 +140,16 @@ export function computeResults(answers) {
   )[0];
 
   // Priority cards come only from pillars under 60. "You told us" lists every
-  // low answer that has a library line (the page shows two).
+  // low answer that has a library line (the page shows two); "Why it matters"
+  // comes from the weakest one.
   const priorities = ranked
     .filter((p) => p.score < PRIORITY_MAX_SCORE)
     .slice(0, 3)
     .map((p) => ({
       ...p,
-      ...PRIORITIES[p.key],
+      ...priorityFor(p.key, track),
       told: p.lowAnswers.map((r) => r.told).filter(Boolean),
-      firstMove: p.lowAnswers.map((r) => r.firstMove).find(Boolean) ?? null,
+      why: p.lowAnswers.map((r) => r.why).find(Boolean) ?? null,
     }));
 
   const platformQuestion = questions.find((q) => q.id === "CM9");
@@ -183,7 +184,7 @@ export function computeResults(answers) {
     topPillar,
     working:
       topPillar.score >= WORKING_MIN_SCORE
-        ? { ...topPillar, working: PRIORITIES[topPillar.key].working }
+        ? { ...topPillar, working: priorityFor(topPillar.key, track).working }
         : null,
     answers: records,
     adPlatforms,
@@ -196,6 +197,8 @@ export function computeResults(answers) {
     agencyReview:
       records.some((r) => r.agencyReview) ||
       Boolean(qualOption("partners")?.agencyReview),
+    // CM25's read line, shown with the agency flag in the lead email
+    agencyReviewRead: records.find((r) => r.agencyReview)?.read ?? null,
     fitScore,
     fitBand: fitBandFor(fitScore),
   };
@@ -203,9 +206,7 @@ export function computeResults(answers) {
 
 // Hottest lead: high fit, an agency under review, and a session requested
 export function isHotLead(results, sessionRequested) {
-  return (
-    results.fitBand === "High" && results.agencyReview && sessionRequested
-  );
+  return results.fitBand === "High" && results.agencyReview && sessionRequested;
 }
 
 // "A", "A and B", "A, B and C". Semicolons when a name has its own comma
@@ -235,7 +236,9 @@ export function leadershipSummary(results, { company, pressure } = {}) {
       `${NUMBER_WORDS[names.length]} ${names.length === 1 ? "priority" : "priorities"}: ${listOf(names)}.`,
     );
     if (outcome) {
-      parts.push(`Addressing ${names.length === 1 ? "it" : "them"} would ${outcome}.`);
+      parts.push(
+        `Addressing ${names.length === 1 ? "it" : "them"} would ${outcome}.`,
+      );
     }
   } else {
     parts.push("Every pillar scores 60 or above.");

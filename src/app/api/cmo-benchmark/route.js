@@ -84,10 +84,7 @@ export async function POST(req) {
     }
     if (!/^https?:\/\//i.test(website)) website = `https://${website}`;
 
-    if (
-      !body.answers ||
-      !H1.options.some((o) => o.value === body.answers.H1)
-    ) {
+    if (!body.answers || !H1.options.some((o) => o.value === body.answers.H1)) {
       return NextResponse.json(
         { error: "Incomplete quiz answers." },
         { status: 400 },
@@ -284,7 +281,13 @@ async function sendLeadEmail(
   const flags = [
     hotLead && flag("Hottest lead. Same-day outreach.", "#ffd6d6"),
     sessionRequested && flag("Session requested", "#d6f5dd"),
-    results.agencyReview && flag("Agency under review", "#ffe8c2"),
+    results.agencyReview &&
+      flag(
+        results.agencyReviewRead
+          ? `Agency under review. ${results.agencyReviewRead}`
+          : "Agency under review",
+        "#ffe8c2",
+      ),
     !results.isDecisionMaker &&
       flag("Not the decision-maker. Ask who signs off.", "#fff3cd"),
     flag(
@@ -298,6 +301,7 @@ async function sendLeadEmail(
         .map(
           (p, i) => `
         <p style="margin:16px 0 4px"><strong>PRIORITY ${i + 1}: ${escapeHtml(p.label)} · ${p.score}</strong></p>
+        ${p.told.length ? `<p style="margin:0 0 8px"><strong>You told us:</strong> ${p.told.map(escapeHtml).join(" ")}</p>` : ""}
         <ul style="margin:0;padding-left:18px">${p.lowAnswers
           .map(
             (a) =>
@@ -452,11 +456,10 @@ async function sendProspectReport({
     });
   // High and mid fit get the session (the request form sits at the base of
   // their results page). Low fit just gets the results link.
-  const cta =
-    fitBand !== "Low" && {
-      ...CTA.session,
-      href: shareUrl ? `${shareUrl}#review` : absolute(BOOKING_URL),
-    };
+  const cta = fitBand !== "Low" && {
+    ...CTA.session,
+    href: shareUrl ? `${shareUrl}#review` : absolute(BOOKING_URL),
+  };
 
   const button = (href, text, primary) =>
     `<a href="${escapeHtml(href)}" style="display:inline-block;padding:10px 20px;border-radius:16px;text-decoration:none;${
