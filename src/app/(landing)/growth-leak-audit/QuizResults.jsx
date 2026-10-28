@@ -17,6 +17,7 @@ import {
 } from "@/lib/quiz/quizData";
 import { tierFor, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
 import ReviewCta from "./ReviewCta";
+import { joinTold } from "@/lib/quiz/joinTold";
 
 // Top of the scale is the lowest tier; the marker travels down towards the top tier
 const EASE = [0.22, 1, 0.36, 1];
@@ -50,14 +51,6 @@ function scalePosition(scale, score, bands) {
   const max = i < scale.length - 1 ? scale[i + 1].min : 101;
   const within = (score - tier.min) / (max - tier.min); // 0 at the top of the band
   return band.top + within * band.height * 0.6 + band.height * 0.2;
-}
-
-// "You're not sure..." + "Prospects push back..." → "you're not sure..., and prospects push back..."
-function joinTold(lines) {
-  const parts = lines.map(
-    (l) => l.charAt(0).toLowerCase() + l.slice(1).replace(/\.$/, ""),
-  );
-  return `${parts.join(", and ")}.`;
 }
 
 // tiers: [{ min, name, color, bullets }], lowest first (defaults to the Growth Leak tiers)

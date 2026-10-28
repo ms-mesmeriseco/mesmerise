@@ -15,15 +15,7 @@ import { tierFor, leadershipSummary } from "@/lib/cmo-benchmark/scoring";
 import { TierScale } from "../growth-leak-audit/QuizResults";
 import ReviewCta from "../growth-leak-audit/ReviewCta";
 import ReportPdf, { exportReportPdf } from "./ReportPdf";
-
-// Same as the Growth Leak results: "You're not sure..." + "Sales push back..."
-// → "you're not sure..., and sales push back..."
-function joinTold(lines) {
-  const parts = lines.map(
-    (l) => l.charAt(0).toLowerCase() + l.slice(1).replace(/\.$/, ""),
-  );
-  return `${parts.join(", and ")}.`;
-}
+import { joinTold } from "@/lib/quiz/joinTold";
 
 const btnOutline =
   "inline-flex items-center justify-center rounded-2xl border border-[var(--mesm-grey)] px-4 py-1.5 text-sm hover:border-[var(--mesm-blue)] hover:text-[var(--mesm-blue)] duration-200";

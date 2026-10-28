@@ -8,6 +8,7 @@ import {
   tierRange,
   pillarStatus,
 } from "@/lib/cmo-benchmark/quizData";
+import { joinTold } from "@/lib/quiz/joinTold";
 
 // The benchmark as a landscape A4 PDF, in the site's look: black pages, Neue
 // Haas, the site colours. Each page is laid out at A4's size in CSS pixels,
@@ -42,14 +43,6 @@ const label = {
 
   color: C.dim,
 };
-
-// "You're not sure..." + "Sales push back..." → "you're not sure..., and sales push back..."
-function joinTold(lines) {
-  const parts = lines.map(
-    (l) => l.charAt(0).toLowerCase() + l.slice(1).replace(/\.$/, ""),
-  );
-  return `${parts.join(", and ")}.`;
-}
 
 const Dot = ({ color, size = 8 }) => (
   <span
