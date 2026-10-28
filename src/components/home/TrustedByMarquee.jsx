@@ -15,7 +15,7 @@ export default function TrustedByMarquee() {
       <InView>
         {/* Logos fade out at the left and right edges */}
         <div className="mt-6 [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-          <Marquee clients={clients} />
+          <Marquee clients={clients} spacing="mx-6 md:mx-10" />
         </div>
       </InView>
     </section>

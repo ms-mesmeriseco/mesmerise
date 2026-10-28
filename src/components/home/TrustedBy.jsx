@@ -66,9 +66,11 @@ function LogoCard({ clientName, logoUrl, index, url }) {
 }
 
 // Marquee card — simpler, no motion stagger needed inside the ticker
-function MarqueeCard({ clientName, logoUrl }) {
+function MarqueeCard({ clientName, logoUrl, spacing }) {
   return (
-    <div className="flex flex-col items-center justify-center shrink-0 mx-3 group">
+    <div
+      className={`flex flex-col items-center justify-center shrink-0 ${spacing} group`}
+    >
       <div className="relative flex flex-col items-center justify-center p-4 w-full h-24 bg-black/20">
         <Image
           src={logoUrl}
@@ -84,7 +86,7 @@ function MarqueeCard({ clientName, logoUrl }) {
 }
 // Repeats the logo set until it overfills the row, then slides by one set
 // width so the loop is seamless on any screen size
-export function MarqueeRow({ clients, reverse = false }) {
+export function MarqueeRow({ clients, reverse = false, spacing = "mx-3" }) {
   const rowRef = useRef(null);
   const setRef = useRef(null);
   const [setWidth, setSetWidth] = useState(0);
@@ -97,7 +99,9 @@ export function MarqueeRow({ clients, reverse = false }) {
       const width = setRef.current.offsetWidth;
       setSetWidth(width);
       if (width) {
-        setCopies(Math.max(2, Math.ceil(rowRef.current.offsetWidth / width) + 1));
+        setCopies(
+          Math.max(2, Math.ceil(rowRef.current.offsetWidth / width) + 1),
+        );
       }
     };
 
@@ -127,7 +131,11 @@ export function MarqueeRow({ clients, reverse = false }) {
             aria-hidden={copy > 0 || undefined}
           >
             {clients.map((client) => (
-              <MarqueeCard key={`${client._id}-${copy}`} {...client} />
+              <MarqueeCard
+                key={`${client._id}-${copy}`}
+                {...client}
+                spacing={spacing}
+              />
             ))}
           </div>
         ))}
@@ -136,15 +144,16 @@ export function MarqueeRow({ clients, reverse = false }) {
   );
 }
 
-export function Marquee({ clients }) {
+// spacing: horizontal margin class on each logo card
+export function Marquee({ clients, spacing }) {
   const mid = Math.ceil(clients.length / 2);
   const rowOne = clients.slice(0, mid);
   const rowTwo = clients.slice(mid);
 
   return (
     <div className="flex flex-col gap-4">
-      <MarqueeRow clients={rowOne} />
-      <MarqueeRow clients={rowTwo} reverse />
+      <MarqueeRow clients={rowOne} spacing={spacing} />
+      <MarqueeRow clients={rowTwo} reverse spacing={spacing} />
     </div>
   );
 }
