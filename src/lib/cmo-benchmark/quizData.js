@@ -78,7 +78,7 @@ export const LANDING_FOCUS = {
       _key: "focus2",
       title: "Dated campaign structures bleeding money",
       content:
-        "Most ad accounts are set up to capture buyers who are already searching, with budgets split across too many campaigns for the algorithms to learn properly. Many accounts are overextending and paying for traffic they already own.\nCosts climb every quarter, results plateau, and the people who’ll buy next year never see you or know your name.\n90% of accounts audited have poor structure.",
+        "Most ad accounts are set up to capture buyers who are already searching, with budgets split across too many campaigns for the algorithms to learn properly. Many accounts are overextending and paying for traffic they already own.\nCosts climb every quarter, results plateau, and the people who’ll buy next year never see you or know your name.\n90% of the accounts we've audited have poor structure.",
     },
     {
       _key: "focus3",

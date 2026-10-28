@@ -5,7 +5,7 @@ import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 export async function generateMetadata() {
   const title = "Marketing Leadership Benchmark | Mesmerise";
   const description =
-    "In 7 minutes, benchmark your marketing function across eight pillars and leave with three priorities and the business case for each.";
+    "In 7 minutes, benchmark your marketing across eight areas and leave with three priorities, plus the business case for each.";
   const url = "https://www.mesmeriseco.com/cmo-benchmark";
 
   return {

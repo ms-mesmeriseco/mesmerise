@@ -87,7 +87,7 @@ export default function CmoLanding() {
         <h5>
           <em>{INTRO.meta.join(" · ")}</em>
         </h5>
-        <AvatarRow />
+        <AvatarRow tagline="Trusted by ambitious leaders" />
       </div>
       <div className="flex w-full flex-col gap-24 text-left">
         <TrustedByMarquee />

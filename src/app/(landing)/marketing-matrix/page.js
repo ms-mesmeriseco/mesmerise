@@ -10,11 +10,11 @@ import TestimonialRail from "@/components/home/TestimonialRail.jsx";
 const TRUST_LOGOS = [
   {
     url: "/client-logos/bespoke.png",
-    title: "bespoke landscaping",
+    title: "Bespoke Landscaping",
   },
   {
     url: "/client-logos/burra.png",
-    title: "burra commercial",
+    title: "Burra Commercial",
   },
   {
     url: "/client-logos/flo.png",
@@ -22,11 +22,11 @@ const TRUST_LOGOS = [
   },
   {
     url: "/client-logos/goodluck.png",
-    title: "Good luck tattoo",
+    title: "Good Luck Tattoo",
   },
   {
     url: "/client-logos/sp.png",
-    title: "Street peace",
+    title: "Street Peace",
   },
   {
     url: "/client-logos/tppt.png",
@@ -128,7 +128,7 @@ export function WhyICreatedThis() {
           key="audit-img"
           className="w-full h-full object-cover"
           src="https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg"
-          alt="CRO Audit"
+          alt="Petar Petrović, Mesmerise founder"
           width={800}
           height={800}
         />,
@@ -219,7 +219,7 @@ export function FinalCTA() {
             key="final-cta-img"
             className="opacity-70"
             src="/assets/matrix-assets/matrix-mockup.png"
-            alt="Why I created this"
+            alt="Marketing Matrix preview"
             width={600}
             height={600}
           />,

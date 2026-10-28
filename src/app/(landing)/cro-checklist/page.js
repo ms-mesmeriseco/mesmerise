@@ -11,11 +11,11 @@ import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
 const CRO_LOGOS = [
   {
     url: "/client-logos/bespoke.png",
-    title: "bespoke landscaping",
+    title: "Bespoke Landscaping",
   },
   {
     url: "/client-logos/burra.png",
-    title: "burra commercial",
+    title: "Burra Commercial",
   },
   {
     url: "/client-logos/flo.png",
@@ -23,11 +23,11 @@ const CRO_LOGOS = [
   },
   {
     url: "/client-logos/goodluck.png",
-    title: "Good luck tattoo",
+    title: "Good Luck Tattoo",
   },
   {
     url: "/client-logos/sp.png",
-    title: "Street peace",
+    title: "Street Peace",
   },
   {
     url: "/client-logos/tppt.png",
@@ -107,7 +107,7 @@ export function CROAudit() {
         <Image
           key="audit-img"
           src="https://cdn.sanity.io/images/wpr5jlmc/production/88f1166772a3d1184533e298e8be8391e37d2afb-4000x4000.jpg"
-          alt="CRO Audit"
+          alt="Petar Petrović, Mesmerise founder"
           width={800}
           height={600}
         />,
