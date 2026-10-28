@@ -109,8 +109,8 @@ export default function CmoResults({
       <section className="flex flex-col gap-12">
         <div className="flex flex-col gap-6">
           <h2 className="page-title-medium">
-            {firstName ? `${firstName}, your` : "Your"} marketing function
-            scored {overall}/100.
+            {firstName ? `${firstName}, your` : "Your"} marketing scored{" "}
+            {overall}/100.
           </h2>
           {subhead && <p className="p2 text-[var(--mesm-l-grey)]">{subhead}</p>}
         </div>

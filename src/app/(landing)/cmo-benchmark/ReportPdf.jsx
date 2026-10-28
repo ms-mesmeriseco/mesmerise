@@ -351,8 +351,8 @@ const ReportPdf = forwardRef(function ReportPdf(
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 30, lineHeight: 1.3, maxWidth: 520 }}>
-              {firstName ? `${firstName}, your` : "Your"} marketing function
-              scored {overall}/100.
+              {firstName ? `${firstName}, your` : "Your"} marketing scored{" "}
+              {overall}/100.
             </div>
             {subhead && (
               <div
