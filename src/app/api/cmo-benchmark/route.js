@@ -329,9 +329,10 @@ async function sendLeadEmail(
     );
   });
 
-  // Every question in the quiz, in order: question text, then their answer
-  const qa = (symbol, question, answer) =>
-    `<li style="margin:0 0 10px">${symbol ? `${symbol} ` : ""}${escapeHtml(question)}<br/><strong>${escapeHtml(answer || "-")}</strong></li>`;
+  // Every question in the quiz, in order: question text, their answer, then
+  // the Read line for 0 and 1 point answers
+  const qa = (symbol, question, answer, read) =>
+    `<li style="margin:0 0 10px">${symbol ? `${symbol} ` : ""}${escapeHtml(question)}<br/><strong>${escapeHtml(answer || "-")}</strong>${read ? `<br/><span style="color:#555">Read: ${escapeHtml(read)}</span>` : ""}</li>`;
   const group = (title, items) => `
       <p style="margin:16px 0 6px"><strong>${escapeHtml(title)}</strong></p>
       <ul style="margin:0;padding-left:0;list-style:none">${items.join("")}</ul>`;
@@ -352,7 +353,9 @@ async function sendLeadEmail(
         p.label,
         results.answers
           .filter((a) => a.pillar === p.key)
-          .map((a) => qa(a.symbol, a.question, a.answer)),
+          .map((a) =>
+            qa(a.symbol, a.question, a.answer, a.points <= 1 ? a.read : null),
+          ),
       ),
     ),
     group(
