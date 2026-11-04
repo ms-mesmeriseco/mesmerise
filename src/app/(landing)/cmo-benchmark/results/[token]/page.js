@@ -15,7 +15,7 @@ export default async function SharedResultsPage({ params }) {
 
   return (
     <>
-      <div className="fixed z-50 p-4 bottom-2 right-0 w-full md:w-fit items-center flex justify-center">
+      <div className="fixed z-50 m-4 px-4 bottom-2 right-0 w-full md:w-fit items-center flex justify-center">
         <Button href="/connect" size="large" variant="CTAFluoro" arrow>
           Book a Strategy Session
         </Button>

@@ -275,9 +275,9 @@ export default function Header() {
 
       {/* Mobile sticky CTA — landing pages only */}
       {isLanding && !isQuizResults && scrolledEnough && (
-        <div className="fixed left-0 right-0 z-[299] md:hidden px-10 pb-6 bottom-[var(--tools-banner-h,0px)] transition-[bottom] duration-500 ease-out">
-          <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
-            <Button size="x-large" variant="CTA" href="tel:0477210477">
+        <div className="fixed left-0 right-0 z-[299] md:hidden px-8 bottom-[var(--tools-banner-h,0px)] transition-[bottom] duration-500 ease-out">
+          <div className="px-2 pt-2 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] w-full">
+            <Button size="x-large" variant="CTAFluoro" href="tel:0477210477">
               <span className="text-2xl">Speak to Simba</span>
             </Button>
           </div>
