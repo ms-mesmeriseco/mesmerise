@@ -4,9 +4,9 @@ import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 // Draft: kept out of search until the page is signed off
 export async function generateMetadata() {
-  const title = "Find the Right Tool | Mesmerise";
+  const title = "Is your marketing working?";
   const description =
-    "Marketing leaders benchmark their function. Business owners find where their marketing is leaking.";
+    "Answer a few quick questions and discover ways to generate more revenue.";
   const canonicalUrl = absoluteUrl("/tools/start");
 
   return {
