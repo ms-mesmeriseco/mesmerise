@@ -7,7 +7,7 @@ import HeroButton from "@/components/ui/HeroButton";
 
 // Draft: kept out of search until the page is signed off
 export async function generateMetadata() {
-  const title = "Free Marketing Tools | Mesmerise";
+  const title = "Discover what's holding your business back";
   const description =
     "Free diagnostics to find where your marketing is leaking and how your function benchmarks against the best.";
   const canonicalUrl = absoluteUrl("/tools");

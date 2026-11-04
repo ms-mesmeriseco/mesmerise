@@ -17,6 +17,8 @@ const VARIANTS = {
   accent2:
     "bg-[var(--accent2)]/98 border-[var(--accent2)]/100 text-[var(--background)]/98",
   CTA: "bg-[var(--accent)] border-[var(--mesm-grey-dk)] text-[var(--background)] shadow-lg shadow-[#686767]/30 w-full h-[52px]",
+  CTAFluoro:
+    "bg-[var(--mesm-fluoro)] border-[var(--mesm-fluoro)] text-[var(--background)] shadow-lg shadow-[#686767]/30 w-full h-[52px]",
 };
 
 // Diagonal ↗ arrow, drawn in the text colour
@@ -56,7 +58,7 @@ export default function Button({
 }) {
   const sizeClasses = SIZE_MAP[size] ?? SIZE_MAP.small;
   const variantClasses = VARIANTS[variant] ?? VARIANTS.primary;
-  const isCTA = variant === "CTA";
+  const isCTA = variant === "CTA" || variant === "CTAFluoro";
 
   return (
     <a
