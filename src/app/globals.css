@@ -577,9 +577,8 @@ figcaption {
   font-weight: 400;
 }
 
-.hide-cursor {
-  cursor: none;
-}
+/* Global custom cursor (src/components/ui/CustomCursor.jsx) is drawn on top of
+   the native cursor — the native one stays visible on purpose. */
 
 .hero-m .hero-stripe-1 {
   fill: none;

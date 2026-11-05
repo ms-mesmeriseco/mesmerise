@@ -1,7 +1,17 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { useCursor, CURSOR_SIZE } from "./CustomCursor";
+
+const DOT_R = CURSOR_SIZE / 2;
+const HOVER_R = 60;
 
 export default function HeroButton({
   href = "#",
@@ -11,33 +21,42 @@ export default function HeroButton({
   ...props
 }) {
   const containerRef = useRef(null);
+  const activeRef = useRef(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  // 1. Motion values for raw mouse position
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  // Shared global cursor position (viewport coords), so the circle inside the
+  // button is the same circle as the site cursor — it just grows and gets
+  // clipped by the button.
+  const cursor = useCursor();
+  const fallback = useMotionValue(0);
+  const cx = cursor.x ?? fallback;
+  const cy = cursor.y ?? fallback;
+  const { scrollY } = useScroll();
 
-  // 2. Spring physics for the "Inertia" effect
-  // Adjust stiffness (speed) and damping (bounce) to taste
-  const smoothX = useSpring(mouseX, { damping: 20, stiffness: 150 });
-  const smoothY = useSpring(mouseY, { damping: 20, stiffness: 150 });
+  const radius = useSpring(DOT_R, { damping: 22, stiffness: 220 });
 
-  // 3. Map the smooth values directly into your radial gradient string
   const background = useTransform(
-    [smoothX, smoothY],
-    ([x, y]) => `radial-gradient(
-      circle 60px at ${x}px ${y}px, 
-      var(--mesm-yellow) 0%, 
-      var(--mesm-yellow) 90%, 
-      transparent 91%
-    )`,
+    [cx, cy, radius, scrollY],
+    ([x, y, r]) => {
+      const el = containerRef.current;
+      if (!el || !activeRef.current) return "none";
+      const rect = el.getBoundingClientRect();
+      return `radial-gradient(circle ${r}px at ${x - rect.left}px ${y - rect.top}px, var(--mesm-yellow) ${Math.max(r - 1, 0)}px, transparent ${r}px)`;
+    },
   );
 
-  const handleMouseMove = (e) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
+  const handleEnter = () => {
+    setIsHovered(true);
+    if (!cursor.enabled) return;
+    activeRef.current = true;
+    radius.jump(DOT_R);
+    radius.set(HOVER_R);
+  };
+
+  const handleLeave = () => {
+    setIsHovered(false);
+    activeRef.current = false;
+    radius.jump(DOT_R);
   };
 
   const baseStyles =
@@ -51,16 +70,16 @@ export default function HeroButton({
     <a
       href={href}
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      data-cursor="hero"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
       className={`
   ${baseStyles}
         relative overflow-hidden
         ${sizeStyles[size]}
-        bg-[var(--mesm-yellow)]  
+        bg-[var(--mesm-yellow)]
         border border-[var(--mesm-yellow)]
-        text-[var(--background)] tracking-wide 
+        text-[var(--background)] tracking-wide
         hover:bg-[var(--mesm-grey-dk)]/40 hover:border-[var(--mesm-yellow)] transition-colors duration-250
         ${extraClass}
       `}
@@ -69,14 +88,16 @@ export default function HeroButton({
       {/* Text layer stays on top */}
       <span className="relative z-10 pointer-events-none">{children}</span>
 
-      {/* The Animated Hard Blue Circle */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-50"
-        style={{
-          opacity: isHovered ? 1 : 0,
-          background,
-        }}
-      />
+      {/* The global cursor, grown and clipped to the button */}
+      {cursor.enabled && (
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            opacity: isHovered ? 1 : 0,
+            background,
+          }}
+        />
+      )}
     </a>
   );
 }

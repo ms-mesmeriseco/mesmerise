@@ -12,6 +12,7 @@ import Script from "next/script";
 import HeroLoader from "@/components/three/HeroLoader";
 import { HeroLoaderProvider } from "@/components/three/HeroLoaderProvider";
 import { DEFAULT_OG_IMAGE_URL } from "@/lib/seo";
+import CursorProvider from "@/components/ui/CustomCursor";
 
 export async function generateMetadata() {
   return {
@@ -171,6 +172,7 @@ Google Tag Manager (noscript) */}
 <!-- End Reddit Pixel --> */}
       </head>
       <body>
+        <CursorProvider>
         <HeroLoaderProvider>
           <HeroLoader />
           <ScrollToTop />
@@ -182,6 +184,7 @@ Google Tag Manager (noscript) */}
 
           <Footer />
         </HeroLoaderProvider>
+        </CursorProvider>
 
         <noscript>
           <img

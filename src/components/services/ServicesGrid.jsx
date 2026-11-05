@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 const VIDEO_DIR = "/assets/services-videos";
@@ -43,6 +43,13 @@ const DEFAULT_SERVICES = [
   },
 ];
 
+// Matches Tailwind's md breakpoint: hover-to-play above it, play-in-view below
+const DESKTOP_QUERY = "(min-width: 768px)";
+
+// Mobile: shrink the viewport to a thin band across its middle, so only the
+// card crossing the centre of the screen counts as "in focus" and plays
+const FOCUS_BAND = "-49.5% 0px -49.5% 0px";
+
 // Gap between the cursor and the floating title, in px
 const CURSOR_OFFSET = 16;
 
@@ -51,10 +58,41 @@ function ServiceCard({ title, href, video }) {
   const labelRef = useRef(null);
 
   const play = () => {
-    // play() returns a promise that rejects if interrupted by pause(); ignore it
+    // play() rejects if interrupted by pause(); ignore it
     videoRef.current?.play().catch(() => {});
   };
   const pause = () => videoRef.current?.pause();
+  // Desktop only: on mobile, playback is driven by visibility instead
+  const isDesktop = () => window.matchMedia(DESKTOP_QUERY).matches;
+
+  // Mobile: play only while the card is in focus (crossing the screen's
+  // centre), pause as soon as it moves out of it
+  useEffect(() => {
+    const el = videoRef.current;
+    const card = el?.parentElement; // the whole card, not just the 70%-high video
+    if (!el || !card) return;
+    const mq = window.matchMedia(DESKTOP_QUERY);
+    let io = null;
+
+    const setup = () => {
+      io?.disconnect();
+      io = null;
+      el.pause();
+      if (mq.matches) return; // desktop uses hover
+      io = new IntersectionObserver(
+        ([entry]) => (entry.isIntersecting ? play() : pause()),
+        { rootMargin: FOCUS_BAND, threshold: 0 },
+      );
+      io.observe(card);
+    };
+
+    setup();
+    mq.addEventListener("change", setup);
+    return () => {
+      mq.removeEventListener("change", setup);
+      io?.disconnect();
+    };
+  }, []);
 
   // Move the floating title with the cursor directly, without re-rendering
   const follow = (e) => {
@@ -73,20 +111,20 @@ function ServiceCard({ title, href, video }) {
       className="no-list group relative grow basis-full md:basis-[calc((100%-1rem)/3)]"
       onMouseEnter={(e) => {
         follow(e);
-        play();
+        if (isDesktop()) play();
       }}
       onMouseMove={follow}
-      onMouseLeave={pause}
+      onMouseLeave={() => isDesktop() && pause()}
     >
       <Link
         href={href}
-        onFocus={play}
-        onBlur={pause}
         // Height = one column's width (100cqw is the list's width), so cards
         // that grow on a short last row stay the same height as the rest
         className="relative block overflow-hidden rounded-lg border border-[var(--mesm-grey-dk)]
                    aspect-square md:aspect-auto md:h-[calc((100cqw-1rem)/3)]
-                   focus:outline-none"
+                   focus:outline-none "
+        onFocus={() => isDesktop() && play()}
+        onBlur={() => isDesktop() && pause()}
         aria-label={`Learn more about ${title}`}
       >
         <video
@@ -98,11 +136,11 @@ function ServiceCard({ title, href, video }) {
           playsInline
           preload="metadata"
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-contain p-6"
+          className="absolute inset-0 m-auto h-[70%] w-full object-contain"
         />
 
         {/* Mobile: title fixed in the top left */}
-        <h5 className="relative p-3 md:hidden">{title}</h5>
+        <h5 className="relative p-3 text-white md:hidden">{title}</h5>
       </Link>
 
       {/* Desktop: title follows the cursor while hovering. Sits outside the
@@ -113,7 +151,7 @@ function ServiceCard({ title, href, video }) {
         className="pointer-events-none absolute left-0 top-0 z-10 hidden md:block whitespace-nowrap
                    opacity-0 transition-opacity duration-200 group-hover:opacity-100"
       >
-        <h3>{title}</h3>
+        <h5>{title}</h5>
       </span>
     </li>
   );

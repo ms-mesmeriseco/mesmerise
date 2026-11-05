@@ -1,6 +1,7 @@
 import FAQ from "@/components/blocks/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import ServicesGrid from "@/components/services/ServicesGrid";
+import SymbolRing from "@/components/three/SymbolRing";
+import InView from "@/hooks/InView";
 import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 export async function generateMetadata() {
@@ -80,16 +81,21 @@ export default function Services() {
 
   return (
     <div className="flex flex-col min-h-screen gap-[8rem]">
-      <div className="py-6">
-        <StaggeredWords
-          key="h1"
-          text="Premium full service solutions, engineered with insight. Delivered with intent."
-          className="page-title-large text-2xl md:text-4xl leading-tight"
-          center
-        />
+      {/* Intro and ring read as one block, so they sit closer than the sections below */}
+      <div className="flex flex-col">
+        <div className="flex flex-col gap-8 items-center justify-end h-[40vh] py-16 px-4 md:px-8">
+          <StaggeredWords
+            key="h1"
+            text="Premium full service solutions, engineered with insight. Delivered with intent."
+            className="page-title-medium text-center"
+            center
+          />
+        </div>
+        {/* Click a symbol to open its service; click left/right to turn the ring */}
+        <InView start="top 50%">
+          <SymbolRing className="h-screen w-full" />
+        </InView>
       </div>
-
-      <ServicesGrid />
 
       <FAQ
         label="common questions"

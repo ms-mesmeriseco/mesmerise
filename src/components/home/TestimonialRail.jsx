@@ -231,7 +231,7 @@ export default function TestimonialsRail({ innerRef }) {
   if (!items.length) return null;
 
   return (
-    <section className="relative overflow-hidden hide-cursor">
+    <section className="relative overflow-hidden">
       <InView>
         <div className="flex flex-col items-center">
           <div className="w-full my-auto">
@@ -260,7 +260,6 @@ export default function TestimonialsRail({ innerRef }) {
                   }
                 }}
                 onMouseLeave={onMouseUp}
-                style={{ cursor: "none" }}
                 className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide"
               >
                 {items.map((item) =>
