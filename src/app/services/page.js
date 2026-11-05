@@ -1,6 +1,6 @@
 import FAQ from "@/components/blocks/FAQ";
 import StaggeredWords from "@/hooks/StaggeredWords";
-import ServicesRail from "@/components/services/ServicesRail";
+import ServicesGrid from "@/components/services/ServicesGrid";
 import { DEFAULT_OG_IMAGE_URL, absoluteUrl } from "@/lib/seo";
 
 export async function generateMetadata() {
@@ -89,7 +89,7 @@ export default function Services() {
         />
       </div>
 
-      <ServicesRail />
+      <ServicesGrid />
 
       <FAQ
         label="common questions"

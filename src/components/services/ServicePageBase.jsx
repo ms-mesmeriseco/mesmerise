@@ -9,7 +9,7 @@ import InView from "@/hooks/InView";
 import Button from "@/components/ui/Button";
 import HeroButton from "@/components/ui/HeroButton";
 import ServiceTags from "./ServiceTags";
-import ServicesRail from "./ServicesRail";
+import ServicesGrid from "./ServicesGrid";
 import FAQ from "@/components/blocks/FAQ.jsx";
 
 function isVideo(src) {
@@ -147,7 +147,7 @@ export default function ServicePageBase({
         singleOpen={false}
         defaultOpen={[0]}
       />
-      <ServicesRail tag="all" />
+      <ServicesGrid />
     </div>
   );
 }

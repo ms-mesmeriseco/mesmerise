@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 import InView from "@/hooks/InView";
 import dynamic from "next/dynamic";
 import ImpactStatsMobile from "@/components/home/ImpactStatsMobile";
-import ServicesRail from "@/components/services/ServicesRail";
+import ServicesGrid from "@/components/services/ServicesGrid";
 import HeroButton from "@/components/ui/HeroButton";
 import StaggeredWords from "@/hooks/StaggeredWords";
 import TrustedBy from "@/components/home/TrustedBy";
@@ -207,7 +207,7 @@ export default function HomePage() {
           <CaseStudyHero narrow={false} block={caseStudyBlock} />
         </div>
       </InView> */}
-      <ServicesRail />
+      <ServicesGrid />
 
       <TrustedBy />
 
