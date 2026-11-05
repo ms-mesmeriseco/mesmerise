@@ -7,6 +7,7 @@ import Button from "../ui/Button";
 import TrustBadges from "./TrustBadges";
 import AvatarRow from "../ui/AvatarRow";
 import GoogleBrow from "../ui/GoogleBrow";
+import StarEyebrow from "../ui/StarEyebrow";
 import {
   listFromHeroL,
   extractIframeFromBlocks,
@@ -80,6 +81,7 @@ function MediaDisplay({ media, fill = false }) {
 export default function LeftHero({
   heroMedia, // {url, mimeType, ...} from GROQ
   eyebrow,
+  eyebrowIsH1 = false, // true → eyebrow is the H1 and the title drops to H2
   pageHeader,
   pageSubtitle,
   heroL, // Sanity blocks or strings
@@ -91,6 +93,8 @@ export default function LeftHero({
   customContent,
 }) {
   const listItems = useMemo(() => listFromHeroL(heroL), [heroL]);
+  // Only promote the eyebrow when there is one, so the page always keeps an H1
+  const eyebrowAsH1 = Boolean(eyebrow && eyebrowIsH1);
 
   const iframeHtml = useMemo(
     () => extractIframeFromBlocks(heroEmbed),
@@ -124,12 +128,14 @@ export default function LeftHero({
             "text-[var(--foreground)]",
           ].join(" ")}
         >
-          <div className="flex flex-col gap-2">
-            {eyebrow && <h6>{eyebrow}</h6>}
+          <div className="flex flex-col items-start gap-4">
+            {eyebrow && (
+              <StarEyebrow as={eyebrowAsH1 ? "h1" : "p"}>{eyebrow}</StarEyebrow>
+            )}
             <StaggeredWords
-              as="h1"
+              as={eyebrowAsH1 ? "h2" : "h1"}
               delay={0.01}
-              className="page-title-medium"
+              className="page-title-medium tracking-[-0.03em]"
               text={`${pageHeader || ""}`}
             />
           </div>

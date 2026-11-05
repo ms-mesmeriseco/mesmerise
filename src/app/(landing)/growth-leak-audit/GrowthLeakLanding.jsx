@@ -9,7 +9,7 @@ import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
 import FAQ from "@/components/blocks/FAQ";
 import { LANDING_BENTO, LANDING_FOCUS, LANDING_FAQ } from "@/lib/quiz/quizData";
 import Quiz from "./Quiz";
-import StarEyebrow from "./StarEyebrow";
+import StarEyebrow from "@/components/ui/StarEyebrow";
 import HeroButton from "@/components/ui/HeroButton";
 import AvatarRow from "@/components/ui/AvatarRow";
 

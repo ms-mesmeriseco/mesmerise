@@ -617,6 +617,22 @@ figcaption {
 
 /* Uppercase has no descenders, so trim the line box to cap height + baseline
    to keep the eyebrow's padding visually even top and bottom */
+/* Small eyebrow text whatever the tag (h1/h5/p). A class outranks the global
+   h1–h6 element rules, which Tailwind utilities can't override (they're layered). */
+.star-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--mesm-blue);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 .star-eyebrow-label {
   line-height: 1;
 }

@@ -8,6 +8,7 @@ import TrustBadges from "./TrustBadges";
 import Image from "next/image";
 import AvatarRow from "../ui/AvatarRow";
 import GoogleBrow from "../ui/GoogleBrow";
+import StarEyebrow from "../ui/StarEyebrow";
 import {
   listFromHeroL,
   extractIframeFromBlocks,
@@ -76,6 +77,8 @@ function MediaDisplay({ media }) {
 export default function CenterHero({
   heroMedia,
   heroEmbed, // Sanity blocks for iframe
+  eyebrow,
+  eyebrowIsH1 = false, // true → eyebrow is the H1 and the title drops to H2
   pageHeader,
   pageSubtitle,
   heroL, // Sanity blocks or strings
@@ -87,6 +90,8 @@ export default function CenterHero({
   avatar, // { src, alt } — replaces the GoogleBrow with a person's avatar
 }) {
   const listItems = useMemo(() => listFromHeroL(heroL), [heroL]);
+  // Only promote the eyebrow when there is one, so the page always keeps an H1
+  const eyebrowAsH1 = Boolean(eyebrow && eyebrowIsH1);
 
   const iframeHtml = useMemo(
     () => extractIframeFromBlocks(heroEmbed),
@@ -117,10 +122,15 @@ export default function CenterHero({
                   className="w-20 h-20 rounded-full object-cover ring-1 ring-[var(--mesm-grey-dk)]"
                 />
               )}
+              {eyebrow && (
+                <StarEyebrow as={eyebrowAsH1 ? "h1" : "p"}>
+                  {eyebrow}
+                </StarEyebrow>
+              )}
               <StaggeredWords
-                as="h1"
+                as={eyebrowAsH1 ? "h2" : "h1"}
                 delay={0.01}
-                className="page-title-medium"
+                className="page-title-medium tracking-[-0.03em]"
                 text={`${pageHeader || ""}`}
               />
 

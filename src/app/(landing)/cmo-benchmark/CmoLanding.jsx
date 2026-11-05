@@ -11,7 +11,7 @@ import {
 } from "@/lib/cmo-benchmark/quizData";
 import FAQ from "@/components/blocks/FAQ";
 import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
-import StarEyebrow from "../growth-leak-audit/StarEyebrow";
+import StarEyebrow from "@/components/ui/StarEyebrow";
 import CmoQuiz from "./CmoQuiz";
 import { loadProgress, clearProgress } from "./progress";
 import TrustedByMarquee from "@/components/home/TrustedByMarquee";

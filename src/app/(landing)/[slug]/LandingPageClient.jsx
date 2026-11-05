@@ -21,6 +21,8 @@ export default function LandingPageClient({ page }) {
     <>
       <Hero
         heroMedia={page.media}
+        eyebrow={page.eyebrow}
+        eyebrowIsH1={page.eyebrowIsH1}
         pageHeader={page.line1}
         pageSubtitle={page.sub}
         heroL={page.heroL}

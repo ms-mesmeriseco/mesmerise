@@ -14,6 +14,8 @@ export const landingBySlugQuery = groq`
 
   // Hero
   hE,
+  eyebrow,
+  "eyebrowIsH1": coalesce(eyebrowIsH1, false),
   align,
   line1,
   sub,

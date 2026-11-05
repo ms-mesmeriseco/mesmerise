@@ -16,7 +16,6 @@ import ThreeColumnImagesBlock from "@/components/sanity-blocks/ThreeColumnImages
 import DataRow from "@/components/sanity-blocks/DataRow";
 import CaseStudyHero from "@/components/sanity-blocks/CaseStudyHero";
 import ContentRail from "@/components/sanity-blocks/ContentRail";
-import IconListColumn from "@/components/sanity-blocks/IconListColumn";
 import Pyramid from "@/components/sanity-blocks/Pyramid";
 import ListIconsFocus from "@/components/sanity-blocks/ListIconsFocus";
 import { motion } from "framer-motion";
