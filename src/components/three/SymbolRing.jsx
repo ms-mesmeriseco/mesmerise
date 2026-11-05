@@ -1,14 +1,5 @@
 "use client";
 
-// The five service symbols on a flat, horizontal ring. The camera sits
-// slightly above the ring so it reads as an ellipse: the front symbol is
-// closest to the viewer, the rear one furthest away (and dimmed by fog).
-//
-// Click either side to turn the ring one fifth that way. The three front
-// symbols show their name on hover and open their service page on click; the
-// two rear ones aren't interactive, so clicking them just turns the ring.
-// On mobile the symbols stack in a vertical column with their names below.
-
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,64 +14,65 @@ import {
 import { MathUtils, Vector3 } from "three";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
-// Analytics.glb holds the extruded + bevelled version of every symbol
-const SOURCE = "/models/symbols/Analytics.glb";
+// Each symbol has its own extruded + bevelled model in /models/symbols
+const MODEL_DIR = "/models/symbols";
 
-const SYMBOLS = [
+export const SYMBOLS = [
   {
     title: "Strategy",
     href: "/services/strategy",
-    node: "Curve004",
+    model: `${MODEL_DIR}/Strategy.glb`,
     accent: "--mesm-yellow",
   },
   {
     title: "Branding",
     href: "/services/branding",
-    node: "Curve001",
+    model: `${MODEL_DIR}/Branding.glb`,
     accent: "--accent",
   },
   {
     title: "Website",
     href: "/services/website",
-    node: "Curve005",
+    model: `${MODEL_DIR}/Website.glb`,
     accent: "--mesm-blue",
   },
   {
     title: "Performance & Growth",
     href: "/services/performance-growth",
-    node: "Curve002",
+    model: `${MODEL_DIR}/Performance.glb`,
     accent: "--mesm-red",
   },
   {
     title: "Analytics",
     href: "/services/analytics",
-    node: "Curve",
+    model: `${MODEL_DIR}/Analytics.glb`,
     accent: "--accent2",
   },
 ];
 
 const STEP = (Math.PI * 2) / SYMBOLS.length; // one click = one fifth of the ring
 const TURN_EASE = 4; // higher = snappier turn to the next symbol
-const SYMBOL_SIZE = 1.1; // world units each symbol's width/height is fitted to
+export const SYMBOL_SIZE = 1.1; // world units each symbol's width/height is fitted to
 const MAX_RADIUS = 4;
-const FACE_YAW = 0.35; // slight angle so the glass edges catch the light
-const HOVER_TURN = 0.45; // radians the symbol swivels on hover (~25°)
+export const FACE_YAW = 0.35; // slight angle so the glass edges catch the light
+export const HOVER_TURN = 0.45; // radians the symbol swivels on hover (~25°)
 // A symbol counts as "front" while its depth is above this fraction of the
 // radius. The front three sit at +0.31r or more, the rear two at -0.81r.
 const FRONT_DEPTH = -0.25;
-const MOBILE_BREAKPOINT = 768; // matches Tailwind's md
-const CURSOR_OFFSET = 16; // px gap between the cursor and the floating title
+export const MOBILE_BREAKPOINT = 768; // matches Tailwind's md
+export const CURSOR_OFFSET = 16; // px gap between the cursor and the floating title
 const CAMERA_TARGET_Y = -0.6;
 
 const worldPos = new Vector3();
 
-// Bake one node's transforms into a single centred geometry, scaled to fit
-function useSymbolGeometry(scene, node) {
+// Bake a model's meshes into a single centred geometry, scaled to fit
+export function useSymbolGeometry(url) {
+  const { scene } = useGLTF(url);
   const geometry = useMemo(() => {
     scene.updateMatrixWorld(true);
     const parts = [];
     scene.traverse((child) => {
-      if (!child.isMesh || child.name !== node) return;
+      if (!child.isMesh) return;
       const g = child.geometry.clone();
       for (const name of Object.keys(g.attributes)) {
         if (name !== "position" && name !== "normal") g.deleteAttribute(name);
@@ -95,13 +87,13 @@ function useSymbolGeometry(scene, node) {
     const s = SYMBOL_SIZE / Math.max(max.x - min.x, max.y - min.y);
     merged.scale(s, s, s);
     return merged;
-  }, [scene, node]);
+  }, [scene]);
 
   useEffect(() => () => geometry.dispose(), [geometry]);
   return geometry;
 }
 
-function useCssColor(variable) {
+export function useCssColor(variable) {
   const [color, setColor] = useState("#ffffff");
   useEffect(() => {
     const value = getComputedStyle(document.documentElement)
@@ -112,9 +104,42 @@ function useCssColor(variable) {
   return color;
 }
 
+// Glass symbol plus an invisible square hit area, shared with SymbolRow
+export function SymbolGlass({ model, accent }) {
+  const geometry = useSymbolGeometry(model);
+  const color = useCssColor(accent);
+  const isMobile = useThree((s) => s.size.width < MOBILE_BREAKPOINT);
+  return (
+    <>
+      <mesh geometry={geometry}>
+        {/* Same glass as the homepage logo */}
+        <MeshTransmissionMaterial
+          color={color}
+          backside={!isMobile}
+          backsideThickness={0.1}
+          samples={isMobile ? 3 : 6}
+          resolution={512}
+          thickness={0.05}
+          anisotropicBlur={0.1}
+          iridescence={2}
+          iridescenceIOR={1}
+          clearcoat={10}
+          envMapIntensity={0.5}
+          emissive={color}
+          emissiveIntensity={0.01}
+        />
+      </mesh>
+      {/* Invisible square hit area, so thin strokes are easy to click */}
+      <mesh>
+        <planeGeometry args={[SYMBOL_SIZE * 1.1, SYMBOL_SIZE * 1.1]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+    </>
+  );
+}
+
 function OrbitingSymbol({
-  scene,
-  node,
+  model,
   accent,
   position,
   scale,
@@ -127,9 +152,6 @@ function OrbitingSymbol({
   onSelect,
   onTurn,
 }) {
-  const geometry = useSymbolGeometry(scene, node);
-  const color = useCssColor(accent);
-  const isMobile = useThree((s) => s.size.width < 768);
   const orbitRef = useRef();
   const hoverRef = useRef();
   const isFront = useRef(true);
@@ -167,29 +189,7 @@ function OrbitingSymbol({
             else onTurn(e.nativeEvent);
           }}
         >
-          <mesh geometry={geometry}>
-            {/* Same glass as the homepage logo */}
-            <MeshTransmissionMaterial
-              color={color}
-              backside={!isMobile}
-              backsideThickness={0.1}
-              samples={isMobile ? 3 : 6}
-              resolution={512}
-              thickness={0.05}
-              anisotropicBlur={0.1}
-              iridescence={2}
-              iridescenceIOR={1}
-              clearcoat={10}
-              envMapIntensity={0.5}
-              emissive={color}
-              emissiveIntensity={hovered ? 0.3 : 0.12}
-            />
-          </mesh>
-          {/* Invisible square hit area, so thin strokes are easy to click */}
-          <mesh>
-            <planeGeometry args={[SYMBOL_SIZE * 1.1, SYMBOL_SIZE * 1.1]} />
-            <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-          </mesh>
+          <SymbolGlass model={model} accent={accent} />
         </group>
 
         {/* Mobile: no hover, so the name always sits under the symbol */}
@@ -208,7 +208,6 @@ function OrbitingSymbol({
 }
 
 function Ring({ targetRef, hoveredIndex, setHoveredIndex, onSelect, onTurn }) {
-  const { scene } = useGLTF(SOURCE);
   const viewport = useThree((s) => s.viewport);
   const stacked = useThree((s) => s.size.width < MOBILE_BREAKPOINT);
   const ringRef = useRef();
@@ -257,8 +256,7 @@ function Ring({ targetRef, hoveredIndex, setHoveredIndex, onSelect, onTurn }) {
       {SYMBOLS.map((s, i) => (
         <OrbitingSymbol
           key={s.title}
-          scene={scene}
-          node={s.node}
+          model={s.model}
           accent={s.accent}
           {...layout(i)}
           radius={radius}
@@ -368,4 +366,4 @@ export default function SymbolRing({ className = "" }) {
   );
 }
 
-useGLTF.preload(SOURCE);
+for (const s of SYMBOLS) useGLTF.preload(s.model);

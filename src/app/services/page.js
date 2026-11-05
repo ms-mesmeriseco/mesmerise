@@ -83,11 +83,13 @@ export default function Services() {
     <div className="flex flex-col min-h-screen gap-[8rem]">
       {/* Intro and ring read as one block, so they sit closer than the sections below */}
       <div className="flex flex-col">
-        <div className="flex flex-col gap-8 items-center justify-end h-[40vh] py-16 px-4 md:px-8">
+        <div className="flex flex-col gap-8 items-center justify-center min-h-[70vh]  px-4 md:px-8">
           <StaggeredWords
             key="h1"
-            text="Premium full service solutions, engineered with insight. Delivered with intent."
-            className="page-title-medium text-center"
+            text={
+              "Premium full service solutions,\nengineered with insight.\nDelivered with intent."
+            }
+            className="page-title-large text-center"
             center
           />
         </div>

@@ -14,6 +14,9 @@ import Statement from "@/components/ui/Statement";
 import { useHeroLoader } from "@/components/three/HeroLoaderProvider";
 
 const Scene = dynamic(() => import("@/components/three/Scene"), { ssr: false });
+const SymbolRow = dynamic(() => import("@/components/three/SymbolRow"), {
+  ssr: false,
+});
 const ProjectRail = dynamic(
   () => import("@/components/sanity-blocks/ProjectRail"),
   { suspense: true },
@@ -190,7 +193,7 @@ export default function HomePage() {
       <ProjectsRow />
 
       <Statement
-        text="Bridging the gap between aesthetic solutions and undeniable data."
+        text={"Bridging the gap between\naesthetic solutions and undeniable data."}
         showCTA="true"
       />
 
@@ -207,6 +210,11 @@ export default function HomePage() {
           <CaseStudyHero narrow={false} block={caseStudyBlock} />
         </div>
       </InView> */}
+      {/* 3D services row: hover to swivel + show the name, click to open */}
+      <InView>
+        <SymbolRow className="h-[90vh] w-full" />
+      </InView>
+
       <ServicesGrid />
 
       <TrustedBy />

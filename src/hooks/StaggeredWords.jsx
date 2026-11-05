@@ -14,13 +14,17 @@ export default function StaggeredWords({
   gradient = false,
   margin = "top 80%", // Triggers when top of text hits 85% of viewport
   once = true,
-  leading = 1.15,
+  // Optional override; by default the line-height comes from the CSS class
+  // (so breakpoint-specific line-heights in globals.css still apply)
+  leading,
   yOffset = 30, // Pixels to slide up
 }) {
   const containerRef = useRef(null);
   const wordsRef = useRef([]);
   const safeText = typeof text === "string" ? text : "";
-  const words = safeText.split(" ");
+  // "\n" in the text forces a line break; each line is split into words
+  const lines = safeText.split("\n").map((line) => line.split(" ").filter(Boolean));
+  let wordIndex = 0; // running index across lines, for wordsRef
 
   const wordClass = gradient
     ? "bg-linear-40 from-[var(--mesm-red)] to-[var(--dark-grey)] bg-clip-text text-transparent"
@@ -69,25 +73,28 @@ export default function StaggeredWords({
         overflow: "visible",
       }}
     >
-      <span
-        style={{ display: "block", whiteSpace: "normal", textWrap: "balance" }}
-      >
-        {words.map((word, i) => (
-          <span key={i} style={{ display: "inline-block" }}>
-            <span
-              ref={(el) => (wordsRef.current[i] = el)}
-              className={`inline-blockalign-baseline will-change-[transform,filter,opacity] ${wordClass}`}
-              style={{ whiteSpace: "normal" }}
-            >
-              {word}
-            </span>
-            {/* Add space between words */}
-            {i < words.length - 1 && (
-              <span style={{ display: "inline-block" }}>&nbsp;</span>
-            )}
-          </span>
-        ))}
-      </span>
+      {lines.map((line, l) => (
+        <span
+          key={l}
+          style={{ display: "block", whiteSpace: "normal", textWrap: "balance" }}
+        >
+          {line.map((word, w) => {
+            const i = wordIndex++;
+            return (
+              <span key={w}>
+                <span
+                  ref={(el) => (wordsRef.current[i] = el)}
+                  className={`inline-block align-baseline will-change-[transform,filter,opacity] ${wordClass}`}
+                >
+                  {word}
+                </span>
+                {/* A real space (not &nbsp;) so word gaps are full width and lines can wrap */}
+                {w < line.length - 1 && " "}
+              </span>
+            );
+          })}
+        </span>
+      ))}
     </As>
   );
 }

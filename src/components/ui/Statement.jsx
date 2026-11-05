@@ -12,7 +12,7 @@ export default function Statement({
   return (
     <section
       data-marker={marker}
-      className="min-h-[50vh] flex items-start justify-center text-[var(--foreground)] max-w-[1280px] py-8"
+      className="min-h-[50vh] flex items-center justify-center text-[var(--foreground)] max-w-[1280px] py-8"
     >
       <div className="text-left">
         <InView>
@@ -23,7 +23,7 @@ export default function Statement({
             className={className ?? "page-title-large"}
           />
           {showCTA && (
-            <div className="mt-8">
+            <div className="mt-12 md:mt-16">
               <HeroButton href="/connect" size="lg">
                 <h3>Let's connect</h3>
               </HeroButton>
