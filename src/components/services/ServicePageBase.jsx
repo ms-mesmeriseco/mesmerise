@@ -73,7 +73,7 @@ function FinalCTA({ text }) {
         <StaggeredWords
           as="h3"
           text={text}
-          className="page-title-large max-w-5xl"
+          className="page-title-large max-w-9xl"
         />
 
         <HeroButton size="lg" href="/connect">
