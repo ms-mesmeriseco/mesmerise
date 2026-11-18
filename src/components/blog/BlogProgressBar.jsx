@@ -106,7 +106,8 @@ export default function BlogProgressBar({
       />
 
       <div className="relative h-full flex items-center justify-between gap-4 px-4 md:px-5">
-        <h6 className="truncate min-w-0 pt-1 ">
+        {/* text-nowrap! beats the global unlayered `h6 { text-wrap: pretty }`, which otherwise re-enables wrapping */}
+        <h6 className="truncate text-nowrap! min-w-0 flex-1 pt-1">
           <span className="hidden sm:inline opacity-50">Now reading: </span>
           <span className="f">{title}</span>
         </h6>
