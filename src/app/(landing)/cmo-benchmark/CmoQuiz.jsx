@@ -17,7 +17,8 @@ import {
   QUIZ_NAME,
 } from "@/lib/cmo-benchmark/quizData";
 import { computeResults } from "@/lib/cmo-benchmark/scoring";
-import { newEventId, trackMeta } from "@/lib/metaPixel";
+import { useQuizTracking } from "@/lib/metaPixel";
+import { getAttribution } from "@/lib/attribution";
 import { saveProgress, clearProgress } from "./progress";
 import CmoResults from "./CmoResults";
 import Button from "@/components/ui/Button";
@@ -96,15 +97,10 @@ export default function CmoQuiz({ initial, onExit } = {}) {
   const [results, setResults] = useState(null);
   const [share, setShare] = useState(null);
   const [quizId, setQuizId] = useState(null);
-  // Meta event IDs, sent with the submission so Conversions API copies can reuse them
-  const [metaIds] = useState(() => ({
-    quizStart: newEventId(),
-    lead: newEventId(),
-    viewContent: newEventId(),
-  }));
-  // A resumed quiz already fired QuizStart on an earlier visit
-  const resumed = useRef(Object.keys(initial?.answers ?? {}).length > 0);
-  const quizStarted = useRef(false);
+  // A resumed quiz already sent QuizStart on an earlier visit
+  const meta = useQuizTracking(QUIZ_NAME, {
+    resumed: Object.keys(initial?.answers ?? {}).length > 0,
+  });
   const advanceTimer = useRef(null);
   const topRef = useRef(null);
 
@@ -135,19 +131,8 @@ export default function CmoQuiz({ initial, onExit } = {}) {
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // QuizStart on the first answer
-  function markStarted() {
-    if (quizStarted.current || resumed.current) return;
-    quizStarted.current = true;
-    trackMeta(
-      "QuizStart",
-      { quiz_name: QUIZ_NAME },
-      { custom: true, eventId: metaIds.quizStart },
-    );
-  }
-
   function selectSingle(q, option, index) {
-    markStarted();
+    meta.markStarted();
     const value = isHook(q) ? option.value : index;
     setAnswers((a) => {
       const next = { ...a, [q.id]: value };
@@ -168,7 +153,7 @@ export default function CmoQuiz({ initial, onExit } = {}) {
   }
 
   function toggleMulti(q, index) {
-    markStarted();
+    meta.markStarted();
     const exclusive = (i) => q.options[i]?.exclusive;
     setAnswers((a) => {
       const current = a[q.id] || [];
@@ -221,10 +206,8 @@ export default function CmoQuiz({ initial, onExit } = {}) {
           answers,
           contact,
           hp,
-          metaEventIds: {
-            ...metaIds,
-            quizStart: quizStarted.current ? metaIds.quizStart : null,
-          },
+          metaEventIds: meta.eventIds(),
+          attribution: getAttribution(),
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -254,11 +237,7 @@ export default function CmoQuiz({ initial, onExit } = {}) {
         });
         // Only fires here, on a successful submission: saved progress is cleared
         // above, and shared results links never reach this form
-        trackMeta(
-          "Lead",
-          { content_name: QUIZ_NAME, quiz_name: QUIZ_NAME },
-          { eventId: metaIds.lead },
-        );
+        meta.trackLead();
       }
       go(1);
     } catch (err) {
@@ -442,7 +421,7 @@ export default function CmoQuiz({ initial, onExit } = {}) {
               share={share}
               contact={contact}
               quizId={quizId}
-              viewEventId={metaIds.viewContent}
+              viewEventId={meta.viewEventId}
             />
           )}
         </motion.div>

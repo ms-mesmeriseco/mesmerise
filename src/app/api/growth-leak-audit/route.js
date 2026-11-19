@@ -12,6 +12,7 @@ import {
 } from "@/lib/quiz/scoring";
 import { resultsLink } from "@/lib/quiz/resultsLink";
 import { sendQuizEvents } from "@/lib/metaCapi";
+import { ATTRIBUTION_FIELDS, cleanAttribution } from "@/lib/attribution";
 import {
   H1,
   H3,
@@ -107,6 +108,8 @@ export async function POST(req) {
     const internal = resultsLink(answers, INTERNAL_LINK_DAYS);
     const resultsUrl = internal && absolute(internal.path);
 
+    const attribution = cleanAttribution(body.attribution);
+
     const lead = {
       firstName,
       email,
@@ -121,6 +124,7 @@ export async function POST(req) {
       resultsUrl,
       shareUrl,
       quizId,
+      attribution,
     };
 
     // Each integration is independent: one failing shouldn't block the prospect's
@@ -139,6 +143,7 @@ export async function POST(req) {
         eventIds: body.metaEventIds,
         email,
         firstName,
+        attribution,
       }),
     ]);
     tasks.forEach((t, i) => {
@@ -232,6 +237,7 @@ async function sendInternalAlert(
     goalLabel,
     wantsCall,
     resultsUrl,
+    attribution,
   },
   contactId,
 ) {
@@ -323,6 +329,10 @@ async function sendInternalAlert(
     ),
   ].join("");
 
+  const sourceRows = ATTRIBUTION_FIELDS.filter(([k]) => attribution[k]).map(
+    ([k, label]) => row(label, attribution[k]),
+  );
+
   const html = `
     <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; max-width: 680px;">
       ${results.isDecisionMaker ? "" : `<p style="background:#fff3cd;padding:8px 12px;border-radius:6px;margin:0 0 8px"><strong>Not the decision-maker. Ask who signs off.</strong></p>`}
@@ -339,6 +349,13 @@ async function sendInternalAlert(
         ${row("Industry", industry)}
         ${row("Goal", goalLabel || "-")}
       </table>
+
+      ${h("SOURCE")}
+      ${
+        sourceRows.length
+          ? `<table>${sourceRows.join("")}</table>`
+          : '<p style="margin:0">No campaign tags or referrer (direct visit, or saved over 30 days ago)</p>'
+      }
 
       ${h("FIT")}
       <table>

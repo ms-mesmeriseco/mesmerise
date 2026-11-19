@@ -12,7 +12,7 @@ import {
   NO_PRIORITIES_MESSAGE,
   QUIZ_NAME,
 } from "@/lib/cmo-benchmark/quizData";
-import { useViewContent } from "@/lib/metaPixel";
+import { useResultsView } from "@/lib/metaPixel";
 import { tierFor, leadershipSummary } from "@/lib/cmo-benchmark/scoring";
 import { TierScale } from "../growth-leak-audit/QuizResults";
 import ReviewCta from "../growth-leak-audit/ReviewCta";
@@ -74,7 +74,7 @@ export default function CmoResults({
   quizId,
   viewEventId,
 }) {
-  useViewContent(`${QUIZ_NAME} results`, viewEventId);
+  useResultsView(QUIZ_NAME, viewEventId);
   const { overall, pillars, priorities, working, fitBand } = results;
   const tier = tierFor(overall);
   const subhead = PRESSURE_HEADLINES[pressure]?.(results.term);

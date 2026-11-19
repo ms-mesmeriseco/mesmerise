@@ -19,7 +19,7 @@ import {
 import { tierFor, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
 import ReviewCta from "./ReviewCta";
 import { joinTold } from "@/lib/quiz/joinTold";
-import { useViewContent } from "@/lib/metaPixel";
+import { useResultsView } from "@/lib/metaPixel";
 
 // Top of the scale is the lowest tier; the marker travels down towards the top tier
 const EASE = [0.22, 1, 0.36, 1];
@@ -354,7 +354,7 @@ export default function QuizResults({
   quizId,
   viewEventId,
 }) {
-  useViewContent(`${QUIZ_NAME} results`, viewEventId);
+  useResultsView(QUIZ_NAME, viewEventId);
   const { overall, pillars, leaks, fitBand } = results;
   const tier = tierFor(overall);
   const headline = GOAL_HEADLINES[goal];

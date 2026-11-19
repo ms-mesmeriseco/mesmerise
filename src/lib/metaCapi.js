@@ -26,12 +26,20 @@ const cookie = (header, name) =>
 // QuizStart is skipped when it fired on an earlier visit (no event_id for it).
 export async function sendQuizEvents(
   req,
-  { quizName, eventIds, email, firstName },
+  { quizName, eventIds, email, firstName, attribution },
 ) {
   if (!accessToken) return;
 
   const headers = req.headers;
   const cookies = headers.get("cookie");
+  // No _fbc cookie (blocked, or another browser tab): build it from the saved
+  // fbclid, in Meta's fb.1.<click time ms>.<fbclid> format
+  const fbclid = attribution?.fbclid;
+  const fbc =
+    cookie(cookies, "_fbc") ||
+    (fbclid
+      ? `fb.1.${attribution.captured_at || Date.now()}.${fbclid}`
+      : undefined);
   const base = {
     event_time: Math.floor(Date.now() / 1000),
     action_source: "website",
@@ -43,7 +51,7 @@ export async function sendQuizEvents(
         headers.get("x-forwarded-for")?.split(",")[0].trim() || undefined,
       client_user_agent: headers.get("user-agent") || undefined,
       fbp: cookie(cookies, "_fbp"),
-      fbc: cookie(cookies, "_fbc"),
+      fbc,
     },
   };
 

@@ -1,10 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { captureAttribution } from "@/lib/attribution";
 
 export default function Template({ children }) {
   const pathname = usePathname();
+  // Mounted once per full page load, so this sees the landing URL's tags
+  useEffect(() => captureAttribution(), []);
   const paddingTop =
     pathname === "/"
       ? "pt-0"

@@ -14,6 +14,7 @@ import {
 } from "@/lib/cmo-benchmark/scoring";
 import { resultsLink } from "@/lib/cmo-benchmark/resultsLink";
 import { sendQuizEvents } from "@/lib/metaCapi";
+import { ATTRIBUTION_FIELDS, cleanAttribution } from "@/lib/attribution";
 import {
   H1,
   H2,
@@ -115,6 +116,8 @@ export async function POST(req) {
     const internal = resultsLink(answers, who, INTERNAL_LINK_DAYS);
     const resultsUrl = internal && absolute(internal.path);
 
+    const attribution = cleanAttribution(body.attribution);
+
     const lead = {
       firstName,
       email,
@@ -130,6 +133,7 @@ export async function POST(req) {
       shareUrl,
       shareExpires: share?.expires ?? null,
       quizId,
+      attribution,
     };
 
     // Each integration is independent: one failing shouldn't block the prospect's
@@ -148,6 +152,7 @@ export async function POST(req) {
         eventIds: body.metaEventIds,
         email,
         firstName,
+        attribution,
       }),
     ]);
     tasks.forEach((t, i) => {
@@ -262,6 +267,7 @@ async function sendLeadEmail(
     sessionRequested,
     hotLead,
     resultsUrl,
+    attribution,
   },
   contactId,
 ) {
@@ -378,6 +384,10 @@ async function sendLeadEmail(
     ),
   ].join("");
 
+  const sourceRows = ATTRIBUTION_FIELDS.filter(([k]) => attribution[k]).map(
+    ([k, label]) => row(label, attribution[k]),
+  );
+
   const html = `
     <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; max-width: 680px;">
       ${flags.join("")}
@@ -393,6 +403,13 @@ async function sendLeadEmail(
         ${row("Industry", industry)}
         ${row("Biggest pressure", pressureLabel(answers) || "-")}
       </table>
+
+      ${h("SOURCE")}
+      ${
+        sourceRows.length
+          ? `<table>${sourceRows.join("")}</table>`
+          : '<p style="margin:0">No campaign tags or referrer (direct visit, or saved over 30 days ago)</p>'
+      }
 
       ${h("FIT")}
       <table>
