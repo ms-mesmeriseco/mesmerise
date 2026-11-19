@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
 import { formLead } from "@/lib/metaPixel";
@@ -44,7 +43,6 @@ function Chip({ label, selected, onClick }) {
 }
 
 export default function ContactForm() {
-  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -104,7 +102,10 @@ export default function ContactForm() {
       setServices([]);
       setBudgets([]);
       setDetails("");
-      router.push("/form-success");
+      // A full page load (not router.push), so GTM's /form-success conversion
+      // tags (Google Ads, LinkedIn, Bing, Reddit, X) fire; they only run on
+      // page load. The short wait lets the Meta Lead request leave first.
+      setTimeout(() => window.location.assign("/form-success"), 300);
     } catch (err) {
       setStatus({ ok: false, msg: err.message || "Something went wrong." });
     } finally {
