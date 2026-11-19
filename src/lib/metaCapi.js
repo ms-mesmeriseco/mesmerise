@@ -10,26 +10,29 @@ const accessToken = process.env.FB_CAPI_ACCESS_TOKEN;
 // Set to a code from Events Manager > Test events to see server events arrive there
 const testEventCode = process.env.FB_CAPI_TEST_EVENT_CODE;
 
+// Each event's params, matching what the browser sends (lib/metaPixel.js)
+const CUSTOM_DATA = {
+  QuizStart: (quizName) => ({ quiz_name: quizName }),
+  Lead: (quizName) => ({ content_name: quizName, quiz_name: quizName }),
+  ViewContent: (quizName) => ({ content_name: `${quizName} results` }),
+};
+
+// Personal details are only ever sent hashed
 const hash = (value) =>
   value
     ? [createHash("sha256").update(value.trim().toLowerCase()).digest("hex")]
     : undefined;
 
 // event_ids come from the browser, so only accept something shaped like one
-const validId = (id) =>
+export const validEventId = (id) =>
   typeof id === "string" && /^[\w-]{8,64}$/.test(id) ? id : null;
 
 const cookie = (header, name) =>
   header?.match(new RegExp(`(?:^|;\\s*)${name}=([^;]+)`))?.[1];
 
-// The quiz's QuizStart, Lead and ViewContent events, sent once the details are in.
-// QuizStart is skipped when it fired on an earlier visit (no event_id for it).
-export async function sendQuizEvents(
-  req,
-  { quizName, eventIds, email, firstName, attribution },
-) {
-  if (!accessToken) return;
-
+// The browser details Meta matches on, sent with every event: _fbp and _fbc
+// cookies, IP and user agent, plus hashed email and first name when known
+function userData(req, { email, firstName, attribution } = {}) {
   const headers = req.headers;
   const cookies = headers.get("cookie");
   // No _fbc cookie (blocked, or another browser tab): build it from the saved
@@ -40,38 +43,36 @@ export async function sendQuizEvents(
     (fbclid
       ? `fb.1.${attribution.captured_at || Date.now()}.${fbclid}`
       : undefined);
+  return {
+    em: hash(email),
+    fn: hash(firstName),
+    client_ip_address:
+      headers.get("x-forwarded-for")?.split(",")[0].trim() || undefined,
+    client_user_agent: headers.get("user-agent") || undefined,
+    fbp: cookie(cookies, "_fbp"),
+    fbc,
+  };
+}
+
+// events: [[event_name, event_id]]; ones without a valid event_id are skipped
+async function sendEvents(req, quizName, events, details) {
+  if (!accessToken) return;
   const base = {
     event_time: Math.floor(Date.now() / 1000),
     action_source: "website",
-    event_source_url: headers.get("referer") || undefined,
-    user_data: {
-      em: hash(email),
-      fn: hash(firstName),
-      client_ip_address:
-        headers.get("x-forwarded-for")?.split(",")[0].trim() || undefined,
-      client_user_agent: headers.get("user-agent") || undefined,
-      fbp: cookie(cookies, "_fbp"),
-      fbc,
-    },
+    // The page the request came from
+    event_source_url: req.headers.get("referer") || undefined,
+    user_data: userData(req, details),
   };
-
-  const events = [
-    ["QuizStart", eventIds?.quizStart, { quiz_name: quizName }],
-    ["Lead", eventIds?.lead, { content_name: quizName, quiz_name: quizName }],
-    [
-      "ViewContent",
-      eventIds?.viewContent,
-      { content_name: `${quizName} results` },
-    ],
-  ]
-    .filter(([, id]) => validId(id))
-    .map(([event_name, event_id, custom_data]) => ({
+  const data = events
+    .filter(([name, id]) => CUSTOM_DATA[name] && validEventId(id))
+    .map(([event_name, event_id]) => ({
       ...base,
       event_name,
       event_id,
-      custom_data,
+      custom_data: CUSTOM_DATA[event_name](quizName),
     }));
-  if (!events.length) return;
+  if (!data.length) return;
 
   const res = await fetch(
     `https://graph.facebook.com/${API_VERSION}/${DATASET_ID}/events?access_token=${encodeURIComponent(accessToken)}`,
@@ -79,7 +80,7 @@ export async function sendQuizEvents(
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        data: events,
+        data,
         ...(testEventCode && { test_event_code: testEventCode }),
       }),
     },
@@ -90,4 +91,27 @@ export async function sendQuizEvents(
       `Meta CAPI ${res.status}: ${detail.error?.message || "request failed"}`,
     );
   }
+}
+
+// On details submission: Lead and the results ViewContent, with hashed email
+// and first name. QuizStart went earlier, through /api/meta-event.
+export function sendQuizEvents(
+  req,
+  { quizName, eventIds, email, firstName, attribution },
+) {
+  return sendEvents(
+    req,
+    quizName,
+    [
+      ["Lead", eventIds?.lead],
+      ["ViewContent", eventIds?.viewContent],
+    ],
+    { email, firstName, attribution },
+  );
+}
+
+// An event sent as it happens in the browser (QuizStart, a shared results
+// ViewContent). No personal details are known yet.
+export function sendBrowserEvent(req, { name, quizName, eventId }) {
+  return sendEvents(req, quizName, [[name, eventId]]);
 }

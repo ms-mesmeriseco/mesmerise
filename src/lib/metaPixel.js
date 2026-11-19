@@ -19,12 +19,24 @@ export function trackMeta(
   return eventId;
 }
 
+// Asks the server to send its Conversions API copy of an event that has no
+// submission to ride on (QuizStart, a shared results ViewContent). Fire and forget.
+function sendServerCopy(name, quizName, eventId) {
+  fetch("/api/meta-event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, quizName, eventId }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
 // Meta tracking for a quiz. Every quiz uses this so events, params and
 // event_ids match across quizzes:
-//   markStarted()  on every answer; only the first sends QuizStart
+//   markStarted()  on every answer; only the first sends QuizStart (browser
+//                  and server)
 //   trackLead()    once the details form is saved; the only Lead a quiz sends
 //   eventIds()     sent with the submission as metaEventIds, so the API route's
-//                  Conversions API copies (lib/metaCapi.js) reuse the IDs
+//                  Lead and ViewContent copies (lib/metaCapi.js) reuse the IDs
 //   viewEventId    passed to the results view for useResultsView
 // resumed: the quiz picked up saved answers, so QuizStart fired on an earlier visit.
 export function useQuizTracking(quizName, { resumed = false } = {}) {
@@ -45,6 +57,7 @@ export function useQuizTracking(quizName, { resumed = false } = {}) {
         { quiz_name: quizName },
         { custom: true, eventId: ids.quizStart },
       );
+      sendServerCopy("QuizStart", quizName, ids.quizStart);
     },
     trackLead() {
       trackMeta(
@@ -53,25 +66,24 @@ export function useQuizTracking(quizName, { resumed = false } = {}) {
         { eventId: ids.lead },
       );
     },
-    eventIds: () => ({
-      ...ids,
-      quizStart: started.current ? ids.quizStart : null,
-    }),
+    eventIds: () => ({ lead: ids.lead, viewContent: ids.viewContent }),
     viewEventId: ids.viewContent,
   };
 }
 
 // ViewContent once per results view (the ref survives Strict Mode's re-run).
-// Shared results links pass no eventId and get a fresh one.
+// After a submission the server copy went with it; a shared results link passes
+// no eventId, so it gets a fresh one and its own server copy.
 export function useResultsView(quizName, eventId) {
   const fired = useRef(false);
   useEffect(() => {
     if (fired.current) return;
     fired.current = true;
-    trackMeta(
+    const id = trackMeta(
       "ViewContent",
       { content_name: `${quizName} results` },
       { eventId },
     );
+    if (!eventId) sendServerCopy("ViewContent", quizName, id);
   }, [quizName, eventId]);
 }

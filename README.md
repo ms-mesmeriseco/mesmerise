@@ -46,6 +46,7 @@ Every quiz sends the same Meta events. To add tracking to a new quiz:
    - call `meta.trackLead()` only after that POST succeeds (the one `Lead` per quiz)
    - pass `viewEventId={meta.viewEventId}` to the results component
 3. In the results component, call `useResultsView(QUIZ_NAME, viewEventId)` (sends `ViewContent`; shared results links get a fresh ID).
-4. In the quiz's API route, add `sendQuizEvents(req, { quizName: QUIZ_NAME, eventIds: body.metaEventIds, email, firstName })` (from `@/lib/metaCapi`) to the post-submission tasks. This sends the Conversions API copies with the same event IDs, so Meta deduplicates them.
+4. In the quiz's API route, add `sendQuizEvents(req, { quizName: QUIZ_NAME, eventIds: body.metaEventIds, email, firstName, attribution })` (from `@/lib/metaCapi`) to the post-submission tasks. This sends the Conversions API copies of `Lead` and `ViewContent` with the same event IDs (and hashed email and first name), so Meta deduplicates them.
+5. Add the quiz's `QUIZ_NAME` to `QUIZZES` in `src/app/api/meta-event/route.js`, which sends the server copies of `QuizStart` and shared-link `ViewContent`.
 
 Needs `FB_CAPI_ACCESS_TOKEN` (and optionally `FB_CAPI_TEST_EVENT_CODE` while testing in Events Manager).
