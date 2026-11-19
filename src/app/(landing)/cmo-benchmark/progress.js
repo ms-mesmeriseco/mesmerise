@@ -4,7 +4,8 @@
 // Bump the version when options are reordered, so old saved indexes are dropped
 const KEY = "mesm-cmo-benchmark-v2";
 
-// { stepIndex, answers } or null
+// { stepIndex, answers, quizStarted } or null. quizStarted: this attempt's
+// QuizStart event was sent (missing on progress saved before tracking)
 export function loadProgress() {
   try {
     const saved = JSON.parse(window.localStorage.getItem(KEY));
@@ -17,9 +18,12 @@ export function loadProgress() {
   }
 }
 
-export function saveProgress(stepIndex, answers) {
+export function saveProgress(stepIndex, answers, quizStarted) {
   try {
-    window.localStorage.setItem(KEY, JSON.stringify({ stepIndex, answers }));
+    window.localStorage.setItem(
+      KEY,
+      JSON.stringify({ stepIndex, answers, quizStarted }),
+    );
   } catch {}
 }
 

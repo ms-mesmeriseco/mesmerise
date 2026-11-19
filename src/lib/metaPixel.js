@@ -38,15 +38,17 @@ function sendServerCopy(name, quizName, eventId) {
 //   eventIds()     sent with the submission as metaEventIds, so the API route's
 //                  Lead and ViewContent copies (lib/metaCapi.js) reuse the IDs
 //   viewEventId    passed to the results view for useResultsView
-// resumed: the quiz picked up saved answers, so QuizStart fired on an earlier visit.
-export function useQuizTracking(quizName, { resumed = false } = {}) {
+//   hasStarted()   whether this attempt has sent QuizStart, for saved progress
+// alreadyStarted: a resumed attempt whose QuizStart went on an earlier visit.
+// QuizStart is once per attempt, so pausing and resuming doesn't count twice.
+export function useQuizTracking(quizName, { alreadyStarted = false } = {}) {
   const [ids] = useState(() => ({
     quizStart: newEventId(),
     lead: newEventId(),
     viewContent: newEventId(),
   }));
   const started = useRef(false);
-  const skipStart = useRef(resumed);
+  const skipStart = useRef(alreadyStarted);
 
   return {
     markStarted() {
@@ -68,6 +70,7 @@ export function useQuizTracking(quizName, { resumed = false } = {}) {
     },
     eventIds: () => ({ lead: ids.lead, viewContent: ids.viewContent }),
     viewEventId: ids.viewContent,
+    hasStarted: () => started.current || skipStart.current,
   };
 }
 

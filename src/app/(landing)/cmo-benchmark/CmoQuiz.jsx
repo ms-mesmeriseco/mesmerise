@@ -97,9 +97,10 @@ export default function CmoQuiz({ initial, onExit } = {}) {
   const [results, setResults] = useState(null);
   const [share, setShare] = useState(null);
   const [quizId, setQuizId] = useState(null);
-  // A resumed quiz already sent QuizStart on an earlier visit
+  // Saved progress remembers whether this attempt already sent QuizStart, so a
+  // resumed quiz sends it only if an earlier visit didn't
   const meta = useQuizTracking(QUIZ_NAME, {
-    resumed: Object.keys(initial?.answers ?? {}).length > 0,
+    alreadyStarted: initial?.quizStarted === true,
   });
   const advanceTimer = useRef(null);
   const topRef = useRef(null);
@@ -110,7 +111,9 @@ export default function CmoQuiz({ initial, onExit } = {}) {
 
   // Save as they go; cleared once the benchmark is submitted
   useEffect(() => {
-    if (step.type !== "results") saveProgress(stepIndex, answers);
+    if (step.type !== "results") {
+      saveProgress(stepIndex, answers, meta.hasStarted());
+    }
   }, [stepIndex, answers, step.type]);
 
   const questionNumber = steps
