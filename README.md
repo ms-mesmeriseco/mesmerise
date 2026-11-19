@@ -51,3 +51,13 @@ Every quiz sends the same Meta events. To add tracking to a new quiz:
 5. Add the quiz's `QUIZ_NAME` to `QUIZZES` in `src/app/api/meta-event/route.js`, which sends the server copies of `QuizStart` and shared-link `ViewContent`.
 
 Needs `FB_CAPI_ACCESS_TOKEN` (and optionally `FB_CAPI_TEST_EVENT_CODE` while testing in Events Manager).
+
+### Other email forms
+
+Any form that collects an email sends one Meta `Lead`, only after it saves:
+
+1. Add the form's name to `LEAD_FORMS` in `src/lib/leadForms.js`.
+2. In the form: `const lead = formLead(LEAD_FORMS.yourForm)` (from `@/lib/metaPixel`) before submitting, send `metaEventId: lead.eventId` and `attribution: getAttribution()` in the body, and call `lead.track()` once the response is OK.
+3. In its API route, after the submission has saved: `await sendFormLead(req, { formName: LEAD_FORMS.yourForm, eventId: body.metaEventId, email, firstName, lastName, phone, attribution: cleanAttribution(body.attribution) }).catch(...)` (from `@/lib/metaCapi`).
+
+Don't add Meta `Lead` tags for these forms in Google Tag Manager; that double counts.

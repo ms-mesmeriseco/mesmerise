@@ -4,6 +4,9 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { upsertHubspotContact, splitName, LEAD_SOURCES } from "@/lib/hubspot";
+import { sendFormLead } from "@/lib/metaCapi";
+import { LEAD_FORMS } from "@/lib/leadForms";
+import { cleanAttribution } from "@/lib/attribution";
 
 const resendApiKey = process.env.RESEND_API_KEY;
 const resend = resendApiKey ? new Resend(resendApiKey) : null;
@@ -98,6 +101,18 @@ export async function POST(req) {
         { status: 502 }
       );
     }
+
+    // Meta Lead (server copy of the browser's); never blocks the submission
+    const { firstname, lastname } = splitName(fullName);
+    await sendFormLead(req, {
+      formName: LEAD_FORMS.contact,
+      eventId: body.metaEventId,
+      email,
+      firstName: firstname,
+      lastName: lastname,
+      phone,
+      attribution: cleanAttribution(body.attribution),
+    }).catch((err) => console.error("Meta CAPI lead failed:", err.message));
 
     return NextResponse.json({ ok: true });
   } catch (err) {

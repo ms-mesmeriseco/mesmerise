@@ -19,6 +19,18 @@ export function trackMeta(
   return eventId;
 }
 
+// Lead for a non-quiz form (contact, newsletter, downloads). Create it before
+// submitting, send eventId in the body as metaEventId so the route's server
+// copy (sendFormLead) reuses it, and call track() only once the submission saved.
+// formName is from lib/leadForms.js.
+export function formLead(formName) {
+  const eventId = newEventId();
+  return {
+    eventId,
+    track: () => trackMeta("Lead", { content_name: formName }, { eventId }),
+  };
+}
+
 // Asks the server to send its Conversions API copy of an event that has no
 // submission to ride on (QuizStart, a shared results ViewContent). Fire and forget.
 function sendServerCopy(name, quizName, eventId) {

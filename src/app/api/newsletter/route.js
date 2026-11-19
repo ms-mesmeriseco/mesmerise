@@ -3,6 +3,9 @@ export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import { upsertHubspotContact, LEAD_SOURCES } from "@/lib/hubspot";
+import { sendFormLead } from "@/lib/metaCapi";
+import { LEAD_FORMS } from "@/lib/leadForms";
+import { cleanAttribution } from "@/lib/attribution";
 
 export async function POST(req) {
   try {
@@ -45,6 +48,16 @@ export async function POST(req) {
       lastname: lastName,
       mesm_lead_source: LEAD_SOURCES.newsletter,
     });
+
+    // Meta Lead (server copy of the browser's); never blocks the submission
+    await sendFormLead(req, {
+      formName: LEAD_FORMS.newsletter,
+      eventId: body.metaEventId,
+      email,
+      firstName,
+      lastName,
+      attribution: cleanAttribution(body.attribution),
+    }).catch((err) => console.error("Meta CAPI lead failed:", err.message));
 
     return NextResponse.json({ ok: true });
   } catch (err) {

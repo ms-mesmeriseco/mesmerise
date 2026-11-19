@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import StaggeredChildren from "@/hooks/StaggeredChildren";
+import { formLead } from "@/lib/metaPixel";
+import { LEAD_FORMS } from "@/lib/leadForms";
+import { getAttribution } from "@/lib/attribution";
 
 const SERVICE_OPTIONS = [
   "Branding",
@@ -69,6 +72,7 @@ export default function ContactForm() {
     }
 
     setSubmitting(true);
+    const lead = formLead(LEAD_FORMS.contact);
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -81,6 +85,8 @@ export default function ContactForm() {
           services,
           budgets,
           details,
+          metaEventId: lead.eventId,
+          attribution: getAttribution(),
         }),
       });
 
@@ -89,6 +95,7 @@ export default function ContactForm() {
         throw new Error(data.error || "Failed to send. Please try again.");
       }
 
+      lead.track();
       setStatus({ ok: true });
       setFullName("");
       setEmail("");

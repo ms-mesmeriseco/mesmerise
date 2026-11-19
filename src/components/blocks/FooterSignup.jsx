@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { formLead } from "@/lib/metaPixel";
+import { LEAD_FORMS } from "@/lib/leadForms";
+import { getAttribution } from "@/lib/attribution";
 
 export default function FooterSignup({
   className = "",
@@ -27,16 +30,24 @@ export default function FooterSignup({
     }
 
     setSubmitting(true);
+    const lead = formLead(LEAD_FORMS.newsletter);
     try {
       const res = await fetch(submitPath, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, website }),
+        body: JSON.stringify({
+          name,
+          email,
+          website,
+          metaEventId: lead.eventId,
+          attribution: getAttribution(),
+        }),
       });
 
       const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Failed to subscribe.");
 
+      lead.track();
       setStatus({ ok: true });
       setName("");
       setEmail("");

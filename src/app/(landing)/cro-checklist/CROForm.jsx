@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { formLead } from "@/lib/metaPixel";
+import { LEAD_FORMS } from "@/lib/leadForms";
+import { getAttribution } from "@/lib/attribution";
 
 export default function CROForm() {
   const router = useRouter();
@@ -24,6 +27,7 @@ export default function CROForm() {
     }
 
     setSubmitting(true);
+    const lead = formLead(LEAD_FORMS.cro_checklist);
 
     try {
       const res = await fetch("/api/cro-checklist", {
@@ -34,6 +38,8 @@ export default function CROForm() {
           email,
           website, // honeypot
           source: "cro-checklist",
+          metaEventId: lead.eventId,
+          attribution: getAttribution(),
         }),
       });
 
@@ -44,6 +50,7 @@ export default function CROForm() {
       }
 
       // Success — redirect to the success page
+      lead.track();
       router.push("/cro-checklist-success");
     } catch (err) {
       setStatus({ ok: false, msg: err.message });

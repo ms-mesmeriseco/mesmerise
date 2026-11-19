@@ -1,5 +1,5 @@
-// Meta Conversions API: server-side copies of the quiz's pixel events. Each copy
-// reuses the browser event's event_id, so Meta counts the pair once.
+// Meta Conversions API: server-side copies of the quiz and form pixel events.
+// Each copy reuses the browser event's event_id, so Meta counts the pair once.
 // Server-only (uses the access token).
 import "server-only";
 import { createHash } from "node:crypto";
@@ -23,6 +23,16 @@ const hash = (value) =>
     ? [createHash("sha256").update(value.trim().toLowerCase()).digest("hex")]
     : undefined;
 
+// Meta wants phone numbers as digits with the country code. Numbers without
+// one are assumed Australian (a leading 0 becomes 61).
+const normalisePhone = (value) => {
+  const digits = String(value || "").replace(/\D/g, "");
+  if (digits.length < 8) return "";
+  if (digits.startsWith("00")) return digits.slice(2);
+  if (digits.startsWith("0")) return `61${digits.slice(1)}`;
+  return digits;
+};
+
 // event_ids come from the browser, so only accept something shaped like one
 export const validEventId = (id) =>
   typeof id === "string" && /^[\w-]{8,64}$/.test(id) ? id : null;
@@ -31,8 +41,11 @@ const cookie = (header, name) =>
   header?.match(new RegExp(`(?:^|;\\s*)${name}=([^;]+)`))?.[1];
 
 // The browser details Meta matches on, sent with every event: _fbp and _fbc
-// cookies, IP and user agent, plus hashed email and first name when known
-function userData(req, { email, firstName, attribution } = {}) {
+// cookies, IP and user agent, plus hashed email, name and phone when known
+function userData(
+  req,
+  { email, firstName, lastName, phone, attribution } = {},
+) {
   const headers = req.headers;
   const cookies = headers.get("cookie");
   // No _fbc cookie (blocked, or another browser tab): build it from the saved
@@ -46,6 +59,8 @@ function userData(req, { email, firstName, attribution } = {}) {
   return {
     em: hash(email),
     fn: hash(firstName),
+    ln: hash(lastName),
+    ph: hash(normalisePhone(phone)),
     client_ip_address:
       headers.get("x-forwarded-for")?.split(",")[0].trim() || undefined,
     client_user_agent: headers.get("user-agent") || undefined,
@@ -54,8 +69,9 @@ function userData(req, { email, firstName, attribution } = {}) {
   };
 }
 
-// events: [[event_name, event_id]]; ones without a valid event_id are skipped
-async function sendEvents(req, quizName, events, details) {
+// events: [[event_name, event_id, custom_data]]; ones without a valid event_id
+// are skipped
+async function sendEvents(req, events, details) {
   if (!accessToken) return;
   const base = {
     event_time: Math.floor(Date.now() / 1000),
@@ -65,12 +81,12 @@ async function sendEvents(req, quizName, events, details) {
     user_data: userData(req, details),
   };
   const data = events
-    .filter(([name, id]) => CUSTOM_DATA[name] && validEventId(id))
-    .map(([event_name, event_id]) => ({
+    .filter(([, id]) => validEventId(id))
+    .map(([event_name, event_id, custom_data]) => ({
       ...base,
       event_name,
       event_id,
-      custom_data: CUSTOM_DATA[event_name](quizName),
+      custom_data,
     }));
   if (!data.length) return;
 
@@ -101,10 +117,9 @@ export function sendQuizEvents(
 ) {
   return sendEvents(
     req,
-    quizName,
     [
-      ["Lead", eventIds?.lead],
-      ["ViewContent", eventIds?.viewContent],
+      ["Lead", eventIds?.lead, CUSTOM_DATA.Lead(quizName)],
+      ["ViewContent", eventIds?.viewContent, CUSTOM_DATA.ViewContent(quizName)],
     ],
     { email, firstName, attribution },
   );
@@ -113,5 +128,20 @@ export function sendQuizEvents(
 // An event sent as it happens in the browser (QuizStart, a shared results
 // ViewContent). No personal details are known yet.
 export function sendBrowserEvent(req, { name, quizName, eventId }) {
-  return sendEvents(req, quizName, [[name, eventId]]);
+  return sendEvents(req, [[name, eventId, CUSTOM_DATA[name](quizName)]]);
+}
+
+// A non-quiz form's Lead (contact, newsletter, downloads), once it has saved.
+// formName is from lib/leadForms.js, matching the browser's content_name.
+export function sendFormLead(
+  req,
+  { formName, eventId, email, firstName, lastName, phone, attribution },
+) {
+  return sendEvents(req, [["Lead", eventId, { content_name: formName }]], {
+    email,
+    firstName,
+    lastName,
+    phone,
+    attribution,
+  });
 }
