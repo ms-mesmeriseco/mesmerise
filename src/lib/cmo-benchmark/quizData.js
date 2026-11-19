@@ -2,6 +2,9 @@
 // Points live here and are only ever used for scoring; they are never rendered.
 // `points: null` marks an answer that isn't scored (the question drops out of its pillar).
 
+// Sent with Meta events (QuizStart, Lead, ViewContent)
+export const QUIZ_NAME = "CMO Benchmark";
+
 export const PILLARS = [
   {
     key: "measurement",

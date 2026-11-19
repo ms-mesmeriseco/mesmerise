@@ -11,6 +11,7 @@ import {
   NO_LEAKS_MESSAGE,
 } from "@/lib/quiz/scoring";
 import { resultsLink } from "@/lib/quiz/resultsLink";
+import { sendQuizEvents } from "@/lib/metaCapi";
 import {
   H1,
   H3,
@@ -23,6 +24,7 @@ import {
   SHARE_LINK_DAYS,
   INTERNAL_LINK_DAYS,
   pillarStatus,
+  QUIZ_NAME,
 } from "@/lib/quiz/quizData";
 import {
   upsertHubspotContact,
@@ -132,6 +134,12 @@ export async function POST(req) {
         },
       ),
       sendProspectReport(lead),
+      sendQuizEvents(req, {
+        quizName: QUIZ_NAME,
+        eventIds: body.metaEventIds,
+        email,
+        firstName,
+      }),
     ]);
     tasks.forEach((t, i) => {
       if (t.status === "rejected") {

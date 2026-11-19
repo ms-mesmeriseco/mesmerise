@@ -2,11 +2,6 @@
 
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import dynamic from "next/dynamic";
-
-const PixelTracker = dynamic(() => import("@/lib/utils/PixelTracker"), {
-  ssr: false,
-});
 
 export default function Template({ children }) {
   const pathname = usePathname();
@@ -45,7 +40,6 @@ export default function Template({ children }) {
       {...anim(opacity)}
       className={`${paddingTop} min-h-screen p-[var(--global-margin-sm)]`}
     >
-      <PixelTracker />
       {children}
     </motion.div>
   );

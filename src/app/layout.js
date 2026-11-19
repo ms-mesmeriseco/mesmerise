@@ -109,7 +109,7 @@ export default function RootLayout({ children }) {
             height="1"
             width="1"
             className="hidden"
-            src="https://www.facebook.com/tr?id=712977556466722&amp;ev=PageView&amp;noscript=1"
+            src="https://www.facebook.com/tr?id=1448494526204583&amp;ev=PageView&amp;noscript=1"
           />
         </noscript>
         {/* End Meta Pixel Code */}

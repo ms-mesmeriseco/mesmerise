@@ -14,10 +14,12 @@ import {
   GUIDE_URL,
   BOOKING_URL,
   SHARE_LINK_DAYS,
+  QUIZ_NAME,
 } from "@/lib/quiz/quizData";
 import { tierFor, NO_LEAKS_MESSAGE } from "@/lib/quiz/scoring";
 import ReviewCta from "./ReviewCta";
 import { joinTold } from "@/lib/quiz/joinTold";
+import { useViewContent } from "@/lib/metaPixel";
 
 // Top of the scale is the lowest tier; the marker travels down towards the top tier
 const EASE = [0.22, 1, 0.36, 1];
@@ -343,7 +345,16 @@ function FloatingCta({ targetId, href, label }) {
 // share: { url, expires } for the results link, when there is one.
 // contact: the gate details, to pre-fill the review request form.
 // quizId: links a review request to the quiz's HubSpot contact.
-export default function QuizResults({ results, goal, share, contact, quizId }) {
+// viewEventId: the ViewContent event_id sent with the submission (shared links get a fresh one)
+export default function QuizResults({
+  results,
+  goal,
+  share,
+  contact,
+  quizId,
+  viewEventId,
+}) {
+  useViewContent(`${QUIZ_NAME} results`, viewEventId);
   const { overall, pillars, leaks, fitBand } = results;
   const tier = tierFor(overall);
   const headline = GOAL_HEADLINES[goal];

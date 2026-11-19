@@ -12,8 +12,10 @@ import {
   QUALIFICATION_QUESTIONS,
   GATE,
   OTHER_MAX_LENGTH,
+  QUIZ_NAME,
 } from "@/lib/quiz/quizData";
 import { computeResults } from "@/lib/quiz/scoring";
+import { newEventId, trackMeta } from "@/lib/metaPixel";
 import QuizResults from "./QuizResults";
 import Button from "@/components/ui/Button";
 
@@ -71,6 +73,13 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
   const [results, setResults] = useState(null);
   const [share, setShare] = useState(null);
   const [quizId, setQuizId] = useState(null);
+  // Meta event IDs, sent with the submission so Conversions API copies can reuse them
+  const [metaIds] = useState(() => ({
+    quizStart: newEventId(),
+    lead: newEventId(),
+    viewContent: newEventId(),
+  }));
+  const quizStarted = useRef(false);
   const advanceTimer = useRef(null);
   const topRef = useRef(null);
 
@@ -96,7 +105,19 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  // QuizStart on the first answer
+  function markStarted() {
+    if (quizStarted.current) return;
+    quizStarted.current = true;
+    trackMeta(
+      "QuizStart",
+      { quiz_name: QUIZ_NAME },
+      { custom: true, eventId: metaIds.quizStart },
+    );
+  }
+
   function selectSingle(q, option, index) {
+    markStarted();
     const value = isHook(q) ? option.value : index;
     setAnswers((a) => ({ ...a, [q.id]: value }));
     clearTimeout(advanceTimer.current);
@@ -110,6 +131,7 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
   }
 
   function toggleMulti(q, index) {
+    markStarted();
     setAnswers((a) => {
       const current = a[q.id] || [];
       const next = current.includes(index)
@@ -152,7 +174,15 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
       const res = await fetch("/api/growth-leak-audit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers, contact, hp }),
+        body: JSON.stringify({
+          answers,
+          contact,
+          hp,
+          metaEventIds: {
+            ...metaIds,
+            quizStart: quizStarted.current ? metaIds.quizStart : null,
+          },
+        }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok)
@@ -178,7 +208,13 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
           gla_tier: computed.tier.name,
           gla_fit_band: computed.fitBand,
         });
-        window.fbq?.("track", "Lead", { content_name: "Growth Leak Audit" });
+        // Only fires here, on a successful submission: refreshing restarts the
+        // quiz, and shared results links never reach this form
+        trackMeta(
+          "Lead",
+          { content_name: QUIZ_NAME, quiz_name: QUIZ_NAME },
+          { eventId: metaIds.lead },
+        );
       }
       go(1);
     } catch (err) {
@@ -401,6 +437,7 @@ export default function Quiz({ skipIntro = false, onExit } = {}) {
               share={share}
               contact={contact}
               quizId={quizId}
+              viewEventId={metaIds.viewContent}
             />
           )}
         </motion.div>

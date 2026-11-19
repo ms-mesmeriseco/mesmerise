@@ -13,6 +13,7 @@ import {
   pickAnswers,
 } from "@/lib/cmo-benchmark/scoring";
 import { resultsLink } from "@/lib/cmo-benchmark/resultsLink";
+import { sendQuizEvents } from "@/lib/metaCapi";
 import {
   H1,
   H2,
@@ -25,6 +26,7 @@ import {
   INTERNAL_LINK_DAYS,
   pillarStatus,
   isWorkEmail,
+  QUIZ_NAME,
 } from "@/lib/cmo-benchmark/quizData";
 import {
   upsertHubspotContact,
@@ -141,6 +143,12 @@ export async function POST(req) {
         },
       ),
       sendProspectReport(lead),
+      sendQuizEvents(req, {
+        quizName: QUIZ_NAME,
+        eventIds: body.metaEventIds,
+        email,
+        firstName,
+      }),
     ]);
     tasks.forEach((t, i) => {
       if (t.status === "rejected") {

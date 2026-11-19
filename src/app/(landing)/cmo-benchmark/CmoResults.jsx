@@ -10,7 +10,9 @@ import {
   pillarStatus,
   CTA,
   NO_PRIORITIES_MESSAGE,
+  QUIZ_NAME,
 } from "@/lib/cmo-benchmark/quizData";
+import { useViewContent } from "@/lib/metaPixel";
 import { tierFor, leadershipSummary } from "@/lib/cmo-benchmark/scoring";
 import { TierScale } from "../growth-leak-audit/QuizResults";
 import ReviewCta from "../growth-leak-audit/ReviewCta";
@@ -61,6 +63,7 @@ function usePdfExport(reportRef, company) {
 // team can open their results.
 // contact: the gate details, to pre-fill the session request form.
 // quizId: links a session request to the quiz's HubSpot contact.
+// viewEventId: the ViewContent event_id sent with the submission (shared links get a fresh one).
 export default function CmoResults({
   results,
   pressure,
@@ -69,7 +72,9 @@ export default function CmoResults({
   share,
   contact,
   quizId,
+  viewEventId,
 }) {
+  useViewContent(`${QUIZ_NAME} results`, viewEventId);
   const { overall, pillars, priorities, working, fitBand } = results;
   const tier = tierFor(overall);
   const subhead = PRESSURE_HEADLINES[pressure]?.(results.term);

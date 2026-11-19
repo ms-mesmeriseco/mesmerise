@@ -1,6 +1,9 @@
 // Growth Leak Audit — single source of truth for questions, scoring and copy.
 // Points live here and are only ever used for scoring; they are never rendered.
 
+// Sent with Meta events (QuizStart, Lead, ViewContent)
+export const QUIZ_NAME = "Growth Leak Audit";
+
 export const PILLARS = [
   { key: "positioning", weight: 0.2 },
   { key: "offer", weight: 0.15 },
